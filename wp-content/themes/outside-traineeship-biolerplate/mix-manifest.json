@@ -1,4 +1,7 @@
 {
+    "/assets/js/modules/leadspace.js": "/assets/js/modules/leadspace.js",
     "/assets/js/app.js": "/assets/js/app.js",
-    "/assets/css/style.css": "/assets/css/style.css"
+    "/assets/js/manifest.js": "/assets/js/manifest.js",
+    "/assets/css/style.css": "/assets/css/style.css",
+    "/assets/css/modules/leadspace.css": "/assets/css/modules/leadspace.css"
 }

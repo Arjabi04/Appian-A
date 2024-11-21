@@ -143,17 +143,10 @@ function outside_traineeship_biolerplate_scripts() {
 }
 add_action('wp_enqueue_scripts', 'outside_traineeship_biolerplate_scripts');
 
-// function outside_traineeship_biolerplate_scripts() {
-// 	wp_enqueue_style( 'outside-traineeship-biolerplate-style', get_stylesheet_uri(), array(), _S_VERSION );
-// 	wp_style_add_data( 'outside-traineeship-biolerplate-style', 'rtl', 'replace' );
 
-// 	wp_enqueue_script( 'outside-traineeship-biolerplate-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-
-// 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-// 		wp_enqueue_script( 'comment-reply' );
-// 	}
-// }
-// add_action( 'wp_enqueue_scripts', 'outside_traineeship_biolerplate_scripts' );
+function is_block_preview(){
+	return is_admin() ? true : false;
+}
 
 /**
  * Implement the Custom Header feature.
@@ -174,6 +167,8 @@ require get_template_directory() . '/inc/template-functions.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
+
+require get_template_directory() . '/acf-block.php';
 
 /**
  * Load Jetpack compatibility file.

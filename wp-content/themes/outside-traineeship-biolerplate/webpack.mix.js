@@ -1,4 +1,19 @@
+const fs = require('fs');
+const path = require('path');
 const mix = require('laravel-mix');
+
+const styleFiles = fs.readdirSync(path.resolve(__dirname, 'resources', 'scss', 'modules'), 'utf-8');
+const scriptFiles = fs.readdirSync(path.resolve(__dirname, 'resources', 'js', 'modules'), 'utf-8');
+
+for (let style of styleFiles) {
+  mix.sass(`resources/scss/modules/${style}`, 'assets/css/modules');
+}
+
+for (let script of scriptFiles) {
+  mix.js(`resources/js/modules/${script}`, 'assets/js/modules')
+    .autoload({ jquery: ['$', 'window.jQuery'] })
+    .extract();
+}
 
 // Set the public path (your theme directory).
 mix.setPublicPath('./');
