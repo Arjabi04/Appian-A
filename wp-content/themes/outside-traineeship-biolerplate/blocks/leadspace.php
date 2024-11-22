@@ -7,7 +7,7 @@ else:
     $content = get_field('leadspace');
     $title   = $content['title'] ?? false;
     if(isset($title)):?>
-        <h1><?php echo $title;?></h1>
+        <h1 class="leadspace"><?php echo $title;?></h1>
 <?php
     endif;    
 endif; 

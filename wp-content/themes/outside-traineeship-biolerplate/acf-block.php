@@ -27,19 +27,21 @@ add_action('acf/init', function() {
                     )
                 ),
                 'enqueue_assets' => function($data){
-                    $fileName = str_replace( '_', '-', $data['fileName'] );
+                    $fileName       = str_replace( '_', '-', $data['fileName'] );
 
-                    $cssFilePath = get_template_directory_uri().'/assets/css/modules/'.$fileName.'.css';
-                    
-                    $jsFilePath  = get_template_directory_uri().'/assets/js/modules/'.$fileName.'.css';
+                    $cssFilePathDir = get_template_directory_uri().'/assets/css/modules/'.$fileName.'.css';
+                    $jsFilePathDir  = get_template_directory_uri().'/assets/js/modules/'.$fileName.'.js';
+
+                    $cssFilePath = $_SERVER['DOCUMENT_ROOT'].parse_url($cssFilePathDir,PHP_URL_PATH);
+                    $jsFilePath  = $_SERVER['DOCUMENT_ROOT'].parse_url($jsFilePathDir,PHP_URL_PATH);
 
                     if(!is_admin()){
                         if ( file_exists( $cssFilePath ) ) {
-                            wp_enqueue_style($fileName.'.css', asset('styles/modules/'.$fileName.'.css')->uri(), true, null);
+                            wp_enqueue_style($fileName.'.css', $cssFilePathDir, false, null);
                         }
 
                         if ( file_exists( $jsFilePath ) ) {
-                            wp_enqueue_script( $fileName.'js', asset('scripts/'.$fileName.'.js')->uri(), array('jquery'), '', true );
+                            wp_enqueue_script( $fileName.'js', $jsFilePathDir, array('jquery'), '', true );
                         }
                     }
                 },
