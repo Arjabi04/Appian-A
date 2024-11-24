@@ -37,7 +37,7 @@ add_action('acf/init', function() {
 
                     if(!is_admin()){
                         if ( file_exists( $cssFilePath ) ) {
-                            wp_enqueue_style($fileName.'.css', $cssFilePathDir, false, null);
+                            wp_enqueue_style($fileName.'.css', $cssFilePathDir);
                         }
 
                         if ( file_exists( $jsFilePath ) ) {

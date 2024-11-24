@@ -1,1 +1,1 @@
-alert('leadspace');
+console.log('leadspace');
