@@ -4,5 +4,7 @@
     "/assets/js/manifest.js": "/assets/js/manifest.js",
     "/assets/css/style.css": "/assets/css/style.css",
     "/assets/css/modules/leadspace.css": "/assets/css/modules/leadspace.css",
-    "/assets/images/leadspace.png": "/assets/images/leadspace.png"
+    "/assets/images/leadspace.png": "/assets/images/leadspace.png",
+    "/assets/fonts/sunset-gothic-bold-pro.woff": "/assets/fonts/sunset-gothic-bold-pro.woff",
+    "/assets/fonts/sunset-gothic-bold-pro.woff2": "/assets/fonts/sunset-gothic-bold-pro.woff2"
 }

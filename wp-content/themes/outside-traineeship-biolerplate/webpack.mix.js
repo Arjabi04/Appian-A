@@ -23,16 +23,16 @@ mix.js('resources/js/app.js', 'assets/js')
    .sourceMaps();
 
 // Compile SCSS
-mix.sass('resources/scss/style.scss', 'assets/css')
-   .options({
-       processCssUrls: false,
-   });
+mix.sass('resources/scss/style.scss', 'assets/css').options({
+    processCssUrls: false,
+});
 
-// Copy images
+// Copy images 
 mix.copyDirectory('resources/images', 'assets/images');
+mix.copyDirectory('resources/fonts', 'assets/fonts');
 
 // Enable versioning in production
-if (mix.inProduction()) {
+if(mix.inProduction()){
     mix.version();
 }
 
