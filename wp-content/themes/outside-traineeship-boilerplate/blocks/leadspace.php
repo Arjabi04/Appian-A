@@ -1,7 +1,7 @@
 <?php
 if ( is_admin() ) :
     /* Render screenshot for example */
-    $imgUrl = get_stylesheet_directory_uri() . '/assets/images/leadspace.webp';
+    $imgUrl = get_stylesheet_directory_uri() . '/public/images/preview/leadspace.webp';
     echo '<img src="' . $imgUrl . '">';
 else:
     $content = get_field('leadspace');

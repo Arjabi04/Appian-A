@@ -29,8 +29,8 @@ add_action('acf/init', function() {
                 'enqueue_assets' => function($data){
                     $fileName       = str_replace( '_', '-', $data['fileName'] );
 
-                    $cssFilePathDir = get_template_directory_uri().'/assets/css/modules/'.$fileName.'.css';
-                    $jsFilePathDir  = get_template_directory_uri().'/assets/js/modules/'.$fileName.'.js';
+                    $cssFilePathDir = get_template_directory_uri().'/public/styles/modules/'.$fileName.'.css';
+                    $jsFilePathDir  = get_template_directory_uri().'/public/scripts/'.$fileName.'.js';
 
                     $cssFilePath = $_SERVER['DOCUMENT_ROOT'].parse_url($cssFilePathDir,PHP_URL_PATH);
                     $jsFilePath  = $_SERVER['DOCUMENT_ROOT'].parse_url($jsFilePathDir,PHP_URL_PATH);

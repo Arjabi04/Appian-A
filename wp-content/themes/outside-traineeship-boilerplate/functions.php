@@ -138,8 +138,8 @@ add_action( 'widgets_init', 'outside_traineeship_biolerplate_widgets_init' );
  * Enqueue scripts and styles.
  */
 function outside_traineeship_biolerplate_scripts() {
-    wp_enqueue_style('theme-style', get_template_directory_uri() . '/assets/css/style.css', [], filemtime(get_template_directory() . '/assets/css/style.css'));
-    wp_enqueue_script('theme-script', get_template_directory_uri() . '/assets/js/app.js', [], filemtime(get_template_directory() . '/assets/js/app.js'), true);
+	wp_enqueue_style('sage/app.css', get_template_directory_uri().'/public/styles/app.css', false, null);
+    wp_enqueue_script('sage/app.js', get_template_directory_uri().'/public/scripts/app.js', ['jquery'], null, true);
 }
 add_action('wp_enqueue_scripts', 'outside_traineeship_biolerplate_scripts');
 

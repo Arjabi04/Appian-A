@@ -1,0 +1,111 @@
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    height: auto;
+    font-size: 10px;
+    // -webkit-overflow-scrolling: touch;
+}
+
+body {
+    letter-spacing: normal;
+    @include font-smoothing(on);
+    @include interpolate(font-size, 375px, 1024px, 16px, 27px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    position: relative;
+    overflow-x: hidden;
+
+    @include media-breakpoint-up(md) {
+        letter-spacing: -0.01em;
+    }
+
+    &.prevent-scrolling {
+        @extend .overflow-hidden, .position-fixed, .w-100;
+        top: auto;
+    }
+
+    #cometchat {
+        padding-bottom: 0 !important;
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+a,
+button,
+.btn {
+    // @extend .transition-fast;
+    transition: none;
+}
+
+p {
+    margin-bottom: rem(24px);
+
+    @include media-breakpoint-up(md) {
+        margin-bottom: rem(32px);
+    }
+
+    &:last-child {
+        @extend .mb-0;
+    }
+}
+
+ul,
+ol {
+    padding-left: rem(24px);
+
+    > li {
+        padding-left: rem(4px);
+        margin-bottom: rem(10px);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &::marker {
+            color: $black;
+        }
+    }
+}
+
+b,
+strong {
+    font-weight: $font-weight-bold;
+}
+
+figure {
+    margin-bottom: 0;
+}
+
+button,
+.btn,
+.btn-link {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+        outline: none;
+    }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    // box-shadow: 0 0 0 130px $peach inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: $black !important;
+}
