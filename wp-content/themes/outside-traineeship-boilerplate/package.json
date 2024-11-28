@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "description": "[![Build Status](https://travis-ci.org/Automattic/_s.svg?branch=master)](https://travis-ci.org/Automattic/_s)",
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap": "5.3.2"
+  },
   "devDependencies": {
     "browser-sync": "^3.0.3",
     "browser-sync-webpack-plugin": "^2.3.0",
