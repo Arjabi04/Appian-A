@@ -12,6 +12,23 @@ if ( ! defined( '_S_VERSION' ) ) {
 	define( '_S_VERSION', '1.0.0' );
 }
 
+function vite_assets($entry) {
+    static $manifest;
+
+    if (!$manifest) {
+        $manifestPath = __DIR__ . '/public/.vite/manifest.json';
+
+        $manifest = json_decode(
+            file_get_contents($manifestPath),
+            true
+        );
+    }
+    if (!isset($manifest[$entry])) {
+        return null;
+    }
+    return get_template_directory_uri() . '/public/' . $manifest[$entry]['file'];
+}
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -138,10 +155,10 @@ add_action( 'widgets_init', 'outside_traineeship_biolerplate_widgets_init' );
  * Enqueue scripts and styles.
  */
 function outside_traineeship_biolerplate_scripts() {
-	wp_enqueue_style('app.css', get_template_directory_uri().'/public/styles/app.css', false, null);
-    wp_enqueue_script('app.js', get_template_directory_uri().'/public/scripts/app.js', ['jquery'], null, true);
+	wp_enqueue_style('app-css', vite_assets ('resources/styles/app.scss'), true, null, );
+    wp_enqueue_script('app-js', vite_assets ('resources/scripts/app.js'), [''], null, true);
 }
-add_action('wp_enqueue_scripts', 'outside_traineeship_biolerplate_scripts');
+add_action('wp_enqueue_scripts', 'outside_traineeship_biolerplate_scripts', 2);
 
 
 function is_block_preview(){
@@ -177,3 +194,143 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+require_once get_template_directory() . '/inc/vite.php';
+
+function theme_assets() {
+
+    $is_dev = defined('WP_ENV')
+        && WP_ENV === 'development';
+
+    // Vite HMR
+    if ( $is_dev ) {
+
+        wp_enqueue_script(
+            'vite-client',
+            'http://localhost:5173/@vite/client',
+            [],
+            null,
+            true
+        );
+
+        wp_enqueue_script(
+            'theme-app',
+            'http://localhost:5173/resources/scripts/app.js',
+            [],
+            null,
+            true
+        );
+
+        return;
+    }
+
+    $manifest = theme_vite_manifest();
+
+    $entry = $manifest['resources/scripts/app.js'] ?? false;
+
+    if ( ! $entry ) {
+        return;
+    }
+
+    // CSS
+    if ( ! empty( $entry['css'] ) ) {
+
+        foreach ( $entry['css'] as $css ) {
+
+            wp_enqueue_style(
+                'theme-app',
+                get_template_directory_uri() . '/public/' . $css,
+                [],
+                null
+            );
+        }
+    }
+
+    // JS
+    wp_enqueue_script(
+        'theme-app',
+        get_template_directory_uri() . '/public/' . $entry['file'],
+        [],
+        null,
+        true
+    );
+}
+
+add_action( 'wp_enqueue_scripts', 'theme_assets' );
+
+/**
+ * Enqueue block editor assets (Gutenberg) built by Vite.
+ */
+function theme_block_editor_assets() {
+
+	$is_dev = defined( 'WP_ENV' )
+		&& WP_ENV === 'development';
+
+	/**
+	 * Development (Vite HMR)
+	 */
+	if ( $is_dev ) {
+
+		// Vite client
+		wp_enqueue_script(
+			'vite-client',
+			'http://localhost:5173/@vite/client',
+			[],
+			null,
+			true
+		);
+
+		// Editor entry
+		// IMPORTANT:
+		// editor.js should import ../styles/editor.scss
+		wp_enqueue_script(
+			'theme-editor',
+			'http://localhost:5173/resources/scripts/editor.js',
+			[],
+			null,
+			true
+		);
+
+		return;
+	}
+
+	/**
+	 * Production
+	 */
+	$manifest = theme_vite_manifest();
+
+	$entry = $manifest['resources/scripts/editor.js'] ?? false;
+
+	if ( ! $entry ) {
+		return;
+	}
+
+	// Enqueue extracted CSS from manifest
+	if ( ! empty( $entry['css'] ) ) {
+
+		foreach ( $entry['css'] as $css ) {
+            wp_enqueue_style(
+                'theme-editor-css',
+                get_template_directory_uri() . '/public/' . $css,
+                [],
+                null
+            );
+        }
+
+	}
+
+	// Enqueue JS
+	wp_enqueue_script(
+		'theme-editor-js',
+		get_template_directory_uri() . '/public/' . $entry['file'],
+		[],
+		null,
+		true
+	);
+}
+
+add_action(
+	'enqueue_block_editor_assets',
+	'theme_block_editor_assets'
+);
+
+add_action( 'enqueue_block_editor_assets', 'theme_block_editor_assets' );

@@ -1,48 +1,65 @@
 <?php
-add_action('acf/init', function() {
-    if( function_exists('acf_register_block_type') ) {
-        $biolerplateModules = [
-            'leadspace'  => 'Leadspace',
+add_action('acf/init', function () {
+    if (function_exists('acf_register_block_type')) {
+
+        $boilerplateModules = [
+            'leadspace' => 'Leadspace',
+            'about'     => 'About',
         ];
 
-        foreach($biolerplateModules as $key => $mModule) {
+        foreach ($boilerplateModules as $key => $mModule) {
 
-            $mName    = $mModule;
+            $fileName = str_replace('_', '-', $key);
 
-            $fileName = str_replace( '_', '-', $key );
-            
             acf_register_block_type(array(
-                'name'              => $key,
-                'fileName'          => $fileName,
-                'title'             => __( $mName ),
-                'description'       => __('A custom '. $mName.' block.'),
-                'render_template'   => 'blocks/'.$fileName.'.php',
-                'category'          => 'wp-trainee-biolerplate',
-                'icon'              => 'block-default',
-                'keywords'          => array( $mModule, 'wp-trainee-biolerplate' ),
-                'example'           => array(
-                    'attributes' => array(
+                'name'            => $key,
+                'title'           => __($mModule),
+                'description'     => __('A custom ' . $mModule . ' block.'),
+                'render_template' => 'blocks/' . $fileName . '.php',
+                'category'        => 'wp-trainee-boilerplate',
+                'icon'            => 'block-default',
+                'api_version'   => 3,
+                'acf_block_version'   => 3,
+                'style'         => "{$fileName}-module",
+                'script'        => "{$fileName}-module",
+                'keywords'      => [$mModule, 'wp-trainee-boilerplate'],
+                'example'       => [
+                    'attributes' => [
                         'mode' => 'preview',
-                        'data' => []
-                    )
-                ),
-                'enqueue_assets' => function($data){
-                    $fileName       = str_replace( '_', '-', $data['fileName'] );
+                        'data' => [],
+                    ],
+                ],
 
-                    $cssFilePathDir = get_template_directory_uri().'/public/styles/modules/'.$fileName.'.css';
-                    $jsFilePathDir  = get_template_directory_uri().'/public/scripts/'.$fileName.'.js';
+                'enqueue_assets' => function () use ($fileName) {
+                    $manifest = theme_vite_manifest();
 
-                    $cssFilePath = $_SERVER['DOCUMENT_ROOT'].parse_url($cssFilePathDir,PHP_URL_PATH);
-                    $jsFilePath  = $_SERVER['DOCUMENT_ROOT'].parse_url($jsFilePathDir,PHP_URL_PATH);
+                    if (empty($manifest)) {
+                        return;
+                    }
 
-                    if(!is_admin()){
-                        if ( file_exists( $cssFilePath ) ) {
-                            wp_enqueue_style($fileName.'.css', $cssFilePathDir);
-                        }
+                    // JS ENTRY
+                    $js_key = "resources/scripts/modules/{$fileName}.js";
 
-                        if ( file_exists( $jsFilePath ) ) {
-                            wp_enqueue_script( $fileName.'js', $jsFilePathDir, array('jquery'), '', true );
-                        }
+                    if (isset($manifest[$js_key])) {
+                        wp_enqueue_script(
+                            "{$fileName}-module",
+                            get_template_directory_uri() . '/public/' . $manifest[$js_key]['file'],
+                            [],
+                            null,
+                            true
+                        );
+                    }
+
+                    // CSS ENTRY
+                    $css_key = "resources/styles/modules/{$fileName}.scss";
+
+                    if (isset($manifest[$css_key])) {
+                        wp_enqueue_style(
+                            "{$fileName}-module",
+                            get_template_directory_uri() . '/public/' . $manifest[$css_key]['file'],
+                            [],
+                            null
+                        );
                     }
                 },
             ));

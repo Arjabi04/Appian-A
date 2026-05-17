@@ -1,0 +1,214 @@
+.btn {
+  --btn-bg: var(--os-primary);
+  --btn-border-color: var(--os-primary);
+  --btn-color: #{$white};
+  --btn-hover-bg: var(--os-primary);
+  --btn-hover-border-color: var(--os-primary);
+  --btn-hover-color: #{$black};
+  --btn-padding: 0.875rem 1.25rem;
+  --btn-focus-bg: var(--os-primary);
+  --btn-focus-color: #{$black};
+  --btn-border-radius: 9999px;
+  --btn-weight: 700;
+  --btn-border-width: 0.125rem; // 2px
+  --btn-font-size: 0.875rem; // 14px
+  --btn-line-height: 1rem; // 16px
+
+  border: var(--btn-border-width, 0.125rem) solid var(--btn-border-color, transparent);
+  border-radius: var(--btn-border-radius, 0);
+  box-sizing: border-box;
+  text-decoration: none;
+  background-color: var(--btn-bg, transparent);
+  color: var(--btn-color, $black);
+  padding: var(--btn-padding, 0.875rem 1.25rem);
+  font-size: var(--btn-font-size, 0.875rem);
+  line-height: var(--btn-line-height, 1rem);
+  font-weight: var(--btn-weight, 700);
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  transition:
+    color 0.35s ease,
+    background-color 0.35s ease;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--btn-hover-bg, $black);
+      color: var(--btn-hover-color, $white);
+      border-color: var(--btn-hover-border-color, var(--os-primary));
+    }
+  }
+
+  &:focus,
+  &:active {
+    background-color: var(--btn-focus-bg, transparent);
+    color: var(--btn-focus-color);
+  }
+
+  &:focus-visible {
+    outline: 0.0625rem solid inherit;
+    outline-offset: 0.25rem;
+  }
+
+  &--small {
+    --btn-padding: 0.625rem 0.875rem;
+  }
+
+  &-primary {
+    --btn-bg: var(--os-primary);
+    --btn-border-color: var(--os-primary);
+    --btn-color: #{$white};
+    --btn-hover-bg: var(--os-primary);
+    --btn-hover-border-color: var(--os-primary);
+    --btn-hover-color: #{$black};
+
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      &:hover,
+      &:focus,
+      &:active {
+        --btn-hover-bg: transparent;
+      }
+    }
+  }
+
+  &-secondary {
+    --btn-bg: var(--os-midnight-blue);
+    --btn-border-color: var(--os-midnight-blue);
+    --btn-color: #{$white};
+    --btn-hover-bg: var(--os-midnight-blue);
+    --btn-hover-border-color: var(--os-midnight-blue);
+    --btn-hover-color: #{$black};
+
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      &:hover,
+      &:focus,
+      &:active {
+        --btn-hover-bg: transparent;
+      }
+    }
+  }
+
+  &-reset {
+    border: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  &-link {
+    --btn-font-size: 1rem;
+    --btn-line-height: 1.4;
+    --btn-color: var(--os-primary);
+    --btn-hover-color: var(--os-primary);
+    --btn-icon-color: var(--os-primary);
+    --btn-icon-size: 1.5rem;
+    --btn-focus-color: var(--os-primary);
+
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: var(--btn-color);
+    border-radius: 0;
+    gap: 0.5rem;
+    font-weight: 600;
+
+    i {
+      color: var(--btn-icon-color);
+      font-size: var(--btn-icon-size);
+      transition: translate 0.35s ease;
+    }
+
+    &:hover,
+    &:focus {
+      background: transparent;
+
+      i {
+        translate: 0.5rem;
+      }
+    }
+
+    &:active {
+      background-color: transparent;
+    }
+
+    &:focus {
+      i {
+        color: var(--btn-focus-color);
+      }
+    }
+
+    &-secondary {
+      --btn-icon-color: var(--os-midnight-blue);
+      --btn-color: var(--os-midnight-blue);
+      --btn-hover-color: var(--os-midnight-blue);
+    }
+
+    &--underline {
+      text-decoration: underline;
+      text-underline-offset: 0.25rem;
+      text-decoration-thickness: 0.0625rem;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover,
+      &:focus,
+      &:active {
+        background: transparent;
+      }
+    }
+  }
+
+  &-outline {
+    --btn-bg: transparent;
+    --btn-border-color: var(--os-primary);
+    --btn-color: var(--os-gray-900);
+    --btn-hover-bg: var(--os-primary);
+    --btn-hover-border-color: var(--os-primary);
+    --btn-hover-color: #{$white};
+    --btn-weight: 600;
+
+    &-primary {
+      --btn-border-color: var(--os-primary);
+      --btn-color: var(--os-gray-900);
+      --btn-hover-bg: var(--os-primary);
+      --btn-hover-border-color: var(--os-primary);
+      --btn-hover-color: #{$white};
+    }
+
+    &-secondary {
+      --btn-border-color: var(--os-midnight-blue);
+      --btn-color: var(--os-gray-900);
+      --btn-hover-bg: var(--os-midnight-blue);
+      --btn-hover-border-color: var(--os-midnight-blue);
+      --btn-hover-color: #{$white};
+    }
+  }
+}
+
+.bg-dark {
+  &:has(.btn-primary) {
+    .btn-primary {
+      &:hover {
+        --btn-hover-color: #{$white};
+      }
+    }
+
+    .btn-outline {
+      --btn-color: #{$white};
+    }
+  }
+}
+
+/* ==================
+  CTA Link Styles
+================== */
+.c-cta-link {
+  &:hover {
+    text-decoration: underline;
+  }
+}

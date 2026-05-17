@@ -1,0 +1,483 @@
+.form {
+  &-check {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+
+    &-label {
+      margin-left: 0.8rem;
+    }
+
+    &-input {
+      --checkbox-width: 1.25rem;
+      --checkbox-foreground: #{$black};
+
+      appearance: none;
+      position: relative;
+      aspect-ratio: 1;
+      width: var(--checkbox-width);
+
+      &::before,
+      &::after {
+        aspect-ratio: 1;
+        content: "";
+        left: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: var(--checkbox-width);
+        border-radius: 0.0625rem;
+      }
+
+      &[type="checkbox"]::before,
+      &[type="radio"]::before {
+        border: 0.0625rem solid $black;
+      }
+
+      &[type="radio"] {
+        &::before,
+        &::after {
+          border-radius: 50%;
+        }
+      }
+
+      &:checked {
+        &::after {
+          background-color: var(--checkbox-foreground);
+          transform: translate(50%, -50%);
+          width: calc(var(--checkbox-width) * 0.5);
+        }
+      }
+    }
+  }
+
+  .invalid {
+    .wpcf7-response-output {
+      border: none !important;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      padding: 1rem !important;
+      margin: 2rem 0 0 !important;
+    }
+
+    .hasError {
+      outline: 0;
+      border: 0.13rem solid green;
+      color: green;
+      position: relative;
+
+      @include placeholder {
+        color: green;
+      }
+    }
+  }
+}
+
+.os {
+  //  needed as per project
+  &-form {
+    $self: &;
+
+    --input-color: #{$black};
+    --btn-color: #{$black};
+    // --stroke-color: #{$magenta};
+    --error-color: #{$black};
+    --loading-image-fliter: unset;
+
+    position: relative;
+
+    &--transparent {
+      --wpforms-field-background-color: transparent;
+    }
+
+    &--show-on-success {
+      display: none;
+    }
+
+    &:has(.wpforms-confirmation-container-full) {
+      #{$self}--show-on-success {
+        display: block;
+      }
+
+      #{$self}--hide-on-success {
+        display: none;
+      }
+    }
+
+    .wpforms-container {
+      &-full:not(:empty) {
+        margin-block: 0;
+
+        .wpforms-confirmation-container-full {
+          background: transparent;
+          border: none;
+          padding: 0;
+          margin-block-end: 0;
+
+          * {
+            color: var(--input-color);
+          }
+
+          p {
+            margin-block-end: var(--space-m);
+
+            &:last-child {
+              margin-block-end: 0;
+            }
+          }
+        }
+      }
+
+      .wpforms-form {
+        input {
+          &:-webkit-autofill,
+          &:-webkit-autofill:active,
+          &:-webkit-autofill:focus,
+          &:-webkit-autofill:hover {
+            --color: var(--input-color);
+          }
+        }
+
+        .wpforms-field-container {
+          .wpforms-field {
+            padding: 0;
+            margin-block-end: var(--space-s);
+
+            &:last-child {
+              margin-block-end: 0;
+            }
+
+            input:not([type="checkbox"], [type="radio"], [type="submit"]),
+            select {
+              --wpforms-field-size-font-size: var(--step-0);
+              --wpforms-field-size-line-height: 1.2;
+              --wpforms-field-background-color: transparent;
+
+              color: var(--input-color);
+              box-shadow: none;
+
+              @include placeholder {
+                opacity: 1;
+                color: var(--input-color);
+              }
+            }
+
+            //For Styling Radio Button Field
+            &.wpforms-field-radio {
+              --wpforms-button-background-color: #{$black};
+              --wpforms-field-border-color: #{$black};
+
+              margin-block: var(--space-xl);
+
+              .wpforms-field-label {
+                margin-block: var(--space-m);
+              }
+
+              .wpforms-field-label-inline {
+                font-weight: $font-weight-light;
+                font-size: var(--step-0);
+                color: $black;
+              }
+
+              ul {
+                gap: var(--space-s);
+
+                li {
+                  align-items: center;
+
+                  input {
+                    --wpforms-field-size-checkbox-size: 1.5rem;
+
+                    @include media-breakpoint-up(sm) {
+                      --wpforms-field-size-checkbox-size: 1rem;
+                    }
+
+                    & + label {
+                      padding-inline-start: var(--space-xs);
+                    }
+                  }
+                }
+              }
+            }
+
+            //For Styling Checkbox Button Field
+            &.wpforms-field-checkbox {
+              --wpforms-button-background-color: #{$black};
+              --wpforms-field-border-color: #{$black};
+
+              margin-block-start: var(--space-xl);
+
+              .wpforms-field-label {
+                margin-block: var(--space-m);
+              }
+
+              .wpforms-field-label-inline {
+                font-weight: $font-weight-light;
+              }
+
+              ul {
+                gap: var(--space-s);
+
+                li {
+                  align-items: center;
+
+                  input {
+                    --wpforms-field-size-checkbox-size: 1.5rem;
+
+                    @include media-breakpoint-up(sm) {
+                      --wpforms-field-size-checkbox-size: 1rem;
+                    }
+
+                    &:checked {
+                      &::before,
+                      &::after {
+                        box-shadow: none;
+                      }
+                    }
+
+                    & + label {
+                      padding-inline-start: var(--space-xs);
+                    }
+                  }
+                }
+              }
+            }
+
+            &.wpforms-field-textarea {
+              textarea {
+                border-radius: 0;
+                font-size: var(--step-0);
+                display: inline-block;
+
+                @include placeholder {
+                  color: $black;
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+
+        //For stying Submit Button Container
+        .wpforms-submit-container {
+          position: relative;
+          margin-block-start: var(--space-2xl);
+
+          input[type="submit"],
+          button[type="submit"] {
+            @extend %heading;
+
+            --wpforms-button-background-color-alt: transparent;
+            --wpforms-field-size-line-height: 0.9;
+            --wpforms-button-text-color: #{$black};
+            --stroke-angle: -1deg;
+
+            height: auto;
+            margin-block: 0;
+            display: inline-flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            column-gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-s);
+            background: transparent;
+            font-size: var(--step-1);
+            color: var(--btn-color);
+            border: none;
+            transition: padding 0.15s ease;
+
+            @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+              &:hover,
+              &:focus,
+              &:active {
+                --stroke-angle: 1deg;
+
+                padding-inline: var(--space-2xs);
+              }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+              &:hover,
+              &:focus,
+              &:active {
+                opacity: 0.6;
+              }
+            }
+
+            &::before {
+              @extend [class^="icon-"];
+
+              border: none;
+              outline: none;
+              box-shadow: none;
+              content: $icon-chevron_right;
+              color: var(--btn-color);
+              font-size: var(--step-0);
+            }
+
+            &::after {
+              content: "";
+              transform: rotate(var(--stroke-angle));
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: var(--fluid-4-6);
+              background: var(--stroke-color);
+              transition: transform 0.15ms ease;
+            }
+
+            &:focus::after,
+            &:active::after {
+              top: unset;
+              right: unset;
+              border: unset;
+              border-radius: none;
+            }
+
+            &:focus-visible {
+              outline: auto;
+            }
+
+            &.wpforms-disabled {
+              opacity: 0;
+            }
+          }
+
+          .wpforms-submit-spinner {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 1rem;
+            filter: var(--loading-image-fliter, unset);
+          }
+        }
+      }
+    }
+
+    //For Styling Newsletter Form
+    &--newsletter {
+      &:has(.wpforms-error) {
+        padding-block-end: var(--step-n1);
+      }
+
+      .wpforms-container {
+        position: relative;
+        margin-block: 0;
+
+        .wpforms-form {
+          .wpforms-field-container {
+            .wpforms-field {
+              padding: 0;
+              overflow-x: visible !important;
+
+              input:not([type="checkbox"], [type="radio"], [type="submit"]),
+              select {
+                --wpforms-field-size-font-size: var(--step-0);
+                --wpforms-field-size-line-height: 1.2;
+                --wpforms-field-background-color: transparent;
+
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+                padding: var(--fluid-14-25) var(--space-2xs);
+                border: none;
+              }
+
+              &::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transform: rotate(-1deg);
+                width: 100%;
+                height: var(--fluid-4-6);
+                background-color: var(--stroke-color);
+              }
+            }
+
+            label.wpforms-error,
+            em.wpforms-error {
+              position: absolute;
+              bottom: 0;
+              transform: translateY(calc(100% + var(--space-2xs)));
+              color: var(--error-color);
+            }
+          }
+
+          .wpforms-submit-container {
+            --wpforms-button-size-margin-top: 0;
+
+            margin-block-start: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin: 0;
+            cursor: pointer;
+            overflow: clip;
+
+            //For Submit Button
+            input[type="submit"],
+            button[type="submit"] {
+              font-size: 0;
+
+              @include media-breakpoint-up(sm) {
+                font-size: var(--step-1);
+              }
+
+              @include media-breakpoint-up(md) {
+                font-size: 0;
+              }
+
+              @include media-breakpoint-up(lg) {
+                font-size: var(--step-1);
+                padding-inline-end: var(--space-l);
+              }
+
+              &::after {
+                display: none;
+              }
+
+              @media (hover: hover) and (pointer: fine) {
+                &:hover,
+                &:focus,
+                &:active {
+                  opacity: 0.6;
+                  padding-inline-end: var(--space-l);
+                }
+              }
+
+              .nkip-footer & {
+                @include media-breakpoint-up(lg) {
+                  padding-inline-end: var(--space-s);
+                }
+              }
+            }
+
+            .wpforms-submit-spinner {
+              right: 0;
+              left: unset;
+            }
+          }
+        }
+      }
+    }
+
+    &--white {
+      --input-color: #{$white};
+      --btn-color: #{$white};
+      --stroke-color: #{$white};
+      --error-color: #{$white};
+      --loading-image-fliter: invert(1);
+    }
+  }
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  &,
+  & + label {
+    cursor: pointer;
+  }
+}

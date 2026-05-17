@@ -1,0 +1,158 @@
+@import "variables/variables";
+
+@font-face {
+  font-family: "#{$icomoon-font-family}";
+  src: url("@fonts/#{$icomoon-font-family}.woff?lswedxsrt") format("woff");
+
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "#{$icomoon-font-family}" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-phone {
+  &:before {
+    content: $icon-phone;
+  }
+}
+
+.icon-user {
+  &:before {
+    content: $icon-user;
+  }
+}
+
+.icon-globe {
+  &:before {
+    content: $icon-globe;
+  }
+}
+
+.icon-linkedin-fill {
+  &:before {
+    content: $icon-linkedin-fill;
+  }
+}
+
+.icon-linkedin {
+  &:before {
+    content: $icon-linkedin;
+  }
+}
+
+.icon-x {
+  &:before {
+    content: $icon-x;
+  }
+}
+
+.icon-plus {
+  &:before {
+    content: $icon-plus;
+  }
+}
+
+.icon-minus {
+  &:before {
+    content: $icon-minus;
+  }
+}
+
+.icon-arrow-left-light {
+  &:before {
+    content: $icon-arrow-left-light;
+  }
+}
+
+.icon-arrow-right-light {
+  &:before {
+    content: $icon-arrow-right-light;
+  }
+}
+
+.icon-search {
+  &:before {
+    content: $icon-search;
+  }
+}
+
+.icon-download {
+  &:before {
+    content: $icon-download;
+  }
+}
+
+.icon-chevron-right {
+  &:before {
+    content: $icon-chevron-right;
+  }
+}
+
+.icon-arrow-left {
+  &:before {
+    content: $icon-arrow-left;
+  }
+}
+
+.icon-chevron-left {
+  &:before {
+    content: $icon-chevron-left;
+  }
+}
+
+.icon-chevron-up {
+  &:before {
+    content: $icon-chevron-up;
+  }
+}
+
+.icon-chevron-down {
+  &:before {
+    content: $icon-chevron-down;
+  }
+}
+
+.icon-arrow-right {
+  &:before {
+    content: $icon-arrow-right;
+  }
+}
+
+.icon-close {
+  &:before {
+    content: $icon-close;
+  }
+}
+
+.icon-hamburger {
+  &:before {
+    content: $icon-hamburger;
+  }
+}
+
+.icon-play {
+  &:before {
+    content: $icon-play;
+  }
+}
+
+.icon-pause {
+  &:before {
+    content: $icon-pause;
+  }
+}
