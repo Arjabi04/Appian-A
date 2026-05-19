@@ -1,1 +1,8 @@
-console.log('App JS hello world');
+import.meta.glob('../images/**', {
+  eager: true,
+  import: 'default',
+});
+
+import './global/header.js';
+
+

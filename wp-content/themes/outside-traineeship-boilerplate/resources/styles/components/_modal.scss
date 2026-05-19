@@ -1,0 +1,67 @@
+.modal {
+  &-backdrop {
+    &.show {
+      opacity: 0.29;
+    }
+  }
+
+  &-dialog {
+    max-width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @include media-breakpoint-down(xl) {
+      margin-left: 3.2rem;
+      margin-right: 3.2rem;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin: 0;
+    }
+
+    @include media-breakpoint-up(xl) {
+      max-width: 106.4rem;
+    }
+  }
+
+  &-content {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  &-body {
+    padding: 0;
+  }
+
+  .btn-close-modal {
+    background-color: transparent;
+    border: none;
+    right: 1.2rem;
+    top: 1.6rem;
+    color: red;
+    z-index: 1;
+
+    @include media-breakpoint-up(md) {
+      right: 3.2rem;
+      top: 2.8rem;
+    }
+
+    i {
+      font-size: 2.3rem;
+    }
+  }
+
+  &-team {
+    &-content {
+      @include media-breakpoint-up(md) {
+        border-radius: 0 2.3rem 0 0;
+        position: relative;
+      }
+    }
+
+    &-wrap {
+      min-height: 42rem;
+    }
+  }
+}

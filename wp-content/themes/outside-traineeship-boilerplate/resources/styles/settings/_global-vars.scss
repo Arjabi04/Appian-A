@@ -1,0 +1,82 @@
+$global: "theme";
+
+:root {
+  --subtle: #fbf9f6;
+  --border-subtle: #dbdad7;
+  --font-color-body: #424241;
+  --font-color-body-grey: #757573;
+  --font-color-headline: #091d3e;
+  --icon-grey: #a8a7a5;
+  --background-subtle: var(--subtle);
+  --blue-gradient: linear-gradient(180deg, #1873d2 0%, #b2edfe 47.78%, #fff 100%);
+  --border-input-default: var(--icon-grey);
+  --light-blue-50: #effbfe;
+  --border-input-default: #a8a7a5;
+  --rounded-input-default: 0.25rem;
+  --box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.1);
+  --fluid-32-80: clamp(2rem, -5.4096rem + 11.5663vw, 5rem);
+  --neutral-100: #f6f5f1;
+  --icon-primary: #091d3e;
+  --red-orange: #ea483b;
+}
+
+// :root {
+//   /* @link https://utopia.fyi/space/calculator?c=390,16,1.2,2000,18.66,1.25,7,2,390-854-1280-1600-2000&s=0.75|0.5|0.25,1.5|2|2.5|3.5|5,s-xl|s-2xl&g=s,xl,xl,12 */
+//   --space-3xs: clamp(0.25rem, 0.2349rem + 0.0621vw, 0.3125rem);
+//   --space-2xs: clamp(0.5rem, 0.4849rem + 0.0621vw, 0.5625rem);
+//   --space-xs: clamp(0.75rem, 0.7197rem + 0.1242vw, 0.875rem);
+//   --space-s: clamp(1rem, 0.9546rem + 0.1863vw, 1.1875rem);
+//   --space-m: clamp(1.5rem, 1.4394rem + 0.2484vw, 1.75rem);
+//   --space-l: clamp(2rem, 1.9243rem + 0.3106vw, 2.3125rem);
+//   --space-xl: clamp(2.5rem, 2.394rem + 0.4348vw, 2.9375rem);
+//   --space-2xl: clamp(3.5rem, 3.3637rem + 0.559vw, 4.0625rem);
+//   --space-3xl: clamp(5rem, 4.8032rem + 0.8075vw, 5.8125rem);
+
+//   /* One-up pairs */
+//   --space-3xs-2xs: clamp(0.25rem, 0.1743rem + 0.3106vw, 0.5625rem);
+//   --space-2xs-xs: clamp(0.5rem, 0.4092rem + 0.3727vw, 0.875rem);
+//   --space-xs-s: clamp(0.75rem, 0.644rem + 0.4348vw, 1.1875rem);
+//   --space-s-m: clamp(1rem, 0.8183rem + 0.7453vw, 1.75rem);
+//   --space-m-l: clamp(1.5rem, 1.3032rem + 0.8075vw, 2.3125rem);
+//   --space-l-xl: clamp(2rem, 1.7729rem + 0.9317vw, 2.9375rem);
+//   --space-xl-2xl: clamp(2.5rem, 2.1215rem + 1.5528vw, 4.0625rem);
+//   --space-2xl-3xl: clamp(3.5rem, 2.9398rem + 2.2981vw, 5.8125rem);
+
+//   /* Custom pairs */
+//   --space-s-xl: clamp(1rem, 0.5307rem + 1.9255vw, 2.9375rem);
+//   --space-s-2xl: clamp(1rem, 0.2582rem + 3.0435vw, 4.0625rem);
+
+//   /* Custom Spacing @link https://utopia.fyi/clamp/calculator?a=320,2400,14—24 */
+//   --fluid-14-25: clamp(0.875rem, 0.7692rem + 0.5288vw, 1.5625rem);
+
+//   /* @link https://utopia.fyi/clamp/calculator?a=390,1440,4—8|6—8 */
+//   --fluid-4-8: clamp(0.25rem, 0.1571rem + 0.381vw, 0.5rem);
+//   --fluid-4-6: clamp(0.25rem, 0.2097rem + 0.1653vw, 0.375rem);
+//   --fluid-6-8: clamp(0.375rem, 0.3286rem + 0.1905vw, 0.5rem);
+
+//   /* @link https://utopia.fyi/type/calculator?c=390,16,1.2,2000,18.66,1.25,7,2,390-854-1280-1600&s=0.75|0.5|0.25,1.5|2|2.5|3.5|5,s-xl|s-2xl&g=s,xl,xl,12 */
+
+//   --step-n2: clamp(0.6944rem, 0.6819rem + 0.0516vw, 0.7464rem);
+//   --step-n1: clamp(0.8333rem, 0.8092rem + 0.099vw, 0.933rem);
+//   --step-0: clamp(1rem, 0.9597rem + 0.1652vw, 1.1663rem);
+//   --step-1: clamp(1.2rem, 1.1375rem + 0.2562vw, 1.4578rem);
+//   --step-2: clamp(1.44rem, 1.3474rem + 0.3799vw, 1.8223rem);
+//   --step-3: clamp(1.728rem, 1.5948rem + 0.5464vw, 2.2778rem);
+//   --step-4: clamp(2.0736rem, 1.8862rem + 0.7689vw, 2.8473rem);
+//   --step-5: clamp(2.4883rem, 2.2289rem + 1.0641vw, 3.5591rem);
+//   --step-6: clamp(2.986rem, 2.6316rem + 1.4538vw, 4.4489rem);
+//   --step-7: clamp(3.5832rem, 3.1041rem + 1.9656vw, 5.5611rem);
+
+//   /* Border widths */
+
+//   /* @link https://utopia.fyi/space/calculator?c=390,16,1.2,1440,18.66,1.25,5,2,&s=0.75|0.5|0.25,,s-l&g=s,l,xl,12 */
+//   --border-3xs: clamp(0.25rem, 0.2268rem + 0.0952vw, 0.3125rem);
+//   --border-2xs: clamp(0.5rem, 0.4768rem + 0.0952vw, 0.5625rem);
+//   --border-xs: clamp(0.75rem, 0.7036rem + 0.1905vw, 0.875rem);
+//   --border-s: clamp(1rem, 0.9304rem + 0.2857vw, 1.1875rem);
+
+//   /* One-up pairs */
+//   --border-3xs-2xs: clamp(0.25rem, 0.1339rem + 0.4762vw, 0.5625rem);
+//   --border-2xs-xs: clamp(0.5rem, 0.3607rem + 0.5714vw, 0.875rem);
+//   --border-xs-s: clamp(0.75rem, 0.5875rem + 0.6667vw, 1.1875rem);
+// }
