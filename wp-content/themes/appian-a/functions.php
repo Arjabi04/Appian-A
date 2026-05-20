@@ -14,7 +14,6 @@ if ( ! defined( '_S_VERSION' ) ) {
 
 function vite_assets($entry) {
     static $manifest;
-
     if (!$manifest) {
         $manifestPath = __DIR__ . '/public/.vite/manifest.json';
 
