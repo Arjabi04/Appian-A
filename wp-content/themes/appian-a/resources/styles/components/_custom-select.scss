@@ -1,0 +1,78 @@
+.custom-select {
+  position: relative;
+
+  select {
+    display: none;
+  }
+}
+
+.select-selected {
+  border: 1.3px solid black;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  padding: 1rem 1.6rem;
+  font-size: 1.2rem;
+  line-height: 2.4;
+  color: black;
+  cursor: pointer;
+  user-select: none;
+  background-color: $white;
+
+  &::after {
+    content: "\e92f";
+    position: absolute;
+    right: 2.1rem;
+    font-family: "#{$icomoon-font-family}";
+    font-size: 1.55rem;
+    color: black;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease;
+  }
+
+  &.select-selected--is-active {
+    box-shadow: none;
+
+    &::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+
+  &--is-active {
+    position: relative;
+    z-index: 100;
+  }
+}
+
+.select-items {
+  border: none;
+  border: 1px solid black;
+  background-color: $white;
+  position: absolute;
+  top: calc(100% + -0.3rem);
+  left: 0;
+  right: 0;
+  padding: 2rem 0 3.6rem;
+  z-index: 99;
+  border-radius: 0;
+
+  > div {
+    background-color: transparent;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: black;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  &--is-hide {
+    display: none;
+  }
+}
