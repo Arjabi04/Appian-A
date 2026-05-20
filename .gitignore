@@ -4,6 +4,8 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+local-xdebuginfo.php
+
 
 # Runtime data
 pids
@@ -40,9 +42,9 @@ vendor
 !wp-content/mu-plugins/vendor/
 !wp-content/plugins/**/vendor/
 jspm_packages/
-wp-content/themes/bottom-line/vendor
-wp-content/themes/bottom-line/public
-wp-content/mu-plugins/local-by-flywheel-live-link-helper.php
+wp-content/themes/**/vendor
+wp-content/themes/**/public
+
 # Typescript v1 declaration files
 typings/
 
@@ -63,7 +65,7 @@ typings/
 .yarn-integrity
 
 # config ignore if not needed
-wp-config.php
+#wp-config.php
 
 # dotenv environment variables file
 .env
@@ -77,8 +79,6 @@ wp-config.php
 .idea
 wp-content/uploads
 wp-content/upgrade
-wp-content/cache
-wp-content/languages
 .htaccess
 .history
 
@@ -86,9 +86,8 @@ wp-content/wflogs/*
 wp-config-local.php
 .history/
 
-
 # large/disallowed file types
 *.exe
 
-local-xdebuginfo.php
-build-timestamp.php
+# symlink of db.php of query-monitor plugin
+wp-content/db.php
