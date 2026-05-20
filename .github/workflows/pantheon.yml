@@ -3,11 +3,8 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 env:
-  pantheon_env: 'dev'
+  pantheon_env: "dev"
   pantheon_repo: ${{ secrets.PANTHEON_REPO }}
   pantheon_site_name: ${{ secrets.TERMINUS_SITE }}
 jobs:
@@ -20,11 +17,11 @@ jobs:
       - name: Installing PHP
         uses: shivammathur/setup-php@master
         with:
-          php-version: '8.3'
+          php-version: "8.3"
       - name: Setup node version
         uses: actions/setup-node@v3
         with:
-          node-version: '22.13.0'
+          node-version: "22.13.0"
       - name: Cache node modules
         uses: actions/cache@v4
         env:
@@ -60,7 +57,7 @@ jobs:
       - name: Deploy to Pantheon for branch
         if: github.event_name == 'push' && success()
         run: |
-          cd wp-content/themes/outside-traineeship-boilerplate  && yarn install && yarn build
+          cd wp-content/themes/appian-a  && yarn install && yarn build
           cd ../../../
           ./vendor/bin/terminus auth:login --machine-token="${{ secrets.PANTHEON_MACHINE_TOKEN }}"
           commit_message=$(git log -1 --pretty=%B)
@@ -70,12 +67,9 @@ jobs:
       - name: multi-dev to Pantheon for PR
         if: github.event_name == 'pull_request' && success()
         run: |
-          cd wp-content/themes/outside-traineeship-boilerplate && yarn install && yarn build
+          cd wp-content/themes/appian-a && yarn install && yarn build
           cd ../../../
           git fetch --unshallow origin
           ./vendor/bin/terminus auth:login --machine-token="${{ secrets.PANTHEON_MACHINE_TOKEN }}"
           export PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           ./vendor/bin/terminus build:env:create -n "${{ secrets.TERMINUS_SITE }}".dev pr-$PULL_NUMBER
-
-
-
