@@ -73,6 +73,30 @@
 // Include bootstrap remainder of variables
 @import "bootstrap/scss/maps";
 
+:root {
+  --primary-red: #{$primary-red};
+  --dark-red: #{$dark-red};
+  --darkest-red: #{$darkest-red};
+  --light-red: #{$light-red};
+  --ultra-light-red: #{$ultra-light-red};
+  --secondary-dark: #{$secondary-dark};
+  --dark: #{$dark};
+  --light: #{$light};
+  --ultra-light: #{$ultra-light};
+  --neutral-600: #{$neutral-600};
+  --neutral-500: #{$neutral-500};
+  --neutral-400: #{$neutral-400};
+  --neutral-300: #{$neutral-300};
+  --neutral-200: #{$neutral-200};
+  --neutral-100: #{$neutral-100};
+  --neutral-75: #{$neutral-75};
+
+  --overlay-68: rgba(0, 0, 0, 0.68);
+  --overlay-50: rgba(0, 0, 0, 0.5);
+  --overlay-30: rgba(0, 0, 0, 0.3);
+  --overlay-20: rgba(0, 0, 0, 0.2);
+}
+
 // 2. Tools : Include remainder of required parts Tools
 @import "bootstrap/scss/mixins";
 @import "tools/mixins";
@@ -84,7 +108,7 @@
 // Root scss
 @import "bootstrap/scss/reboot";
 // Normalize Scss
-// @import 'generic/fonts';
+@import "generic/fonts";
 @import "generic/icons/icons";
 
 // 4. Elements
@@ -154,7 +178,23 @@ $utilities: map-merge(
             "dirty-purple": $dirty-purple,
             "gray": $gray-600,
             "gray-dark": $gray-800,
-            "headline": $midnight-blue
+            "headline": $midnight-blue,
+            "primary-red": var(--primary-red),
+            "dark-red": var(--dark-red),
+            "darkest-red": var(--darkest-red),
+            "light-red": var(--light-red),
+            "ultra-light-red": var(--ultra-light-red),
+            "secondary-dark": var(--secondary-dark),
+            "dark": var(--dark),
+            "light": var(--light),
+            "ultra-light": var(--ultra-light),
+            "neutral-600": var(--neutral-600),
+            "neutral-500": var(--neutral-500),
+            "neutral-400": var(--neutral-400),
+            "neutral-300": var(--neutral-300),
+            "neutral-200": var(--neutral-200),
+            "neutral-100": var(--neutral-100),
+            "neutral-75": var(--neutral-75)
           )
         )
     ),
@@ -181,7 +221,26 @@ $utilities: map-merge(
             "grey": $gray-100,
             "subtle": $gray-50,
             "accent": $primary,
-            "dark": $midnight-blue
+            "primary-red": var(--primary-red),
+            "dark-red": var(--dark-red),
+            "darkest-red": var(--darkest-red),
+            "light-red": var(--light-red),
+            "ultra-light-red": var(--ultra-light-red),
+            "secondary-dark": var(--secondary-dark),
+            "dark": var(--dark),
+            "light": var(--light),
+            "ultra-light": var(--ultra-light),
+            "neutral-600": var(--neutral-600),
+            "neutral-500": var(--neutral-500),
+            "neutral-400": var(--neutral-400),
+            "neutral-300": var(--neutral-300),
+            "neutral-200": var(--neutral-200),
+            "neutral-100": var(--neutral-100),
+            "neutral-75": var(--neutral-75),
+            "overlay-68": var(--overlay-68),
+            "overlay-50": var(--overlay-50),
+            "overlay-30": var(--overlay-30),
+            "overlay-20": var(--overlay-20)
           )
         )
     ),

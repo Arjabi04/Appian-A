@@ -62,6 +62,29 @@ $faded-orange: #ff814a !default;
 $light-rose: #fdc8d5 !default;
 $dirty-purple: #6d3877 !default;
 
+// Figma "sans" brand colors
+$primary-red: #d72027 !default;
+$dark-red: #ad1a1f !default;
+$darkest-red: #811317 !default;
+$light-red: #f3babc !default;
+$ultra-light-red: #fbe9e9 !default;
+$secondary-dark: #101922 !default;
+$dark: #0c131a !default;
+$light: #dbddde !default;
+$ultra-light: #e7e8e9 !default;
+$neutral-600: #111111 !default;
+$neutral-500: #1c1c1c !default;
+$neutral-400: #292929 !default;
+$neutral-300: #393939 !default;
+$neutral-200: #7c7c7c !default;
+$neutral-100: #dedede !default;
+$neutral-75: #e9e9e9 !default;
+
+// Figma "sans" button semantic tokens
+$btn-hover-dark: $neutral-500 !default;    // #1c1c1c — primary hover bg
+$btn-disabled: $neutral-200 !default;      // #7c7c7c — disabled bg/border
+$btn-tertiary-hover: $neutral-600 !default; // #111111 — tertiary hover text
+
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -628,9 +651,9 @@ $aspect-ratios: (
 
 // scss-docs-start font-variables
 // stylelint-disable value-keyword-case
-$font-family-sans-serif: "Plus Jakarta Sans", sans-serif !default;
+$font-family-sans-serif: "General Sans", sans-serif !default;
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
-$font-family-heading: "Plus Jakarta Sans", sans-serif !default;
+$font-family-heading: "Reckless Neue", Georgia, serif !default;
 // stylelint-enable value-keyword-case
 $font-family-base: var(--#{$prefix}font-sans-serif) !default;
 $font-family-code: var(--#{$prefix}font-monospace) !default;

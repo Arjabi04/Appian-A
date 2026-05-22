@@ -21,3 +21,22 @@ function theme_vite_manifest() {
 
     return $manifest;
 }
+
+/**
+ * Add type="module" to scripts loaded by Vite or custom block modules.
+ */
+add_filter('script_loader_tag', function ($tag, $handle, $src) {
+    $module_handles = [
+        'vite-client',
+        'theme-app',
+        'theme-editor',
+        'theme-editor-js',
+    ];
+
+    if (in_array($handle, $module_handles) || (strlen($handle) > 7 && substr($handle, -7) === '-module')) {
+        if (strpos($tag, 'type="module"') === false) {
+            $tag = str_replace('<script ', '<script type="module" ', $tag);
+        }
+    }
+    return $tag;
+}, 10, 3);
