@@ -6,19 +6,13 @@ class Styleguide {
         this.container = document.querySelector('.m-styleguide');
         if (!this.container) return;
 
-        this.sidebar = this.container.querySelector('.m-styleguide__sidebar');
-        this.main = this.container.querySelector('.m-styleguide__main');
         this.toast = this.container.querySelector('.m-styleguide__toast');
-        this.navLinks = this.container.querySelectorAll('.m-styleguide__nav-link');
-        this.sections = this.container.querySelectorAll('.m-styleguide__section');
         this.swatches = this.container.querySelectorAll('.m-styleguide__swatch');
         this.iconCards = this.container.querySelectorAll('.m-styleguide__icon-card');
         this.typoToggles = this.container.querySelectorAll('.m-styleguide__typo-toggle');
-        this.mobileToggle = this.container.querySelector('.m-styleguide__mobile-toggle');
         this.form = this.container.querySelector('.m-styleguide__form-el');
 
         this.toastTimeout = null;
-        this.activeLink = null;
 
         this.copyCodeBtns = this.container.querySelectorAll('[data-copy-code]');
 
@@ -26,70 +20,11 @@ class Styleguide {
     }
 
     init() {
-        this.bindSmoothScroll();
         this.bindSwatchCopy();
         this.bindIconCopy();
         this.bindTypoToggle();
-        this.bindMobileToggle();
         this.bindCodeCopy();
-        this.initScrollSpy();
         this.bindFormValidation();
-    }
-
-    // =========================================================================
-    // Smooth scroll for sidebar nav links
-    // =========================================================================
-    bindSmoothScroll() {
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const target = document.getElementById(targetId);
-                if (!target) return;
-
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-                // Close mobile sidebar if open
-                if (this.sidebar && this.sidebar.classList.contains('is-open')) {
-                    this.sidebar.classList.remove('is-open');
-                }
-            });
-        });
-    }
-
-    // =========================================================================
-    // Scroll spy using IntersectionObserver
-    // =========================================================================
-    initScrollSpy() {
-        if (!this.sections.length || !this.navLinks.length) return;
-
-        const options = {
-            root: null,
-            rootMargin: '-20% 0px -60% 0px',
-            threshold: 0,
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    this.setActiveNavLink(id);
-                }
-            });
-        }, options);
-
-        this.sections.forEach(section => observer.observe(section));
-    }
-
-    setActiveNavLink(sectionId) {
-        this.navLinks.forEach(link => {
-            const href = link.getAttribute('href').substring(1);
-            if (href === sectionId) {
-                link.classList.add('is-active');
-            } else {
-                link.classList.remove('is-active');
-            }
-        });
     }
 
     // =========================================================================
@@ -113,16 +48,8 @@ class Styleguide {
         this.iconCards.forEach(card => {
             card.addEventListener('click', () => {
                 const iconClass = card.getAttribute('data-icon-class') || '';
-                const iEl = card.querySelector('.m-styleguide__icon-svg i');
-                if (iEl) {
-                    const markup = `<i class="${iconClass}"></i>`;
-                    this.copyToClipboard(markup, `Copied: ${iconClass}`);
-                } else {
-                    const svgEl = card.querySelector('.m-styleguide__icon-svg svg');
-                    if (svgEl) {
-                        this.copyToClipboard(svgEl.outerHTML, `Copied: ${iconClass}`);
-                    }
-                }
+                const phpReference = `<?php echo appian_get_svg_icon( '${iconClass}' ); ?>`;
+                this.copyToClipboard(phpReference, `Copied PHP tag for ${iconClass}`);
             });
         });
     }
@@ -148,28 +75,6 @@ class Styleguide {
     }
 
     // =========================================================================
-    // Mobile sidebar toggle
-    // =========================================================================
-    bindMobileToggle() {
-        if (!this.mobileToggle || !this.sidebar) return;
-
-        this.mobileToggle.addEventListener('click', () => {
-            this.sidebar.classList.toggle('is-open');
-        });
-
-        // Close sidebar on click outside
-        document.addEventListener('click', (e) => {
-            if (
-                this.sidebar.classList.contains('is-open') &&
-                !this.sidebar.contains(e.target) &&
-                !this.mobileToggle.contains(e.target)
-            ) {
-                this.sidebar.classList.remove('is-open');
-            }
-        });
-    }
-
-    // =========================================================================
     // Code block click-to-copy
     // =========================================================================
     bindCodeCopy() {
@@ -184,37 +89,28 @@ class Styleguide {
         });
     }
 
-    // Accordion toggling is handled natively by Bootstrap 5 collapse component.
-
     // =========================================================================
     // Clipboard utility
     // =========================================================================
     copyToClipboard(text, message) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => {
-                this.showToast(message || `Copied: ${text}`);
-            }).catch(() => {
-                this.fallbackCopy(text, message);
-            });
+        const done = () => this.showToast(message || `Copied: ${text}`);
+        if (navigator.clipboard?.writeText) {
+            navigator.clipboard.writeText(text).then(done).catch(() => this.fallbackCopy(text, done));
         } else {
-            this.fallbackCopy(text, message);
+            this.fallbackCopy(text, done);
         }
     }
 
-    fallbackCopy(text, message) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            document.execCommand('copy');
-            this.showToast(message || `Copied: ${text}`);
-        } catch (err) {
-            console.error('Copy failed:', err);
-        }
-        document.body.removeChild(textarea);
+    fallbackCopy(text, done) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.style.position = 'fixed';
+        el.style.opacity = '0';
+        document.body.appendChild(el);
+        el.select();
+        try { document.execCommand('copy'); } catch (e) { console.error('Copy failed:', e); }
+        document.body.removeChild(el);
+        done();
     }
 
     // =========================================================================
@@ -242,55 +138,27 @@ class Styleguide {
 
         const validateField = (input) => {
             const group = input.closest('.m-styleguide__input-group');
-            if (!group) return false;
-
-            const isRequired = input.hasAttribute('required');
-            const isEmpty = !input.value.trim();
-
-            if (isRequired && isEmpty) {
-                group.classList.add('m-styleguide__input-group--error');
-                return true;
-            } else {
-                group.classList.remove('m-styleguide__input-group--error');
-                return false;
-            }
+            const hasError = input.hasAttribute('required') && !input.value.trim();
+            group?.classList.toggle('m-styleguide__input-group--error', hasError);
+            return hasError;
         };
 
-        // Handle typing/changing input to update error status in real time
         inputs.forEach(input => {
-            const handleUpdate = () => {
-                if (this.formSubmitted) {
-                    validateField(input);
-                }
-            };
-            input.addEventListener('input', handleUpdate);
-            input.addEventListener('change', handleUpdate);
-            input.addEventListener('blur', handleUpdate);
+            ['input', 'change', 'blur'].forEach(evt => {
+                input.addEventListener(evt, () => this.formSubmitted && validateField(input));
+            });
         });
 
-        // Handle form submission
         this.form.addEventListener('submit', (e) => {
             e.preventDefault();
             this.formSubmitted = true;
-            let hasErrors = false;
-
-            inputs.forEach(input => {
-                if (validateField(input)) {
-                    hasErrors = true;
-                }
-            });
+            const hasErrors = [...inputs].reduce((err, input) => validateField(input) || err, false);
 
             if (!hasErrors) {
                 this.showToast('Form submitted successfully!');
                 this.form.reset();
                 this.formSubmitted = false;
-                // Remove all error classes after reset
-                inputs.forEach(input => {
-                    const group = input.closest('.m-styleguide__input-group');
-                    if (group) {
-                        group.classList.remove('m-styleguide__input-group--error');
-                    }
-                });
+                inputs.forEach(input => input.closest('.m-styleguide__input-group')?.classList.remove('m-styleguide__input-group--error'));
             } else {
                 this.showToast('Please fill out all required fields.');
             }

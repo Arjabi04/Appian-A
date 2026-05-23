@@ -34,17 +34,6 @@ if ( ! empty( $block['align'] ) ) {
     $classes .= ' align' . $block['align'];
 }
 
-// Section definitions for sidebar navigation
-$sections = [
-    'sg-colors'       => 'Colors',
-    'sg-typography'   => 'Typography',
-    'sg-buttons'      => 'Buttons',
-    'sg-icons'        => 'Icons',
-    'sg-components'   => 'Components',
-    'sg-forms'        => 'Forms',
-    'sg-layout-grid'  => 'Layout / Grid',
-    'sg-logo'         => 'Logo &amp; Favicon',
-];
 
 // Brand colors with their SCSS variable names and hex values (from Figma "sans")
 $brand_colors = [
@@ -124,25 +113,6 @@ $icons = appian_get_svg_icons();
 ?>
 
 <div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $classes ); ?>">
-
-    <!-- Sidebar Navigation -->
-    <aside class="m-styleguide__sidebar">
-        <div class="m-styleguide__sidebar-inner">
-            <span class="m-styleguide__sidebar-title">Design System</span>
-            <nav class="m-styleguide__nav">
-                <?php foreach ( $sections as $section_id => $section_label ) : ?>
-                    <a href="#<?php echo esc_attr( $section_id ); ?>" class="m-styleguide__nav-link">
-                        <?php echo esc_html( $section_label ); ?>
-                    </a>
-                <?php endforeach; ?>
-            </nav>
-        </div>
-    </aside>
-
-    <!-- Mobile Navigation Toggle -->
-    <button type="button" class="m-styleguide__mobile-toggle" aria-label="Toggle navigation">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-miterlimit="5.75877" stroke-linecap="square"/></svg>
-    </button>
 
     <!-- Main Content Area -->
     <main class="m-styleguide__main">
@@ -303,10 +273,10 @@ background-color: var(--dark-red);'
 
             <?php
             // Arrow SVG used across buttons
-            $arrow_right = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M12 19L19 12L12 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="5.75877" stroke-linecap="square"/></svg>';
+            $arrow_right = appian_get_svg_icon( 'arrow-right' );
 
             // Tertiary button underline (the "line" that sits beneath tertiary buttons)
-            $tertiary_line = '<span class="m-styleguide__btn-line"><svg width="100%" height="2" preserveAspectRatio="none" viewBox="0 0 1 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 1H1" stroke="currentColor" stroke-width="2"/></svg></span>';
+            $tertiary_line = '<span class="m-styleguide__btn-line">' . appian_get_svg_icon( 'tertiary-underline' ) . '</span>';
             ?>
 
             <?php
@@ -335,9 +305,9 @@ background-color: var(--dark-red);'
                         ['Disabled', ' m-styleguide__btn--disabled'],
                     ];
 
-                    // Code snippet — use <i> tag for the arrow, not raw SVG
-                    $arrow_i = '<i class="icon-arrow-right"></i>';
-                    $code_snippet = '<a href="#" class="' . $classes . '">' . 'Label' . ( $has_arrow ? ' ' . $arrow_i : '' ) . '</a>';
+                    // Code snippet — use appian_get_svg_icon for the arrow
+                    $arrow_php = "<?php echo appian_get_svg_icon( 'arrow-right' ); ?>";
+                    $code_snippet = '<a href="#" class="' . $classes . '">' . 'Label' . ( $has_arrow ? ' ' . $arrow_php : '' ) . '</a>';
                 ?>
                     <div class="m-styleguide__btn-group-row">
                         <div class="m-styleguide__btn-info">
@@ -380,8 +350,7 @@ background-color: var(--dark-red);'
         <section id="sg-icons" class="m-styleguide__section">
             <div class="m-styleguide__section-header">
                 <h2 class="m-styleguide__section-heading">Icons</h2>
-                <p class="m-styleguide__section-desc">Inline SVG icons from the design system. Click any icon to copy its raw SVG markup. Reference them in PHP using:</p>
-                <?php sg_code_block( '<?php echo appian_get_svg_icon( \'icon-name\' ); ?>' ); ?>
+                <p class="m-styleguide__section-desc">Inline SVG icons from the design system. Click any icon card to copy its PHP reference snippet.</p>
             </div>
 
             <?php
@@ -413,59 +382,6 @@ background-color: var(--dark-red);'
         <!-- ============================================
              10. COMPONENTS
              ============================================ -->
-        <section id="sg-components" class="m-styleguide__section">
-            <div class="m-styleguide__section-header">
-                <h2 class="m-styleguide__section-heading">Components</h2>
-                <p class="m-styleguide__section-desc">Reusable component patterns.</p>
-            </div>
-
-            <!-- Accordion (Bootstrap 5) -->
-            <h3 class="m-styleguide__subsection-title">Accordion</h3>
-            <div class="m-styleguide__component-demo m-styleguide__component-demo--accordion">
-                <?php
-                $accordion_id    = 'sgAccordion';
-                $accordion_toggle = appian_accordion_toggle_icon();
-                $accordion_items = [
-                    [
-                        'heading' => 'What is a design system?',
-                        'body'    => 'A design system is a collection of reusable components, tokens, and guidelines that help maintain visual consistency across products.',
-                    ],
-                    [
-                        'heading' => 'How do I use these tokens?',
-                        'body'    => 'Reference the SCSS variables directly in your stylesheets. For example, use <code>$primary-red</code> for the brand primary or <code>$neutral-400</code> for headline text.',
-                    ],
-                ];
-                ?>
-                <div class="m-styleguide__accordion" id="<?php echo esc_attr( $accordion_id ); ?>">
-                    <?php foreach ( $accordion_items as $index => $item ) :
-                        $item_id = $accordion_id . '-' . $index;
-                    ?>
-                        <details class="m-styleguide__accordion-item">
-                            <summary class="m-styleguide__accordion-button">
-                                <span><?php echo esc_html( $item['heading'] ); ?></span>
-                                <?php echo $accordion_toggle; ?>
-                            </summary>
-                            <div class="m-styleguide__accordion-body">
-                                <p><?php echo $item['body']; ?></p>
-                            </div>
-                        </details>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <?php sg_code_block(
-'<details class="accordion-item">
-  <summary class="accordion-button">
-    <span>Accordion heading</span>
-    <?php echo appian_accordion_toggle_icon(); ?>
-  </summary>
-  <div class="accordion-body">
-    <p>Accordion body content.</p>
-  </div>
-</details>'
-            ); ?>
-
-        </section>
         <!-- ============================================
              10a. FORMS
              ============================================ -->
@@ -696,42 +612,22 @@ HTML
             <h3 class="m-styleguide__subsection-title">Logo</h3>
             <div class="m-styleguide__demo-block">
                 <div class="m-styleguide__demo-preview p-4 bg-white">
-                    <svg width="120" height="47" viewBox="0 0 120 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M68.8889 14.476C68.2898 15.1234 68.1517 15.9559 68.1517 16.8345V35.2415H74.3725V8.69489L68.8889 14.476Z" fill="#D72027"/>
-                        <path d="M68.1117 0V9.80465L74.3324 3.19113V0H68.1117Z" fill="#D72027"/>
-                        <path d="M64.9721 12.2104C64.8339 6.61435 62.8064 4.44067 57.3689 4.44067C54.8344 4.44067 45.4801 4.44067 45.4801 4.44067V46.2029H51.5628V35.1958C52.5765 35.1958 55.3414 35.1958 57.3689 35.1958C62.8064 35.1958 64.8339 32.9297 64.9721 27.3336C64.9721 27.195 64.9721 12.3492 64.9721 12.2104ZM55.1571 29.9699C52.7147 29.9699 51.5628 29.9699 51.5628 27.8424V11.7017C51.5628 9.57426 52.7147 9.57426 55.1571 9.57426C57.4611 9.57426 58.7513 9.57426 58.7513 11.7017V27.8424C58.7513 29.9699 57.4611 29.9235 55.1571 29.9699Z" fill="#D72027"/>
-                        <path d="M42.2549 12.2104C42.1166 6.61435 40.0892 4.44067 34.6516 4.44067C32.1173 4.44067 22.763 4.44067 22.763 4.44067V46.2029H28.7994V35.1958C29.8133 35.1958 32.578 35.1958 34.6055 35.1958C40.043 35.1958 42.0705 32.9297 42.2088 27.3336C42.2549 27.195 42.2549 12.3492 42.2549 12.2104ZM32.4398 29.9699C29.9975 29.9699 28.8455 29.9699 28.8455 27.8424V11.7017C28.8455 9.57426 29.9975 9.57426 32.4398 9.57426C34.7438 9.57426 36.0341 9.57426 36.0341 11.7017V27.8424C36.0341 29.9699 34.7438 29.9235 32.4398 29.9699Z" fill="#D72027"/>
-                        <path d="M113.59 11.7479C113.59 9.62045 112.3 9.62045 109.995 9.62045C107.554 9.62045 106.402 9.62045 106.402 11.7479V35.1958H100.227V4.44067C100.227 4.44067 109.719 4.44067 112.208 4.44067C117.645 4.44067 119.672 6.70685 119.811 12.3029C119.811 12.4417 119.811 35.2421 119.811 35.2421H113.59V11.7479Z" fill="#D72027"/>
-                        <path d="M97.0427 12.2541C96.9037 6.65807 94.7843 4.39191 89.3469 4.39191C89.0703 4.39191 83.3103 4.39191 81.2827 4.39191V9.61799C87.181 9.61799 86.8585 9.61799 87.1349 9.61799C89.4389 9.61799 90.7292 9.61799 90.7292 11.7454V14.7978C89.6233 14.7978 86.9968 14.7516 85.0614 14.7516C79.6239 14.7516 77.5964 17.0177 77.4581 22.6138C77.4581 22.7526 77.4581 27.2848 77.4581 27.4236C77.5964 33.0196 79.6239 35.2396 85.0614 35.2396C87.5957 35.2396 97.0427 35.2396 97.0427 35.2396V12.2541ZM90.9136 27.8862C90.9136 30.0135 89.7616 30.0135 87.3193 30.0135C85.0153 30.0135 83.725 30.0135 83.725 27.8862V22.0589C83.725 19.9314 85.0153 19.9314 87.3193 19.9314C89.7616 19.9314 90.9136 19.9314 90.9136 22.0589V27.8862Z" fill="#D72027"/>
-                        <path d="M19.5841 12.2541C19.446 6.65807 17.3262 4.39191 11.8888 4.39191C11.6123 4.39191 5.85221 4.39191 3.82466 4.39191V9.61799C9.72294 9.61799 9.40043 9.61799 9.67692 9.61799C11.9809 9.61799 13.2712 9.61799 13.2712 11.7454V14.7978C12.2113 14.7978 9.58475 14.7516 7.60326 14.7516C2.16578 14.7516 0.138244 16.9716 0 22.6138C0 22.7526 0 27.2848 0 27.4236C0.138244 32.696 1.93538 34.962 6.72773 35.2396L11.6583 30.0135C11.1515 30.0598 10.5524 30.0598 9.81511 30.0598C7.51109 30.0598 6.22084 30.0598 6.22084 27.9323V22.0589C6.22084 19.9314 7.51109 19.9314 9.81511 19.9314C12.2574 19.9314 13.4094 19.9314 13.4094 22.0589V35.1933C13.6398 35.1933 19.5841 35.1933 19.5841 35.1933V12.2541Z" fill="#D72027"/>
-                    </svg>
+                    <?php echo appian_get_svg_icon( 'logo' ); ?>
                 </div>
                 <div class="m-styleguide__demo-preview p-4 bg-neutral-500">
-                    <svg width="120" height="47" viewBox="0 0 120 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M68.8889 14.476C68.2898 15.1234 68.1517 15.9559 68.1517 16.8345V35.2415H74.3725V8.69489L68.8889 14.476Z" fill="#D72027"/>
-                        <path d="M68.1117 0V9.80465L74.3324 3.19113V0H68.1117Z" fill="#D72027"/>
-                        <path d="M64.9721 12.2104C64.8339 6.61435 62.8064 4.44067 57.3689 4.44067C54.8344 4.44067 45.4801 4.44067 45.4801 4.44067V46.2029H51.5628V35.1958C52.5765 35.1958 55.3414 35.1958 57.3689 35.1958C62.8064 35.1958 64.8339 32.9297 64.9721 27.3336C64.9721 27.195 64.9721 12.3492 64.9721 12.2104ZM55.1571 29.9699C52.7147 29.9699 51.5628 29.9699 51.5628 27.8424V11.7017C51.5628 9.57426 52.7147 9.57426 55.1571 9.57426C57.4611 9.57426 58.7513 9.57426 58.7513 11.7017V27.8424C58.7513 29.9699 57.4611 29.9235 55.1571 29.9699Z" fill="#D72027"/>
-                        <path d="M42.2549 12.2104C42.1166 6.61435 40.0892 4.44067 34.6516 4.44067C32.1173 4.44067 22.763 4.44067 22.763 4.44067V46.2029H28.7994V35.1958C29.8133 35.1958 32.578 35.1958 34.6055 35.1958C40.043 35.1958 42.0705 32.9297 42.2088 27.3336C42.2549 27.195 42.2549 12.3492 42.2549 12.2104ZM32.4398 29.9699C29.9975 29.9699 28.8455 29.9699 28.8455 27.8424V11.7017C28.8455 9.57426 29.9975 9.57426 32.4398 9.57426C34.7438 9.57426 36.0341 9.57426 36.0341 11.7017V27.8424C36.0341 29.9699 34.7438 29.9235 32.4398 29.9699Z" fill="#D72027"/>
-                        <path d="M113.59 11.7479C113.59 9.62045 112.3 9.62045 109.995 9.62045C107.554 9.62045 106.402 9.62045 106.402 11.7479V35.1958H100.227V4.44067C100.227 4.44067 109.719 4.44067 112.208 4.44067C117.645 4.44067 119.672 6.70685 119.811 12.3029C119.811 12.4417 119.811 35.2421 119.811 35.2421H113.59V11.7479Z" fill="#D72027"/>
-                        <path d="M97.0427 12.2541C96.9037 6.65807 94.7843 4.39191 89.3469 4.39191C89.0703 4.39191 83.3103 4.39191 81.2827 4.39191V9.61799C87.181 9.61799 86.8585 9.61799 87.1349 9.61799C89.4389 9.61799 90.7292 9.61799 90.7292 11.7454V14.7978C89.6233 14.7978 86.9968 14.7516 85.0614 14.7516C79.6239 14.7516 77.5964 17.0177 77.4581 22.6138C77.4581 22.7526 77.4581 27.2848 77.4581 27.4236C77.5964 33.0196 79.6239 35.2396 85.0614 35.2396C87.5957 35.2396 97.0427 35.2396 97.0427 35.2396V12.2541ZM90.9136 27.8862C90.9136 30.0135 89.7616 30.0135 87.3193 30.0135C85.0153 30.0135 83.725 30.0135 83.725 27.8862V22.0589C83.725 19.9314 85.0153 19.9314 87.3193 19.9314C89.7616 19.9314 90.9136 19.9314 90.9136 22.0589V27.8862Z" fill="#D72027"/>
-                        <path d="M19.5841 12.2541C19.446 6.65807 17.3262 4.39191 11.8888 4.39191C11.6123 4.39191 5.85221 4.39191 3.82466 4.39191V9.61799C9.72294 9.61799 9.40043 9.61799 9.67692 9.61799C11.9809 9.61799 13.2712 9.61799 13.2712 11.7454V14.7978C12.2113 14.7978 9.58475 14.7516 7.60326 14.7516C2.16578 14.7516 0.138244 16.9716 0 22.6138C0 22.7526 0 27.2848 0 27.4236C0.138244 32.696 1.93538 34.962 6.72773 35.2396L11.6583 30.0135C11.1515 30.0598 10.5524 30.0598 9.81511 30.0598C7.51109 30.0598 6.22084 30.0598 6.22084 27.9323V22.0589C6.22084 19.9314 7.51109 19.9314 9.81511 19.9314C12.2574 19.9314 13.4094 19.9314 13.4094 22.0589V35.1933C13.6398 35.1933 19.5841 35.1933 19.5841 35.1933V12.2541Z" fill="#D72027"/>
-                    </svg>
+                    <?php echo appian_get_svg_icon( 'logo' ); ?>
                 </div>
             </div>
 
             <h3 class="m-styleguide__subsection-title">Favicon</h3>
             <div class="m-styleguide__demo-block">
                 <div class="m-styleguide__demo-preview p-4 gap-4">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M40 17.724C39.932 14.9134 38.9333 13.8216 36.2553 13.8216C35.007 13.8216 30.3998 13.8216 30.3998 13.8216V34.7971H33.3957V29.2687C33.895 29.2687 35.2567 29.2687 36.2553 29.2687C38.9333 29.2687 39.932 28.1305 40 25.3198C40 25.2502 40 17.7937 40 17.724ZM35.1659 26.6439C33.963 26.6439 33.3957 26.6439 33.3957 25.5754V17.4685C33.3957 16.4 33.963 16.4 35.1659 16.4C36.3007 16.4 36.9361 16.4 36.9361 17.4685V25.5754C36.9361 26.6439 36.3007 26.6206 35.1659 26.6439Z" fill="#D72027"/>
-                        <path d="M28.8114 17.724C28.7432 14.9134 27.7447 13.8216 25.0666 13.8216C23.8184 13.8216 19.2112 13.8216 19.2112 13.8216V34.7971H22.1843V29.2687C22.6836 29.2687 24.0453 29.2687 25.0439 29.2687C27.7219 29.2687 28.7205 28.1305 28.7887 25.3198C28.8114 25.2502 28.8114 17.7937 28.8114 17.724ZM23.9772 26.6439C22.7743 26.6439 22.207 26.6439 22.207 25.5754V17.4685C22.207 16.4 22.7743 16.4 23.9772 16.4C25.112 16.4 25.7475 16.4 25.7475 17.4685V25.5754C25.7475 26.6439 25.112 26.6206 23.9772 26.6439Z" fill="#D72027"/>
-                        <path d="M17.6456 17.746C17.5775 14.9353 16.5335 13.7971 13.8554 13.7971C13.7193 13.7971 10.8823 13.7971 9.88372 13.7971V16.422C12.7887 16.422 12.6299 16.422 12.7661 16.422C13.9008 16.422 14.5363 16.422 14.5363 17.4905V19.0236C14.0143 19.0236 12.7207 19.0004 11.7448 19.0004C9.06669 19.0004 8.06809 20.1154 8 22.9492C8 23.0189 8 25.2953 8 25.365C8.06809 28.0131 8.95321 29.1513 11.3135 29.2907L13.7419 26.6658C13.4923 26.689 13.1973 26.689 12.8341 26.689C11.6994 26.689 11.0639 26.689 11.0639 25.6205V22.6705C11.0639 21.602 11.6994 21.602 12.8341 21.602C14.037 21.602 14.6044 21.602 14.6044 22.6705V29.2674C14.7179 29.2674 17.6456 29.2674 17.6456 29.2674V17.746Z" fill="#D72027"/>
-                    </svg>
-                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M40 17.724C39.932 14.9134 38.9333 13.8216 36.2553 13.8216C35.007 13.8216 30.3998 13.8216 30.3998 13.8216V34.7971H33.3957V29.2687C33.895 29.2687 35.2567 29.2687 36.2553 29.2687C38.9333 29.2687 39.932 28.1305 40 25.3198C40 25.2502 40 17.7937 40 17.724ZM35.1659 26.6439C33.963 26.6439 33.3957 26.6439 33.3957 25.5754V17.4685C33.3957 16.4 33.963 16.4 35.1659 16.4C36.3007 16.4 36.9361 16.4 36.9361 17.4685V25.5754C36.9361 26.6439 36.3007 26.6206 35.1659 26.6439Z" fill="#D72027"/>
-                        <path d="M28.8114 17.724C28.7432 14.9134 27.7447 13.8216 25.0666 13.8216C23.8184 13.8216 19.2112 13.8216 19.2112 13.8216V34.7971H22.1843V29.2687C22.6836 29.2687 24.0453 29.2687 25.0439 29.2687C27.7219 29.2687 28.7205 28.1305 28.7887 25.3198C28.8114 25.2502 28.8114 17.7937 28.8114 17.724ZM23.9772 26.6439C22.7743 26.6439 22.207 26.6439 22.207 25.5754V17.4685C22.207 16.4 22.7743 16.4 23.9772 16.4C25.112 16.4 25.7475 16.4 25.7475 17.4685V25.5754C25.7475 26.6439 25.112 26.6206 23.9772 26.6439Z" fill="#D72027"/>
-                        <path d="M17.6456 17.746C17.5775 14.9353 16.5335 13.7971 13.8554 13.7971C13.7193 13.7971 10.8823 13.7971 9.88372 13.7971V16.422C12.7887 16.422 12.6299 16.422 12.7661 16.422C13.9008 16.422 14.5363 16.422 14.5363 17.4905V19.0236C14.0143 19.0236 12.7207 19.0004 11.7448 19.0004C9.06669 19.0004 8.06809 20.1154 8 22.9492C8 23.0189 8 25.2953 8 25.365C8.06809 28.0131 8.95321 29.1513 11.3135 29.2907L13.7419 26.6658C13.4923 26.689 13.1973 26.689 12.8341 26.689C11.6994 26.689 11.0639 26.689 11.0639 25.6205V22.6705C11.0639 21.602 11.6994 21.602 12.8341 21.602C14.037 21.602 14.6044 21.602 14.6044 22.6705V29.2674C14.7179 29.2674 17.6456 29.2674 17.6456 29.2674V17.746Z" fill="#D72027"/>
-                    </svg>
+                    <div class="m-styleguide__favicon-preview-wrap" style="width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center;">
+                        <?php echo appian_get_svg_icon( 'favicon' ); ?>
+                    </div>
+                    <div class="m-styleguide__favicon-preview-wrap" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center;">
+                        <?php echo appian_get_svg_icon( 'favicon' ); ?>
+                    </div>
                 </div>
             </div>
         </section>
@@ -742,5 +638,4 @@ HTML
 
     <!-- Toast Notification -->
     <div class="m-styleguide__toast">Copied!</div>
-
 </div>

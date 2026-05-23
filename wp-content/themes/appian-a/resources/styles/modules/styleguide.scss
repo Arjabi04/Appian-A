@@ -1,243 +1,65 @@
-/* ==========================================================================
-   STYLE GUIDE MODULE
-   BEM: m-styleguide
-   Consumes centralized tokens — no hardcoded values.
-   ========================================================================== */
-
-// Import required token dependencies (standalone entry point)
 @import "bootstrap/scss/functions";
 @import "../settings/bootstrap-variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
 
-// ---------------------------------------------------------------------------
-// Styleguide UI chrome variables (only acceptable local vars)
-// ---------------------------------------------------------------------------
 :root {
-  --sg-sidebar-width: 16.25rem; // 260px
-  --sg-sidebar-bg: #{$gray-100};
-  --sg-sidebar-color: #{$gray-800};
-  --sg-section-header-bg: transparent;
-  --sg-section-header-color: #{$gray-900};
-  --sg-surface: #{$white};
-  --sg-page-bg: #{$white};
   --sg-border: #{$gray-200};
-  --sg-text-primary: #{$gray-900};
   --sg-text-secondary: #{$gray-600};
   --sg-text-muted: #{$gray-400};
   --sg-accent: #{$primary-red};
   --sg-code-bg: #{$gray-100};
-  --sg-shadow: none;
 }
 
-// ---------------------------------------------------------------------------
-// Root layout — CSS Grid with persistent sidebar
-// ---------------------------------------------------------------------------
 .m-styleguide {
-  display: grid;
-  grid-template-columns: var(--sg-sidebar-width) 1fr;
-  min-height: 100vh;
-  background-color: var(--sg-page-bg);
   font-family: $font-family-sans-serif;
-  color: var(--sg-text-primary);
-  position: relative;
 
-  @media (max-width: map-get($grid-breakpoints, lg) - 1) {
-    grid-template-columns: 1fr;
-  }
-
-  // ===========================================================================
-  // SIDEBAR
-  // ===========================================================================
-  &__sidebar {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    background-color: var(--sg-sidebar-bg);
-    color: var(--sg-sidebar-color);
-    border-right: 1px solid var(--sg-border);
-    z-index: 10;
-
-    @media (max-width: map-get($grid-breakpoints, lg) - 1) {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: var(--sg-sidebar-width);
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      border-right: 1px solid var(--sg-border);
-
-      &.is-open {
-        transform: translateX(0);
-      }
-    }
-  }
-
-  &__sidebar-inner {
-    padding: map-get($spacers, 8) map-get($spacers, 6);
-  }
-
-  &__sidebar-title {
-    display: block;
-    font-family: $font-family-heading;
-    font-weight: $font-weight-bold;
-    font-size: 1.25rem;
-    margin-bottom: map-get($spacers, 8);
-    color: var(--sg-sidebar-color);
-    letter-spacing: -0.02em;
-  }
-
-  &__nav {
-    display: flex;
-    flex-direction: column;
-    gap: map-get($spacers, 1);
-  }
-
-  &__nav-link {
-    display: block;
-    padding: map-get($spacers, 2) map-get($spacers, 4);
-    color: var(--sg-text-secondary);
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: $font-weight-medium;
-    border-left: 3px solid transparent;
-    border-radius: 0 $border-radius-sm $border-radius-sm 0;
-    transition: all 0.2s ease;
-
-    &:hover {
-      color: var(--sg-accent);
-      background-color: rgba($black, 0.03);
-    }
-
-    &.is-active {
-      color: var(--sg-accent);
-      border-left-color: var(--sg-accent);
-      font-weight: $font-weight-bold;
-      background-color: rgba($primary-red, 0.05);
-    }
-  }
-
-  // ===========================================================================
-  // MOBILE TOGGLE
-  // ===========================================================================
-  &__mobile-toggle {
-    display: none;
-    position: fixed;
-    top: map-get($spacers, 4);
-    left: map-get($spacers, 4);
-    z-index: 20;
-    background-color: var(--sg-sidebar-bg);
-    color: var(--sg-sidebar-color);
-    border: 1px solid var(--sg-border);
-    border-radius: $border-radius;
-    padding: map-get($spacers, 2) map-get($spacers, 3);
-    cursor: pointer;
-    font-size: 1.25rem;
-
-    @media (max-width: map-get($grid-breakpoints, lg) - 1) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  // ===========================================================================
-  // MAIN CONTENT
-  // ===========================================================================
   &__main {
-    padding: map-get($spacers, 12) map-get($spacers, 16);
-    overflow-y: auto;
-    max-width: 100%;
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: map-get($spacers, 16) map-get($spacers, 6);
 
-    @media (max-width: map-get($grid-breakpoints, lg) - 1) {
-      padding: map-get($spacers, 8) map-get($spacers, 4);
-      padding-top: map-get($spacers, 16);
+    @media (max-width: map-get($grid-breakpoints, md) - 1) {
+      padding: map-get($spacers, 10) map-get($spacers, 4);
     }
   }
 
-  // ===========================================================================
-  // HEADER
-  // ===========================================================================
   &__header {
-    margin-bottom: map-get($spacers, 16);
-    padding-bottom: map-get($spacers, 8);
-    border-bottom: 2px solid var(--sg-border);
+    margin-bottom: map-get($spacers, 12);
+    padding-bottom: map-get($spacers, 6);
+    border-bottom: 1px solid var(--sg-border);
   }
 
   &__title {
     font-family: $font-family-heading;
-    font-size: 3.5rem;
     font-weight: $font-weight-bold;
     color: $neutral-400;
-    margin-bottom: map-get($spacers, 2);
-    letter-spacing: -0.03em;
-
-    @media (max-width: map-get($grid-breakpoints, md)) {
-      font-size: 2.5rem;
-    }
   }
 
-  &__subtitle {
-    font-size: 1.125rem;
-    color: var(--sg-text-secondary);
-    font-weight: $font-weight-normal;
-    margin: 0;
-  }
-
-  // ===========================================================================
-  // SECTION (shared)
-  // ===========================================================================
   &__section {
-    margin-bottom: map-get($spacers, 20);
+    margin-bottom: map-get($spacers, 16);
     scroll-margin-top: map-get($spacers, 4);
   }
 
   &__section-header {
-    background: var(--sg-section-header-bg);
-    color: var(--sg-section-header-color);
-    padding: 0 0 map-get($spacers, 6) 0;
+    padding-bottom: map-get($spacers, 4);
     border-bottom: 1px solid var(--sg-border);
-    margin-bottom: map-get($spacers, 8);
-
-    code {
-      background: var(--sg-code-bg);
-      padding: 0.125rem 0.375rem;
-      border-radius: $border-radius-sm;
-      font-size: 0.875em;
-    }
+    margin-bottom: map-get($spacers, 6);
   }
 
   &__section-heading {
     font-family: $font-family-heading;
-    font-size: 2rem;
     font-weight: $font-weight-bold;
-    margin-bottom: map-get($spacers, 2);
-    color: inherit;
-  }
-
-  &__section-desc {
-    font-size: 1rem;
-    color: var(--sg-text-secondary);
-    margin: 0;
-    line-height: 1.6;
   }
 
   &__subsection-title {
-    font-family: $font-family-heading;
-    font-size: 1.25rem;
     font-weight: $font-weight-semibold;
-    color: var(--sg-text-primary);
-    margin-bottom: map-get($spacers, 4);
     margin-top: map-get($spacers, 8);
-    padding-left: map-get($spacers, 3);
-    border-left: 3px solid var(--sg-accent);
+    margin-bottom: map-get($spacers, 4);
   }
 
-  // ===========================================================================
-  // 1. COLORS
-  // ===========================================================================
+  // Colors
   &__color-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
@@ -245,21 +67,14 @@
   }
 
   &__swatch {
-    background: var(--sg-surface);
-    border-radius: $border-radius-lg;
+    border: 1px solid var(--sg-border);
+    border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
-    position: relative;
-    border: 1px solid var(--sg-border);
-    transition: border-color 0.2s ease;
-
-    &:hover {
-      border-color: var(--sg-accent);
-    }
   }
 
   &__swatch-preview {
-    height: 7.5rem;
+    height: 5.5rem;
     width: 100%;
 
     &--light {
@@ -268,83 +83,45 @@
   }
 
   &__swatch-info {
-    padding: map-get($spacers, 3) map-get($spacers, 4);
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-
-  &__swatch-name {
-    font-weight: $font-weight-semibold;
-    font-size: 0.875rem;
-    color: var(--sg-text-primary);
-  }
-
-  &__swatch-hex {
-    font-size: 0.8125rem;
-    color: var(--sg-text-secondary);
-    text-transform: uppercase;
+    padding: map-get($spacers, 3);
   }
 
   &__swatch-var {
-    font-size: 0.75rem;
     color: var(--sg-accent);
     word-break: break-all;
   }
 
-
-
-  // ===========================================================================
-  // 2. TYPOGRAPHY
-  // ===========================================================================
+  // Typography
   &__typo-controls {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: map-get($spacers, 6);
-    gap: map-get($spacers, 2);
+    gap: map-get($spacers, 4);
+    margin-bottom: map-get($spacers, 4);
   }
 
   &__typo-toggle {
-    border: 1px solid var(--sg-border);
-    background: var(--sg-surface);
-    color: var(--sg-text-secondary);
-    padding: map-get($spacers, 2) map-get($spacers, 4);
-    border-radius: $border-radius;
-    font-weight: $font-weight-medium;
-    font-size: 0.875rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
     cursor: pointer;
-    transition: all 0.2s ease;
     font-family: $font-family-sans-serif;
 
-    &:hover {
-      border-color: var(--sg-accent);
-      color: var(--sg-accent);
-    }
-
     &.active {
-      background: var(--sg-accent);
-      color: $white;
-      border-color: var(--sg-accent);
+      color: var(--sg-accent);
+      border-bottom-color: var(--sg-accent);
     }
-  }
-
-  &__typo-list {
-    display: flex;
-    flex-direction: column;
-    gap: map-get($spacers, 6);
   }
 
   &__typo-row {
     display: grid;
     grid-template-columns: 11.25rem 1fr;
     gap: map-get($spacers, 4);
-    padding-bottom: map-get($spacers, 6);
+    padding-bottom: map-get($spacers, 4);
     border-bottom: 1px solid var(--sg-border);
     align-items: start;
 
     &:last-child {
       border-bottom: none;
-      padding-bottom: 0;
     }
 
     @media (max-width: map-get($grid-breakpoints, md)) {
@@ -352,39 +129,15 @@
     }
   }
 
-  &__typo-meta {
-    display: flex;
-    flex-direction: column;
-    gap: map-get($spacers, 2);
-  }
-
   &__typo-tag {
     background: var(--sg-code-bg);
     padding: 0.125rem map-get($spacers, 2);
     border-radius: $border-radius-sm;
-    color: var(--sg-text-secondary);
-    font-size: 0.75rem;
-    font-weight: $font-weight-semibold;
     display: inline-block;
-    align-self: flex-start;
-  }
-
-  &__typo-specs {
-    font-size: 0.8125rem;
-    color: var(--sg-text-muted);
-    line-height: 1.5;
-
-    span {
-      display: block;
-    }
   }
 
   &__typo-preview {
     overflow-x: auto;
-  }
-
-  &__typo-sample {
-    // Styling is applied directly via typography utility classes (e.g. .d1, .sh1, etc.)
   }
 
   &.mobile-view &__typo-sample {
@@ -408,17 +161,14 @@
       line-height: 1.4 !important;
     }
 
-    &.h3 {
-      font-size: 1.75rem !important;
-      line-height: 1.4 !important;
-    }
-
+    &.h3,
     &.h4 {
       font-size: 1.75rem !important;
       line-height: 1.4 !important;
     }
 
-    &.h5 {
+    &.h5,
+    &.sh3 {
       font-size: 1.125rem !important;
       line-height: 1.6 !important;
     }
@@ -428,24 +178,11 @@
       line-height: 1.4 !important;
     }
 
-    &.sh0 {
-      font-size: 1.5rem !important;
-      line-height: 1.38 !important;
-    }
-
-    &.sh1 {
-      font-size: 1.5rem !important;
-      line-height: 1.38 !important;
-    }
-
+    &.sh0,
+    &.sh1,
     &.sh2 {
       font-size: 1.5rem !important;
       line-height: 1.38 !important;
-    }
-
-    &.sh3 {
-      font-size: 1.125rem !important;
-      line-height: 1.6 !important;
     }
 
     &.body-xlarge {
@@ -453,7 +190,8 @@
       line-height: 1.2 !important;
     }
 
-    &.body-large {
+    &.body-large,
+    &.body-medium {
       font-size: 1.125rem !important;
       line-height: 1.4 !important;
     }
@@ -463,73 +201,36 @@
       line-height: 1.4 !important;
     }
 
-    &.body-medium {
-      font-size: 1.125rem !important;
-      line-height: 1.8125rem !important;
-    }
-
-    &.body-small {
-      font-size: 0.875rem !important;
-      line-height: 1.4 !important;
-    }
-
-    &.body-xsmall {
-      font-size: 0.75rem !important;
-      line-height: 1.4 !important;
-    }
-
-    &.c1 {
-      font-size: 0.75rem !important;
-      line-height: 1.5 !important;
-    }
-
+    &.body-small,
     &.c2 {
       font-size: 0.875rem !important;
-      line-height: 1.5 !important;
+      line-height: 1.4 !important;
     }
 
+    &.body-xsmall,
+    &.c1,
     &.c3 {
       font-size: 0.75rem !important;
       line-height: 1.5 !important;
     }
   }
 
-  // ===========================================================================
-  // 3. BUTTONS
-  // ===========================================================================
-  &__btn-list {
-    display: flex;
-    flex-direction: column;
-    gap: map-get($spacers, 6);
-  }
-
+  // Buttons
   &__btn-group-row {
-    background: var(--sg-surface);
-    border: 1px solid var(--sg-border);
-    border-radius: $border-radius-lg;
-    padding: map-get($spacers, 6);
     display: grid;
     grid-template-columns: 18.75rem 1fr;
     gap: map-get($spacers, 6);
+    padding: map-get($spacers, 6) 0;
+    border-bottom: 1px solid var(--sg-border);
     align-items: center;
+
+    &:last-child {
+      border-bottom: none;
+    }
 
     @media (max-width: map-get($grid-breakpoints, xl) - 1) {
       grid-template-columns: 1fr;
-      align-items: stretch;
     }
-  }
-
-  &__btn-info {
-    display: flex;
-    flex-direction: column;
-    gap: map-get($spacers, 3);
-  }
-
-  &__btn-label {
-    font-size: 1rem;
-    font-weight: $font-weight-semibold;
-    color: var(--sg-text-primary);
-    margin: 0;
   }
 
   &__btn-previews {
@@ -541,7 +242,6 @@
     @media (max-width: map-get($grid-breakpoints, sm) - 1) {
       flex-direction: column;
       align-items: flex-start;
-      gap: map-get($spacers, 4);
     }
   }
 
@@ -551,60 +251,43 @@
     gap: map-get($spacers, 2);
   }
 
-  &__btn-state-label {
-    font-size: 0.75rem;
-    font-weight: $font-weight-medium;
-    color: var(--sg-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
   &__btn-preview-wrap {
     display: inline-flex;
     align-items: center;
     min-height: 3.5rem;
   }
 
+  &__btn-state-label {
+    font-size: 0.6875rem;
+    color: var(--sg-text-muted);
+    text-transform: uppercase;
+  }
+
+  // Demo blocks
   &__demo-block {
-    background: var(--sg-surface);
-    border: 1px solid var(--sg-border);
-    border-radius: $border-radius-lg;
-    padding: map-get($spacers, 6);
     margin-bottom: map-get($spacers, 4);
 
-    &--dark {
-      .m-styleguide__demo-preview {
-        background: $secondary-dark;
-        border-radius: $border-radius;
-        padding: map-get($spacers, 6);
-      }
+    &--dark .m-styleguide__demo-preview {
+      background: $secondary-dark;
+      padding: map-get($spacers, 6);
+      border-radius: 4px;
     }
   }
 
-  &__demo-label {
-    font-size: 0.875rem;
-    font-weight: $font-weight-semibold;
-    color: var(--sg-text-secondary);
-    margin-bottom: map-get($spacers, 4);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
   &__demo-preview {
-    margin-bottom: map-get($spacers, 4);
     display: flex;
     flex-wrap: wrap;
     gap: map-get($spacers, 4);
     align-items: center;
+    margin-bottom: map-get($spacers, 4);
   }
 
   &__demo-code {
     position: relative;
-    background: #1e293b;
-    border-radius: $border-radius;
+    background: #111;
+    border-radius: 4px;
     overflow: hidden;
     margin-top: map-get($spacers, 4);
-    max-width: 100%;
 
     pre {
       margin: 0;
@@ -612,11 +295,9 @@
       overflow-x: auto;
 
       code {
-        font-size: 0.8125rem;
         color: $gray-300;
         white-space: pre-wrap;
         word-break: break-all;
-        line-height: 1.6;
       }
     }
   }
@@ -625,16 +306,13 @@
     position: absolute;
     top: map-get($spacers, 2);
     right: map-get($spacers, 2);
-    background: #0f172a;
+    background: #222;
     color: $white;
     border: none;
     border-radius: $border-radius-sm;
     padding: map-get($spacers, 1) map-get($spacers, 3);
-    font-size: 0.75rem;
-    font-weight: $font-weight-medium;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.2s ease;
     font-family: $font-family-sans-serif;
 
     .m-styleguide__demo-code:hover & {
@@ -644,22 +322,11 @@
 
   &__demo-note {
     margin-top: map-get($spacers, 3);
-    font-size: 0.8125rem;
     color: var(--sg-text-muted);
-
-    code {
-      background: var(--sg-code-bg);
-      padding: 0.0625rem 0.25rem;
-      border-radius: $border-radius-sm;
-      font-size: 0.8125rem;
-    }
+    font-size: 0.75rem;
   }
 
-
-
-  // ===========================================================================
-  // 9. ICONS
-  // ===========================================================================
+  // Icons
   &__icon-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
@@ -667,20 +334,18 @@
   }
 
   &__icon-card {
-    background: var(--sg-surface);
-    border: 1px solid var(--sg-border);
-    border-radius: $border-radius-lg;
-    padding: map-get($spacers, 5) map-get($spacers, 3);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: map-get($spacers, 4) map-get($spacers, 2);
     text-align: center;
     cursor: pointer;
-    transition: border-color 0.2s ease;
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     &:hover {
-      border-color: var(--sg-accent);
+      background-color: var(--sg-code-bg);
+      border-color: var(--sg-border);
     }
   }
 
@@ -689,15 +354,10 @@
     justify-content: center;
     margin-bottom: map-get($spacers, 3);
 
-    svg {
+    svg,
+    i {
       width: 1.5rem;
       height: 1.5rem;
-      color: var(--sg-text-primary);
-    }
-
-    i {
-      font-size: 1.5rem;
-      color: var(--sg-text-primary);
     }
   }
 
@@ -707,133 +367,21 @@
     word-break: break-all;
   }
 
-  // ===========================================================================
-  // 10. COMPONENTS
-  // ===========================================================================
+  // Components
   &__component-demo {
-    background: var(--sg-surface);
-    border: 1px solid var(--sg-border);
-    border-radius: $border-radius-lg;
-    padding: map-get($spacers, 6);
-    margin-bottom: map-get($spacers, 4);
     display: flex;
     flex-wrap: wrap;
     gap: map-get($spacers, 3);
-
-    &--accordion {
-      border: none;
-      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
-      padding: map-get($spacers, 8) map-get($spacers, 8);
-    }
-  }
-
-  // Accordion
-  &__accordion {
-    width: 100%;
-  }
-
-  &__accordion-item {
-    border: none;
-    border-bottom: 1px solid var(--sg-border);
-    background: transparent;
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  &__accordion-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: map-get($spacers, 4) 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    cursor: pointer;
-    font-family: $font-family-sans-serif;
-    font-size: 1rem;
-    font-weight: $font-weight-semibold;
-    color: var(--sg-text-primary);
-    text-align: left;
-    list-style: none; // Hides default summary marker in Firefox/Safari/Chrome
-
-    // Remove Bootstrap's default chevron
-    &::after {
-      display: none;
-    }
-
-    // Hide summary disclosure triangle in Chrome/Safari
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &:focus {
-      box-shadow: none;
-      border-color: transparent;
-      outline: none;
-    }
-  }
-
-  // Rotate plus icon 45deg to form X when details is open
-  details[open] {
-    .accordion-icon {
-      transform: rotate(45deg);
-    }
-  }
-
-  // Accordion icon wrapper
-  .accordion-icon {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: map-get($spacers, 3);
-    color: $secondary-dark;
-    transition: transform 0.3s ease;
-
-    svg {
-      width: 2.875rem;
-      height: 2.875rem;
-    }
-  }
-
-  &__accordion-body {
-    padding: 0 0 map-get($spacers, 4);
-    color: var(--sg-text-secondary);
-    font-size: 0.9375rem;
-    line-height: 1.6;
-
-    p {
-      margin: 0;
-
-      code {
-        background: var(--sg-code-bg);
-        padding: 0.0625rem 0.25rem;
-        border-radius: $border-radius-sm;
-        font-size: 0.875em;
-      }
-    }
-  }
-
-  // ===========================================================================
-  // 10a. FORMS Styling
-  // ===========================================================================
-  &__form-demo {
-    background: var(--sg-surface);
-    border-radius: $border-radius-lg;
-    padding: map-get($spacers, 6);
-    box-shadow: var(--sg-shadow);
     margin-bottom: map-get($spacers, 4);
   }
 
+
+  // Forms
   &__form-wrapper {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
     max-width: 580px;
-    margin: 0 auto;
   }
 
   &__form-el {
@@ -860,15 +408,11 @@
 
   &__input-group {
     position: relative;
-    width: 100%;
 
-    &--focus {
-
-      .m-styleguide__input,
-      .m-styleguide__select {
-        border-color: #111111;
-        color: #111111;
-      }
+    &--focus .m-styleguide__input,
+    &--focus .m-styleguide__select {
+      border-color: #111;
+      color: #111;
     }
 
     &--error {
@@ -900,12 +444,10 @@
     border: 1px solid rgba(0, 0, 0, 0.68);
     padding: 14px 24px;
     font-family: $font-family-sans-serif;
-    font-size: 0.875rem;
     font-weight: $font-weight-medium;
     color: rgba(0, 0, 0, 0.68);
-    background-color: #ffffff;
+    background-color: #fff;
     outline: none;
-    transition: border-color 0.2s ease, color 0.2s ease;
 
     &::placeholder {
       color: rgba(0, 0, 0, 0.68);
@@ -913,18 +455,15 @@
     }
 
     &:focus {
-      border-color: #111111;
-      color: #111111;
+      border-color: #111;
+      color: #111;
     }
   }
 
   &__input-error {
     display: none;
-    font-family: $font-family-sans-serif;
-    font-size: 0.875rem;
     font-weight: $font-weight-medium;
     color: #d72027;
-    margin-top: 0.25rem;
   }
 
   &__select {
@@ -935,20 +474,12 @@
     padding: 14px 24px;
     padding-right: 3.5rem;
     font-family: $font-family-sans-serif;
-    font-size: 0.875rem;
     font-weight: $font-weight-medium;
     color: rgba(0, 0, 0, 0.68);
-    background-color: #ffffff;
+    background-color: #fff;
     outline: none;
     appearance: none;
     cursor: pointer;
-
-    &:disabled {
-      background-color: #ffffff;
-      opacity: 1;
-      color: rgba(0, 0, 0, 0.68);
-      cursor: default;
-    }
   }
 
   &__select-arrow {
@@ -959,7 +490,6 @@
     pointer-events: none;
     display: flex;
     align-items: center;
-    justify-content: center;
 
     svg {
       width: 24px;
@@ -979,10 +509,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-
-    input:disabled~.m-styleguide__radio-label {
-      cursor: default;
-    }
   }
 
   &__radio {
@@ -992,33 +518,26 @@
     border: 1px solid rgba(0, 0, 0, 0.68);
     border-radius: 50%;
     outline: none;
-    margin: 0;
-    margin-right: 12px;
+    margin: 0 12px 0 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    position: relative;
-    background-color: #ffffff;
-    transition: border-color 0.2s ease;
-
-    &:disabled {
-      cursor: default;
-    }
+    background-color: #fff;
 
     &::after {
       content: "";
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background-color: #111111;
+      background-color: #111;
       opacity: 0;
       transform: scale(0);
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     &:checked {
-      border-color: #111111;
+      border-color: #111;
 
       &::after {
         opacity: 1;
@@ -1028,38 +547,25 @@
   }
 
   &__radio-label {
-    font-family: $font-family-sans-serif;
-    font-size: 0.875rem;
     font-weight: $font-weight-medium;
     color: rgba(0, 0, 0, 0.68);
   }
 
   &__form-submit {
-    // Rely on .btn.btn-primary base styling
     align-self: flex-start;
   }
 
-  // ===========================================================================
-  // 11. LAYOUT / GRID
-  // ===========================================================================
-
-
+  // Grid demo
   &__grid-col-inner {
-    background: rgba($primary, 0.1);
-    border: 1px solid rgba($primary, 0.25);
-    border-radius: $border-radius-sm;
+    background: rgba($primary, 0.05);
+    border: 1px solid rgba($primary, 0.15);
+    border-radius: 4px;
     padding: map-get($spacers, 3) map-get($spacers, 2);
     text-align: center;
-    font-size: 0.8125rem;
-    font-weight: $font-weight-medium;
     color: $primary;
   }
 
-  // ===========================================================================
-  // 12. INTERACTIVE STATES
-  // ===========================================================================
-
-
+  // Button states
   &__btn--hover {
     &.btn-primary {
       background-color: $btn-hover-dark !important;
@@ -1075,48 +581,23 @@
 
     &.btn-link {
       color: $btn-tertiary-hover !important;
-
-      .m-styleguide__btn-line svg path:last-child {
-        fill: $btn-tertiary-hover;
-      }
-
-      .m-styleguide__btn-line svg path[stroke] {
-        stroke: $btn-tertiary-hover;
-      }
     }
   }
 
   &__btn--disabled {
 
     &.btn-primary,
-    &.btn-secondary {
-      background-color: $btn-disabled !important;
-      border-color: $btn-disabled !important;
-      color: $white !important;
-      pointer-events: none;
-      cursor: default;
-    }
-
+    &.btn-secondary,
     &.btn-outline {
       background-color: $btn-disabled !important;
       border-color: $btn-disabled !important;
       color: $white !important;
       pointer-events: none;
-      cursor: default;
     }
 
     &.btn-link {
       color: $btn-disabled !important;
       pointer-events: none;
-      cursor: default;
-
-      .m-styleguide__btn-line svg path:last-child {
-        fill: $btn-disabled;
-      }
-
-      .m-styleguide__btn-line svg path[stroke] {
-        stroke: $btn-disabled;
-      }
     }
   }
 
@@ -1147,15 +628,10 @@
     }
   }
 
-
-
-  // ===========================================================================
-  // 13. TABLES
-  // ===========================================================================
+  // Table
   &__table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9375rem;
 
     th,
     td {
@@ -1166,11 +642,7 @@
 
     th {
       font-weight: $font-weight-semibold;
-      color: var(--sg-text-primary);
       background: var(--sg-code-bg);
-      font-size: 0.8125rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
     }
 
     td {
@@ -1181,29 +653,19 @@
       background: var(--sg-code-bg);
       padding: 0.0625rem 0.25rem;
       border-radius: $border-radius-sm;
-      font-size: 0.8125rem;
       color: var(--sg-accent);
-    }
-
-    tbody tr:hover {
-      background: rgba($primary, 0.02);
     }
   }
 
-  // ===========================================================================
-  // TOAST
-  // ===========================================================================
+  // Toast
   &__toast {
     position: fixed;
     bottom: map-get($spacers, 6);
     right: map-get($spacers, 6);
-    background: var(--sg-sidebar-bg);
+    background: #111;
     color: $white;
     padding: map-get($spacers, 3) map-get($spacers, 6);
-    border-radius: $border-radius;
-    font-size: 0.875rem;
-    font-weight: $font-weight-medium;
-    box-shadow: 0 0.25rem 0.75rem rgba($black, 0.15);
+    border-radius: 4px;
     z-index: 9999;
     opacity: 0;
     transform: translateY(1.25rem);
