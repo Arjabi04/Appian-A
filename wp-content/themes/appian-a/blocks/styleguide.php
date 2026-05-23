@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Style Guide Block Template.
  *
@@ -11,9 +12,10 @@
 /**
  * Render a dark code-snippet block with a copy button.
  */
-if ( ! function_exists( 'sg_code_block' ) ) :
-    function sg_code_block( $code ) {
-        $escaped = htmlspecialchars( trim( $code ), ENT_QUOTES, 'UTF-8' );
+if (! function_exists('sg_code_block')) :
+    function sg_code_block($code)
+    {
+        $escaped = htmlspecialchars(trim($code), ENT_QUOTES, 'UTF-8');
         echo '<div class="m-styleguide__demo-code">';
         echo '<button type="button" class="m-styleguide__copy-btn" data-copy-code>Copy</button>';
         echo '<pre><code>' . $escaped . '</code></pre>';
@@ -22,15 +24,15 @@ if ( ! function_exists( 'sg_code_block' ) ) :
 endif;
 
 $id = 'styleguide-' . $block['id'];
-if ( ! empty( $block['anchor'] ) ) {
+if (! empty($block['anchor'])) {
     $id = $block['anchor'];
 }
 
 $classes = 'm-styleguide';
-if ( ! empty( $block['className'] ) ) {
+if (! empty($block['className'])) {
     $classes .= ' ' . $block['className'];
 }
-if ( ! empty( $block['align'] ) ) {
+if (! empty($block['align'])) {
     $classes .= ' align' . $block['align'];
 }
 
@@ -114,7 +116,7 @@ $icons = appian_get_svg_icons();
 
 ?>
 
-<div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $classes ); ?>">
+<div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr($classes); ?>">
 
     <!-- Main Content Area -->
     <main class="m-styleguide__main">
@@ -136,13 +138,13 @@ $icons = appian_get_svg_icons();
 
             <h3 class="m-styleguide__subsection-title">Primary</h3>
             <div class="m-styleguide__color-grid">
-                <?php foreach ( $brand_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>">
-                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?>"></div>
+                <?php foreach ($brand_colors as $color) : ?>
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr($color['slug']); ?>">
+                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr($color['slug']); ?>"></div>
                         <div class="m-styleguide__swatch-info">
-                            <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
+                            <span class="m-styleguide__swatch-name"><?php echo esc_html($color['name']); ?></span>
                             <code class="m-styleguide__swatch-hex" data-hex></code>
-                            <code class="m-styleguide__swatch-var">var(--<?php echo esc_html( $color['slug'] ); ?>)</code>
+                            <code class="m-styleguide__swatch-var">var(--<?php echo esc_html($color['slug']); ?>)</code>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -150,13 +152,13 @@ $icons = appian_get_svg_icons();
 
             <h3 class="m-styleguide__subsection-title">Secondary</h3>
             <div class="m-styleguide__color-grid">
-                <?php foreach ( $secondary_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>">
-                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?>"></div>
+                <?php foreach ($secondary_colors as $color) : ?>
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr($color['slug']); ?>">
+                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr($color['slug']); ?>"></div>
                         <div class="m-styleguide__swatch-info">
-                            <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
+                            <span class="m-styleguide__swatch-name"><?php echo esc_html($color['name']); ?></span>
                             <code class="m-styleguide__swatch-hex" data-hex></code>
-                            <code class="m-styleguide__swatch-var">var(--<?php echo esc_html( $color['slug'] ); ?>)</code>
+                            <code class="m-styleguide__swatch-var">var(--<?php echo esc_html($color['slug']); ?>)</code>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -164,13 +166,13 @@ $icons = appian_get_svg_icons();
 
             <h3 class="m-styleguide__subsection-title">Neutrals</h3>
             <div class="m-styleguide__color-grid">
-                <?php foreach ( $neutral_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>"<?php echo $color['slug'] === 'white' ? ' data-color="#ffffff"' : ''; ?>>
-                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?><?php echo in_array( $color['name'], ['White', 'Neutral 75', 'Neutral 100'] ) ? ' m-styleguide__swatch-preview--light' : ''; ?>"></div>
+                <?php foreach ($neutral_colors as $color) : ?>
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr($color['slug']); ?>" <?php echo $color['slug'] === 'white' ? ' data-color="#ffffff"' : ''; ?>>
+                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr($color['slug']); ?><?php echo in_array($color['name'], ['White', 'Neutral 75', 'Neutral 100']) ? ' m-styleguide__swatch-preview--light' : ''; ?>"></div>
                         <div class="m-styleguide__swatch-info">
-                            <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
+                            <span class="m-styleguide__swatch-name"><?php echo esc_html($color['name']); ?></span>
                             <code class="m-styleguide__swatch-hex" data-hex><?php echo $color['slug'] === 'white' ? '#ffffff' : ''; ?></code>
-                            <code class="m-styleguide__swatch-var"><?php echo $color['slug'] === 'white' ? '$white' : 'var(--' . esc_html( $color['slug'] ) . ')'; ?></code>
+                            <code class="m-styleguide__swatch-var"><?php echo $color['slug'] === 'white' ? '$white' : 'var(--' . esc_html($color['slug']) . ')'; ?></code>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -178,19 +180,19 @@ $icons = appian_get_svg_icons();
 
             <h3 class="m-styleguide__subsection-title">Overlays</h3>
             <div class="m-styleguide__color-grid">
-                <?php foreach ( $overlay_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>">
-                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?>"></div>
+                <?php foreach ($overlay_colors as $color) : ?>
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr($color['slug']); ?>">
+                        <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr($color['slug']); ?>"></div>
                         <div class="m-styleguide__swatch-info">
-                            <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
-                            <code class="m-styleguide__swatch-var">var(--<?php echo esc_html( $color['slug'] ); ?>)</code>
+                            <span class="m-styleguide__swatch-name"><?php echo esc_html($color['name']); ?></span>
+                            <code class="m-styleguide__swatch-var">var(--<?php echo esc_html($color['slug']); ?>)</code>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
 
             <?php sg_code_block(
-'<!-- Background color utility -->
+                '<!-- Background color utility -->
 <div class="bg-primary-red">...</div>
 
 <!-- Text color utility -->
@@ -225,13 +227,13 @@ background-color: var(--dark-red);'
                 'Captions'    => $typography_caption,
             ];
             ?>
-            <?php foreach ( $typo_groups as $group_label => $group_items ) : ?>
-                <h3 class="m-styleguide__subsection-title"><?php echo esc_html( $group_label ); ?></h3>
+            <?php foreach ($typo_groups as $group_label => $group_items) : ?>
+                <h3 class="m-styleguide__subsection-title"><?php echo esc_html($group_label); ?></h3>
                 <div class="m-styleguide__typo-list">
-                    <?php foreach ( $group_items as $type ) : ?>
-                        <div class="m-styleguide__typo-row" data-typo-class="<?php echo esc_attr( $type[0] ); ?>">
+                    <?php foreach ($group_items as $type) : ?>
+                        <div class="m-styleguide__typo-row" data-typo-class="<?php echo esc_attr($type[0]); ?>">
                             <div class="m-styleguide__typo-meta">
-                                <code class="m-styleguide__typo-tag"><?php echo esc_html( $type[1] ); ?></code>
+                                <code class="m-styleguide__typo-tag"><?php echo esc_html($type[1]); ?></code>
                                 <div class="m-styleguide__typo-specs">
                                     <span>Font: <span data-typo-font></span></span>
                                     <span>Weight: <span data-typo-weight></span></span>
@@ -240,7 +242,7 @@ background-color: var(--dark-red);'
                                 </div>
                             </div>
                             <div class="m-styleguide__typo-preview">
-                                <div class="m-styleguide__typo-sample <?php echo esc_attr( $type[0] ); ?>">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+                                <div class="m-styleguide__typo-sample <?php echo esc_attr($type[0]); ?>">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -259,10 +261,10 @@ background-color: var(--dark-red);'
 
             <?php
             // Arrow SVG used across buttons
-            $arrow_right = appian_get_svg_icon( 'arrow-right' );
+            $arrow_right = appian_get_svg_icon('arrow-right');
 
             // Tertiary button underline (the "line" that sits beneath tertiary buttons)
-            $tertiary_line = '<span class="m-styleguide__btn-line">' . appian_get_svg_icon( 'tertiary-underline' ) . '</span>';
+            $tertiary_line = '<span class="m-styleguide__btn-line">' . appian_get_svg_icon('tertiary-underline') . '</span>';
             ?>
 
             <?php
@@ -277,7 +279,7 @@ background-color: var(--dark-red);'
             ?>
 
             <div class="m-styleguide__btn-list">
-                <?php foreach ( $button_types as $btn_type ) :
+                <?php foreach ($button_types as $btn_type) :
                     $label     = $btn_type[0];
                     $classes   = $btn_type[1];
                     $has_arrow = $btn_type[2];
@@ -293,29 +295,29 @@ background-color: var(--dark-red);'
 
                     // Code snippet — use appian_get_svg_icon for the arrow
                     $arrow_php = "<?php echo appian_get_svg_icon( 'arrow-right' ); ?>";
-                    $code_snippet = '<a href="#" class="' . $classes . '">' . 'Label' . ( $has_arrow ? ' ' . $arrow_php : '' ) . '</a>';
+                    $code_snippet = '<a href="#" class="' . $classes . '">' . 'Label' . ($has_arrow ? ' ' . $arrow_php : '') . '</a>';
                 ?>
                     <div class="m-styleguide__btn-group-row">
                         <div class="m-styleguide__btn-info">
-                            <span class="m-styleguide__btn-label"><?php echo esc_html( $label ); ?></span>
-                            <?php sg_code_block( $code_snippet ); ?>
+                            <span class="m-styleguide__btn-label"><?php echo esc_html($label); ?></span>
+                            <?php sg_code_block($code_snippet); ?>
                         </div>
                         <div class="m-styleguide__btn-previews">
-                            <?php foreach ( $states as $state ) :
+                            <?php foreach ($states as $state) :
                                 $state_label     = $state[0];
                                 $state_preview   = $state[1];
                                 $btn_text        = $state_label === 'Disabled' ? 'Disabled' : $state_label;
                             ?>
                                 <div class="m-styleguide__btn-preview-item">
-                                    <span class="m-styleguide__btn-state-label"><?php echo esc_html( $state_label ); ?></span>
+                                    <span class="m-styleguide__btn-state-label"><?php echo esc_html($state_label); ?></span>
                                     <div class="m-styleguide__btn-preview-wrap">
-                                        <?php if ( $is_tert ) : ?>
-                                            <span class="m-styleguide__btn-wrap<?php echo esc_attr( $state_preview ); ?>">
-                                                <a href="#" class="<?php echo esc_attr( $classes . $state_preview ); ?>" onclick="return false;"<?php echo $state_label === 'Disabled' ? ' tabindex="-1"' : ''; ?>><?php echo $btn_text . $arrow_html; ?></a>
+                                        <?php if ($is_tert) : ?>
+                                            <span class="m-styleguide__btn-wrap<?php echo esc_attr($state_preview); ?>">
+                                                <a href="#" class="<?php echo esc_attr($classes . $state_preview); ?>" onclick="return false;" <?php echo $state_label === 'Disabled' ? ' tabindex="-1"' : ''; ?>><?php echo $btn_text . $arrow_html; ?></a>
                                                 <?php echo $tertiary_line; ?>
                                             </span>
                                         <?php else : ?>
-                                            <a href="#" class="<?php echo esc_attr( $classes . $state_preview ); ?>" onclick="return false;"<?php echo $state_label === 'Disabled' ? ' tabindex="-1"' : ''; ?>><?php echo $btn_text . $arrow_html; ?></a>
+                                            <a href="#" class="<?php echo esc_attr($classes . $state_preview); ?>" onclick="return false;" <?php echo $state_label === 'Disabled' ? ' tabindex="-1"' : ''; ?>><?php echo $btn_text . $arrow_html; ?></a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -355,10 +357,10 @@ background-color: var(--dark-red);'
             ?>
 
             <div class="m-styleguide__icon-grid">
-                <?php foreach ( $sg_icon_names as $name ) : ?>
-                    <div class="m-styleguide__icon-card" data-icon-class="<?php echo esc_attr( $name ); ?>">
-                        <div class="m-styleguide__icon-svg"><?php echo $icons[ $name ]; ?></div>
-                        <span class="m-styleguide__icon-name"><?php echo esc_html( $name ); ?></span>
+                <?php foreach ($sg_icon_names as $name) : ?>
+                    <div class="m-styleguide__icon-card" data-icon-class="<?php echo esc_attr($name); ?>">
+                        <div class="m-styleguide__icon-svg"><?php echo $icons[$name]; ?></div>
+                        <span class="m-styleguide__icon-name"><?php echo esc_html($name); ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -399,7 +401,7 @@ background-color: var(--dark-red);'
                         <!-- Email -->
                         <div class="m-styleguide__form-row">
                             <div class="m-styleguide__input-group">
-                                    <input type="email" class="m-styleguide__input" placeholder="Email *" required>
+                                <input type="email" class="m-styleguide__input" placeholder="Email *" required>
                             </div>
                             <span class="m-styleguide__input-error">Please fill out this field.</span>
                         </div>
@@ -430,7 +432,7 @@ background-color: var(--dark-red);'
                                     <option value="2bed">2 Bedroom</option>
                                 </select>
                                 <span class="m-styleguide__select-arrow">
-                                    <?php echo appian_get_svg_icon( 'arrow-down' ); ?>
+                                    <?php echo appian_get_svg_icon('arrow-down'); ?>
                                 </span>
                             </div>
                             <span class="m-styleguide__input-error">Please select a unit type.</span>
@@ -458,7 +460,7 @@ background-color: var(--dark-red);'
                         <div class="m-styleguide__form-row">
                             <button type="submit" class="btn btn-primary m-styleguide__form-submit">
                                 <span>Submit</span>
-                                <?php echo appian_get_svg_icon( 'arrow-right' ); ?>
+                                <?php echo appian_get_svg_icon('arrow-right'); ?>
                             </button>
                         </div>
                     </form>
@@ -466,7 +468,7 @@ background-color: var(--dark-red);'
             </div>
 
             <?php sg_code_block(
-<<<'HTML'
+                <<<'HTML'
 <div class="contact-form">
     <form class="contact-form__el">
         <div class="contact-form__row contact-form__row--inline">
@@ -535,7 +537,7 @@ HTML
 
             <h3 class="m-styleguide__subsection-title">12-Column Grid</h3>
             <div class="row g-2 mb-4">
-                <?php for ( $i = 1; $i <= 12; $i++ ) : ?>
+                <?php for ($i = 1; $i <= 12; $i++) : ?>
                     <div class="col-1">
                         <div class="m-styleguide__grid-col-inner"><?php echo $i; ?></div>
                     </div>
@@ -544,7 +546,7 @@ HTML
 
             <h3 class="m-styleguide__subsection-title">4-Column Grid (Mobile)</h3>
             <div class="row g-2 mb-4">
-                <?php for ( $i = 1; $i <= 4; $i++ ) : ?>
+                <?php for ($i = 1; $i <= 4; $i++) : ?>
                     <div class="col-3">
                         <div class="m-styleguide__grid-col-inner"><?php echo $i; ?></div>
                     </div>
@@ -598,10 +600,10 @@ HTML
             <h3 class="m-styleguide__subsection-title">Logo</h3>
             <div class="m-styleguide__demo-block">
                 <div class="m-styleguide__demo-preview p-4 bg-white">
-                    <?php echo appian_get_svg_icon( 'logo' ); ?>
+                    <?php echo appian_get_svg_icon('logo'); ?>
                 </div>
                 <div class="m-styleguide__demo-preview p-4 bg-neutral-500">
-                    <?php echo appian_get_svg_icon( 'logo' ); ?>
+                    <?php echo appian_get_svg_icon('logo'); ?>
                 </div>
             </div>
 
@@ -609,10 +611,10 @@ HTML
             <div class="m-styleguide__demo-block">
                 <div class="m-styleguide__demo-preview p-4 gap-4">
                     <div class="m-styleguide__favicon-preview-wrap" style="width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center;">
-                        <?php echo appian_get_svg_icon( 'favicon' ); ?>
+                        <?php echo appian_get_svg_icon('favicon'); ?>
                     </div>
                     <div class="m-styleguide__favicon-preview-wrap" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center;">
-                        <?php echo appian_get_svg_icon( 'favicon' ); ?>
+                        <?php echo appian_get_svg_icon('favicon'); ?>
                     </div>
                 </div>
             </div>

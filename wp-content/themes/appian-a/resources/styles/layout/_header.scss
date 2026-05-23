@@ -1,81 +1,482 @@
-:root {
-  --theme-header-height: -90px;
-  --site-banner-height: auto;
-}
-
-.#{$global} {
-  &-header {
+.site-header {
+    position: relative;
+    z-index: 100;
+    font-family: "General Sans", sans-serif;
     background-color: $white;
-    top: 0;
-    transition: all 0.5s ease-in-out;
-    transition-delay: 0.1s;
-    z-index: 10;
-    border-block-end: 1px solid var(--border-subtle, #dbdad7);
-    min-height: 5rem;
-    display: flex;
-  }
-}
+    color: $neutral-600;
 
-#app:has(.sticky-banner) .theme-header {
-  top: 7.12rem;
+    // Mobile layout
 
-  @media (min-width: 615px) {
-    top: 5.5rem;
-  }
-
-  @include media-breakpoint-up(md) {
-    top: 3.12rem;
-  }
-}
-
-.scroll-down {
-  .theme-header {
-    transform: translateY(var(--theme-header-height));
-    transition: all 0.5s ease-in-out 0.1s;
-
-    @include media-breakpoint-down(lg) {
-      --theme-header-height: -80px;
-    }
-  }
-}
-
-.scroll-up .theme-header.has-site-banner {
-  transform: translateY(var(--site-banner-height));
-  transition: all 0.5s ease-in-out 0.1s;
-}
-
-.sticky-banner {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
-
-.logged-in {
-  .theme-header {
-    top: 2.87rem !important;
-
-    @media (min-width: 783px) {
-      top: 2rem !important;
-    }
-  }
-
-  #app:has(.sticky-banner) .theme-header {
-    top: 10rem !important;
-
-    @media (min-width: 615px) {
-      top: 8.37rem !important;
+    // Header container layout
+    &__container {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        min-height: 72px;
+        padding-inline: 28px;
     }
 
-    @media (min-width: 783px) {
-      top: 5.12rem !important;
+    // Logo styling
+    &__logo {
+        grid-column: 1;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        z-index: 220;
     }
-  }
 
-  .sticky-banner {
-    top: 2.87rem;
-
-    @media (min-width: 783px) {
-      top: 2rem;
+    &__logo-image {
+        width: 85px;
+        height: auto;
+        display: block;
     }
-  }
+
+    // Mobile navigation overlay
+    &__nav {
+        display: none;
+
+        &--mobile-active {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            padding-top: 124px;
+            padding-inline: 28px;
+            padding-bottom: 220px;
+            background-color: $white;
+
+            // Mobile menu list
+            .site-header__menu {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .site-header__menu-item {
+                border-bottom: 1px solid $neutral-100;
+            }
+
+            // Navigation links and buttons
+            .site-header__menu-link,
+            .site-header__menu-button {
+                width: 100%;
+                justify-content: space-between;
+                padding-block: 24px;
+                font-size: 18px;
+                line-height: 28px;
+            }
+
+            // Open accordion dropdown
+            .site-header__menu-button[aria-expanded="true"] ~ .site-header__dropdown {
+                display: flex;
+                padding-top: 12px;
+                padding-bottom: 24px;
+            }
+
+            // Mobile dropdown menu
+            .site-header__dropdown {
+                position: static;
+                min-width: 100%;
+                display: none;
+                padding: 0;
+                box-shadow: none;
+                transform: none;
+            }
+
+            // Mobile dropdown links
+            .site-header__dropdown-link {
+                padding-inline: 18px;
+                font-size: 16px;
+            }
+        }
+    }
+
+    // Desktop/mobile menu list
+    &__menu {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    &__menu-item {
+        position: relative;
+    }
+
+    // Navigation links and buttons
+    &__menu-link,
+    &__menu-button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        min-height: 40px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    // Dropdown arrow icon
+    &__menu-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+
+        img {
+            display: block;
+            transition: transform 0.2s ease;
+        }
+    }
+
+    // Rotate arrow when dropdown opens
+    &__menu-button[aria-expanded="true"] .site-header__menu-icon img {
+        transform: rotate(180deg);
+    }
+
+    // Dropdown menu
+    &__dropdown {
+        position: absolute;
+        left: 0;
+        top: calc(100% + 8px);
+        min-width: 240px;
+        display: none;
+        flex-direction: column;
+        gap: 18px;
+        margin: 0;
+        padding: 24px 0;
+        list-style: none;
+        background-color: $white;
+        border-radius: 8px;
+    }
+
+    // Dropdown links
+    &__dropdown-link {
+        display: block;
+        padding-inline: 16px;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.5;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: $primary-red;
+        }
+    }
+
+    // Emergency contact section
+    &__contact {
+        display: none;
+    }
+
+    &__contact-label {
+        margin-bottom: 2px;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 14px;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: $neutral-600;
+    }
+
+    &__contact-number {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 27px;
+        letter-spacing: -0.02em;
+        color: $neutral-600;
+        white-space: nowrap;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    // Mobile hamburger button
+    &__mobile-toggle {
+        grid-column: 3;
+        justify-self: end;
+        z-index: 220;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+
+        &[aria-expanded="true"] {
+
+            // Hamburger open/close animation
+            .site-header__toggle-icon--open {
+                opacity: 0;
+                transform: rotate(90deg);
+            }
+
+            .site-header__toggle-icon--close {
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+        }
+    }
+
+    // Hamburger icons
+    &__toggle-icon {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        &--open {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        &--close {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+    }
+
+    // Mobile footer
+    &__mobile-footer {
+        display: none;
+    }
+
+    // Show footer when menu opens
+    &--menu-open {
+
+        .site-header__mobile-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 210;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 24px 28px 40px;
+            background-color: $white;
+            border-top: 1px solid $neutral-75;
+
+            .site-header__contact {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+        }
+
+        // LinkedIn icon
+        .site-header__linkedin {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+
+    &__contact-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &__linkedin {
+        display: none;
+    }
+
+    // Tablet adjustments
+    @media (min-width: 768px) {
+
+        // Increase spacing for tablet
+        &__container {
+            min-height: 84px;
+            padding-inline: 40px;
+        }
+
+        // Slightly larger logo on tablet
+        &__logo-image {
+            width: 105px;
+        }
+
+        // Tablet mobile menu spacing
+        &__nav {
+
+            &--mobile-active {
+                padding-top: 140px;
+                padding-inline: 40px;
+
+                .site-header__menu-link,
+                .site-header__menu-button {
+                    padding-block: 18px;
+                    font-size: 17px;
+                }
+
+                .site-header__menu-button[aria-expanded="true"] ~ .site-header__dropdown {
+                    display: flex;
+                    padding-top: 12px;
+                    padding-bottom: 24px;
+                }
+            }
+        }
+
+        &--menu-open {
+
+            .site-header__mobile-footer {
+                padding: 24px 40px 40px;
+            }
+        }
+    }
+
+    // Desktop layout
+    @media (min-width: 1200px) {
+
+        // Desktop grid layout
+        &__container {
+            grid-template-columns: 120px 1fr auto;
+            column-gap: 40px;
+            max-width: 1440px;
+            width: 100%;
+            min-height: 90.2px;
+            padding: 22px 80px;
+            margin: 0 auto;
+        }
+
+        // Larger desktop logo
+        &__logo-image {
+            width: 120px;
+        }
+
+        // Show desktop navigation
+        &__nav {
+            grid-column: 2;
+            display: flex;
+            justify-content: center;
+            padding-right: 12px;
+
+            &--mobile-active {
+                position: static;
+                display: flex;
+                flex-direction: row;
+                width: auto;
+                height: auto;
+                overflow: visible;
+                padding: 0;
+                background-color: transparent;
+
+                .site-header__menu {
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 40px;
+                }
+
+                .site-header__menu-item {
+                    border-bottom: none;
+                }
+
+                .site-header__menu-link,
+                .site-header__menu-button {
+                    width: auto;
+                    justify-content: center;
+                    padding-block: 0;
+                    font-size: 16px;
+                    line-height: 24px;
+                }
+
+                .site-header__dropdown {
+                    position: absolute;
+                    min-width: 240px;
+                    display: none;
+                }
+            }
+        }
+
+        // Desktop menu spacing
+        &__menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        // Desktop hover border effect
+        &__menu-link,
+        &__menu-button {
+
+            @media (hover: hover) and (pointer: fine) {
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: -4px;
+                    bottom: -4px;
+                    left: -12px;
+                    right: -12px;
+                    border: 1px solid transparent;
+                    pointer-events: none;
+                    transition: border-color 0.3s ease;
+                }
+
+                &:hover::after {
+                    border-color: $neutral-400;
+                }
+            }
+        }
+
+        &__menu-button[aria-expanded="true"] .site-header__menu-icon img {
+            transform: rotate(0deg);
+        }
+
+        // Show dropdown on hover
+        &__dropdown {
+
+            .site-header__menu-item--dropdown:hover & {
+                display: flex;
+            }
+        }
+
+        // Show contact section on desktop
+        &__contact {
+            grid-column: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-decoration: none;
+            padding-right: 24px;
+        }
+
+        // Hide hamburger on desktop
+        &__mobile-toggle {
+            display: none;
+        }
+    }
 }
