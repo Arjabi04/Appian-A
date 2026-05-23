@@ -1,3 +1,172 @@
+// Typography design tokens — consumed by the styleguide JS to display spec metadata.
+// Values here mirror the class definitions below; keeping them co-located ensures they stay in sync.
+:root {
+  // Display
+  --typo-d1-font: #{$font-family-heading};
+  --typo-d1-weight: 700;
+  --typo-d1-desktop-size: 120px;
+  --typo-d1-desktop-lh: 100%;
+  --typo-d1-mobile-size: 48px;
+  --typo-d1-mobile-lh: 110%;
+  --typo-d1-weight-label: Bold;
+
+  --typo-d2-font: #{$font-family-heading};
+  --typo-d2-weight: 400;
+  --typo-d2-desktop-size: 88px;
+  --typo-d2-desktop-lh: 120%;
+  --typo-d2-mobile-size: 40px;
+  --typo-d2-mobile-lh: 90%;
+  --typo-d2-weight-label: Regular;
+
+  // Headings
+  --typo-h1-font: #{$font-family-heading};
+  --typo-h1-weight: 700;
+  --typo-h1-desktop-size: 64px;
+  --typo-h1-desktop-lh: 110%;
+  --typo-h1-mobile-size: 40px;
+  --typo-h1-mobile-lh: 120%;
+  --typo-h1-weight-label: Bold;
+
+  --typo-h2-font: #{$font-family-heading};
+  --typo-h2-weight: 700;
+  --typo-h2-desktop-size: 48px;
+  --typo-h2-desktop-lh: 110%;
+  --typo-h2-mobile-size: 32px;
+  --typo-h2-mobile-lh: 140%;
+  --typo-h2-weight-label: Bold;
+
+  --typo-h3-font: #{$font-family-heading};
+  --typo-h3-weight: 700;
+  --typo-h3-desktop-size: 40px;
+  --typo-h3-desktop-lh: 120%;
+  --typo-h3-mobile-size: 28px;
+  --typo-h3-mobile-lh: 140%;
+  --typo-h3-weight-label: Bold;
+
+  --typo-h4-font: #{$font-family-heading};
+  --typo-h4-weight: 700;
+  --typo-h4-desktop-size: 32px;
+  --typo-h4-desktop-lh: 140%;
+  --typo-h4-mobile-size: 28px;
+  --typo-h4-mobile-lh: 140%;
+  --typo-h4-weight-label: Bold;
+
+  --typo-h5-font: #{$font-family-heading};
+  --typo-h5-weight: 500;
+  --typo-h5-desktop-size: 28px;
+  --typo-h5-desktop-lh: 140%;
+  --typo-h5-mobile-size: 18px;
+  --typo-h5-mobile-lh: 160%;
+  --typo-h5-weight-label: Medium;
+
+  --typo-h6-font: #{$font-family-heading};
+  --typo-h6-weight: 500;
+  --typo-h6-desktop-size: 24px;
+  --typo-h6-desktop-lh: 138%;
+  --typo-h6-mobile-size: 20px;
+  --typo-h6-mobile-lh: 140%;
+  --typo-h6-weight-label: Medium;
+
+  // Subheadings
+  --typo-sh0-font: #{$font-family-heading};
+  --typo-sh0-weight: 400;
+  --typo-sh0-desktop-size: 28px;
+  --typo-sh0-desktop-lh: 155%;
+  --typo-sh0-mobile-size: 24px;
+  --typo-sh0-mobile-lh: 138%;
+  --typo-sh0-weight-label: Book;
+
+  --typo-sh1-font: #{$font-family-heading};
+  --typo-sh1-weight: 500;
+  --typo-sh1-desktop-size: 28px;
+  --typo-sh1-desktop-lh: 140%;
+  --typo-sh1-mobile-size: 24px;
+  --typo-sh1-mobile-lh: 138%;
+  --typo-sh1-weight-label: Medium;
+
+  --typo-sh2-font: #{$font-family-heading};
+  --typo-sh2-weight: 500;
+  --typo-sh2-desktop-size: 20px;
+  --typo-sh2-desktop-lh: 140%;
+  --typo-sh2-mobile-size: 24px;
+  --typo-sh2-mobile-lh: 138%;
+  --typo-sh2-weight-label: Medium;
+
+  --typo-sh3-font: #{$font-family-heading};
+  --typo-sh3-weight: 400;
+  --typo-sh3-desktop-size: 18px;
+  --typo-sh3-desktop-lh: 110%;
+  --typo-sh3-mobile-size: 18px;
+  --typo-sh3-mobile-lh: 160%;
+  --typo-sh3-weight-label: Book;
+
+  // Body
+  --typo-body-xlarge-font: #{$font-family-sans-serif};
+  --typo-body-xlarge-weight: 500;
+  --typo-body-xlarge-desktop-size: 28px;
+  --typo-body-xlarge-desktop-lh: 150%;
+  --typo-body-xlarge-mobile-size: 24px;
+  --typo-body-xlarge-mobile-lh: 120%;
+  --typo-body-xlarge-weight-label: Medium;
+
+  --typo-body-large-font: #{$font-family-sans-serif};
+  --typo-body-large-weight: 400;
+  --typo-body-large-desktop-size: 18px;
+  --typo-body-large-desktop-lh: 140%;
+  --typo-body-large-mobile-size: 18px;
+  --typo-body-large-mobile-lh: 140%;
+  --typo-body-large-weight-label: Regular;
+
+  --typo-body-font: #{$font-family-sans-serif};
+  --typo-body-weight: 400;
+  --typo-body-desktop-size: 16px;
+  --typo-body-desktop-lh: 140%;
+  --typo-body-mobile-size: 16px;
+  --typo-body-mobile-lh: 140%;
+  --typo-body-weight-label: Regular;
+
+  --typo-body-small-font: #{$font-family-sans-serif};
+  --typo-body-small-weight: 400;
+  --typo-body-small-desktop-size: 14px;
+  --typo-body-small-desktop-lh: 150%;
+  --typo-body-small-mobile-size: 14px;
+  --typo-body-small-mobile-lh: 140%;
+  --typo-body-small-weight-label: Regular;
+
+  --typo-body-xsmall-font: #{$font-family-sans-serif};
+  --typo-body-xsmall-weight: 400;
+  --typo-body-xsmall-desktop-size: 12px;
+  --typo-body-xsmall-desktop-lh: 140%;
+  --typo-body-xsmall-mobile-size: 12px;
+  --typo-body-xsmall-mobile-lh: 140%;
+  --typo-body-xsmall-weight-label: Regular;
+
+  // Captions
+  --typo-c1-font: #{$font-family-sans-serif};
+  --typo-c1-weight: 500;
+  --typo-c1-desktop-size: 14px;
+  --typo-c1-desktop-lh: 150%;
+  --typo-c1-mobile-size: 12px;
+  --typo-c1-mobile-lh: 150%;
+  --typo-c1-weight-label: Medium / Uppercase;
+
+  --typo-c2-font: #{$font-family-sans-serif};
+  --typo-c2-weight: 500;
+  --typo-c2-desktop-size: 14px;
+  --typo-c2-desktop-lh: 150%;
+  --typo-c2-mobile-size: 14px;
+  --typo-c2-mobile-lh: 150%;
+  --typo-c2-weight-label: Medium / Uppercase;
+
+  --typo-c3-font: #{$font-family-sans-serif};
+  --typo-c3-weight: 500;
+  --typo-c3-desktop-size: 12px;
+  --typo-c3-desktop-lh: 150%;
+  --typo-c3-mobile-size: 12px;
+  --typo-c3-mobile-lh: 150%;
+  --typo-c3-weight-label: Medium / Uppercase;
+}
+
 h1,
 h2,
 h3,

@@ -20,11 +20,67 @@ class Styleguide {
     }
 
     init() {
+        this.populateColorHex();
+        this.populateTypography();
         this.bindSwatchCopy();
         this.bindIconCopy();
         this.bindTypoToggle();
         this.bindCodeCopy();
         this.bindFormValidation();
+    }
+
+    // =========================================================================
+    // Populate swatch hex values from CSS custom properties
+    // =========================================================================
+    populateColorHex() {
+        const style = getComputedStyle(document.documentElement);
+        this.swatches.forEach(swatch => {
+            const cssVar = swatch.getAttribute('data-css-var');
+            const hexEl = swatch.querySelector('[data-hex]');
+            if (cssVar) {
+                const value = style.getPropertyValue(cssVar).trim();
+                if (hexEl) {
+                    hexEl.textContent = value || cssVar;
+                }
+                if (value) {
+                    swatch.setAttribute('data-color', value);
+                }
+            }
+        });
+    }
+
+    // =========================================================================
+    // Populate typography spec metadata from CSS custom properties
+    // =========================================================================
+    populateTypography() {
+        const style = getComputedStyle(document.documentElement);
+        const rows = this.container.querySelectorAll('[data-typo-class]');
+        rows.forEach(row => {
+            const cls = row.getAttribute('data-typo-class');
+            const prefix = `--typo-${cls}`;
+
+            const fontEl = row.querySelector('[data-typo-font]');
+            const weightEl = row.querySelector('[data-typo-weight]');
+            const desktopEl = row.querySelector('[data-typo-desktop]');
+            const mobileEl = row.querySelector('[data-typo-mobile]');
+
+            if (fontEl) {
+                fontEl.textContent = style.getPropertyValue(`${prefix}-font`).trim();
+            }
+            if (weightEl) {
+                weightEl.textContent = style.getPropertyValue(`${prefix}-weight-label`).trim();
+            }
+            if (desktopEl) {
+                const size = style.getPropertyValue(`${prefix}-desktop-size`).trim();
+                const lh = style.getPropertyValue(`${prefix}-desktop-lh`).trim();
+                desktopEl.textContent = `${size} / ${lh}`;
+            }
+            if (mobileEl) {
+                const size = style.getPropertyValue(`${prefix}-mobile-size`).trim();
+                const lh = style.getPropertyValue(`${prefix}-mobile-lh`).trim();
+                mobileEl.textContent = `${size} / ${lh}`;
+            }
+        });
     }
 
     // =========================================================================

@@ -1,23 +1,22 @@
 $global: "theme";
 
 :root {
-  --subtle: #fbf9f6;
-  --border-subtle: #dbdad7;
-  --font-color-body: #424241;
-  --font-color-body-grey: #757573;
-  --font-color-headline: #091d3e;
-  --icon-grey: #a8a7a5;
+  --subtle: #{$gray-50};
+  --border-subtle: #{$gray-200};
+  --font-color-body: #{$gray-800};
+  --font-color-body-grey: #{$gray-600};
+  --font-color-headline: #{$midnight-blue};
+  --icon-grey: #{$gray-400};
   --background-subtle: var(--subtle);
-  --blue-gradient: linear-gradient(180deg, #1873d2 0%, #b2edfe 47.78%, #fff 100%);
-  --border-input-default: var(--icon-grey);
-  --light-blue-50: #effbfe;
-  --border-input-default: #a8a7a5;
+  --blue-gradient: linear-gradient(180deg, #{$blue} 0%, #{$light-blue} 47.78%, #{$white} 100%);
+  --light-blue-50: #{$blue-50};
+  --border-input-default: #{$gray-400};
   --rounded-input-default: 0.25rem;
   --box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.1);
   --fluid-32-80: clamp(2rem, -5.4096rem + 11.5663vw, 5rem);
-  --neutral-100: #f6f5f1;
-  --icon-primary: #091d3e;
-  --red-orange: #ea483b;
+  --gray-100: #{$gray-100};
+  --icon-primary: #{$midnight-blue};
+  --red-orange: #{$red-orange};
 }
 
 // :root {

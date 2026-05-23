@@ -24,7 +24,7 @@
   font-size: var(--btn-font-size, 1rem);
   line-height: var(--btn-line-height, 1.5);
   font-weight: var(--btn-weight, 500);
-  font-family: "General Sans", sans-serif;
+  font-family: $font-family-sans-serif;
   display: inline-flex;
   justify-content: center;
   align-items: center;
