@@ -16,112 +16,218 @@ h6,
   letter-spacing: normal;
 }
 
-h1,
-.h1 {
-  font-size: 2.5rem; // 40px
-  line-height: 3rem; // 48px
-  letter-spacing: -0.0625rem; // -1px
+// Display 1 & 2
+.d1 {
+  font-family: $font-family-heading;
+  font-weight: 700;
+  font-size: 3rem; // 48px
+  line-height: 1.1; // 110%
+  @include media-breakpoint-up(md) {
+    font-size: 7.5rem; // 120px
+    line-height: 1.0; // 100%
+  }
+}
 
+.d2 {
+  font-family: $font-family-heading;
+  font-weight: 400;
+  font-size: 2.5rem; // 40px
+  line-height: 0.9; // 90%
+  @include media-breakpoint-up(md) {
+    font-size: 5.5rem; // 88px
+    line-height: 1.2; // 120%
+  }
+}
+
+// Headings
+h1, .h1 {
+  font-weight: 700;
+  font-size: 2.5rem; // 40px
+  line-height: 1.2; // 120%
+  @include media-breakpoint-up(md) {
+    font-size: 4rem; // 64px
+    line-height: 1.1; // 110%
+  }
+}
+
+h2, .h2 {
+  font-weight: 700;
+  font-size: 2rem; // 32px
+  line-height: 1.4; // 140%
   @include media-breakpoint-up(md) {
     font-size: 3rem; // 48px
-    line-height: 3.625rem; // 58px
-  }
-
-  @include media-breakpoint-up(lg) {
-    font-size: 3.5rem; // 56px
-    line-height: 4.1875rem; // 67px
+    line-height: 1.1; // 110%
   }
 }
 
-h2,
-.h2 {
-  font-size: 2rem; // 32px
-  line-height: 2.375rem; // 38px
-  letter-spacing: -0.0625rem; // -1px
-
+h3, .h3 {
+  font-weight: 700;
+  font-size: 1.75rem; // 28px
+  line-height: 1.4; // 140%
   @include media-breakpoint-up(md) {
     font-size: 2.5rem; // 40px
-    line-height: 3rem; // 48px
+    line-height: 1.2; // 120%
   }
 }
 
-h3,
-.h3 {
-  font-size: 1.5rem; // 24px
-  line-height: 2.25rem; // 36px
-
+h4, .h4 {
+  font-weight: 700;
+  font-size: 1.75rem; // 28px
+  line-height: 1.4; // 140%
   @include media-breakpoint-up(md) {
     font-size: 2rem; // 32px
-    line-height: 2.375rem; // 38px
+    line-height: 1.4; // 140%
   }
 }
 
-h4,
-.h4 {
-  font-size: 1.25rem; // 20px
-  line-height: 2rem; // 32px
+h5, .h5 {
+  font-weight: 500;
+  font-size: 1.125rem; // 18px
+  line-height: 1.6; // 160%
+  @include media-breakpoint-up(md) {
+    font-size: 1.75rem; // 28px
+    line-height: 1.4; // 140%
+  }
+}
 
+h6, .h6 {
+  font-weight: 500;
+  font-size: 1.25rem; // 20px
+  line-height: 1.4; // 140%
   @include media-breakpoint-up(md) {
     font-size: 1.5rem; // 24px
-    line-height: 2.25rem; // 36px
+    line-height: 1.38; // 138%
   }
 }
 
-h5,
-.h5 {
-  font-size: 1.125rem; // 18px
-  line-height: 1.8125rem; // 29px
-}
-
-h6,
-.h6 {
-  font-size: 1.125rem; // 18px
-  line-height: 1.8125rem; // 29px
-  letter-spacing: normal;
-
+// Subheadings
+.sh0 {
+  font-family: $font-family-heading;
+  font-weight: 400; // Book
+  font-size: 1.5rem; // 24px
+  line-height: 1.38; // 138%
   @include media-breakpoint-up(md) {
-    font-size: 1.24rem; // 20px
-    line-height: 2rem; // 32px
+    font-size: 1.75rem; // 28px
+    line-height: 1.55; // 155%
   }
 }
 
+.sh1 {
+  font-family: $font-family-heading;
+  font-weight: 500; // Medium
+  font-size: 1.5rem; // 24px
+  line-height: 1.38; // 138%
+  @include media-breakpoint-up(md) {
+    font-size: 1.75rem; // 28px
+    line-height: 1.4; // 140%
+  }
+}
+
+.sh2 {
+  font-family: $font-family-heading;
+  font-weight: 500; // Medium
+  font-size: 1.5rem; // 24px
+  line-height: 1.38; // 138%
+  @include media-breakpoint-up(md) {
+    font-size: 1.25rem; // 20px
+    line-height: 1.4; // 140%
+  }
+}
+
+.sh3 {
+  font-family: $font-family-heading;
+  font-weight: 400; // Book
+  font-size: 1.125rem; // 18px
+  line-height: 1.6; // 160%
+  @include media-breakpoint-up(md) {
+    font-size: 1.125rem; // 18px
+    line-height: 1.1; // 110%
+  }
+}
+
+// Body Text
 .body-xlarge {
-  font-size: 1.25rem; // 20px
-  line-height: 2rem; // 32px
-
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem; // 24px
+  line-height: 1.2; // 120%
   @include media-breakpoint-up(md) {
-    font-size: 1.5rem; // 24px
-    line-height: 2.25rem; // 36px
+    font-size: 1.75rem; // 28px
+    line-height: 1.5; // 150%
   }
+}
+
+.body-large {
+  font-family: $font-family-sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem; // 18px
+  line-height: 1.4; // 140%
 }
 
 .body {
+  font-family: $font-family-sans-serif;
+  font-weight: 400;
   font-size: 1rem; // 16px
-  line-height: 1.625; // 26px
+  line-height: 1.4; // 140%
+}
 
-  &-large {
-    font-size: 1.125rem; // 18px
-    line-height: 1.8125rem; // ~29px
+.body-medium {
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem; // 18px
+  line-height: 1.8125rem; // ~29px
+}
 
-    @include media-breakpoint-up(md) {
-      font-size: 1.25rem; // 20px
-      line-height: 2rem; // 32px
-    }
-  }
-
-  &-medium {
-    font-size: 1.125rem; // 18px
-    line-height: 1.8125rem; // ~29px
-    letter-spacing: 0;
-  }
-
-  &-small {
-    font-size: 0.875rem; // 14px
-    line-height: 1.5rem; // 24px (~160%)
+.body-small {
+  font-family: $font-family-sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem; // 14px
+  line-height: 1.4; // 140%
+  @include media-breakpoint-up(md) {
+    line-height: 1.5; // 150%
   }
 }
 
+.body-xsmall {
+  font-family: $font-family-sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem; // 12px
+  line-height: 1.4; // 140%
+}
+
+// Captions (Medium / Uppercase)
+.c1 {
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem; // 12px
+  line-height: 1.5; // 150%
+  @include media-breakpoint-up(md) {
+    font-size: 0.875rem; // 14px
+  }
+}
+
+.c2 {
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem; // 14px
+  line-height: 1.5; // 150%
+}
+
+.c3 {
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem; // 12px
+  line-height: 1.5; // 150%
+}
+
 .eyebrow {
+  font-family: $font-family-sans-serif;
   font-size: 1rem; // 16px
   line-height: 1.25rem; // 20px (~120%)
   letter-spacing: 0.0625rem; // 1px

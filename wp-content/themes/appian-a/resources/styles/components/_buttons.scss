@@ -1,42 +1,52 @@
 .btn {
-  --btn-bg: var(--os-primary);
-  --btn-border-color: var(--os-primary);
+  --btn-bg: #{$primary-red};
+  --btn-border-color: #{$primary-red};
   --btn-color: #{$white};
-  --btn-hover-bg: var(--os-primary);
-  --btn-hover-border-color: var(--os-primary);
-  --btn-hover-color: #{$black};
-  --btn-padding: 0.875rem 1.25rem;
-  --btn-focus-bg: var(--os-primary);
-  --btn-focus-color: #{$black};
-  --btn-border-radius: 9999px;
-  --btn-weight: 700;
+  --btn-hover-bg: #{$btn-hover-dark};
+  --btn-hover-border-color: #{$btn-hover-dark};
+  --btn-hover-color: #{$white};
+  --btn-padding: 1.375rem 1.75rem;
+  --btn-focus-bg: #{$primary-red};
+  --btn-focus-color: #{$white};
+  --btn-border-radius: 0;
+  --btn-weight: 500;
   --btn-border-width: 0.125rem; // 2px
-  --btn-font-size: 0.875rem; // 14px
-  --btn-line-height: 1rem; // 16px
+  --btn-font-size: 1rem; // 16px
+  --btn-line-height: 1.5; // 150%
 
   border: var(--btn-border-width, 0.125rem) solid var(--btn-border-color, transparent);
   border-radius: var(--btn-border-radius, 0);
   box-sizing: border-box;
   text-decoration: none;
   background-color: var(--btn-bg, transparent);
-  color: var(--btn-color, $black);
-  padding: var(--btn-padding, 0.875rem 1.25rem);
-  font-size: var(--btn-font-size, 0.875rem);
-  line-height: var(--btn-line-height, 1rem);
-  font-weight: var(--btn-weight, 700);
+  color: var(--btn-color, #{$black});
+  padding: var(--btn-padding, 1.375rem 1.75rem);
+  font-size: var(--btn-font-size, 1rem);
+  line-height: var(--btn-line-height, 1.5);
+  font-weight: var(--btn-weight, 500);
+  font-family: "General Sans", sans-serif;
   display: inline-flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 5.5rem;
   position: relative;
+  cursor: pointer;
   transition:
     color 0.35s ease,
-    background-color 0.35s ease;
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+  }
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: var(--btn-hover-bg, $black);
-      color: var(--btn-hover-color, $white);
-      border-color: var(--btn-hover-border-color, var(--os-primary));
+      background-color: var(--btn-hover-bg, transparent);
+      color: var(--btn-hover-color, #{$white});
+      border-color: var(--btn-hover-border-color, #{$btn-hover-dark});
     }
   }
 
@@ -52,41 +62,41 @@
   }
 
   &--small {
-    --btn-padding: 0.625rem 0.875rem;
+    --btn-padding: 0.75rem 1.25rem;
   }
 
   &-primary {
-    --btn-bg: var(--os-primary);
-    --btn-border-color: var(--os-primary);
+    --btn-bg: #{$primary-red};
+    --btn-border-color: #{$primary-red};
     --btn-color: #{$white};
-    --btn-hover-bg: var(--os-primary);
-    --btn-hover-border-color: var(--os-primary);
-    --btn-hover-color: #{$black};
-
-    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-      &:hover,
-      &:focus,
-      &:active {
-        --btn-hover-bg: transparent;
-      }
-    }
+    --btn-hover-bg: #{$btn-hover-dark};
+    --btn-hover-border-color: #{$btn-hover-dark};
+    --btn-hover-color: #{$white};
+    --btn-focus-bg: #{$primary-red};
+    --btn-focus-color: #{$white};
   }
 
   &-secondary {
-    --btn-bg: var(--os-midnight-blue);
-    --btn-border-color: var(--os-midnight-blue);
+    --btn-bg: #{$neutral-500};
+    --btn-border-color: #{$neutral-500};
     --btn-color: #{$white};
-    --btn-hover-bg: var(--os-midnight-blue);
-    --btn-hover-border-color: var(--os-midnight-blue);
-    --btn-hover-color: #{$black};
+    --btn-hover-bg: transparent;
+    --btn-hover-border-color: #{$neutral-500};
+    --btn-hover-color: #{$neutral-500};
+    --btn-focus-bg: #{$neutral-500};
+    --btn-focus-color: #{$white};
+  }
 
-    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-      &:hover,
-      &:focus,
-      &:active {
-        --btn-hover-bg: transparent;
-      }
-    }
+  &[disabled],
+  &[aria-disabled="true"] {
+    --btn-bg: #{$btn-disabled};
+    --btn-border-color: #{$btn-disabled};
+    --btn-color: #{$white};
+    --btn-hover-bg: #{$btn-disabled};
+    --btn-hover-border-color: #{$btn-disabled};
+    --btn-hover-color: #{$white};
+    pointer-events: none;
+    cursor: default;
   }
 
   &-reset {
@@ -97,12 +107,10 @@
 
   &-link {
     --btn-font-size: 1rem;
-    --btn-line-height: 1.4;
-    --btn-color: var(--os-primary);
-    --btn-hover-color: var(--os-primary);
-    --btn-icon-color: var(--os-primary);
-    --btn-icon-size: 1.5rem;
-    --btn-focus-color: var(--os-primary);
+    --btn-line-height: 1.5;
+    --btn-color: #{$primary-red};
+    --btn-hover-color: #{$btn-tertiary-hover};
+    --btn-focus-color: #{$primary-red};
 
     border: none;
     background: transparent;
@@ -110,11 +118,9 @@
     color: var(--btn-color);
     border-radius: 0;
     gap: 0.5rem;
-    font-weight: 600;
+    font-weight: 500;
 
-    i {
-      color: var(--btn-icon-color);
-      font-size: var(--btn-icon-size);
+    svg {
       transition: translate 0.35s ease;
     }
 
@@ -122,7 +128,7 @@
     &:focus {
       background: transparent;
 
-      i {
+      svg {
         translate: 0.5rem;
       }
     }
@@ -131,16 +137,10 @@
       background-color: transparent;
     }
 
-    &:focus {
-      i {
-        color: var(--btn-focus-color);
-      }
-    }
-
     &-secondary {
-      --btn-icon-color: var(--os-midnight-blue);
-      --btn-color: var(--os-midnight-blue);
-      --btn-hover-color: var(--os-midnight-blue);
+      --btn-color: #{$neutral-500};
+      --btn-hover-color: #{$neutral-500};
+      --btn-focus-color: #{$neutral-500};
     }
 
     &--underline {
@@ -165,26 +165,26 @@
 
   &-outline {
     --btn-bg: transparent;
-    --btn-border-color: var(--os-primary);
-    --btn-color: var(--os-gray-900);
-    --btn-hover-bg: var(--os-primary);
-    --btn-hover-border-color: var(--os-primary);
+    --btn-border-color: #{$primary-red};
+    --btn-color: #{$primary-red};
+    --btn-hover-bg: #{$primary-red};
+    --btn-hover-border-color: #{$primary-red};
     --btn-hover-color: #{$white};
-    --btn-weight: 600;
+    --btn-weight: 500;
 
     &-primary {
-      --btn-border-color: var(--os-primary);
-      --btn-color: var(--os-gray-900);
-      --btn-hover-bg: var(--os-primary);
-      --btn-hover-border-color: var(--os-primary);
+      --btn-border-color: #{$primary-red};
+      --btn-color: #{$primary-red};
+      --btn-hover-bg: #{$primary-red};
+      --btn-hover-border-color: #{$primary-red};
       --btn-hover-color: #{$white};
     }
 
     &-secondary {
-      --btn-border-color: var(--os-midnight-blue);
-      --btn-color: var(--os-gray-900);
-      --btn-hover-bg: var(--os-midnight-blue);
-      --btn-hover-border-color: var(--os-midnight-blue);
+      --btn-border-color: #{$neutral-500};
+      --btn-color: #{$neutral-500};
+      --btn-hover-bg: #{$neutral-500};
+      --btn-hover-border-color: #{$neutral-500};
       --btn-hover-color: #{$white};
     }
   }
@@ -195,11 +195,21 @@
     .btn-primary {
       &:hover {
         --btn-hover-color: #{$white};
+        --btn-hover-bg: transparent;
+        --btn-hover-border-color: #{$white};
       }
     }
 
     .btn-outline {
+      --btn-border-color: #{$white};
       --btn-color: #{$white};
+      --btn-hover-bg: #{$white};
+      --btn-hover-color: #{$primary-red};
+    }
+
+    .btn-link {
+      --btn-color: #{$white};
+      --btn-hover-color: #{$white};
     }
   }
 }

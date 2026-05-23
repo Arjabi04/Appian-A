@@ -5,6 +5,8 @@ add_action('acf/init', function () {
         $boilerplateModules = [
             'leadspace' => 'Leadspace',
             'about'     => 'About',
+            'our-work'  => 'Our Work',
+            'styleguide' => 'Style Guide',
         ];
 
         foreach ($boilerplateModules as $key => $mModule) {
@@ -64,5 +66,6 @@ add_action('acf/init', function () {
                 },
             ));
         }
+        
     }
 });
