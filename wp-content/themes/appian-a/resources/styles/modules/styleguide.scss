@@ -12,6 +12,11 @@
   --sg-code-bg: #{$gray-100};
 }
 
+$sg-form-border: rgba($black, 0.68);
+$sg-input-height: 3.25rem;           // 52px
+$sg-input-radius: $border-radius-lg; // 8px = 0.5rem
+$sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
+
 .m-styleguide {
   font-family: $font-family-sans-serif;
 
@@ -284,7 +289,7 @@
 
   &__demo-code {
     position: relative;
-    background: #111;
+    background: $neutral-600;
     border-radius: 4px;
     overflow: hidden;
     margin-top: map-get($spacers, 4);
@@ -306,7 +311,7 @@
     position: absolute;
     top: map-get($spacers, 2);
     right: map-get($spacers, 2);
-    background: #222;
+    background: $neutral-400;
     color: $white;
     border: none;
     border-radius: $border-radius-sm;
@@ -381,7 +386,7 @@
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
-    max-width: 580px;
+    max-width: 36.25rem;
   }
 
   &__form-el {
@@ -411,24 +416,24 @@
 
     &--focus .m-styleguide__input,
     &--focus .m-styleguide__select {
-      border-color: #111;
-      color: #111;
+      border-color: $neutral-600;
+      color: $neutral-600;
     }
 
     &--error {
 
       .m-styleguide__input,
       .m-styleguide__select {
-        border-color: #d72027;
-        color: #d72027;
+        border-color: $primary-red;
+        color: $primary-red;
 
         &::placeholder {
-          color: #d72027;
+          color: $primary-red;
         }
       }
 
       .m-styleguide__select-arrow svg {
-        color: #d72027;
+        color: $primary-red;
       }
 
       &+.m-styleguide__input-error {
@@ -439,44 +444,44 @@
 
   &__input {
     width: 100%;
-    height: 52px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.68);
-    padding: 14px 24px;
+    height: $sg-input-height;
+    border-radius: $sg-input-radius;
+    border: 1px solid $sg-form-border;
+    padding: $sg-input-padding;
     font-family: $font-family-sans-serif;
     font-weight: $font-weight-medium;
-    color: rgba(0, 0, 0, 0.68);
-    background-color: #fff;
+    color: $sg-form-border;
+    background-color: $white;
     outline: none;
 
     &::placeholder {
-      color: rgba(0, 0, 0, 0.68);
+      color: $sg-form-border;
       opacity: 1;
     }
 
     &:focus {
-      border-color: #111;
-      color: #111;
+      border-color: $neutral-600;
+      color: $neutral-600;
     }
   }
 
   &__input-error {
     display: none;
     font-weight: $font-weight-medium;
-    color: #d72027;
+    color: $primary-red;
   }
 
   &__select {
     width: 100%;
-    height: 52px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.68);
-    padding: 14px 24px;
+    height: $sg-input-height;
+    border-radius: $sg-input-radius;
+    border: 1px solid $sg-form-border;
+    padding: $sg-input-padding;
     padding-right: 3.5rem;
     font-family: $font-family-sans-serif;
     font-weight: $font-weight-medium;
-    color: rgba(0, 0, 0, 0.68);
-    background-color: #fff;
+    color: $sg-form-border;
+    background-color: $white;
     outline: none;
     appearance: none;
     cursor: pointer;
@@ -484,7 +489,7 @@
 
   &__select-arrow {
     position: absolute;
-    right: 24px;
+    right: 1.5rem;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
@@ -494,7 +499,7 @@
     svg {
       width: 24px;
       height: 24px;
-      color: rgba(0, 0, 0, 0.68);
+      color: $sg-form-border;
     }
   }
 
@@ -515,7 +520,7 @@
     appearance: none;
     width: 24px;
     height: 24px;
-    border: 1px solid rgba(0, 0, 0, 0.68);
+    border: 1px solid $sg-form-border;
     border-radius: 50%;
     outline: none;
     margin: 0 12px 0 0;
@@ -523,21 +528,21 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: #fff;
+    background-color: $white;
 
     &::after {
       content: "";
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background-color: #111;
+      background-color: $neutral-600;
       opacity: 0;
       transform: scale(0);
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     &:checked {
-      border-color: #111;
+      border-color: $neutral-600;
 
       &::after {
         opacity: 1;
@@ -548,7 +553,7 @@
 
   &__radio-label {
     font-weight: $font-weight-medium;
-    color: rgba(0, 0, 0, 0.68);
+    color: $sg-form-border;
   }
 
   &__form-submit {
@@ -662,7 +667,7 @@
     position: fixed;
     bottom: map-get($spacers, 6);
     right: map-get($spacers, 6);
-    background: #111;
+    background: $neutral-600;
     color: $white;
     padding: map-get($spacers, 3) map-get($spacers, 6);
     border-radius: 4px;

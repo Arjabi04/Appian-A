@@ -35,74 +35,76 @@ if ( ! empty( $block['align'] ) ) {
 }
 
 
-// Brand colors with their SCSS variable names and hex values (from Figma "sans")
+// Brand colors — hex values are populated at runtime from CSS custom properties.
 $brand_colors = [
-    ['name' => 'Primary Red',     'var' => '$primary-red',     'hex' => '#d72027', 'slug' => 'primary-red'],
-    ['name' => 'Dark Red',        'var' => '$dark-red',        'hex' => '#ad1a1f', 'slug' => 'dark-red'],
-    ['name' => 'Darkest Red',     'var' => '$darkest-red',     'hex' => '#811317', 'slug' => 'darkest-red'],
-    ['name' => 'Light Red',       'var' => '$light-red',       'hex' => '#f3babc', 'slug' => 'light-red'],
-    ['name' => 'Ultra Light Red', 'var' => '$ultra-light-red', 'hex' => '#fbe9e9', 'slug' => 'ultra-light-red'],
+    ['name' => 'Primary Red',     'var' => '$primary-red',     'slug' => 'primary-red'],
+    ['name' => 'Dark Red',        'var' => '$dark-red',        'slug' => 'dark-red'],
+    ['name' => 'Darkest Red',     'var' => '$darkest-red',     'slug' => 'darkest-red'],
+    ['name' => 'Light Red',       'var' => '$light-red',       'slug' => 'light-red'],
+    ['name' => 'Ultra Light Red', 'var' => '$ultra-light-red', 'slug' => 'ultra-light-red'],
 ];
 
 $secondary_colors = [
-    ['name' => 'Secondary',       'var' => '$secondary-dark',  'hex' => '#101922', 'slug' => 'secondary-dark'],
-    ['name' => 'Dark',            'var' => '$dark',            'hex' => '#0c131a', 'slug' => 'dark'],
-    ['name' => 'Light',           'var' => '$light',           'hex' => '#dbddde', 'slug' => 'light'],
-    ['name' => 'Ultra Light',     'var' => '$ultra-light',     'hex' => '#e7e8e9', 'slug' => 'ultra-light'],
+    ['name' => 'Secondary',       'var' => '$secondary-dark',  'slug' => 'secondary-dark'],
+    ['name' => 'Dark',            'var' => '$dark',            'slug' => 'dark'],
+    ['name' => 'Light',           'var' => '$light',           'slug' => 'light'],
+    ['name' => 'Ultra Light',     'var' => '$ultra-light',     'slug' => 'ultra-light'],
 ];
 
 $neutral_colors = [
-    ['name' => 'Neutral 600',  'var' => '$neutral-600',  'hex' => '#111111', 'slug' => 'neutral-600'],
-    ['name' => 'Neutral 500',  'var' => '$neutral-500',  'hex' => '#1c1c1c', 'slug' => 'neutral-500'],
-    ['name' => 'Neutral 400',  'var' => '$neutral-400',  'hex' => '#292929', 'slug' => 'neutral-400'],
-    ['name' => 'Neutral 300',  'var' => '$neutral-300',  'hex' => '#393939', 'slug' => 'neutral-300'],
-    ['name' => 'Neutral 200',  'var' => '$neutral-200',  'hex' => '#7c7c7c', 'slug' => 'neutral-200'],
-    ['name' => 'Neutral 100',  'var' => '$neutral-100',  'hex' => '#dedede', 'slug' => 'neutral-100'],
-    ['name' => 'Neutral 75',   'var' => '$neutral-75',   'hex' => '#e9e9e9', 'slug' => 'neutral-75'],
-    ['name' => 'White',        'var' => '$white',         'hex' => '#ffffff', 'slug' => 'white'],
+    ['name' => 'Neutral 600',  'var' => '$neutral-600',  'slug' => 'neutral-600'],
+    ['name' => 'Neutral 500',  'var' => '$neutral-500',  'slug' => 'neutral-500'],
+    ['name' => 'Neutral 400',  'var' => '$neutral-400',  'slug' => 'neutral-400'],
+    ['name' => 'Neutral 300',  'var' => '$neutral-300',  'slug' => 'neutral-300'],
+    ['name' => 'Neutral 200',  'var' => '$neutral-200',  'slug' => 'neutral-200'],
+    ['name' => 'Neutral 100',  'var' => '$neutral-100',  'slug' => 'neutral-100'],
+    ['name' => 'Neutral 75',   'var' => '$neutral-75',   'slug' => 'neutral-75'],
+    ['name' => 'White',        'var' => '$white',         'slug' => 'white'],
 ];
 
 $overlay_colors = [
-    ['name' => 'Overlay 68%',  'var' => 'rgba(0,0,0,0.68)', 'hex' => 'rgba(0,0,0,0.68)', 'slug' => 'overlay-68'],
-    ['name' => 'Overlay 50%',  'var' => 'rgba(0,0,0,0.50)', 'hex' => 'rgba(0,0,0,0.50)', 'slug' => 'overlay-50'],
-    ['name' => 'Overlay 30%',  'var' => 'rgba(0,0,0,0.30)', 'hex' => 'rgba(0,0,0,0.30)', 'slug' => 'overlay-30'],
-    ['name' => 'Overlay 20%',  'var' => 'rgba(0,0,0,0.20)', 'hex' => 'rgba(0,0,0,0.20)', 'slug' => 'overlay-20'],
+    ['name' => 'Overlay 68%',  'var' => 'var(--overlay-68)', 'slug' => 'overlay-68'],
+    ['name' => 'Overlay 50%',  'var' => 'var(--overlay-50)', 'slug' => 'overlay-50'],
+    ['name' => 'Overlay 30%',  'var' => 'var(--overlay-30)', 'slug' => 'overlay-30'],
+    ['name' => 'Overlay 20%',  'var' => 'var(--overlay-20)', 'slug' => 'overlay-20'],
 ];
 
-// Typography definitions: [class, label, font, desktop-size, desktop-lh, mobile-size, mobile-lh, weight]
+// Typography definitions: [class, label]
+// Specs (font, sizes, weights, line-heights) are defined in _type.scss and exposed
+// as CSS custom properties (--typo-{class}-*). The styleguide JS reads them at runtime.
 $typography_display = [
-    ['d1', 'Display 1', 'Reckless Neue', '120px', '100%', '48px', '110%', 'Bold'],
-    ['d2', 'Display 2', 'Reckless Neue', '88px',  '120%', '40px', '90%',  'Regular'],
+    ['d1', 'Display 1'],
+    ['d2', 'Display 2'],
 ];
 
 $typography_headings = [
-    ['h1', 'Heading 1', 'Reckless Neue', '64px', '110%', '40px', '120%', 'Bold'],
-    ['h2', 'Heading 2', 'Reckless Neue', '48px', '110%', '32px', '140%', 'Bold'],
-    ['h3', 'Heading 3', 'Reckless Neue', '40px', '120%', '28px', '140%', 'Bold'],
-    ['h4', 'Heading 4', 'Reckless Neue', '32px', '140%', '28px', '140%', 'Bold'],
-    ['h5', 'Heading 5', 'Reckless Neue', '28px', '140%', '18px', '160%', 'Medium'],
-    ['h6', 'Heading 6', 'Reckless Neue', '24px', '138%', '20px', '140%', 'Medium'],
+    ['h1', 'Heading 1'],
+    ['h2', 'Heading 2'],
+    ['h3', 'Heading 3'],
+    ['h4', 'Heading 4'],
+    ['h5', 'Heading 5'],
+    ['h6', 'Heading 6'],
 ];
 
 $typography_subheadings = [
-    ['sh0', 'Subheading 0', 'Reckless Neue', '28px', '155%', '24px', '138%', 'Book'],
-    ['sh1', 'Subheading 1', 'Reckless Neue', '28px', '140%', '24px', '138%', 'Medium'],
-    ['sh2', 'Subheading 2', 'Reckless Neue', '20px', '140%', '24px', '138%', 'Medium'],
-    ['sh3', 'Subheading 3', 'Reckless Neue', '18px', '110%', '18px', '160%', 'Book'],
+    ['sh0', 'Subheading 0'],
+    ['sh1', 'Subheading 1'],
+    ['sh2', 'Subheading 2'],
+    ['sh3', 'Subheading 3'],
 ];
 
 $typography_body = [
-    ['body-xlarge', 'Body XL',    'General Sans', '28px', '150%', '24px', '120%', 'Medium'],
-    ['body-large',  'Body Large', 'General Sans', '18px', '140%', '18px', '140%', 'Regular'],
-    ['body',        'Body',       'General Sans', '16px', '140%', '16px', '140%', 'Regular'],
-    ['body-small',  'Body Small', 'General Sans', '14px', '150%', '14px', '140%', 'Regular'],
-    ['body-xsmall', 'Body XS',   'General Sans', '12px', '140%', '12px', '140%', 'Regular'],
+    ['body-xlarge', 'Body XL'],
+    ['body-large',  'Body Large'],
+    ['body',        'Body'],
+    ['body-small',  'Body Small'],
+    ['body-xsmall', 'Body XS'],
 ];
 
 $typography_caption = [
-    ['c1', 'Caption 1', 'General Sans', '14px', '150%', '12px', '150%', 'Medium / Uppercase'],
-    ['c2', 'Caption 2', 'General Sans', '14px', '150%', '14px', '150%', 'Medium / Uppercase'],
-    ['c3', 'Caption 3', 'General Sans', '12px', '150%', '12px', '150%', 'Medium / Uppercase'],
+    ['c1', 'Caption 1'],
+    ['c2', 'Caption 2'],
+    ['c3', 'Caption 3'],
 ];
 
 // Load centralized SVG icon registry.
@@ -135,11 +137,11 @@ $icons = appian_get_svg_icons();
             <h3 class="m-styleguide__subsection-title">Primary</h3>
             <div class="m-styleguide__color-grid">
                 <?php foreach ( $brand_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-color="<?php echo esc_attr( $color['hex'] ); ?>">
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>">
                         <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?>"></div>
                         <div class="m-styleguide__swatch-info">
                             <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
-                            <code class="m-styleguide__swatch-hex"><?php echo esc_html( $color['hex'] ); ?></code>
+                            <code class="m-styleguide__swatch-hex" data-hex></code>
                             <code class="m-styleguide__swatch-var">var(--<?php echo esc_html( $color['slug'] ); ?>)</code>
                         </div>
                     </div>
@@ -149,11 +151,11 @@ $icons = appian_get_svg_icons();
             <h3 class="m-styleguide__subsection-title">Secondary</h3>
             <div class="m-styleguide__color-grid">
                 <?php foreach ( $secondary_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-color="<?php echo esc_attr( $color['hex'] ); ?>">
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>">
                         <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?>"></div>
                         <div class="m-styleguide__swatch-info">
                             <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
-                            <code class="m-styleguide__swatch-hex"><?php echo esc_html( $color['hex'] ); ?></code>
+                            <code class="m-styleguide__swatch-hex" data-hex></code>
                             <code class="m-styleguide__swatch-var">var(--<?php echo esc_html( $color['slug'] ); ?>)</code>
                         </div>
                     </div>
@@ -163,11 +165,11 @@ $icons = appian_get_svg_icons();
             <h3 class="m-styleguide__subsection-title">Neutrals</h3>
             <div class="m-styleguide__color-grid">
                 <?php foreach ( $neutral_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-color="<?php echo esc_attr( $color['hex'] ); ?>">
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>"<?php echo $color['slug'] === 'white' ? ' data-color="#ffffff"' : ''; ?>>
                         <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?><?php echo in_array( $color['name'], ['White', 'Neutral 75', 'Neutral 100'] ) ? ' m-styleguide__swatch-preview--light' : ''; ?>"></div>
                         <div class="m-styleguide__swatch-info">
                             <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
-                            <code class="m-styleguide__swatch-hex"><?php echo esc_html( $color['hex'] ); ?></code>
+                            <code class="m-styleguide__swatch-hex" data-hex><?php echo $color['slug'] === 'white' ? '#ffffff' : ''; ?></code>
                             <code class="m-styleguide__swatch-var"><?php echo $color['slug'] === 'white' ? '$white' : 'var(--' . esc_html( $color['slug'] ) . ')'; ?></code>
                         </div>
                     </div>
@@ -177,7 +179,7 @@ $icons = appian_get_svg_icons();
             <h3 class="m-styleguide__subsection-title">Overlays</h3>
             <div class="m-styleguide__color-grid">
                 <?php foreach ( $overlay_colors as $color ) : ?>
-                    <div class="m-styleguide__swatch" data-color="<?php echo esc_attr( $color['hex'] ); ?>">
+                    <div class="m-styleguide__swatch" data-css-var="--<?php echo esc_attr( $color['slug'] ); ?>">
                         <div class="m-styleguide__swatch-preview bg-<?php echo esc_attr( $color['slug'] ); ?>"></div>
                         <div class="m-styleguide__swatch-info">
                             <span class="m-styleguide__swatch-name"><?php echo esc_html( $color['name'] ); ?></span>
@@ -226,31 +228,15 @@ background-color: var(--dark-red);'
             <?php foreach ( $typo_groups as $group_label => $group_items ) : ?>
                 <h3 class="m-styleguide__subsection-title"><?php echo esc_html( $group_label ); ?></h3>
                 <div class="m-styleguide__typo-list">
-                    <?php foreach ( $group_items as $type ) :
-                        // Determine font-family for inline preview
-                        $preview_font = ( $type[2] === 'Reckless Neue' )
-                            ? "'Reckless Neue', Georgia, serif"
-                            : "'General Sans', sans-serif";
-
-                        // Map weight labels to CSS values
-                        $weight_map = [
-                            'Bold' => '700',
-                            'Medium' => '500',
-                            'Book' => '400',
-                            'Regular' => '400',
-                            'Medium / Uppercase' => '500',
-                        ];
-                        $css_weight = isset( $weight_map[ $type[7] ] ) ? $weight_map[ $type[7] ] : '400';
-                        $is_uppercase = strpos( $type[7], 'Uppercase' ) !== false;
-                    ?>
-                        <div class="m-styleguide__typo-row">
+                    <?php foreach ( $group_items as $type ) : ?>
+                        <div class="m-styleguide__typo-row" data-typo-class="<?php echo esc_attr( $type[0] ); ?>">
                             <div class="m-styleguide__typo-meta">
                                 <code class="m-styleguide__typo-tag"><?php echo esc_html( $type[1] ); ?></code>
                                 <div class="m-styleguide__typo-specs">
-                                    <span>Font: <?php echo esc_html( $type[2] ); ?></span>
-                                    <span>Weight: <?php echo esc_html( $type[7] ); ?></span>
-                                    <span class="m-styleguide__typo-spec-desktop">Desktop: <?php echo esc_html( $type[3] ); ?> / <?php echo esc_html( $type[4] ); ?></span>
-                                    <span class="m-styleguide__typo-spec-mobile">Mobile: <?php echo esc_html( $type[5] ); ?> / <?php echo esc_html( $type[6] ); ?></span>
+                                    <span>Font: <span data-typo-font></span></span>
+                                    <span>Weight: <span data-typo-weight></span></span>
+                                    <span class="m-styleguide__typo-spec-desktop">Desktop: <span data-typo-desktop></span></span>
+                                    <span class="m-styleguide__typo-spec-mobile">Mobile: <span data-typo-mobile></span></span>
                                 </div>
                             </div>
                             <div class="m-styleguide__typo-preview">

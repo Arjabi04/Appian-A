@@ -63,10 +63,10 @@
 // 1. Settings
 
 @import "settings/path";
-@import "settings/global-vars";
 // Custom variable Bootstrapped Only
 @import "bootstrap/scss/functions";
 @import "settings/bootstrap-variables";
+@import "settings/global-vars";
 
 // Bootstrap Functions
 @import "bootstrap/scss/variables";
@@ -132,7 +132,7 @@
 // @import 'bootstrap/scss/accordion';
 
 // 4. Elements
-// @import 'elements/type';
+@import 'elements/type';
 @import "elements/grids";
 @import "elements/config";
 
