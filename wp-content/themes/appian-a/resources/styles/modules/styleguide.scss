@@ -23,16 +23,12 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
   &__main {
     max-width: 64rem;
     margin: 0 auto;
-    padding: map-get($spacers, 16) map-get($spacers, 6);
-
-    @media (max-width: map-get($grid-breakpoints, md) - 1) {
-      padding: map-get($spacers, 10) map-get($spacers, 4);
-    }
+    padding: 3rem 1.5rem;
   }
 
   &__header {
-    margin-bottom: map-get($spacers, 12);
-    padding-bottom: map-get($spacers, 6);
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--sg-border);
   }
 
@@ -43,14 +39,11 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
   }
 
   &__section {
-    margin-bottom: map-get($spacers, 16);
-    scroll-margin-top: map-get($spacers, 4);
+    margin-bottom: 3rem;
   }
 
   &__section-header {
-    padding-bottom: map-get($spacers, 4);
-    border-bottom: 1px solid var(--sg-border);
-    margin-bottom: map-get($spacers, 6);
+    margin-bottom: 1.5rem;
   }
 
   &__section-heading {
@@ -60,25 +53,37 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
 
   &__subsection-title {
     font-weight: $font-weight-semibold;
-    margin-top: map-get($spacers, 8);
-    margin-bottom: map-get($spacers, 4);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
   }
 
-  // Colors
+  &__divider {
+    border: 0;
+    border-top: 1px solid var(--sg-border);
+    margin: 3rem 0;
+  }
+
+  // Colors Section (Simplified Flex layout instead of CSS Grid)
   &__color-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
-    gap: map-get($spacers, 4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
-  &__swatch {
+  &__color-item {
     border: 1px solid var(--sg-border);
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
+    width: calc(25% - 1rem);
+    min-width: 12.5rem;
+
+    @media (max-width: map-get($grid-breakpoints, md)) {
+      width: 100%;
+    }
   }
 
-  &__swatch-preview {
+  &__color-preview {
     height: 5.5rem;
     width: 100%;
 
@@ -87,41 +92,47 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
     }
   }
 
-  &__swatch-info {
-    padding: map-get($spacers, 3);
+  &__color-info {
+    padding: 0.75rem;
   }
 
-  &__swatch-var {
+  &__color-variable {
     color: var(--sg-accent);
     word-break: break-all;
   }
 
-  // Typography
-  &__typo-controls {
+  // Typography Section
+  &__typo-buttons {
     display: flex;
     justify-content: flex-end;
-    gap: map-get($spacers, 4);
-    margin-bottom: map-get($spacers, 4);
+    gap: 1rem;
+    margin-bottom: 1rem;
   }
 
-  &__typo-toggle {
+  &__typo-button {
     border: none;
     border-bottom: 2px solid transparent;
     background: transparent;
     cursor: pointer;
     font-family: $font-family-sans-serif;
 
-    &.active {
+    &.is-active {
       color: var(--sg-accent);
       border-bottom-color: var(--sg-accent);
     }
   }
 
-  &__typo-row {
+  &__typo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__typo-item {
     display: grid;
     grid-template-columns: 11.25rem 1fr;
-    gap: map-get($spacers, 4);
-    padding-bottom: map-get($spacers, 4);
+    gap: 1rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid var(--sg-border);
     align-items: start;
 
@@ -134,98 +145,113 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
     }
   }
 
-  &__typo-tag {
+  &__typo-class {
     background: var(--sg-code-bg);
-    padding: 0.125rem map-get($spacers, 2);
+    padding: 0.125rem 0.5rem;
     border-radius: $border-radius-sm;
     display: inline-block;
+  }
+
+  &__typo-info {
+    font-size: 0.75rem;
+    color: var(--sg-text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
   }
 
   &__typo-preview {
     overflow-x: auto;
   }
 
-  &.mobile-view &__typo-sample {
+  // Mobile View Specificity Overrides - NO !important
+  &.is-mobile-view &__typo-text {
     &.d1 {
-      font-size: 3rem !important;
-      line-height: 1.1 !important;
+      font-size: 3rem;
+      line-height: 1.1;
     }
 
     &.d2 {
-      font-size: 2.5rem !important;
-      line-height: 0.9 !important;
+      font-size: 2.5rem;
+      line-height: 0.9;
     }
 
     &.h1 {
-      font-size: 2.5rem !important;
-      line-height: 1.2 !important;
+      font-size: 2.5rem;
+      line-height: 1.2;
     }
 
     &.h2 {
-      font-size: 2rem !important;
-      line-height: 1.4 !important;
+      font-size: 2rem;
+      line-height: 1.4;
     }
 
     &.h3,
     &.h4 {
-      font-size: 1.75rem !important;
-      line-height: 1.4 !important;
+      font-size: 1.75rem;
+      line-height: 1.4;
     }
 
     &.h5,
     &.sh3 {
-      font-size: 1.125rem !important;
-      line-height: 1.6 !important;
+      font-size: 1.125rem;
+      line-height: 1.6;
     }
 
     &.h6 {
-      font-size: 1.25rem !important;
-      line-height: 1.4 !important;
+      font-size: 1.25rem;
+      line-height: 1.4;
     }
 
     &.sh0,
     &.sh1,
     &.sh2 {
-      font-size: 1.5rem !important;
-      line-height: 1.38 !important;
+      font-size: 1.5rem;
+      line-height: 1.38;
     }
 
     &.body-xlarge {
-      font-size: 1.5rem !important;
-      line-height: 1.2 !important;
+      font-size: 1.5rem;
+      line-height: 1.2;
     }
 
     &.body-large,
     &.body-medium {
-      font-size: 1.125rem !important;
-      line-height: 1.4 !important;
+      font-size: 1.125rem;
+      line-height: 1.4;
     }
 
     &.body {
-      font-size: 1rem !important;
-      line-height: 1.4 !important;
+      font-size: 1rem;
+      line-height: 1.4;
     }
 
     &.body-small,
     &.c2 {
-      font-size: 0.875rem !important;
-      line-height: 1.4 !important;
+      font-size: 0.875rem;
+      line-height: 1.4;
     }
 
     &.body-xsmall,
     &.c1,
     &.c3 {
-      font-size: 0.75rem !important;
-      line-height: 1.5 !important;
+      font-size: 0.75rem;
+      line-height: 1.5;
     }
   }
 
-  // Buttons
-  &__btn-group-row {
+  // Buttons Section
+  &__button-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button-row {
     display: grid;
     grid-template-columns: 18.75rem 1fr;
-    gap: map-get($spacers, 6);
-    padding: map-get($spacers, 6) 0;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
     border-bottom: 1px solid var(--sg-border);
     align-items: center;
 
@@ -238,10 +264,10 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
     }
   }
 
-  &__btn-previews {
+  &__button-previews {
     display: flex;
     flex-wrap: wrap;
-    gap: map-get($spacers, 6);
+    gap: 1.5rem;
     align-items: center;
 
     @media (max-width: map-get($grid-breakpoints, sm) - 1) {
@@ -250,53 +276,35 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
     }
   }
 
-  &__btn-preview-item {
+  &__button-preview-item {
     display: flex;
     flex-direction: column;
-    gap: map-get($spacers, 2);
+    gap: 0.5rem;
   }
 
-  &__btn-preview-wrap {
+  &__button-preview-wrapper {
     display: inline-flex;
     align-items: center;
     min-height: 3.5rem;
   }
 
-  &__btn-state-label {
+  &__button-state-text {
     font-size: 0.6875rem;
     color: var(--sg-text-muted);
     text-transform: uppercase;
   }
 
-  // Demo blocks
-  &__demo-block {
-    margin-bottom: map-get($spacers, 4);
-
-    &--dark .m-styleguide__demo-preview {
-      background: $secondary-dark;
-      padding: map-get($spacers, 6);
-      border-radius: 4px;
-    }
-  }
-
-  &__demo-preview {
-    display: flex;
-    flex-wrap: wrap;
-    gap: map-get($spacers, 4);
-    align-items: center;
-    margin-bottom: map-get($spacers, 4);
-  }
-
-  &__demo-code {
+  // Demo code styling
+  &__example-block {
     position: relative;
     background: $neutral-600;
     border-radius: 4px;
     overflow: hidden;
-    margin-top: map-get($spacers, 4);
+    margin-top: 1rem;
 
     pre {
       margin: 0;
-      padding: map-get($spacers, 4) map-get($spacers, 5);
+      padding: 1rem 1.25rem;
       overflow-x: auto;
 
       code {
@@ -309,87 +317,74 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
 
   &__copy-btn {
     position: absolute;
-    top: map-get($spacers, 2);
-    right: map-get($spacers, 2);
+    top: 0.5rem;
+    right: 0.5rem;
     background: $neutral-400;
     color: $white;
     border: none;
     border-radius: $border-radius-sm;
-    padding: map-get($spacers, 1) map-get($spacers, 3);
+    padding: 0.25rem 0.75rem;
     cursor: pointer;
     opacity: 0;
     font-family: $font-family-sans-serif;
+    transition: opacity 0.2s ease;
 
-    .m-styleguide__demo-code:hover & {
+    .m-styleguide__example-block:hover & {
       opacity: 1;
     }
   }
 
-  &__demo-note {
-    margin-top: map-get($spacers, 3);
-    color: var(--sg-text-muted);
-    font-size: 0.75rem;
+  // Icons Section (Simplified Flex layout instead of CSS Grid)
+  &__icon-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
-  // Icons
-  &__icon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
-    gap: map-get($spacers, 4);
-  }
-
-  &__icon-card {
-    border: 1px solid transparent;
+  &__icon-item {
+    border: 1px solid var(--sg-border);
     border-radius: 4px;
-    padding: map-get($spacers, 4) map-get($spacers, 2);
+    padding: 1rem;
     text-align: center;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: $white;
+    width: calc(12.5% - 1rem);
+    min-width: 7.5rem;
 
     &:hover {
       background-color: var(--sg-code-bg);
-      border-color: var(--sg-border);
     }
   }
 
-  &__icon-svg {
+  &__icon-image {
     display: flex;
     justify-content: center;
-    margin-bottom: map-get($spacers, 3);
+    margin-bottom: 0.75rem;
 
-    svg,
-    i {
+    svg {
       width: 1.5rem;
       height: 1.5rem;
     }
   }
 
-  &__icon-name {
+  &__icon-title {
     font-size: 0.6875rem;
     color: var(--sg-text-secondary);
     word-break: break-all;
   }
 
-  // Components
-  &__component-demo {
-    display: flex;
-    flex-wrap: wrap;
-    gap: map-get($spacers, 3);
-    margin-bottom: map-get($spacers, 4);
-  }
-
-
-  // Forms
-  &__form-wrapper {
+  // Forms Section
+  &__form-container {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
     max-width: 36.25rem;
   }
 
-  &__form-el {
+  &__form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -405,25 +400,18 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
       flex-direction: row;
       gap: 1.5rem;
 
-      .m-styleguide__form-col {
+      .m-styleguide__form-column {
         flex: 1;
       }
     }
   }
 
-  &__input-group {
+  &__form-group {
     position: relative;
 
-    &--focus .m-styleguide__input,
-    &--focus .m-styleguide__select {
-      border-color: $neutral-600;
-      color: $neutral-600;
-    }
-
-    &--error {
-
-      .m-styleguide__input,
-      .m-styleguide__select {
+    &.is-error {
+      .m-styleguide__form-input,
+      .m-styleguide__form-select {
         border-color: $primary-red;
         color: $primary-red;
 
@@ -432,17 +420,13 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
         }
       }
 
-      .m-styleguide__select-arrow svg {
-        color: $primary-red;
-      }
-
-      &+.m-styleguide__input-error {
+      & + .m-styleguide__form-error {
         display: block;
       }
     }
   }
 
-  &__input {
+  &__form-input {
     width: 100%;
     height: $sg-input-height;
     border-radius: $sg-input-radius;
@@ -465,164 +449,117 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
     }
   }
 
-  &__input-error {
+  &__form-error {
     display: none;
     font-weight: $font-weight-medium;
     color: $primary-red;
   }
 
-  &__select {
+  &__form-select {
     width: 100%;
     height: $sg-input-height;
     border-radius: $sg-input-radius;
     border: 1px solid $sg-form-border;
     padding: $sg-input-padding;
-    padding-right: 3.5rem;
     font-family: $font-family-sans-serif;
     font-weight: $font-weight-medium;
     color: $sg-form-border;
     background-color: $white;
     outline: none;
-    appearance: none;
     cursor: pointer;
   }
 
-  &__select-arrow {
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-
-    svg {
-      width: 24px;
-      height: 24px;
-      color: $sg-form-border;
-    }
-  }
-
-  &__radio-list {
+  &__form-radio-list {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
     padding-top: 0.5rem;
   }
 
-  &__radio-option {
+  &__form-radio-option {
     display: flex;
     align-items: center;
     cursor: pointer;
   }
 
-  &__radio {
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    border: 1px solid $sg-form-border;
-    border-radius: 50%;
-    outline: none;
-    margin: 0 12px 0 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  &__form-radio {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
     cursor: pointer;
-    background-color: $white;
-
-    &::after {
-      content: "";
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: $neutral-600;
-      opacity: 0;
-      transform: scale(0);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    &:checked {
-      border-color: $neutral-600;
-
-      &::after {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
   }
 
-  &__radio-label {
+  &__form-radio-label {
     font-weight: $font-weight-medium;
     color: $sg-form-border;
   }
 
-  &__form-submit {
+  &__form-button {
     align-self: flex-start;
   }
 
   // Grid demo
-  &__grid-col-inner {
+  &__grid-box {
     background: rgba($primary, 0.05);
     border: 1px solid rgba($primary, 0.15);
     border-radius: 4px;
-    padding: map-get($spacers, 3) map-get($spacers, 2);
+    padding: 0.75rem 0.5rem;
     text-align: center;
     color: $primary;
   }
 
-  // Button states
-  &__btn--hover {
+  // Static Button Preview States (Hover and Disabled overrides) - NO !important
+  .is-hover {
     &.btn-primary {
-      background-color: $btn-hover-dark !important;
-      border-color: $btn-hover-dark !important;
-      color: $white !important;
+      background-color: $btn-hover-dark;
+      border-color: $btn-hover-dark;
+      color: $white;
     }
 
     &.btn-outline {
-      background-color: $primary-red !important;
-      border-color: $primary-red !important;
-      color: $white !important;
+      background-color: $primary-red;
+      border-color: $primary-red;
+      color: $white;
     }
 
     &.btn-link {
-      color: $btn-tertiary-hover !important;
+      color: $btn-tertiary-hover;
     }
   }
 
-  &__btn--disabled {
-
+  .is-disabled {
     &.btn-primary,
     &.btn-secondary,
     &.btn-outline {
-      background-color: $btn-disabled !important;
-      border-color: $btn-disabled !important;
-      color: $white !important;
+      background-color: $btn-disabled;
+      border-color: $btn-disabled;
+      color: $white;
       pointer-events: none;
     }
 
     &.btn-link {
-      color: $btn-disabled !important;
-      pointer-events: none;
-    }
-  }
-
-  &__btn-wrap {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: stretch;
-    color: $primary-red;
-
-    &.m-styleguide__btn--hover {
-      color: $btn-tertiary-hover;
-    }
-
-    &.m-styleguide__btn--disabled {
       color: $btn-disabled;
       pointer-events: none;
     }
   }
 
-  &__btn-line {
+  &__button-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    color: $primary-red;
+
+    &.is-hover {
+      color: $btn-tertiary-hover;
+    }
+
+    &.is-disabled {
+      color: $btn-disabled;
+      pointer-events: none;
+    }
+  }
+
+  &__button-underline {
     display: block;
     line-height: 0;
     margin-top: 0.25rem;
@@ -634,13 +571,13 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
   }
 
   // Table
-  &__table {
+  &__styleguide-table {
     width: 100%;
     border-collapse: collapse;
 
     th,
     td {
-      padding: map-get($spacers, 3) map-get($spacers, 4);
+      padding: 0.75rem 1rem;
       text-align: left;
       border-bottom: 1px solid var(--sg-border);
     }
@@ -662,24 +599,23 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
     }
   }
 
-  // Toast
-  &__toast {
-    position: fixed;
-    bottom: map-get($spacers, 6);
-    right: map-get($spacers, 6);
-    background: $neutral-600;
-    color: $white;
-    padding: map-get($spacers, 3) map-get($spacers, 6);
-    border-radius: 4px;
-    z-index: 9999;
-    opacity: 0;
-    transform: translateY(1.25rem);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
 
-    &.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  // Demo blocks
+  &__example-block {
+    margin-bottom: 1rem;
+  }
+
+  &__example-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__favicon-wrapper {
+    background-color: var(--sg-code-bg);
+    border: 1px solid var(--sg-border);
+    border-radius: 4px;
   }
 }

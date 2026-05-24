@@ -1,239 +1,153 @@
-// Side-effect import — registers Bootstrap's collapse data-api listeners.
-import 'bootstrap/js/dist/collapse';
+function initStyleguide() {
+    const container = document.querySelector('.m-styleguide');
+    if (!container) return;
 
-class Styleguide {
-    constructor() {
-        this.container = document.querySelector('.m-styleguide');
-        if (!this.container) return;
+    const colorItems = container.querySelectorAll('.m-styleguide__color-item');
+    const iconItems = container.querySelectorAll('.m-styleguide__icon-item');
+    const typoButtons = container.querySelectorAll('.m-styleguide__typo-button');
+    const form = container.querySelector('.m-styleguide__form');
+    const copyCodeBtns = container.querySelectorAll('[data-copy-code]');
 
-        this.toast = this.container.querySelector('.m-styleguide__toast');
-        this.swatches = this.container.querySelectorAll('.m-styleguide__swatch');
-        this.iconCards = this.container.querySelectorAll('.m-styleguide__icon-card');
-        this.typoToggles = this.container.querySelectorAll('.m-styleguide__typo-toggle');
-        this.form = this.container.querySelector('.m-styleguide__form-el');
-
-        this.toastTimeout = null;
-
-        this.copyCodeBtns = this.container.querySelectorAll('[data-copy-code]');
-
-        this.init();
-    }
-
-    init() {
-        this.populateColorHex();
-        this.populateTypography();
-        this.bindSwatchCopy();
-        this.bindIconCopy();
-        this.bindTypoToggle();
-        this.bindCodeCopy();
-        this.bindFormValidation();
-    }
-
-    // =========================================================================
-    // Populate swatch hex values from CSS custom properties
-    // =========================================================================
-    populateColorHex() {
-        const style = getComputedStyle(document.documentElement);
-        this.swatches.forEach(swatch => {
-            const cssVar = swatch.getAttribute('data-css-var');
-            const hexEl = swatch.querySelector('[data-hex]');
-            if (cssVar) {
-                const value = style.getPropertyValue(cssVar).trim();
-                if (hexEl) {
-                    hexEl.textContent = value || cssVar;
-                }
-                if (value) {
-                    swatch.setAttribute('data-color', value);
-                }
-            }
-        });
-    }
-
-    // =========================================================================
-    // Populate typography spec metadata from CSS custom properties
-    // =========================================================================
-    populateTypography() {
-        const style = getComputedStyle(document.documentElement);
-        const rows = this.container.querySelectorAll('[data-typo-class]');
-        rows.forEach(row => {
-            const cls = row.getAttribute('data-typo-class');
-            const prefix = `--typo-${cls}`;
-
-            const fontEl = row.querySelector('[data-typo-font]');
-            const weightEl = row.querySelector('[data-typo-weight]');
-            const desktopEl = row.querySelector('[data-typo-desktop]');
-            const mobileEl = row.querySelector('[data-typo-mobile]');
-
-            if (fontEl) {
-                fontEl.textContent = style.getPropertyValue(`${prefix}-font`).trim();
-            }
-            if (weightEl) {
-                weightEl.textContent = style.getPropertyValue(`${prefix}-weight-label`).trim();
-            }
-            if (desktopEl) {
-                const size = style.getPropertyValue(`${prefix}-desktop-size`).trim();
-                const lh = style.getPropertyValue(`${prefix}-desktop-lh`).trim();
-                desktopEl.textContent = `${size} / ${lh}`;
-            }
-            if (mobileEl) {
-                const size = style.getPropertyValue(`${prefix}-mobile-size`).trim();
-                const lh = style.getPropertyValue(`${prefix}-mobile-lh`).trim();
-                mobileEl.textContent = `${size} / ${lh}`;
-            }
-        });
-    }
-
-    // =========================================================================
-    // Color swatch click-to-copy
-    // =========================================================================
-    bindSwatchCopy() {
-        this.swatches.forEach(swatch => {
-            swatch.addEventListener('click', () => {
-                const hex = swatch.getAttribute('data-color');
-                if (hex) {
-                    this.copyToClipboard(hex, `Copied: ${hex}`);
-                }
-            });
-        });
-    }
-
-    // =========================================================================
-    // Icon card click-to-copy
-    // =========================================================================
-    bindIconCopy() {
-        this.iconCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const iconClass = card.getAttribute('data-icon-class') || '';
-                const phpReference = `<?php echo appian_get_svg_icon( '${iconClass}' ); ?>`;
-                this.copyToClipboard(phpReference, `Copied PHP tag for ${iconClass}`);
-            });
-        });
-    }
-
-    // =========================================================================
-    // Typography desktop/mobile toggle
-    // =========================================================================
-    bindTypoToggle() {
-        this.typoToggles.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const view = btn.getAttribute('data-view');
-
-                this.typoToggles.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                if (view === 'mobile') {
-                    this.container.classList.add('mobile-view');
-                } else {
-                    this.container.classList.remove('mobile-view');
-                }
-            });
-        });
-    }
-
-    // =========================================================================
-    // Code block click-to-copy
-    // =========================================================================
-    bindCodeCopy() {
-        this.copyCodeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const codeBlock = btn.closest('.m-styleguide__demo-code');
-                const codeEl = codeBlock ? codeBlock.querySelector('code') : null;
-                if (codeEl) {
-                    this.copyToClipboard(codeEl.textContent, 'Copied code!');
-                }
-            });
-        });
-    }
-
-    // =========================================================================
-    // Clipboard utility
-    // =========================================================================
-    copyToClipboard(text, message) {
-        const done = () => this.showToast(message || `Copied: ${text}`);
-        if (navigator.clipboard?.writeText) {
-            navigator.clipboard.writeText(text).then(done).catch(() => this.fallbackCopy(text, done));
-        } else {
-            this.fallbackCopy(text, done);
+    // Clipboard copy helper
+    function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .catch(err => console.error('Clipboard copy failed:', err));
         }
     }
 
-    fallbackCopy(text, done) {
-        const el = document.createElement('textarea');
-        el.value = text;
-        el.style.position = 'fixed';
-        el.style.opacity = '0';
-        document.body.appendChild(el);
-        el.select();
-        try { document.execCommand('copy'); } catch (e) { console.error('Copy failed:', e); }
-        document.body.removeChild(el);
-        done();
-    }
-
-    // =========================================================================
-    // Toast notification
-    // =========================================================================
-    showToast(message) {
-        if (!this.toast) return;
-        this.toast.textContent = message;
-        this.toast.classList.add('is-visible');
-
-        if (this.toastTimeout) {
-            clearTimeout(this.toastTimeout);
+    // Colors: read custom properties and write hex values
+    const style = getComputedStyle(document.documentElement);
+    colorItems.forEach(item => {
+        const cssVar = item.getAttribute('data-css-var');
+        const hexEl = item.querySelector('[data-hex]');
+        if (cssVar) {
+            const value = style.getPropertyValue(cssVar).trim();
+            if (hexEl) {
+                hexEl.textContent = value || cssVar;
+            }
+            if (value) {
+                item.setAttribute('data-color', value);
+            }
         }
 
-        this.toastTimeout = setTimeout(() => {
-            this.toast.classList.remove('is-visible');
-        }, 2000);
-    }
-
-    bindFormValidation() {
-        if (!this.form) return;
-
-        const inputs = this.form.querySelectorAll('.m-styleguide__input, .m-styleguide__select');
-        this.formSubmitted = false;
-
-        const validateField = (input) => {
-            const group = input.closest('.m-styleguide__input-group');
-            const hasError = input.hasAttribute('required') && !input.value.trim();
-            group?.classList.toggle('m-styleguide__input-group--error', hasError);
-            return hasError;
-        };
-
-        inputs.forEach(input => {
-            ['input', 'change', 'blur'].forEach(evt => {
-                input.addEventListener(evt, () => this.formSubmitted && validateField(input));
-            });
+        // Color click to copy
+        item.addEventListener('click', () => {
+            const colorVal = item.getAttribute('data-color');
+            if (colorVal) {
+                copyText(colorVal);
+            }
         });
+    });
 
-        this.form.addEventListener('submit', (e) => {
+    // Typography specs populator
+    const typoItems = container.querySelectorAll('[data-typo-class]');
+    typoItems.forEach(item => {
+        const cls = item.getAttribute('data-typo-class');
+        const prefix = `--typo-${cls}`;
+
+        const fontEl = item.querySelector('[data-typo-font]');
+        const weightEl = item.querySelector('[data-typo-weight]');
+        const desktopEl = item.querySelector('[data-typo-desktop]');
+        const mobileEl = item.querySelector('[data-typo-mobile]');
+
+        if (fontEl) {
+            fontEl.textContent = style.getPropertyValue(`${prefix}-font`).trim();
+        }
+        if (weightEl) {
+            weightEl.textContent = style.getPropertyValue(`${prefix}-weight-label`).trim();
+        }
+        if (desktopEl) {
+            const size = style.getPropertyValue(`${prefix}-desktop-size`).trim();
+            const lh = style.getPropertyValue(`${prefix}-desktop-lh`).trim();
+            desktopEl.textContent = `${size} / ${lh}`;
+        }
+        if (mobileEl) {
+            const size = style.getPropertyValue(`${prefix}-mobile-size`).trim();
+            const lh = style.getPropertyValue(`${prefix}-mobile-lh`).trim();
+            mobileEl.textContent = `${size} / ${lh}`;
+        }
+    });
+
+    // Typography Desktop/Mobile Preview Toggle
+    typoButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const view = btn.getAttribute('data-view');
+
+            typoButtons.forEach(b => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+
+            if (view === 'mobile') {
+                container.classList.add('is-mobile-view');
+            } else {
+                container.classList.remove('is-mobile-view');
+            }
+        });
+    });
+
+    // Icon click to copy PHP reference
+    iconItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const name = item.getAttribute('data-icon-class') || '';
+            const phpSnippet = `<?php echo appian_get_svg_icon( '${name}' ); ?>`;
+            copyText(phpSnippet);
+        });
+    });
+
+    // Code block click to copy
+    copyCodeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const codeBlock = btn.closest('.m-styleguide__example-block');
+            const codeEl = codeBlock ? codeBlock.querySelector('code') : null;
+            if (codeEl) {
+                copyText(codeEl.textContent);
+            }
+        });
+    });
+
+    // Form validation
+    if (form) {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-            this.formSubmitted = true;
-            const hasErrors = [...inputs].reduce((err, input) => validateField(input) || err, false);
+
+            let hasErrors = false;
+            const inputs = form.querySelectorAll('.m-styleguide__form-input, .m-styleguide__form-select');
+
+            inputs.forEach(input => {
+                const group = input.closest('.m-styleguide__form-group');
+                const hasError = input.hasAttribute('required') && !input.value.trim();
+                if (group) {
+                    group.classList.toggle('is-error', hasError);
+                }
+                if (hasError) {
+                    hasErrors = true;
+                }
+            });
 
             if (!hasErrors) {
-                this.showToast('Form submitted successfully!');
-                this.form.reset();
-                this.formSubmitted = false;
-                inputs.forEach(input => input.closest('.m-styleguide__input-group')?.classList.remove('m-styleguide__input-group--error'));
+                alert('Form submitted successfully!');
+                form.reset();
+                inputs.forEach(input => {
+                    const group = input.closest('.m-styleguide__form-group');
+                    if (group) {
+                        group.classList.remove('is-error');
+                    }
+                });
             } else {
-                this.showToast('Please fill out all required fields.');
+                alert('Please fill out all required fields.');
             }
         });
     }
 }
 
-// Initialize on DOM ready or immediately if already loaded
+// Initialize styleguide
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new Styleguide();
-    });
+    document.addEventListener('DOMContentLoaded', initStyleguide);
 } else {
-    new Styleguide();
+    initStyleguide();
 }
 
-// Support ACF block preview re-renders
+// ACF block preview support
 if (window.acf) {
-    window.acf.addAction('render_block_preview/type=styleguide', () => {
-        new Styleguide();
-    });
+    window.acf.addAction('render_block_preview/type=styleguide', initStyleguide);
 }
