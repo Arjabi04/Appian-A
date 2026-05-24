@@ -64,7 +64,8 @@ function outside_traineeship_biolerplate_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'outside-traineeship-biolerplate' ),
+			'menu-1'  => esc_html__( 'Primary', 'outside-traineeship-biolerplate' ),
+			'primary' => esc_html__( 'Primary Navigation', 'outside-traineeship-biolerplate' ),
 		)
 	);
 
@@ -185,6 +186,8 @@ require get_template_directory() . '/inc/customizer.php';
 
 require get_template_directory() . '/acf-block.php';
 require get_template_directory() . '/inc/svg-icons.php';
+require get_template_directory() . '/inc/acf-options.php';
+require get_template_directory() . '/inc/class-header-walker.php';
 
 /**
  * Load Jetpack compatibility file.
