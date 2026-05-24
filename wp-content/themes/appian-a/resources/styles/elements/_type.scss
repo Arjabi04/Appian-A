@@ -72,8 +72,8 @@
   --typo-sh0-weight: 400;
   --typo-sh0-desktop-size: 28px;
   --typo-sh0-desktop-lh: 155%;
-  --typo-sh0-mobile-size: 24px;
-  --typo-sh0-mobile-lh: 138%;
+  --typo-sh0-mobile-size: 28px;
+  --typo-sh0-mobile-lh: 155%;
   --typo-sh0-weight-label: Book;
 
   --typo-sh1-font: #{$font-family-heading};
@@ -273,12 +273,8 @@ h6, .h6 {
 .sh0 {
   font-family: $font-family-heading;
   font-weight: 400; // Book
-  font-size: 1.5rem; // 24px
-  line-height: 1.38; // 138%
-  @include media-breakpoint-up(md) {
-    font-size: 1.75rem; // 28px
-    line-height: 1.55; // 155%
-  }
+  font-size: 1.75rem; // 28px
+  line-height: 1.55; // 155%
 }
 
 .sh1 {
