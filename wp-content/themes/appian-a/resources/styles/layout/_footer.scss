@@ -106,10 +106,12 @@
             display: block;
             height: auto;
             width: 100%;
+            max-width: ($spacer * 19.9375);
             max-height: ($spacer * 7.6875);
 
             @include media-breakpoint-up(lg) {
                 width: ($spacer * 13.75);
+                max-width: none;
                 max-height: none;
             }
         }
@@ -121,10 +123,12 @@
         display: flex;
         flex-direction: column;
         order: 1;
+        max-width: ($spacer * 19.9375);
 
         @include media-breakpoint-up(lg) {
             order: 0;
             margin-top: ($spacer * 3.3125);
+            max-width: none;
         }
     }
 
