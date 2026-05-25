@@ -94,6 +94,7 @@ $typography_body = [
     ['body-large',  'Body Large'],
     ['body',        'Body'],
     ['body-small',  'Body Small'],
+    ['body-sm-all',  'Body Sm All'],
     ['body-xsmall', 'Body XS'],
 ];
 
@@ -255,34 +256,38 @@ background-color: var(--dark-red);'
             <?php
             $arrow_right = appian_get_svg_icon('arrow-right');
             $tertiary_line = '<span class="m-styleguide__button-underline">' . appian_get_svg_icon('tertiary-underline') . '</span>';
-            ?>
 
-            <?php
             $button_types = [
-                ['Primary',               'btn btn-primary',          true,  false],
-                ['Primary Small',         'btn btn-primary btn--small', true, false],
-                ['Secondary',             'btn btn-outline',          true,  false],
-                ['Secondary (no arrow)',  'btn btn-outline',          false, false],
-                ['Tertiary',              'btn btn-link',             true,  true],
+                ['Primary',                    'btn btn-primary',            true,  false, false],
+                ['Primary Small',              'btn btn-primary btn--small', true,  false, false],
+                ['Secondary',                  'btn btn-outline',            true,  false, false],
+                ['Secondary Small',            'btn btn-outline btn--small', true,  false, false],
+                ['Secondary (no arrow)',       'btn btn-outline',            false, false, true],
+                ['Secondary Small (no arrow)', 'btn btn-outline btn--small', false, false, true],
+                ['Tertiary',                   'btn btn-link',               true,  true,  false],
+                ['Tertiary Small',             'btn btn-link btn--small',    true,  true,  false],
             ];
             ?>
 
             <div class="m-styleguide__button-list">
                 <?php foreach ($button_types as $btn_type) :
-                    $label     = $btn_type[0];
-                    $classes   = $btn_type[1];
-                    $has_arrow = $btn_type[2];
-                    $is_tert   = $btn_type[3];
-                    $arrow_html = $has_arrow ? ' ' . $arrow_right : '';
+                    $label            = $btn_type[0];
+                    $classes          = $btn_type[1];
+                    $has_arrow        = $btn_type[2];
+                    $is_tert          = $btn_type[3];
+                    $exclude_disabled = isset($btn_type[4]) ? $btn_type[4] : false;
+                    $arrow_html       = $has_arrow ? ' ' . $arrow_right : '';
 
                     $states = [
                         ['Default',  ''],
                         ['Hover',    ' is-hover'],
-                        ['Disabled', ' is-disabled'],
                     ];
+                    if (!$exclude_disabled) {
+                        $states[] = ['Disabled', ' is-disabled'];
+                    }
 
                     $arrow_php = "<?php echo appian_get_svg_icon( 'arrow-right' ); ?>";
-                    $code_snippet = '<a href="#" class="' . $classes . '">' . 'Label' . ($has_arrow ? ' ' . $arrow_php : '') . '</a>';
+                    $code_snippet = '<a href="#" class="' . $classes . '">' . ($is_tert ? 'Link' : 'Label') . ($has_arrow ? ' ' . $arrow_php : '') . '</a>';
                 ?>
                     <div class="m-styleguide__button-row">
                         <div class="m-styleguide__button-info">
@@ -293,7 +298,7 @@ background-color: var(--dark-red);'
                             <?php foreach ($states as $state) :
                                 $state_label     = $state[0];
                                 $state_preview   = $state[1];
-                                $btn_text        = $state_label === 'Disabled' ? 'Disabled' : $state_label;
+                                $btn_text        = $is_tert ? 'Link' : ($state_label === 'Disabled' ? 'Disabled' : $state_label);
                             ?>
                                 <div class="m-styleguide__button-preview-item">
                                     <span class="m-styleguide__button-state-text"><?php echo esc_html($state_label); ?></span>
