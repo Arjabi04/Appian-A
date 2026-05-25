@@ -129,7 +129,7 @@
   --typo-body-small-weight: 400;
   --typo-body-small-desktop-size: 14px;
   --typo-body-small-desktop-lh: 150%;
-  --typo-body-small-mobile-size: 14px;
+  --typo-body-small-mobile-size: 12px;
   --typo-body-small-mobile-lh: 140%;
   --typo-body-small-weight-label: Regular;
 
@@ -354,9 +354,10 @@ h6, .h6 {
 .body-small {
   font-family: $font-family-sans-serif;
   font-weight: 400;
-  font-size: 0.875rem; // 14px
+  font-size: 0.75rem; // 12px
   line-height: 1.4; // 140%
   @include media-breakpoint-up(md) {
+    font-size: 0.875rem; // 14px
     line-height: 1.5; // 150%
   }
 }
