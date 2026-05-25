@@ -227,7 +227,11 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
       line-height: 1.4;
     }
 
-    &.body-small,
+    &.body-small {
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
     &.body-sm-all,
     &.c2 {
       font-size: 0.875rem;
