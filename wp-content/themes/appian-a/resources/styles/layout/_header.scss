@@ -38,7 +38,7 @@
     }
 
     /* =========================================================
-       Mobile menu overlay
+    //    Mobile menu overlay
     ========================================================= */
 
     &__nav {
@@ -63,7 +63,7 @@
                 overflow-y: auto;
                 overscroll-behavior: contain;
                 -webkit-overflow-scrolling: touch;
-                padding-top: 16px;
+                padding-top: 20px;
                 padding-bottom: 24px;
             }
 
@@ -86,6 +86,12 @@
                 font-size: 18px;
                 line-height: 28px;
             }
+
+            /* First item only */
+.site-header__menu-item:first-child .site-header__menu-link {
+    padding-top: 0;
+    padding-bottom: 24px;
+}
 
             .site-header__menu-button[aria-expanded="true"] ~ .site-header__dropdown {
                 display: flex;
@@ -499,4 +505,21 @@
 
 body.site-header-menu-open {
     overflow: hidden;
+}
+
+// Prevent iOS "rubber-band" grey background while the mobile menu is open.
+html:has(body.site-header-menu-open),
+body.site-header-menu-open {
+    background-color: $white;
+    overscroll-behavior: none;
+}
+
+// Hide scrollbars on the mobile menu scroll container (keep scrolling enabled).
+.site-header__nav--mobile-active .site-header__nav-scroll {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
 }
