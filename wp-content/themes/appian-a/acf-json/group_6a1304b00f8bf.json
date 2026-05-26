@@ -185,7 +185,7 @@
                             "label": "Street Address",
                             "name": "street_address",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "textarea",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -197,9 +197,9 @@
                             "default_value": "",
                             "maxlength": "",
                             "allow_in_bindings": 0,
+                            "rows": "",
                             "placeholder": "",
-                            "prepend": "",
-                            "append": ""
+                            "new_lines": ""
                         }
                     ]
                 },
@@ -301,6 +301,27 @@
                     "layout": "row",
                     "sub_fields": [
                         {
+                            "key": "field_6a130665be5f2",
+                            "label": "Explore Eyebrow",
+                            "name": "explore_eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
                             "key": "field_6a13066bbe5f3",
                             "label": "Explore Links",
                             "name": "explore_links",
@@ -363,27 +384,6 @@
                                     "parent_repeater": "field_6a13066bbe5f3"
                                 }
                             ]
-                        },
-                        {
-                            "key": "field_6a130665be5f2",
-                            "label": "Explore Eyebrow",
-                            "name": "explore_eyebrow",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "allow_in_bindings": 0,
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": ""
                         }
                     ]
                 },
@@ -520,5 +520,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1779639449
+    "modified": 1779778552
 }
