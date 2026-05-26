@@ -160,6 +160,8 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
             $social_links = array_values(array_filter($social_links_raw, static function ($item) {
                 if (!is_array($item)) return false;
                 if (empty($item['icon']['url'])) return false;
+                if (empty($item['url']) || !is_array($item['url'])) return false;
+                if (empty($item['url']['url'])) return false;
                 return true;
             }));
             ?>
@@ -173,8 +175,20 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
             <?php if (!empty($social_links)) : ?>
 
                 <?php foreach ($social_links as $social_link) : ?>
+                    <?php
+                    $link = $social_link['url'];
+                    $href = $link['url'] ?? '';
+                    $target = $link['target'] ?? '_self';
+                    $rel = ($target === '_blank') ? 'noopener noreferrer' : '';
+                    $label = $social_link['platform_name_'] ?? ($link['title'] ?? 'Social link');
+                    ?>
 
-                    <a class="site-footer__social">
+                    <a
+                        class="site-footer__social"
+                        href="<?php echo esc_url($href); ?>"
+                        target="<?php echo esc_attr($target); ?>"
+                        <?php if (!empty($rel)) : ?>rel="<?php echo esc_attr($rel); ?>"<?php endif; ?>
+                        aria-label="<?php echo esc_attr($label); ?>">
 
                         <img
                             src="<?php echo esc_url($social_link['icon']['url']); ?>"
