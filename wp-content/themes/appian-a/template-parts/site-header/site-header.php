@@ -24,17 +24,37 @@ if ( ! empty( $phone ) ) {
         <nav
             class="site-header__nav"
             aria-label="Primary Navigation">
-            <?php
-            wp_nav_menu(
-                array(
-                    'theme_location' => 'primary',
-                    'menu_class' => 'site-header__menu',
-                    'container' => false,
-                    'fallback_cb' => false,
-                    'walker' => new Header_Walker(),
-                )
-            );
-            ?>
+            <div class="site-header__nav-scroll">
+                <?php
+                wp_nav_menu(
+                    array(
+                        'theme_location' => 'primary',
+                        'menu_class' => 'site-header__menu',
+                        'container' => false,
+                        'fallback_cb' => false,
+                        'walker' => new Header_Walker(),
+                    )
+                );
+                ?>
+            </div>
+            <div class="site-header__mobile-footer">
+                <?php if ( ! empty( $linkedin ) ) : ?>
+                <a href="<?php echo esc_url($linkedin); ?>" class="site-header__linkedin" aria-label="Appian on LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/linkedin.svg" alt="LinkedIn">
+                </a>
+                <?php endif; ?>
+                <?php if ( ! empty( $phone ) ) : ?>
+                <div class="site-header__contact-wrapper">
+                    <a href="<?php echo esc_url($phone_href); ?>" class="site-header__contact" aria-label="<?php echo esc_attr($phone); ?>">
+                        <span class="site-header__contact-label">24/7 Emergency Services</span>
+                        <span class="site-header__contact-number">
+                            <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/call.svg" alt="" aria-hidden="true" width="18" height="18">
+                            <span><?php echo esc_html($phone); ?></span>
+                        </span>
+                    </a>
+                </div>
+                <?php endif; ?>
+            </div>
         </nav>
         <?php if ( ! empty( $phone ) ) : ?>
         <a href="<?php echo esc_url($phone_href); ?>" class="site-header__contact" aria-label="<?php echo esc_attr($phone); ?>">
@@ -51,23 +71,5 @@ if ( ! empty( $phone ) ) {
                 <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/close.svg" alt="" aria-hidden="true" width="24" height="24">
             </span>
         </button>
-    </div>
-    <div class="site-header__mobile-footer">
-        <?php if ( ! empty( $linkedin ) ) : ?>
-        <a href="<?php echo esc_url($linkedin); ?>" class="site-header__linkedin" aria-label="Appian on LinkedIn" target="_blank" rel="noopener noreferrer">
-            <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/linkedin.svg" alt="LinkedIn">
-        </a>
-        <?php endif; ?>
-        <?php if ( ! empty( $phone ) ) : ?>
-        <div class="site-header__contact-wrapper">
-            <a href="<?php echo esc_url($phone_href); ?>" class="site-header__contact" aria-label="<?php echo esc_attr($phone); ?>">
-                <span class="site-header__contact-label">24/7 Emergency Services</span>
-                <span class="site-header__contact-number">
-                    <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/call.svg" alt="" aria-hidden="true" width="18" height="18">
-                    <span><?php echo esc_html($phone); ?></span>
-                </span>
-            </a>
-        </div>
-        <?php endif; ?>
     </div>
 </header>
