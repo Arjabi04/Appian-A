@@ -381,4 +381,5 @@ function appian_validate_header_phone( $valid, $value, $field, $input ) {
 }
 add_filter( 'acf/validate_value/name=phone_number', 'appian_validate_header_phone', 10, 4 );
 add_filter( 'acf/validate_value/name=header_phone', 'appian_validate_header_phone', 10, 4 );
+add_filter( 'acf/validate_value/name=fax_number', 'appian_validate_header_phone', 10, 4 );
 

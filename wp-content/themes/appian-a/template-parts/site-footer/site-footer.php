@@ -138,11 +138,23 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
 
                     <a href="tel:<?php echo esc_attr($contact_group['phone_number'] ?? ''); ?>">
 
-                        <?php echo esc_html($contact_group['phone_number'] ?? ''); ?>
+                        Phone: <?php echo esc_html($contact_group['phone_number'] ?? ''); ?>
 
                     </a>
 
                     <br>
+
+                    <?php if (!empty($contact_group['fax_number'])) : ?>
+
+                        <a href="tel:<?php echo esc_attr($contact_group['fax_number']); ?>">
+
+                            Fax: <?php echo esc_html($contact_group['fax_number']); ?>
+
+                        </a>
+
+                        <br>
+
+                    <?php endif; ?>
 
                     <a href="mailto:<?php echo esc_attr($contact_group['email_address'] ?? ''); ?>">
 
