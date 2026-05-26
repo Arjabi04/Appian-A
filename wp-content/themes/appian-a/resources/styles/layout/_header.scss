@@ -43,6 +43,7 @@
 
     &__nav {
         display: none;
+        padding-block: 30px;
 
         &--mobile-active {
             position: fixed;
@@ -72,6 +73,7 @@
                 flex-direction: column;
                 align-items: stretch;
                 gap: 0;
+
             }
 
             .site-header__menu-item {
@@ -110,7 +112,8 @@
 
             .site-header__dropdown-link {
                 padding-inline: 18px;
-                font-size: 16px;
+                font-size: 18px;
+                line-height: 27px;
             }
 
             .site-header__mobile-footer {
