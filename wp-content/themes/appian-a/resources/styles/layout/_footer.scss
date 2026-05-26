@@ -238,12 +238,6 @@
         }
     }
 
-    &__fax {
-        @include media-breakpoint-up(lg) {
-            display: none;
-        }
-    }
-
     // Social
 
     &__social {
