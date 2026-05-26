@@ -43,7 +43,7 @@
 
     &__nav {
         display: none;
-        padding-block: 30px;
+        padding-block: 24px;
 
 	        &--mobile-active {
 	            position: fixed;
@@ -293,8 +293,9 @@
         gap: 8px;
         font-size: 18px;
         font-weight: 400;
-        line-height: 27px;
-        letter-spacing: -0.02em;
+        line-height: 24px;
+        // Figma "2%" letter-spacing ~= 0.02em in CSS.
+        letter-spacing: 0.02em;
         color: $neutral-600;
         white-space: nowrap;
 
