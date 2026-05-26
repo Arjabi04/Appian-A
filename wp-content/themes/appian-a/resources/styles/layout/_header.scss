@@ -164,6 +164,11 @@
         position: relative;
     }
 
+    &__menu-item--active > .site-header__menu-link,
+    &__menu-item--active > .site-header__menu-button {
+        box-shadow: inset 0 -2px 0 $primary-red;
+    }
+
     &__menu-link,
     &__menu-button {
         position: relative;
@@ -182,6 +187,10 @@
         white-space: nowrap;
         cursor: pointer;
         transition: color 0.3s ease, border-color 0.3s ease;
+
+        &[aria-current="page"] {
+            box-shadow: inset 0 -2px 0 $primary-red;
+        }
     }
 
     &__menu-icon {
@@ -216,10 +225,10 @@
         border-radius: 8px;
     }
 
-	    &__dropdown-link {
-	        display: block;
-	        padding-inline: 16px;
-	        font-size: 18px;
+		    &__dropdown-link {
+		        display: block;
+		        padding-inline: 16px;
+		        font-size: 18px;
 	        font-weight: 400;
 	        line-height: 1.5;
 	        text-decoration: none;
@@ -229,11 +238,10 @@
 	            color: $primary-red;
 	        }
 
-	        &[aria-current="page"] {
-	            outline: 1px solid $primary-red;
-	            outline-offset: 2px;
-	        }
-	    }
+			        &[aria-current="page"] {
+			            box-shadow: inset 0 -2px 0 $primary-red;
+			        }
+			    }
 
     /* =========================================================
        Contact + toggle
@@ -489,10 +497,7 @@
 	                }
 	            }
 
-	            &[aria-current="page"]::after {
-	                border-color: $primary-red;
-	            }
-	        }
+		        }
 
         &__menu-button[aria-expanded="true"] .site-header__menu-icon img {
             transform: rotate(0deg);
