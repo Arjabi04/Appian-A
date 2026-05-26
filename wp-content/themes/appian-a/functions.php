@@ -198,6 +198,18 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
 require_once get_template_directory() . '/inc/vite.php';
 
+function appian_footer_email_empty_ajax() {
+	if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'appian_footer_email' ) ) {
+		wp_send_json_error( [ 'message' => 'invalid_nonce' ], 403 );
+	}
+
+	error_log( 'Footer subscribe: empty email submitted.' );
+	wp_send_json_success();
+}
+
+add_action( 'wp_ajax_appian_footer_email_empty', 'appian_footer_email_empty_ajax' );
+add_action( 'wp_ajax_nopriv_appian_footer_email_empty', 'appian_footer_email_empty_ajax' );
+
 function theme_assets() {
 
     $is_dev = defined('WP_ENV')

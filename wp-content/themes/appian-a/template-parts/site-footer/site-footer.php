@@ -63,7 +63,10 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
                 <form
                     class="site-footer__form"
                     role="form"
-                    aria-label="Newsletter subscription">
+                    aria-label="Newsletter subscription"
+                    data-footer-ajax-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
+                    data-footer-ajax-nonce="<?php echo esc_attr(wp_create_nonce('appian_footer_email')); ?>"
+                    novalidate>
 
                     <div class="site-footer__input-group">
 
@@ -72,7 +75,7 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
                             type="email"
                             class="site-footer__input body"
                             placeholder="<?php echo esc_attr($subscribe_group['subscribe_placeholder'] ?? ''); ?>"
-                            required
+                            maxlength="254"
                             autocomplete="email"
                             aria-label="Email address" />
 
@@ -91,6 +94,8 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
                         </button>
 
                     </div>
+
+                    <div class="site-footer__input-error c3" data-footer-email-error aria-live="polite"></div>
 
                 </form>
 

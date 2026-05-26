@@ -3,6 +3,6 @@ import.meta.glob('../images/**', {
   import: 'default',
 });
 
+import './global/footer.js';
 import './global/header.js';
-
 
