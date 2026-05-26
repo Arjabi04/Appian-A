@@ -22,9 +22,23 @@ function getFooterEmailError(value, options = {}) {
   if (!domainPart) return 'Email must include a domain after "@".';
 
   if (localPart.length > 64) return 'Email local part (before @) must be 64 characters or less.';
-  if (domainPart.length > 255) return 'Email domain (after @) must be 255 characters or less.';
+  if (domainPart.length > 189) return 'Email domain (after @) must be 189 characters or less.';
 
   return '';
+}
+
+function getFooterEmailDomainLengthError(value) {
+  const email = (value || '').trim();
+  if (!email) return '';
+
+  const firstAt = email.indexOf('@');
+  if (firstAt === -1) return '';
+  if (email.indexOf('@', firstAt + 1) !== -1) return '';
+
+  const domainPart = email.slice(firstAt + 1);
+  if (!domainPart) return '';
+
+  return domainPart.length > 189 ? 'Email domain (after @) must be 189 characters or less.' : '';
 }
 
 function enforceEmailLengthLimit(rawValue) {
@@ -41,7 +55,7 @@ function enforceEmailLengthLimit(rawValue) {
   const domainPart = value.slice(atIndex + 1);
 
   const cappedLocal = localPart.length > 64 ? localPart.slice(0, 64) : localPart;
-  const cappedDomain = domainPart.length > 255 ? domainPart.slice(0, 255) : domainPart;
+  const cappedDomain = domainPart;
 
   let rebuilt = `${cappedLocal}@${cappedDomain}`;
   if (rebuilt.length > 254) rebuilt = rebuilt.slice(0, 254);
@@ -67,7 +81,7 @@ function getTruncationMessage(originalValue) {
   const domainPart = value.slice(atIndex + 1);
 
   if (localPart.length > 64) return 'Email local part (before @) max is 64 characters.';
-  if (domainPart.length > 255) return 'Email domain (after @) max is 255 characters.';
+  if (domainPart.length > 189) return 'Email domain (after @) max is 189 characters.';
 
   return '';
 }
@@ -138,7 +152,8 @@ function initFooterEmailValidation() {
       if (hasSubmitted) {
         validate({ showRequired: true });
       } else {
-        render('');
+        const domainLengthError = getFooterEmailDomainLengthError(input.value);
+        render(domainLengthError);
       }
     });
 
