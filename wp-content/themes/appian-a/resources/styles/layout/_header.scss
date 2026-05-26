@@ -426,8 +426,8 @@
        Desktop
     ========================================================= */
 
-	    @media (min-width: 1200px) {
-	        --site-header-bar-height: 90.2px;
+		    @media (min-width: 1200px) {
+		        --site-header-bar-height: 90.2px;
 
         &__container {
             grid-template-columns: 120px 1fr auto;
@@ -490,10 +490,23 @@
             }
         }
 
-        &__menu {
-            display: flex;
-            gap: 40px;
-        }
+	        &__menu {
+	            display: flex;
+	            gap: 40px;
+	            flex-wrap: nowrap;
+	        }
+
+	        // Slightly tighten spacing on smaller desktop widths to prevent wrapping/misalignment.
+	        @media (max-width: 1356px) {
+	            &__container {
+	                padding-inline: 48px;
+	                column-gap: 24px;
+	            }
+
+	            &__menu {
+	                gap: 24px;
+	            }
+	        }
 
 	        &__menu-link,
 	        &__menu-button {
