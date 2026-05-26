@@ -216,19 +216,24 @@
         border-radius: 8px;
     }
 
-    &__dropdown-link {
-        display: block;
-        padding-inline: 16px;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 1.5;
-        text-decoration: none;
-        transition: color 0.3s ease;
+	    &__dropdown-link {
+	        display: block;
+	        padding-inline: 16px;
+	        font-size: 18px;
+	        font-weight: 400;
+	        line-height: 1.5;
+	        text-decoration: none;
+	        transition: color 0.3s ease;
 
-        &:hover {
-            color: $primary-red;
-        }
-    }
+	        &:hover {
+	            color: $primary-red;
+	        }
+
+	        &[aria-current="page"] {
+	            outline: 1px solid $primary-red;
+	            outline-offset: 2px;
+	        }
+	    }
 
     /* =========================================================
        Contact + toggle
@@ -456,26 +461,38 @@
             gap: 40px;
         }
 
-        &__menu-link,
-        &__menu-button {
-            @media (hover: hover) and (pointer: fine) {
-                &::after {
-                    content: "";
-                    position: absolute;
-                    top: -4px;
-                    bottom: -4px;
-                    left: -12px;
-                    right: -12px;
-                    border: 1px solid transparent;
-                    pointer-events: none;
-                    transition: border-color 0.3s ease;
-                }
+	        &__menu-link,
+	        &__menu-button {
+	            @media (hover: hover) and (pointer: fine) {
+	                &::after {
+	                    content: "";
+	                    position: absolute;
+	                    top: -4px;
+	                    bottom: -4px;
+	                    left: -12px;
+	                    right: -12px;
+	                    border: 1px solid transparent;
+	                    pointer-events: none;
+	                    transition: border-color 0.3s ease;
+	                }
 
-                &:hover::after {
-                    border-color: $neutral-400;
-                }
-            }
-        }
+	                &:hover {
+	                    color: $primary-red;
+	                }
+
+	                &:focus-visible {
+	                    outline: none;
+	                }
+
+	                &:focus-visible::after {
+	                    border-color: $neutral-400;
+	                }
+	            }
+
+	            &[aria-current="page"]::after {
+	                border-color: $primary-red;
+	            }
+	        }
 
         &__menu-button[aria-expanded="true"] .site-header__menu-icon img {
             transform: rotate(0deg);
