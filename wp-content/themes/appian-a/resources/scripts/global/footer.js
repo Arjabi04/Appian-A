@@ -22,7 +22,7 @@ function getFooterEmailError(value, options = {}) {
   if (!domainPart) return 'Email must include a domain after "@".';
 
   if (localPart.length > 64) return 'Email local part (before @) must be 64 characters or less.';
-  if (domainPart.length > 255) return 'Email domain (after @) must be 255 characters or less.';
+  if (domainPart.length > 189) return 'Email domain (after @) must be 189 characters or less.';
 
   return '';
 }
@@ -41,7 +41,7 @@ function enforceEmailLengthLimit(rawValue) {
   const domainPart = value.slice(atIndex + 1);
 
   const cappedLocal = localPart.length > 64 ? localPart.slice(0, 64) : localPart;
-  const cappedDomain = domainPart.length > 255 ? domainPart.slice(0, 255) : domainPart;
+  const cappedDomain = domainPart.length > 189 ? domainPart.slice(0, 189) : domainPart;
 
   let rebuilt = `${cappedLocal}@${cappedDomain}`;
   if (rebuilt.length > 254) rebuilt = rebuilt.slice(0, 254);
@@ -67,7 +67,7 @@ function getTruncationMessage(originalValue) {
   const domainPart = value.slice(atIndex + 1);
 
   if (localPart.length > 64) return 'Email local part (before @) max is 64 characters.';
-  if (domainPart.length > 255) return 'Email domain (after @) max is 255 characters.';
+  if (domainPart.length > 189) return 'Email domain (after @) max is 189 characters.';
 
   return '';
 }
