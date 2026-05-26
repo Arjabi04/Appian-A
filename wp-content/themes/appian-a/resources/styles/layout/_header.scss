@@ -512,11 +512,12 @@
             transform: rotate(0deg);
         }
 
-        &__dropdown {
-            .site-header__menu-item--dropdown:hover & {
-                display: flex;
-            }
-        }
+	        &__dropdown {
+	            .site-header__menu-item--dropdown:hover &,
+	            .site-header__menu-item--dropdown:focus-within & {
+	                display: flex;
+	            }
+	        }
 
         &__contact {
             grid-column: 3;
