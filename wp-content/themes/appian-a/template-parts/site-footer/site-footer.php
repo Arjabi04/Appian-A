@@ -2,12 +2,29 @@
 
 $footer_fields = get_field('footer_group', 'option');
 
-$branding_group  = $footer_fields['branding_group'];
-$subscribe_group = $footer_fields['subscribe_group'];
-$address_group   = $footer_fields['address_group'];
-$contact_group   = $footer_fields['contact_group'];
-$explore_group   = $footer_fields['explore_group'];
-$social_group    = $footer_fields['social_group'];
+$footer_fields = is_array($footer_fields) ? $footer_fields : [];
+
+$has_explore_group = array_key_exists('explore_group', $footer_fields);
+$has_social_group  = array_key_exists('social_group', $footer_fields);
+
+$branding_group  = (isset($footer_fields['branding_group']) && is_array($footer_fields['branding_group'])) ? $footer_fields['branding_group'] : [];
+$subscribe_group = (isset($footer_fields['subscribe_group']) && is_array($footer_fields['subscribe_group'])) ? $footer_fields['subscribe_group'] : [];
+$address_group   = (isset($footer_fields['address_group']) && is_array($footer_fields['address_group'])) ? $footer_fields['address_group'] : [];
+$contact_group   = (isset($footer_fields['contact_group']) && is_array($footer_fields['contact_group'])) ? $footer_fields['contact_group'] : [];
+$explore_group   = (isset($footer_fields['explore_group']) && is_array($footer_fields['explore_group'])) ? $footer_fields['explore_group'] : [];
+$social_group    = (isset($footer_fields['social_group']) && is_array($footer_fields['social_group'])) ? $footer_fields['social_group'] : [];
+
+$appian_footer_warn = static function ($message) {
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        trigger_error($message, E_USER_WARNING);
+    }
+    error_log($message);
+};
+
+$footer_logo = $branding_group['footer_logo'] ?? [];
+$footer_logo = is_array($footer_logo) ? $footer_logo : [];
+$footer_logo_url = $footer_logo['url'] ?? '';
+$footer_logo_alt = $footer_logo['alt'] ?? '';
 
 // print_r($explore_group);
 
@@ -20,16 +37,18 @@ $social_group    = $footer_fields['social_group'];
         <!-- Column 1: Logo + Subscribe -->
         <div class="site-footer__col site-footer__col--brand">
 
-            <a
-                href="<?php echo esc_url(home_url('/')); ?>"
-                class="site-footer__logo"
-                aria-label="Appian Home">
+            <?php if (!empty($footer_logo_url)) : ?>
+                <a
+                    href="<?php echo esc_url(home_url('/')); ?>"
+                    class="site-footer__logo"
+                    aria-label="Appian Home">
 
-                <img
-                    src="<?php echo esc_url($branding_group['footer_logo']['url']); ?>"
-                    alt="<?php echo esc_attr($branding_group['footer_logo']['alt']); ?>" />
+                    <img
+                        src="<?php echo esc_url($footer_logo_url); ?>"
+                        alt="<?php echo esc_attr($footer_logo_alt); ?>" />
 
-            </a>
+                </a>
+            <?php endif; ?>
 
             <div class="site-footer__subscribe">
 
@@ -37,7 +56,7 @@ $social_group    = $footer_fields['social_group'];
                     class="c3 site-footer__label"
                     for="footer-email">
 
-                    <?php echo esc_html($subscribe_group['subscribe_label']); ?>
+                    <?php echo esc_html($subscribe_group['subscribe_label'] ?? ''); ?>
 
                 </label>
 
@@ -52,7 +71,7 @@ $social_group    = $footer_fields['social_group'];
                             id="footer-email"
                             type="email"
                             class="site-footer__input body"
-                            placeholder="<?php echo esc_attr($subscribe_group['subscribe_placeholder']); ?>"
+                            placeholder="<?php echo esc_attr($subscribe_group['subscribe_placeholder'] ?? ''); ?>"
                             required
                             autocomplete="email"
                             aria-label="Email address" />
@@ -87,15 +106,15 @@ $social_group    = $footer_fields['social_group'];
 
                 <span class="c3 site-footer__label">
 
-                    <?php echo esc_html($address_group['address_eyebrow']); ?>
+                    <?php echo esc_html($address_group['address_eyebrow'] ?? ''); ?>
 
                 </span>
 
                 <address class="sh3 site-footer__text">
 
-                    <?php echo nl2br(esc_html($address_group['company_name'])); ?><br>
+                    <?php echo nl2br(esc_html($address_group['company_name'] ?? '')); ?><br>
 
-                    <?php echo nl2br(esc_html($address_group['street_address'])); ?>
+                    <?php echo nl2br(esc_html($address_group['street_address'] ?? '')); ?>
 
                 </address>
 
@@ -106,23 +125,23 @@ $social_group    = $footer_fields['social_group'];
 
                 <span class="c3 site-footer__label">
 
-                    <?php echo esc_html($contact_group['contact_eyebrow']); ?>
+                    <?php echo esc_html($contact_group['contact_eyebrow'] ?? ''); ?>
 
                 </span>
 
                 <p class="sh3 site-footer__text">
 
-                    <a href="tel:<?php echo esc_attr($contact_group['phone_number']); ?>">
+                    <a href="tel:<?php echo esc_attr($contact_group['phone_number'] ?? ''); ?>">
 
-                        <?php echo esc_html($contact_group['phone_number']); ?>
+                        <?php echo esc_html($contact_group['phone_number'] ?? ''); ?>
 
                     </a>
 
                     <br>
 
-                    <a href="mailto:<?php echo esc_attr($contact_group['email_address']); ?>">
+                    <a href="mailto:<?php echo esc_attr($contact_group['email_address'] ?? ''); ?>">
 
-                        <?php echo esc_html($contact_group['email_address']); ?>
+                        <?php echo esc_html($contact_group['email_address'] ?? ''); ?>
 
                     </a>
 
@@ -131,15 +150,49 @@ $social_group    = $footer_fields['social_group'];
             </div>
 
             <!-- Social Links -->
-            <?php if (!empty($social_group['social_links'])) : ?>
+            <?php
+            $social_links_field = $social_group['social_links'] ?? [];
+            if (!is_array($social_links_field) && $has_social_group) {
+                $appian_footer_warn('Footer social links field is not an array; hiding block.');
+            }
 
-                <?php foreach ($social_group['social_links'] as $social_link) : ?>
+            $social_links_raw = is_array($social_links_field) ? $social_links_field : [];
+            $social_links = array_values(array_filter($social_links_raw, static function ($item) {
+                if (!is_array($item)) return false;
+                if (empty($item['icon']['url'])) return false;
+                if (empty($item['url']) || !is_array($item['url'])) return false;
+                if (empty($item['url']['url'])) return false;
+                return true;
+            }));
+            ?>
 
-                    <a class="site-footer__social">
+            <?php if ($has_social_group && empty($social_links_raw)) : ?>
+                <?php $appian_footer_warn('Footer social links block has no items; hiding block.'); ?>
+            <?php elseif (!empty($social_links_raw) && empty($social_links)) : ?>
+                <?php $appian_footer_warn('Footer social links block has no valid items; hiding block.'); ?>
+            <?php endif; ?>
+
+            <?php if (!empty($social_links)) : ?>
+
+                <?php foreach ($social_links as $social_link) : ?>
+                    <?php
+                    $link = $social_link['url'];
+                    $href = $link['url'] ?? '';
+                    $target = $link['target'] ?? '_self';
+                    $rel = ($target === '_blank') ? 'noopener noreferrer' : '';
+                    $label = $social_link['platform_name_'] ?? ($link['title'] ?? 'Social link');
+                    ?>
+
+                    <a
+                        class="site-footer__social"
+                        href="<?php echo esc_url($href); ?>"
+                        target="<?php echo esc_attr($target); ?>"
+                        <?php if (!empty($rel)) : ?>rel="<?php echo esc_attr($rel); ?>"<?php endif; ?>
+                        aria-label="<?php echo esc_attr($label); ?>">
 
                         <img
                             src="<?php echo esc_url($social_link['icon']['url']); ?>"
-                            alt="<?php echo esc_attr($social_link['icon']['alt']); ?>"
+                            alt="<?php echo esc_attr($social_link['icon']['alt'] ?? ''); ?>"
                             width="24"
                             height="24" />
 
@@ -151,35 +204,55 @@ $social_group    = $footer_fields['social_group'];
 
         </div>
 
-        <!-- Column 3: Explore Links -->
-        <div class="site-footer__col site-footer__col--nav">
+            <!-- Column 3: Explore Links -->
+            <div class="site-footer__col site-footer__col--nav">
 
-            <span
-                class="c3 site-footer__label"
-                id="footer-nav-label">
+            <?php
+            $explore_links_field = $explore_group['explore_links'] ?? [];
+            if (!is_array($explore_links_field) && $has_explore_group) {
+                $appian_footer_warn('Footer explore links field is not an array; hiding block.');
+            }
 
-                <?php echo esc_html($explore_group['explore_eyebrow']); ?>
+            $explore_links_raw = is_array($explore_links_field) ? $explore_links_field : [];
+            $explore_links = array_values(array_filter($explore_links_raw, static function ($item) {
+                if (!is_array($item)) return false;
+                if (empty($item['link_url']) || !is_array($item['link_url'])) return false;
+                if (empty($item['link_url']['url'])) return false;
+                if (empty($item['link_text'])) return false;
+                return true;
+            }));
+            ?>
 
-            </span>
+            <?php if ($has_explore_group && empty($explore_links_raw)) : ?>
+                <?php $appian_footer_warn('Footer explore links block has no items; hiding block.'); ?>
+            <?php elseif (!empty($explore_links_raw) && empty($explore_links)) : ?>
+                <?php $appian_footer_warn('Footer explore links block has no valid items; hiding block.'); ?>
+            <?php endif; ?>
 
-            <nav aria-labelledby="footer-nav-label">
+            <?php if (!empty($explore_group['explore_eyebrow']) || !empty($explore_links)) : ?>
+                <span
+                    class="c3 site-footer__label"
+                    id="footer-nav-label">
 
-                <?php if (!empty($explore_group['explore_links'])) : ?>
+                    <?php echo esc_html($explore_group['explore_eyebrow'] ?? ''); ?>
+
+                </span>
+
+                <nav aria-labelledby="footer-nav-label">
+
+                    <?php if (!empty($explore_links)) : ?>
 
                     <ul class="site-footer__menu">
 
-                        <?php foreach ($explore_group['explore_links'] as $link_item) :
-
-                            $link = $link_item['link_url'];
-
-                        ?>
+                        <?php foreach ($explore_links as $link_item) : ?>
+                            <?php $link = $link_item['link_url']; ?>
 
                             <li>
 
                                 <a
                                     class="sh0 site-footer__link"
                                     href="<?php echo esc_url($link['url']); ?>"
-                                    target="<?php echo esc_attr($link['target']); ?>">
+                                    target="<?php echo esc_attr($link['target'] ?? '_self'); ?>">
 
                                     <?php echo esc_html($link_item['link_text']); ?>
 
@@ -193,7 +266,8 @@ $social_group    = $footer_fields['social_group'];
 
                 <?php endif; ?>
 
-            </nav>
+                </nav>
+            <?php endif; ?>
 
         </div>
 
