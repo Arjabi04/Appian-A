@@ -348,3 +348,37 @@ add_action(
 );
 
 add_action( 'enqueue_block_editor_assets', 'theme_block_editor_assets' );
+
+/**
+ * Validate ACF phone number fields to ensure they match US phone number formats.
+ *
+ * Accepts formats like (301) 816-2088, 301-816-2088, 301.816.2088, 3018162088, +13018162088.
+ *
+ * @param bool   $valid The validation status.
+ * @param mixed  $value The value of the field.
+ * @param array  $field The field array.
+ * @param string $input The input name.
+ * @return bool|string True if valid, error message string if invalid.
+ */
+function appian_validate_header_phone( $valid, $value, $field, $input ) {
+	if ( ! $valid || empty( $value ) ) {
+		return $valid;
+	}
+
+	// Regex matching US phone formats like:
+	// - (301) 816-2088
+	// - 301-816-2088
+	// - 301.816.2088
+	// - 3018162088
+	// - +13018162088
+	$pattern = '/^\+?1?[\s.-]?(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/';
+
+	if ( ! preg_match( $pattern, $value ) ) {
+		return 'Please enter a valid US phone number e.g. (301) 816-2088';
+	}
+
+	return $valid;
+}
+add_filter( 'acf/validate_value/name=phone_number', 'appian_validate_header_phone', 10, 4 );
+add_filter( 'acf/validate_value/name=header_phone', 'appian_validate_header_phone', 10, 4 );
+
