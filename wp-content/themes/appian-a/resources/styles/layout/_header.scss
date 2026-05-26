@@ -125,15 +125,14 @@
                 line-height: 27px;
             }
 
-            .site-header__mobile-footer {
-                flex: 0 0 auto;
-                display: flex;
-                align-items: flex-end;
-                justify-content: space-between;
-                padding: 24px 0 calc(40px + env(safe-area-inset-bottom, 0px));
-                background-color: $white;
-                border-top: 1px solid $neutral-75;
-            }
+	            .site-header__mobile-footer {
+	                flex: 0 0 auto;
+	                display: flex;
+	                align-items: flex-end;
+	                justify-content: space-between;
+	                padding: 24px 0 calc(40px + env(safe-area-inset-bottom, 0px));
+	                background-color: $white;
+	            }
 
             .site-header__contact {
                 display: flex;
@@ -512,12 +511,17 @@
             transform: rotate(0deg);
         }
 
-	        &__dropdown {
-	            .site-header__menu-item--dropdown:hover &,
-	            .site-header__menu-item--dropdown:focus-within & {
-	                display: flex;
-	            }
-	        }
+        &__dropdown {
+            .site-header__menu-item--dropdown:hover &,
+            .site-header__menu-item--dropdown:focus-within & {
+                display: flex;
+            }
+        }
+
+        &__dropdown-link {
+            font-size: 16px;
+            line-height: 24px;
+        }
 
         &__contact {
             grid-column: 3;
