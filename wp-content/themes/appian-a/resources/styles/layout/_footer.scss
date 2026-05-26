@@ -141,6 +141,15 @@
         display: flex;
     }
 
+    &__input-error {
+        margin-top: ($spacer * 0.5);
+        color: $primary-red;
+
+        &:empty {
+            display: none;
+        }
+    }
+
     &__input {
         flex: 1;
         width: 100%;
