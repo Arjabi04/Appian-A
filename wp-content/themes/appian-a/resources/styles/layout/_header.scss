@@ -45,23 +45,32 @@
         display: none;
         padding-block: 30px;
 
-        &--mobile-active {
-            position: fixed;
-            top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--site-header-bar-height));
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 240;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            padding-inline: 28px;
-            background-color: $white;
+	        &--mobile-active {
+	            position: fixed;
+	            top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--site-header-bar-height));
+	            left: 0;
+	            right: 0;
+	            bottom: 0;
+	            z-index: 240;
+	            display: flex;
+	            flex-direction: column;
+	            width: 100%;
+	            padding-inline: 28px;
+	            background-color: $white;
 
-            .site-header__nav-scroll {
-                flex: 1 1 auto;
-                min-height: 0;
-                overflow-y: auto;
+	            // Remove active underline styling in the mobile menu.
+	            .site-header__menu-item--active > .site-header__menu-link,
+	            .site-header__menu-item--active > .site-header__menu-button,
+	            .site-header__menu-link[aria-current="page"],
+	            .site-header__menu-button[aria-current="page"],
+	            .site-header__dropdown-link[aria-current="page"] {
+	                box-shadow: none;
+	            }
+
+	            .site-header__nav-scroll {
+	                flex: 1 1 auto;
+	                min-height: 0;
+	                overflow-y: auto;
                 overscroll-behavior: contain;
                 -webkit-overflow-scrolling: touch;
                 padding-top: 20px;
