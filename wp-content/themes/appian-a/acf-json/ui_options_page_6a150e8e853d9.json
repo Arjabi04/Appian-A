@@ -1,0 +1,26 @@
+{
+    "key": "ui_options_page_6a150e8e853d9",
+    "title": "header Settings",
+    "active": true,
+    "menu_order": 0,
+    "page_title": "header Settings",
+    "menu_slug": "header-settings",
+    "parent_slug": "none",
+    "advanced_configuration": 0,
+    "icon_url": "",
+    "menu_title": "",
+    "position": "",
+    "redirect": 0,
+    "description": "",
+    "menu_icon": {
+        "type": "dashicons",
+        "value": "dashicons-admin-generic"
+    },
+    "update_button": "Update",
+    "updated_message": "Options Updated",
+    "capability": "edit_posts",
+    "data_storage": "options",
+    "post_id": "",
+    "autoload": 0,
+    "modified": 1779764901
+}

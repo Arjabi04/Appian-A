@@ -1,24 +1,30 @@
 .site-header {
-    position: relative;
-    z-index: 100;
+    --site-header-bar-height: 72px;
+    position: sticky;
+    top: var(--wp-admin--admin-bar--height, 0px);
+    z-index: 300;
     font-family: $font-family-sans-serif;
     background-color: $white;
     color: $neutral-600;
 
-    // Mobile layout
+    /* =========================================================
+       Mobile-first base
+    ========================================================= */
 
-    // Header container layout
     &__container {
+        position: relative;
+        z-index: 250;
         display: grid;
         grid-template-columns: auto 1fr auto;
         align-items: center;
-        min-height: 72px;
+        min-height: var(--site-header-bar-height);
         padding-inline: 28px;
+        background-color: $white;
     }
 
-    // Logo styling
     &__logo {
         grid-column: 1;
+        position: relative;
         display: flex;
         align-items: center;
         text-decoration: none;
@@ -26,30 +32,41 @@
     }
 
     &__logo-image {
+        display: block;
         width: 85px;
         height: auto;
-        display: block;
     }
 
-    // Mobile navigation overlay
+    /* =========================================================
+       Mobile menu overlay
+    ========================================================= */
+
     &__nav {
         display: none;
 
         &--mobile-active {
             position: fixed;
-            inset: 0;
-            z-index: 200;
+            top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--site-header-bar-height));
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 240;
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100vh;
-            overflow-y: auto;
-            padding-top: 124px;
             padding-inline: 28px;
-            padding-bottom: 220px;
             background-color: $white;
 
-            // Mobile menu list
+            .site-header__nav-scroll {
+                flex: 1 1 auto;
+                min-height: 0;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                -webkit-overflow-scrolling: touch;
+                padding-top: 16px;
+                padding-bottom: 24px;
+            }
+
             .site-header__menu {
                 display: flex;
                 flex-direction: column;
@@ -61,7 +78,6 @@
                 border-bottom: 1px solid $neutral-100;
             }
 
-            // Navigation links and buttons
             .site-header__menu-link,
             .site-header__menu-button {
                 width: 100%;
@@ -71,14 +87,12 @@
                 line-height: 28px;
             }
 
-            // Open accordion dropdown
             .site-header__menu-button[aria-expanded="true"] ~ .site-header__dropdown {
                 display: flex;
                 padding-top: 12px;
                 padding-bottom: 24px;
             }
 
-            // Mobile dropdown menu
             .site-header__dropdown {
                 position: static;
                 min-width: 100%;
@@ -88,15 +102,47 @@
                 transform: none;
             }
 
-            // Mobile dropdown links
             .site-header__dropdown-link {
                 padding-inline: 18px;
                 font-size: 16px;
             }
+
+            .site-header__mobile-footer {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-between;
+                padding: 24px 0 calc(40px + env(safe-area-inset-bottom, 0px));
+                background-color: $white;
+                border-top: 1px solid $neutral-75;
+            }
+
+            .site-header__contact {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+
+            .site-header__linkedin {
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
         }
     }
 
-    // Desktop/mobile menu list
+    &__nav-scroll {
+        display: block;
+    }
+
+    /* =========================================================
+       Menu + dropdowns
+    ========================================================= */
+
     &__menu {
         margin: 0;
         padding: 0;
@@ -109,7 +155,6 @@
         position: relative;
     }
 
-    // Navigation links and buttons
     &__menu-link,
     &__menu-button {
         position: relative;
@@ -130,7 +175,6 @@
         transition: color 0.3s ease, border-color 0.3s ease;
     }
 
-    // Dropdown arrow icon
     &__menu-icon {
         display: flex;
         align-items: center;
@@ -144,12 +188,10 @@
         }
     }
 
-    // Rotate arrow when dropdown opens
     &__menu-button[aria-expanded="true"] .site-header__menu-icon img {
         transform: rotate(180deg);
     }
 
-    // Dropdown menu
     &__dropdown {
         position: absolute;
         left: 0;
@@ -165,7 +207,6 @@
         border-radius: 8px;
     }
 
-    // Dropdown links
     &__dropdown-link {
         display: block;
         padding-inline: 16px;
@@ -180,7 +221,10 @@
         }
     }
 
-    // Emergency contact section
+    /* =========================================================
+       Contact + toggle
+    ========================================================= */
+
     &__contact {
         display: none;
     }
@@ -212,11 +256,11 @@
         }
     }
 
-    // Mobile hamburger button
     &__mobile-toggle {
         grid-column: 3;
         justify-self: end;
         z-index: 220;
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -229,7 +273,6 @@
 
         &[aria-expanded="true"] {
 
-            // Hamburger open/close animation
             .site-header__toggle-icon--open {
                 opacity: 0;
                 transform: rotate(90deg);
@@ -242,7 +285,6 @@
         }
     }
 
-    // Hamburger icons
     &__toggle-icon {
         position: absolute;
         display: flex;
@@ -266,44 +308,12 @@
         }
     }
 
-    // Mobile footer
+    /* =========================================================
+       Mobile footer
+    ========================================================= */
+
     &__mobile-footer {
         display: none;
-    }
-
-    // Show footer when menu opens
-    &--menu-open {
-
-        .site-header__mobile-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 210;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            padding: 24px 28px 40px;
-            background-color: $white;
-            border-top: 1px solid $neutral-75;
-
-            .site-header__contact {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-            }
-        }
-
-        // LinkedIn icon
-        .site-header__linkedin {
-            display: flex;
-            align-items: center;
-
-            img {
-                width: 24px;
-                height: 24px;
-            }
-        }
     }
 
     &__contact-wrapper {
@@ -316,25 +326,31 @@
         display: none;
     }
 
-    // Tablet adjustments
-    @media (min-width: 768px) {
+    &--menu-open {
+        // Keep the bar opaque when the menu is open.
+        .site-header__container {
+            background-color: $white;
+            box-shadow: 0 1px 0 $neutral-75;
+        }
+    }
 
-        // Increase spacing for tablet
+    /* =========================================================
+       Tablet
+    ========================================================= */
+
+    @media (min-width: 768px) {
+        --site-header-bar-height: 84px;
+
         &__container {
-            min-height: 84px;
             padding-inline: 40px;
         }
 
-        // Slightly larger logo on tablet
         &__logo-image {
             width: 105px;
         }
 
-        // Tablet mobile menu spacing
         &__nav {
-
             &--mobile-active {
-                padding-top: 140px;
                 padding-inline: 40px;
 
                 .site-header__menu-link,
@@ -351,34 +367,33 @@
             }
         }
 
-        &--menu-open {
-
+        &__nav--mobile-active {
             .site-header__mobile-footer {
-                padding: 24px 40px 40px;
+                padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
             }
         }
     }
 
-    // Desktop layout
-    @media (min-width: 1200px) {
+    /* =========================================================
+       Desktop
+    ========================================================= */
 
-        // Desktop grid layout
+    @media (min-width: 1200px) {
+        --site-header-bar-height: 90.2px;
+
         &__container {
             grid-template-columns: 120px 1fr auto;
             column-gap: 40px;
             max-width: 1440px;
             width: 100%;
-            min-height: 90.2px;
             padding: 22px 80px;
             margin: 0 auto;
         }
 
-        // Larger desktop logo
         &__logo-image {
             width: 120px;
         }
 
-        // Show desktop navigation
         &__nav {
             grid-column: 2;
             display: flex;
@@ -394,6 +409,11 @@
                 overflow: visible;
                 padding: 0;
                 background-color: transparent;
+
+                .site-header__nav-scroll {
+                    overflow: visible;
+                    padding: 0;
+                }
 
                 .site-header__menu {
                     flex-direction: row;
@@ -422,18 +442,14 @@
             }
         }
 
-        // Desktop menu spacing
         &__menu {
             display: flex;
             gap: 40px;
         }
 
-        // Desktop hover border effect
         &__menu-link,
         &__menu-button {
-
             @media (hover: hover) and (pointer: fine) {
-
                 &::after {
                     content: "";
                     position: absolute;
@@ -456,15 +472,12 @@
             transform: rotate(0deg);
         }
 
-        // Show dropdown on hover
         &__dropdown {
-
             .site-header__menu-item--dropdown:hover & {
                 display: flex;
             }
         }
 
-        // Show contact section on desktop
         &__contact {
             grid-column: 3;
             display: flex;
@@ -474,9 +487,16 @@
             padding-right: 24px;
         }
 
-        // Hide hamburger on desktop
         &__mobile-toggle {
             display: none;
         }
+
+        &__mobile-footer {
+            display: none !important;
+        }
     }
+}
+
+body.site-header-menu-open {
+    overflow: hidden;
 }
