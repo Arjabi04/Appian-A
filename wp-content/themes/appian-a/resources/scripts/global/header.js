@@ -5,6 +5,14 @@ const header = document.querySelector(".site-header");
 if (toggleBtn && nav && header) {
     const dropdownButtons = nav.querySelectorAll(".site-header__menu-button");
     const DESKTOP_BREAKPOINT_PX = 1200;
+    const closeOtherDropdowns = (currentItem) => {
+        nav.querySelectorAll(".site-header__menu-item--open").forEach((item) => {
+            if (item === currentItem) return;
+            item.classList.remove("site-header__menu-item--open");
+            const btn = item.querySelector(".site-header__menu-button");
+            if (btn) btn.setAttribute("aria-expanded", "false");
+        });
+    };
 
     let lockedScrollY = 0;
 
@@ -84,7 +92,12 @@ if (toggleBtn && nav && header) {
     //  Throttled Accordion Dropdowns
     dropdownButtons.forEach((button) => {
         button.addEventListener("click", throttle(() => {
+            // Desktop dropdowns are hover/focus driven only.
+            if (window.innerWidth >= DESKTOP_BREAKPOINT_PX) {
+                return;
+            }
             const parentItem = button.closest(".site-header__menu-item");
+            closeOtherDropdowns(parentItem);
             const isOpen = parentItem.classList.toggle("site-header__menu-item--open");
             button.setAttribute("aria-expanded", String(isOpen));
         }));
