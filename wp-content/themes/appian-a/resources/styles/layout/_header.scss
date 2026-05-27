@@ -257,17 +257,17 @@
 
     &__dropdown {
         position: absolute;
-        left: 0;
-        top: calc(100% + 8px);
+        left: -20px;
+        top: calc(100% + 5px);
         min-width: 240px;
         display: none;
         flex-direction: column;
-        gap: 18px;
+        gap: 12px;
         margin: 0;
-        padding: 24px 0;
+        padding: 8px 0 16px 0;
         list-style: none;
         background-color: $white;
-        border-radius: 8px;
+        border-radius: 0px 0px 8px 8px;
     }
 
 		    &__dropdown-link {
@@ -630,4 +630,22 @@ body.site-header-menu-open {
         width: 0;
         height: 0;
     }
+}
+
+// Desktop dropdown overlay: show light-red tint behind dropdown/header and above page content.
+#site-header-overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--site-header-bar-height, 72px));
+    bottom: 0;
+    background-color: rgba($light-red, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 200;
+}
+
+#site-header-overlay.is-active {
+    opacity: 1;
 }

@@ -4,6 +4,7 @@ const header = document.querySelector(".site-header");
 
 if (toggleBtn && nav && header) {
     const dropdownButtons = nav.querySelectorAll(".site-header__menu-button");
+    const dropdownHoverItems = nav.querySelectorAll(".site-header__menu-item--dropdown");
     const DESKTOP_BREAKPOINT_PX = 1200;
     const closeOtherDropdowns = (currentItem) => {
         nav.querySelectorAll(".site-header__menu-item--open").forEach((item) => {
@@ -102,4 +103,29 @@ if (toggleBtn && nav && header) {
             button.setAttribute("aria-expanded", String(isOpen));
         }));
     });
+
+    // Desktop-only: show overlay while hovering a dropdown parent item.
+    let overlay = document.getElementById("site-header-overlay");
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.id = "site-header-overlay";
+        overlay.setAttribute("aria-hidden", "true");
+        // Insert after the header so the overlay starts below it and inherits header CSS vars if needed.
+        header.insertAdjacentElement("afterend", overlay);
+    }
+
+    const setOverlayOpen = (isOpen) => {
+        if (window.innerWidth < DESKTOP_BREAKPOINT_PX) {
+            overlay.classList.remove("is-active");
+            return;
+        }
+        overlay.classList.toggle("is-active", Boolean(isOpen));
+    };
+
+    dropdownHoverItems.forEach((item) => {
+        item.addEventListener("mouseenter", () => setOverlayOpen(true));
+        item.addEventListener("mouseleave", () => setOverlayOpen(false));
+    });
+
+    window.addEventListener("resize", throttle(() => setOverlayOpen(false), 200));
 }
