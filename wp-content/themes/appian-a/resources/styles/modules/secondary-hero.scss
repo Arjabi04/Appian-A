@@ -17,8 +17,21 @@
 .m-secondary-hero {
     position: relative;
     width: 100%;
-    aspect-ratio: 375 / 303;
+    height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 72px);
+    min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 72px);
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
+
+    @media (min-width: 768px) {
+        height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px);
+        min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px);
+    }
+
+    @media (min-width: 1200px) {
+        height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px);
+        min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px);
+    }
 
     &__image {
         position: absolute;
@@ -27,6 +40,9 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
+        background-size: cover;
+        background-position: center;
         animation: kenburns 12s ease-in-out infinite alternate;
     }
 
@@ -42,8 +58,8 @@
 
     &__content {
         position: absolute;
-        bottom: 2.5rem;
-        left: 1.75rem;
+        bottom: clamp(2.5rem, 1.355rem + 2.88vw, 6.25rem);
+        left: clamp(1.75rem, 0.504rem + 3.13vw, 5rem);
         right: 1.81rem;
     }
 
@@ -58,8 +74,6 @@
     }
 
     @include media-breakpoint-up(lg) {
-        aspect-ratio: 1440 / 816;
-
         &__overlay {
             opacity: 0.5;
         }
