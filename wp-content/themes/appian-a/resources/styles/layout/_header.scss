@@ -280,12 +280,12 @@
 	        color: $neutral-600;
 	        transition: color 0.3s ease;
 
-	        &:hover {
-	            color: $primary-red;
-	        }
-
 	        &:visited {
 	            color: $neutral-600;
+	        }
+
+	        &:hover {
+	            color: $primary-red;
 	        }
 
 			        &[aria-current="page"] {
