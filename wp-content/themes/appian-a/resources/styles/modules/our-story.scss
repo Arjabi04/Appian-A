@@ -1,70 +1,142 @@
 @import "../custom";
 
 .our-story {
-  --our-story-curve-bg: url("../../images/svgs/curve.svg");
-
   padding: 120px 28px;
-  background-image: none;
-}
+  background-image: none; 
 
-.our-story__inner {
-  display: flex;
-  flex-direction: column;
-}
-
-.our-story__eyebrow {
-  margin: 0;
-  font-family: "General Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.5;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--neutral-200);
-}
-
-.our-story__body {
-  margin: 24px 0 0;
-  font-family: var(--typo-h5-font, #{$font-family-heading}, Georgia, "Times New Roman", serif);
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 1.6;
-  letter-spacing: 0;
-  color: var(--neutral-600);
-}
-
-.our-story__year {
-  position: relative;
-  display: inline-block;
-  z-index: 0;
-}
-
-.our-story__year-text {
-  position: relative;
-  z-index: 1;
-}
-
-.our-story__year-curve {
-  position: absolute;
-//   width: 44px;
-  left: 50%;
-//   bottom: -0.1em;
-  transform: translateX(-50%);
-  z-index: 0;
-  pointer-events: none;
-
-  svg {
-    display: block;
-    width: 3em;
-    height: 1.55em;
+  @include media-breakpoint-up(lg) {
+    padding: 180px 0; 
   }
-}
 
-// to match the btn size with figma design
-.btn--small{
-    gap:40px;
-}
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 
-.our-story__cta {
-  margin-top: 48px;
+    @include media-breakpoint-up(lg) {
+      max-width: 819px; // content width box acc to Figma
+      margin-left: auto;
+      margin-right: 190px;
+      padding-left: 89px; // Keep padding-left for line gap
+      position: relative;
+
+      // The Left Accent Line
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: var(--neutral-200, #e5e7eb);
+      }
+    }
+  }
+
+  &__eyebrow {
+    margin: 0;
+    font-family: "General Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--neutral-200);
+
+    @include media-breakpoint-up(lg) {
+      font-size: 14px;
+    }
+  }
+
+  &__body {
+    margin: 24px 0 0;
+    font-family: var(--typo-h5-font, #{$font-family-heading}, Georgia, "Times New Roman", serif);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: var(--neutral-600);
+
+    @include media-breakpoint-up(lg) {
+      margin-top: 32px;
+      font-size: 28px;
+      line-height: 1.4;
+      text-transform: capitalize;
+    }
+
+    strong {
+      position: relative;
+      display: inline-block;
+      font-weight: inherit; 
+      white-space: nowrap;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--neutral-100, #dedede);
+        mix-blend-mode: plus-darker;
+        z-index: -1; // layers it behind the text 
+        bottom: 0.1em;
+        width: 54px;
+        height: 28px;
+        clip-path: polygon(0% 24%,6% 18%,12% 13%,18% 9.5%,24% 6.8%,30% 4.6%,36% 2.8%,42% 1.4%,48% .5%,50% 0%,52% .2%,58% 1%,64% 2.4%,70% 4.4%,76% 7%,82% 10.2%,88% 14%,94% 18.5%,99% 23%,85% 94%,82% 92%,77% 89.5%,71% 87.5%,64% 85.8%,58% 84.5%,48% 84%,49% 84%,48% 84.1%,43% 84.8%,36% 86.2%,30% 88.2%,24% 91%,15% 95.5%,15% 95%,9% 69%,5% 52%);
+
+        @include media-breakpoint-up(lg) {
+          width: 80px;
+          height: 30px;
+          clip-path: polygon(
+            1.517% 19.130%, 8.346% 15.451%, 15.175% 11.772%, 22.004% 8.093%, 25.825% 6.125%, 
+            29.280% 4.582%, 32.744% 3.264%, 36.214% 2.169%, 39.690% 1.298%, 43.170% 0.649%, 
+            46.652% 0.224%, 50.135% 0.021%, 53.617% 0.040%, 57.096% 0.281%, 60.572% 0.744%, 
+            64.043% 1.428%, 67.506% 2.333%, 70.961% 3.459%, 74.406% 4.806%, 77.840% 6.373%, 
+            81.260% 8.161%, 84.666% 10.168%, 88.056% 12.394%, 91.428% 14.840%, 94.781% 17.504%, 
+            98.113% 20.387%, 87.695% 95.559%, 85.063% 93.323%, 82.416% 91.260%, 79.753% 89.370%, 
+            77.077% 87.652%, 74.388% 86.108%, 71.688% 84.737%, 68.978% 83.540%, 66.260% 82.516%, 
+            63.533% 81.667%, 60.800% 80.991%, 58.062% 80.491%, 55.320% 80.164%, 52.575% 80.013%, 
+            49.829% 80.037%, 47.082% 80.236%, 44.336% 80.611%, 41.593% 81.161%, 38.852% 81.888%, 
+            36.116% 82.790%, 33.386% 83.869%, 30.663% 85.125%, 26.576% 87.287%, 19.747% 90.966%, 
+            12.918% 94.645%, 6.089% 98.324%
+          );
+        }
+      }
+    }
+  }
+
+  &__cta {
+    margin-top: 48px;
+
+    @media (min-width: 1200px) {
+      margin-top: 64px;
+    }
+  }
+
+  // Button adjustments & responsive layout gaps
+  .btn {
+    gap: 80px;
+
+    @media (max-width: 768px) {
+      gap: 40px; 
+    }
+  }
+
+  // Responsive Visibility Handlers
+  &__cta-btn {
+    &--mobile {
+      display: inline-flex;
+
+      @media (min-width: 768px) {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @media (min-width: 768px) {
+        display: inline-flex;
+      }
+    }
+  }
 }

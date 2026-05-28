@@ -645,8 +645,8 @@ body.site-header-menu-open {
     pointer-events: none;
     transition: opacity 0.2s ease;
     z-index: 200;
-}
 
-#site-header-overlay.is-active {
-    opacity: 1;
+    &.is-active {
+        opacity: 1;
+    }
 }
