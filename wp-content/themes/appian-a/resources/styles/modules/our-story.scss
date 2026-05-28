@@ -1,0 +1,70 @@
+@import "../custom";
+
+.our-story {
+  --our-story-curve-bg: url("../../images/svgs/curve.svg");
+
+  padding: 120px 28px;
+  background-image: none;
+}
+
+.our-story__inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.our-story__eyebrow {
+  margin: 0;
+  font-family: "General Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neutral-200);
+}
+
+.our-story__body {
+  margin: 24px 0 0;
+  font-family: var(--typo-h5-font, #{$font-family-heading}, Georgia, "Times New Roman", serif);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--neutral-600);
+}
+
+.our-story__year {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.our-story__year-text {
+  position: relative;
+  z-index: 1;
+}
+
+.our-story__year-curve {
+  position: absolute;
+//   width: 44px;
+  left: 50%;
+//   bottom: -0.1em;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+
+  svg {
+    display: block;
+    width: 3em;
+    height: 1.55em;
+  }
+}
+
+// to match the btn size with figma design
+.btn--small{
+    gap:40px;
+}
+
+.our-story__cta {
+  margin-top: 48px;
+}

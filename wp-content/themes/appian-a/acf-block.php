@@ -9,6 +9,8 @@ add_action('acf/init', function () {
             'styleguide'     => 'Style Guide',
             'secondary-hero' => 'Secondary Hero',
             'faq'            => 'FAQ',
+            'testimonial'    => 'Testimonial',
+            'our-story'    => 'Our Story',
         ];
 
         foreach ($boilerplateModules as $key => $mModule) {
