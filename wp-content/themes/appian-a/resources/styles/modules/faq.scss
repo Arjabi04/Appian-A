@@ -110,8 +110,12 @@
     font-size: 18px;
     letter-spacing: 0em;
     // color: $secondary;
+<<<<<<< HEAD
     color: var(--secondary-dark);
     ;
+=======
+    color: var(--secondary-dark);;
+>>>>>>> e67cfa1 (using variables for consistency)
     text-align: left;
   }
 
@@ -164,7 +168,6 @@
       letter-spacing: 0em;
       font-weight: 400;
       color: var(--secondary-dark);
-      ;
     }
 
     p {
