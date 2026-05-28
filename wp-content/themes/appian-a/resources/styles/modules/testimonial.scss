@@ -1,0 +1,176 @@
+@import "../common";
+
+.m-testimonial {
+    position: relative;
+    width: 100%;
+    background: $white;
+    overflow: visible;
+    padding-bottom: 10.5rem;
+
+    @include media-breakpoint-up(lg) {
+        padding-bottom: 5.8125rem;
+    }
+
+    &__red-block {
+        position: absolute;
+        bottom: 10.5rem;
+        left: 0;
+        width: 100%;
+        height: 9.875rem;
+        background: var(--primary-red);
+        z-index: 1;
+
+        @include media-breakpoint-up(lg) {
+            bottom: 5.8125rem;
+            height: 19.1875rem;
+        }
+    }
+
+    &__person {
+        position: relative;
+        display: block;
+        width: 88.6%;
+        max-width: 100%;
+        margin-left: 5.7%;
+        height: auto;
+        aspect-ratio: 332.143 / 280;
+        object-fit: cover;
+        object-position: top center;
+        z-index: 2;
+
+        @include media-breakpoint-up(lg) {
+            width: 100%;
+            max-width: 74rem;
+            margin: 0 auto;
+            aspect-ratio: 1184 / 862;
+            object-position: center;
+        }
+    }
+
+    &__annotation {
+        position: absolute;
+        top: -5.9375rem;
+        right: calc(29% - 5.8rem);
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        width: 7.4375rem;
+        z-index: 3;
+
+        @include media-breakpoint-up(lg) {
+            top: 15.25rem;
+            right: max(5rem, calc((100% - 74rem) / 2 + 12rem), 20%);
+            flex-direction: column;
+            width: auto;
+        }
+    }
+
+    &__arrow {
+        width: 2.625rem;
+        height: 3.4375rem;
+        transform: scaleY(-1);
+
+        @include media-breakpoint-up(lg) {
+            width: 4.5625rem;
+            height: 5.9375rem;
+            transform: none;
+        }
+    }
+
+    &__name {
+        width: 7.4375rem;
+        color: var(--secondary-dark);
+        text-align: center;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: 0.0225rem;
+        margin: 0;
+
+        @include media-breakpoint-up(lg) {
+            width: 11.875rem;
+        }
+    }
+
+    &__quote-box {
+        position: absolute;
+        bottom: 0;
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        max-width: 26.25rem;
+        margin: 0 auto;
+        filter: drop-shadow(0 0.625rem 1.25rem rgba(0, 0, 0, 0.08));
+        z-index: 3;
+
+        @include media-breakpoint-up(lg) {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            width: 26.25rem;
+            max-width: none;
+        }
+    }
+
+    &__quote-bg-container {
+        position: relative;
+        width: 100%;
+        height: 13.75rem;
+        /* 220px */
+        margin-block-end: -13.125rem;
+        /* -210px */
+        z-index: 1;
+
+        picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        @include media-breakpoint-up(lg) {
+            height: 11.5rem;
+            /* 184px */
+            margin-block-end: -11.5rem;
+            /* -184px */
+        }
+    }
+
+    &__quote-bg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    &__quote-content {
+        position: relative;
+        display: flex;
+        width: 100%;
+        padding: 1.5rem;
+        /* 24px padding on mobile */
+        min-height: 13.125rem;
+        /* 210px content height on mobile */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+
+        @include media-breakpoint-up(lg) {
+            padding: 1.5rem 2rem;
+            /* 24px top/bottom, 32px left/right on desktop */
+            min-height: 11.5rem;
+            /* 184px height on desktop */
+        }
+    }
+
+    &__quote-text {
+        align-self: stretch;
+        color: var(--secondary-dark);
+        font-family: "General Sans", sans-serif;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: 0.0225rem;
+        margin: 0;
+    }
+}
