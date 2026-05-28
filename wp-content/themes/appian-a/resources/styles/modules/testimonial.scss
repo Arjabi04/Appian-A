@@ -50,7 +50,7 @@
     &__annotation {
         position: absolute;
         top: -5.9375rem;
-        right: 1rem;
+        right: calc(29% - 5.8rem);
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
@@ -59,7 +59,7 @@
 
         @include media-breakpoint-up(lg) {
             top: 15.25rem;
-            right: max(5rem, calc((100% - 74rem) / 2 + 12rem));
+            right: max(5rem, calc((100% - 74rem) / 2 + 12rem), 20%);
             flex-direction: column;
             width: auto;
         }
