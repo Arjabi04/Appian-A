@@ -22,7 +22,9 @@
 			</p>
 			<a class="faq__cta-button btn btn-primary" href="#" aria-label="Our Story">
 				<span>Our Story</span>
-				<?php echo appian_get_svg_icon('arrow-right'); ?>
+				<span class="faq__cta-icon" aria-hidden="true">
+					<?php echo appian_get_svg_icon('arrow-right'); ?>
+				</span>
 			</a>
 		</div>
 

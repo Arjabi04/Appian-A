@@ -122,9 +122,27 @@ if (toggleBtn && nav && header) {
         overlay.classList.toggle("is-active", Boolean(isOpen));
     };
 
+    const syncOverlayState = () => {
+        if (window.innerWidth < DESKTOP_BREAKPOINT_PX) {
+            setOverlayOpen(false);
+            return;
+        }
+
+        const hasActiveDropdown =
+            Boolean(nav.querySelector(".site-header__menu-item--dropdown:hover")) ||
+            Boolean(nav.querySelector(".site-header__menu-item--dropdown:focus-within"));
+
+        setOverlayOpen(hasActiveDropdown);
+    };
+
     dropdownHoverItems.forEach((item) => {
-        item.addEventListener("mouseenter", () => setOverlayOpen(true));
-        item.addEventListener("mouseleave", () => setOverlayOpen(false));
+        item.addEventListener("mouseenter", syncOverlayState);
+        item.addEventListener("mouseleave", syncOverlayState);
+        item.addEventListener("focusin", syncOverlayState);
+        item.addEventListener("focusout", () => {
+            // Delay so `document.activeElement` is updated before we re-check `:focus-within`.
+            setTimeout(syncOverlayState, 0);
+        });
     });
 
     window.addEventListener("resize", throttle(() => setOverlayOpen(false), 200));

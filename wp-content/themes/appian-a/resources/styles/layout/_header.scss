@@ -569,7 +569,8 @@
         }
 
 	        &__dropdown {
-	            .site-header__menu-item--dropdown:hover & {
+	            .site-header__menu-item--dropdown:hover &,
+	            .site-header__menu-item--dropdown:focus-within & {
 	                display: flex;
 	            }
 	        }
