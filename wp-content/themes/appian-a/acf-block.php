@@ -11,6 +11,7 @@ add_action('acf/init', function () {
             'faq'            => 'FAQ',
             'testimonial'    => 'Testimonial',
             'our-story'    => 'Our Story',
+            'two-column'     => 'Two Column',
         ];
 
         foreach ($boilerplateModules as $key => $mModule) {
