@@ -47,7 +47,7 @@
     font-size: 18px;
     font-weight: 400;
     line-height: 160%;
-    color: #101922;
+    color: var(--secondary-dark);
     max-width: 302px;
     text-align: left;
     // text-transform: capitalize;
@@ -109,7 +109,7 @@
     font-size: 18px;
     letter-spacing: 0em;
     // color: $secondary;
-    color: #101922;
+    color: var(--secondary-dark);;
     text-align: left;
   }
 
@@ -159,12 +159,11 @@
         Roboto,
         sans-serif
       );
-      color: #4a4a4a;
       font-size: 14px;
       line-height: 1.5;
       letter-spacing: 0em;
       font-weight: 400;
-      color: #101922;
+      color: var(--secondary-dark);;
     }
 
     p {

@@ -10,6 +10,7 @@ add_action('acf/init', function () {
             'secondary-hero' => 'Secondary Hero',
             'faq'            => 'FAQ',
             'testimonial'    => 'Testimonial',
+            'our-story'    => 'Our Story',
         ];
 
         foreach ($boilerplateModules as $key => $mModule) {

@@ -57,7 +57,7 @@
   }
 
   &:focus-visible {
-    outline: 0.0625rem solid inherit;
+    outline: 0.125rem solid $neutral-600;
     outline-offset: 0.25rem;
   }
 
