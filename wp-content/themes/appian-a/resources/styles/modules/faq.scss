@@ -1,4 +1,5 @@
-@import "../custom";
+@import "../common";
+
 
 .faq {
   &-module {
@@ -109,7 +110,8 @@
     font-size: 18px;
     letter-spacing: 0em;
     // color: $secondary;
-    color: var(--secondary-dark);;
+    color: var(--secondary-dark);
+    ;
     text-align: left;
   }
 
@@ -148,22 +150,21 @@
       padding: 24px 0px;
     }
 
-    > * {
-      font-family: var(
-        --typo-body-small-font,
+    >* {
+      font-family: var(--typo-body-small-font,
         #{$font-family-sans-serif},
         system-ui,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         Roboto,
-        sans-serif
-      );
+        sans-serif);
       font-size: 14px;
       line-height: 1.5;
       letter-spacing: 0em;
       font-weight: 400;
-      color: var(--secondary-dark);;
+      color: var(--secondary-dark);
+      ;
     }
 
     p {
@@ -181,7 +182,8 @@
   }
 
   &__question {
-    margin: 0; /* This completely wipes out the default browser orange margin! */
+    margin: 0;
+    /* This completely wipes out the default browser orange margin! */
   }
 }
 
