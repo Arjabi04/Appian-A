@@ -1,147 +1,86 @@
 <?php
 
 /**
- * FAQ & Process block (static content).
+ * FAQ & Process block.
  */
+
+$faq_section_title = get_field('section_title');
+$faq_heading       = get_field('heading');
+$faq_description   = get_field('description');
+$faq_cta_link      = get_field('cta_link');
+$faq_items         = get_field('faq_items');
+
+if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) && empty($faq_cta_link) && empty($faq_items)) {
+	return;
+}
 ?>
 
 <section class="faq-module">
-	<header class="faq__section-header" aria-label="FAQ">
-		<h2 class="faq__section-title">FAQ</h2>
-		<img
-			class="faq__section-divider"
-			src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
-			alt=""
-			aria-hidden="true" />
-	</header>
+	<?php if (! empty($faq_section_title)) : ?>
+		<header class="faq__section-header" aria-label="<?php echo esc_attr($faq_section_title); ?>">
+			<h2 class="faq__section-title"><?php echo esc_html($faq_section_title); ?></h2>
+			<img
+				class="faq__section-divider"
+				src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
+				alt=""
+				aria-hidden="true" />
+		</header>
+	<?php endif; ?>
 	<div class="faq__grid">
 		<div class="faq__process">
-			<h2 class="faq__heading">How will we achieve this?</h2>
-			<p class="faq__description">
-				We achieve this by following a structured and transparent construction process that ensures quality, efficiency, and client satisfaction at every stage. Our team begins with detailed planning and requirement analysis, followed by precise architectural and engineering design tailored to the project goals.
-			</p>
-			<a class="faq__cta-button btn btn-primary" href="#" aria-label="Our Story">
-				<span>Our Story</span>
-				<span class="faq__cta-icon" aria-hidden="true">
-					<?php echo appian_get_svg_icon('arrow-right'); ?>
-				</span>
-			</a>
+			<?php if (! empty($faq_heading)) : ?>
+				<h2 class="faq__heading"><?php echo esc_html($faq_heading); ?></h2>
+			<?php endif; ?>
+			<?php if (! empty($faq_description)) : ?>
+				<p class="faq__description">
+					<?php echo esc_html($faq_description); ?>
+				</p>
+			<?php endif; ?>
+			<?php if (! empty($faq_cta_link) && is_array($faq_cta_link) && ! empty($faq_cta_link['url'])) : ?>
+				<a class="faq__cta-button btn btn-primary" href="<?php echo esc_url($faq_cta_link['url']); ?>"<?php echo ! empty($faq_cta_link['target']) && $faq_cta_link['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : ''; ?> aria-label="<?php echo esc_attr($faq_cta_link['title']); ?>">
+					<span><?php echo esc_html($faq_cta_link['title']); ?></span>
+					<span class="faq__cta-icon" aria-hidden="true">
+						<?php echo appian_get_svg_icon('arrow-right'); ?>
+					</span>
+				</a>
+			<?php endif; ?>
 		</div>
 
 		<div class="faq__faq" data-faq>
-			<div class="faq__item is-open" data-faq-item>
-				<h3 class="faq__question">
-					<button
-						class="faq__toggle"
-						type="button"
-						aria-expanded="true"
-						aria-controls="faq-panel-1">
-						<span class="faq__question-text">What services do you provide?</span>
-						<span class="faq__icon" aria-hidden="true">
-							<?php echo appian_accordion_toggle_icon(); ?>
-						</span>
-					</button>
-				</h3>
-				<div class="faq__panel is-open" id="faq-panel-1" role="region">
-					<p>
-						We provide complete construction solutions for residential, commercial, and industrial projects. Our team manages every stage of the construction process, from initial planning and architectural design to final execution and finishing. Whether you are building a new property, renovating an existing space, or developing a large-scale infrastructure project, we focus on delivering high-quality workmanship, efficient project management, and long-lasting results.
-					</p>
-					<p>
-						Our services are designed to meet the needs of homeowners, businesses, and property developers. We work closely with clients to understand their vision, budget, and timeline while ensuring every project follows modern construction standards and safety requirements. By combining skilled professionals, quality materials, and innovative building techniques, we create functional and visually impressive spaces.
-					</p>
-					<p class="faq__list-heading">Our construction services include:</p>
-					<ul>
-						<li>Residential Construction</li>
-						<li>Commercial Building Projects</li>
-						<li>Renovation &amp; Remodeling</li>
-						<li>Interior Fit-Out Services</li>
-						<li>Architectural Design &amp; Planning</li>
-						<li>Civil &amp; Structural Works</li>
-						<li>Plumbing &amp; Electrical Installation</li>
-						<li>Roofing &amp; Waterproofing</li>
-						<li>Landscaping &amp; Exterior Development</li>
-						<li>Project Management &amp; Consultation</li>
-						<li>Building Maintenance Services</li>
-						<li>Turnkey Construction Solutions</li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="faq__item" data-faq-item>
-				<h3 class="faq__question">
-					<button
-						class="faq__toggle"
-						type="button"
-						aria-expanded="false"
-						aria-controls="faq-panel-2">
-						<span class="faq__question-text">How long does construction take?</span>
-						<span class="faq__icon" aria-hidden="true">
-							<?php echo appian_accordion_toggle_icon(); ?>
-						</span>
-					</button>
-				</h3>
-				<div class="faq__panel" id="faq-panel-2" role="region" hidden>
-					<p>
-						We provide complete construction solutions for residential, commercial, and industrial projects. Our team manages every stage of the construction process, from initial planning and architectural design to final execution and finishing. Whether you are building a new property, renovating an existing space, or developing a large-scale infrastructure project, we focus on delivering high-quality workmanship, efficient project management, and long-lasting results.
-					</p>
-					<p>
-						Our services are designed to meet the needs of homeowners, businesses, and property developers. We work closely with clients to understand their vision, budget, and timeline while ensuring every project follows modern construction standards and safety requirements. By combining skilled professionals, quality materials, and innovative building techniques, we create functional and visually impressive spaces.
-					</p>
-					<p class="faq__list-heading">Our construction services include:</p>
-					<ul>
-						<li>Residential Construction</li>
-						<li>Commercial Building Projects</li>
-						<li>Renovation &amp; Remodeling</li>
-						<li>Interior Fit-Out Services</li>
-						<li>Architectural Design &amp; Planning</li>
-						<li>Civil &amp; Structural Works</li>
-						<li>Plumbing &amp; Electrical Installation</li>
-						<li>Roofing &amp; Waterproofing</li>
-						<li>Landscaping &amp; Exterior Development</li>
-						<li>Project Management &amp; Consultation</li>
-						<li>Building Maintenance Services</li>
-						<li>Turnkey Construction Solutions</li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="faq__item" data-faq-item>
-				<h3 class="faq__question">
-					<button
-						class="faq__toggle"
-						type="button"
-						aria-expanded="false"
-						aria-controls="faq-panel-3">
-						<span class="faq__question-text">Do you handle project permits?</span>
-						<span class="faq__icon" aria-hidden="true">
-							<?php echo appian_accordion_toggle_icon(); ?>
-						</span>
-					</button>
-				</h3>
-				<div class="faq__panel" id="faq-panel-3" role="region" hidden>
-					<p>
-						We provide complete construction solutions for residential, commercial, and industrial projects. Our team manages every stage of the construction process, from initial planning and architectural design to final execution and finishing. Whether you are building a new property, renovating an existing space, or developing a large-scale infrastructure project, we focus on delivering high-quality workmanship, efficient project management, and long-lasting results.
-					</p>
-					<p>
-						Our services are designed to meet the needs of homeowners, businesses, and property developers. We work closely with clients to understand their vision, budget, and timeline while ensuring every project follows modern construction standards and safety requirements. By combining skilled professionals, quality materials, and innovative building techniques, we create functional and visually impressive spaces.
-					</p>
-					<p class="faq__list-heading">Our construction services include:</p>
-					<ul>
-						<li>Residential Construction</li>
-						<li>Commercial Building Projects</li>
-						<li>Renovation &amp; Remodeling</li>
-						<li>Interior Fit-Out Services</li>
-						<li>Architectural Design &amp; Planning</li>
-						<li>Civil &amp; Structural Works</li>
-						<li>Plumbing &amp; Electrical Installation</li>
-						<li>Roofing &amp; Waterproofing</li>
-						<li>Landscaping &amp; Exterior Development</li>
-						<li>Project Management &amp; Consultation</li>
-						<li>Building Maintenance Services</li>
-						<li>Turnkey Construction Solutions</li>
-					</ul>
-				</div>
-			</div>
+			<?php if (! empty($faq_items) && is_array($faq_items)) : ?>
+				<?php 
+				$visible_index = 0;
+				foreach ($faq_items as $index => $item) : 
+					if (empty($item['question']) && empty($item['answer'])) {
+						continue;
+					}
+					$is_first = ($visible_index === 0);
+					$panel_id = 'faq-panel-' . ($visible_index + 1);
+					$item_class = $is_first ? 'faq__item is-open' : 'faq__item';
+					$panel_class = $is_first ? 'faq__panel is-open' : 'faq__panel';
+					$aria_expanded = $is_first ? 'true' : 'false';
+					$hidden_attr = $is_first ? '' : ' hidden';
+					$visible_index++;
+					?>
+					<div class="<?php echo esc_attr($item_class); ?>" data-faq-item>
+						<h3 class="faq__question">
+							<button
+								class="faq__toggle"
+								type="button"
+								aria-expanded="<?php echo esc_attr($aria_expanded); ?>"
+								aria-controls="<?php echo esc_attr($panel_id); ?>">
+								<span class="faq__question-text"><?php echo esc_html($item['question']); ?></span>
+								<span class="faq__icon" aria-hidden="true">
+									<?php echo appian_accordion_toggle_icon(); ?>
+								</span>
+							</button>
+						</h3>
+						<div class="<?php echo esc_attr($panel_class); ?>" id="<?php echo esc_attr($panel_id); ?>" role="region"<?php echo $hidden_attr; ?>>
+							<?php echo wp_kses_post($item['answer']); ?>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>
