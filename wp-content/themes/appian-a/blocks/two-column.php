@@ -1,77 +1,158 @@
 <?php
+
 /**
- * Two Column Block Template (Construction & Service Departments).
- *
- * @package Appian_A
+ * Two Column block.
  */
+
+$two_column_group = get_field('two_column_group');
+$two_column_group = is_array($two_column_group) ? $two_column_group : get_field('two_column');
+$two_column_group = is_array($two_column_group) ? $two_column_group : [];
+
+$resolve_image = static function ($value): array {
+	if (is_array($value)) {
+		return [
+			'url' => $value['url'] ?? '',
+			'alt' => $value['alt'] ?? '',
+		];
+	}
+
+	if (is_numeric($value)) {
+		$attachment_id = (int) $value;
+		return [
+			'url' => wp_get_attachment_image_url($attachment_id, 'full') ?: '',
+			'alt' => get_post_meta($attachment_id, '_wp_attachment_image_alt', true) ?: '',
+		];
+	}
+
+	if (is_string($value)) {
+		return [
+			'url' => $value,
+			'alt' => '',
+		];
+	}
+
+	return ['url' => '', 'alt' => ''];
+};
+
+$resolve_link = static function ($value): array {
+	if (! is_array($value)) {
+		return ['url' => '', 'title' => '', 'target' => '_self'];
+	}
+
+	$url = $value['url'] ?? '';
+	if (! $url && isset($value['link']) && is_array($value['link'])) {
+		$url = $value['link']['url'] ?? '';
+	}
+
+	return [
+		'url'    => $url,
+		'title'  => $value['title'] ?? '',
+		'target' => $value['target'] ?? '_self',
+	];
+};
+
+$get_card = static function (array $group, string $slug) use ($resolve_image, $resolve_link): array {
+	$card = [];
+	$possible_card_keys = [
+		$slug,
+		$slug . '_card',
+	];
+
+	foreach ($possible_card_keys as $key) {
+		if (isset($group[$key]) && is_array($group[$key])) {
+			$card = $group[$key];
+			break;
+		}
+	}
+
+	$raw_image = $card['image'] ?? $card[$slug . '_image'] ?? $group[$slug . '_image'] ?? null;
+	$raw_mobile_image = $card['mobile_image'] ?? $card[$slug . '_mobile_image'] ?? $group[$slug . '_mobile_image'] ?? null;
+	$raw_link = $card['link'] ?? $card[$slug . '_link'] ?? $group[$slug . '_link'] ?? null;
+
+	$image = $resolve_image($raw_image);
+	$mobile_image = $resolve_image($raw_mobile_image);
+	$link = $resolve_link($raw_link);
+
+	return [
+		'image_url' => $image['url'],
+		'image_alt' => $image['alt'],
+		'mobile_image_url' => $mobile_image['url'],
+		'eyebrow' => $card['eyebrow'] ?? $card[$slug . '_eyebrow'] ?? $group[$slug . '_eyebrow'] ?? '',
+		'heading' => $card['heading'] ?? $card[$slug . '_heading'] ?? $group[$slug . '_heading'] ?? '',
+		'link_url' => $link['url'],
+		'link_target' => $link['target'],
+		'link_title' => $link['title'],
+	];
+};
+
+$construction = $get_card($two_column_group, 'construction');
+$service = $get_card($two_column_group, 'service');
+
+$has_construction = ! empty($construction['image_url']) || ! empty($construction['mobile_image_url']) || ! empty($construction['eyebrow']) || ! empty($construction['heading']) || ! empty($construction['link_url']);
+$has_service = ! empty($service['image_url']) || ! empty($service['mobile_image_url']) || ! empty($service['eyebrow']) || ! empty($service['heading']) || ! empty($service['link_url']);
+
+if (! $has_construction && ! $has_service) {
+	return;
+}
+
+$render_card = static function (string $card_type, array $data) {
+	$has_link = ! empty($data['link_url']);
+	$link_target = $data['link_target'] === '_blank' ? '_blank' : '_self';
+	$link_rel = $link_target === '_blank' ? 'noopener noreferrer' : '';
+	$aria_label = ! empty($data['link_title']) ? $data['link_title'] : $data['heading'];
+	?>
+	<div class="m-two-column__card m-two-column__card--<?php echo esc_attr($card_type); ?>">
+		<?php if (! empty($data['image_url']) || ! empty($data['mobile_image_url'])) : ?>
+			<div class="m-two-column__image-wrapper">
+				<picture class="m-two-column__picture">
+					<?php if (! empty($data['mobile_image_url'])) : ?>
+						<source media="(max-width: 767px)" srcset="<?php echo esc_url($data['mobile_image_url']); ?>">
+					<?php endif; ?>
+					<?php if (! empty($data['image_url'])) : ?>
+						<img
+							class="m-two-column__image"
+							src="<?php echo esc_url($data['image_url']); ?>"
+							alt="<?php echo esc_attr($data['image_alt']); ?>" />
+					<?php endif; ?>
+				</picture>
+			</div>
+		<?php endif; ?>
+
+		<div class="m-two-column__overlay"></div>
+		<div class="m-two-column__content">
+			<?php if (! empty($data['eyebrow'])) : ?>
+				<span class="m-two-column__eyebrow"><?php echo esc_html($data['eyebrow']); ?></span>
+			<?php endif; ?>
+			<?php if (! empty($data['heading'])) : ?>
+				<h2 class="m-two-column__heading"><?php echo wp_kses_post($data['heading']); ?></h2>
+			<?php endif; ?>
+		</div>
+
+		<?php if ($has_link) : ?>
+			<a
+				class="m-two-column__button"
+				href="<?php echo esc_url($data['link_url']); ?>"
+				target="<?php echo esc_attr($link_target); ?>"
+				<?php if (! empty($link_rel)) : ?>rel="<?php echo esc_attr($link_rel); ?>"<?php endif; ?>
+				aria-label="<?php echo esc_attr($aria_label); ?>">
+				<span class="m-two-column__button-inner">
+					<?php echo appian_get_svg_icon('arrow-right'); ?>
+				</span>
+			</a>
+		<?php endif; ?>
+	</div>
+	<?php
+};
 ?>
 
 <section class="m-two-column">
-    <div class="m-two-column__container">
-        <!-- Card 1: Construction Department -->
-        <div class="m-two-column__card m-two-column__card--construction" data-node-id="4045:2396">
-            <div class="m-two-column__image-wrapper" data-node-id="4045:2397">
-                <picture class="m-two-column__picture">
-                    <source media="(max-width: 767px)" srcset="<?php echo esc_url(get_template_directory_uri() . '/resources/images/construction-department-mobile.png'); ?>">
-                    <img
-                        class="m-two-column__image"
-                        src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/construction-department.png'); ?>"
-                        alt="<?php esc_attr_e('Construction workers discussing project details at a site', 'outside-traineeship-boilerplate'); ?>"
-                    />
-                </picture>
-            </div>
-            <div class="m-two-column__overlay" data-node-id="4045:2399"></div>
-            <div class="m-two-column__content" data-node-id="4045:2407">
-                <span class="m-two-column__eyebrow"><?php esc_html_e('Leaders in the field', 'outside-traineeship-boilerplate'); ?></span>
-                <h2 class="m-two-column__heading">
-                    <?php echo wp_kses_post(__('Construction<br>Department', 'outside-traineeship-boilerplate')); ?>
-                </h2>
-            </div>
-            <a
-                class="m-two-column__button"
-                href="https://example.com/construction"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="<?php esc_attr_e('Visit Construction Department (opens in a new window)', 'outside-traineeship-boilerplate'); ?>"
-                data-node-id="4045:2400"
-            >
-                <span class="m-two-column__button-inner" data-node-id="4045:2401">
-                    <?php echo appian_get_svg_icon('arrow-right'); ?>
-                </span>
-            </a>
-        </div>
+	<div class="m-two-column__container">
+		<?php if ($has_construction) : ?>
+			<?php $render_card('construction', $construction); ?>
+		<?php endif; ?>
 
-        <!-- Card 2: Service Department -->
-        <div class="m-two-column__card m-two-column__card--service" data-node-id="4045:2410">
-            <div class="m-two-column__image-wrapper" data-node-id="4045:2411">
-                <picture class="m-two-column__picture">
-                    <source media="(max-width: 767px)" srcset="<?php echo esc_url(get_template_directory_uri() . '/resources/images/service-department-mobile.png'); ?>">
-                    <img
-                        class="m-two-column__image"
-                        src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/service-department.png'); ?>"
-                        alt="<?php esc_attr_e('Service technician working on equipment panels', 'outside-traineeship-boilerplate'); ?>"
-                    />
-                </picture>
-            </div>
-            <div class="m-two-column__overlay" data-node-id="4045:2413"></div>
-            <div class="m-two-column__content" data-node-id="4045:2421">
-                <span class="m-two-column__eyebrow"><?php esc_html_e('Experience that matters', 'outside-traineeship-boilerplate'); ?></span>
-                <h2 class="m-two-column__heading">
-                    <?php echo wp_kses_post(__('Service<br>Department', 'outside-traineeship-boilerplate')); ?>
-                </h2>
-            </div>
-            <a
-                class="m-two-column__button"
-                href="https://example.com/service"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="<?php esc_attr_e('Visit Service Department (opens in a new window)', 'outside-traineeship-boilerplate'); ?>"
-                data-node-id="4045:2414"
-            >
-                <span class="m-two-column__button-inner" data-node-id="4045:2415">
-                    <?php echo appian_get_svg_icon('arrow-right'); ?>
-                </span>
-            </a>
-        </div>
-    </div>
+		<?php if ($has_service) : ?>
+			<?php $render_card('service', $service); ?>
+		<?php endif; ?>
+	</div>
 </section>
