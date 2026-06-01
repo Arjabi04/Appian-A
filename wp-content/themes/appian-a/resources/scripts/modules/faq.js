@@ -4,6 +4,7 @@ function initFaqProcess(context = document) {
 
     containers.forEach((container) => {
         const items = Array.from(container.querySelectorAll('[data-faq-item]'));
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         function waitForCloseAnimation(panel, done) {
             let called = false;
@@ -34,11 +35,11 @@ function initFaqProcess(context = document) {
 
         function setItemOpen(item, open) {
             const button = item.querySelector('.faq__toggle');
-            if (!button) return;
+            if (!button) return Promise.resolve();
 
             const panelId = button.getAttribute('aria-controls');
             const panel = panelId ? container.querySelector(`#${panelId}`) : item.querySelector('.faq__panel');
-            if (!panel) return;
+            if (!panel) return Promise.resolve();
 
             button.setAttribute('aria-expanded', open ? 'true' : 'false');
 
@@ -50,19 +51,34 @@ function initFaqProcess(context = document) {
                     panel.classList.add('is-open');
 
                 });
-                return;
+                return Promise.resolve();
             }
 
             // Animate closed, then hide after the transition completes.
             item.classList.remove('is-open');
             panel.classList.remove('is-open');
 
-            waitForCloseAnimation(panel, () => {
-                // If it was reopened while we were waiting, don't hide it.
-                const stillClosed = button.getAttribute('aria-expanded') === 'false';
-                if (stillClosed) {
-                    panel.setAttribute('hidden', '');
-                }
+            return new Promise((resolve) => {
+                waitForCloseAnimation(panel, () => {
+                    // If it was reopened while we were waiting, don't hide it.
+                    const stillClosed = button.getAttribute('aria-expanded') === 'false';
+                    if (stillClosed) {
+                        panel.setAttribute('hidden', '');
+                    }
+                    resolve();
+                });
+            });
+        }
+
+        function scrollToQuestion(item) {
+            const behavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+            window.requestAnimationFrame(() => {
+                item.scrollIntoView({
+                    behavior,
+                    block: 'start',
+                    inline: 'nearest',
+                });
             });
         }
 
@@ -77,15 +93,35 @@ function initFaqProcess(context = document) {
             const button = item.querySelector('.faq__toggle');
             if (!button) return;
 
-            button.addEventListener('click', () => {
+            const handleClick = () => {
                 const isOpen = button.getAttribute('aria-expanded') === 'true';
+                const closingPromises = [];
 
                 items.forEach((other) => {
-                    setItemOpen(other, false);
+                    if (other === item) return;
+                    const otherButton = other.querySelector('.faq__toggle');
+                    const otherIsOpen = otherButton && otherButton.getAttribute('aria-expanded') === 'true';
+                    if (otherIsOpen) {
+                        closingPromises.push(setItemOpen(other, false));
+                    }
                 });
 
-                setItemOpen(item, !isOpen);
-            });
+                if (isOpen) {
+                    setItemOpen(item, false);
+                    return;
+                }
+
+                Promise.all(closingPromises).then(() => {
+                    scrollToQuestion(item);
+                    setItemOpen(item, true);
+                });
+            };
+
+            if (button.faqClickHandler) {
+                button.removeEventListener('click', button.faqClickHandler);
+            }
+            button.addEventListener('click', handleClick);
+            button.faqClickHandler = handleClick;
         });
     });
 }

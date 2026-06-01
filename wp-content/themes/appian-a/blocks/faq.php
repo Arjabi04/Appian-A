@@ -37,7 +37,7 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 				</p>
 			<?php endif; ?>
 			<?php if (! empty($faq_cta_link) && is_array($faq_cta_link) && ! empty($faq_cta_link['url'])) : ?>
-				<a class="faq__cta-button btn btn-primary" href="<?php echo esc_url($faq_cta_link['url']); ?>"<?php echo ! empty($faq_cta_link['target']) && $faq_cta_link['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : ''; ?> aria-label="<?php echo esc_attr($faq_cta_link['title']); ?>">
+				<a class="faq__cta-button btn btn-primary" href="<?php echo esc_url($faq_cta_link['url']); ?>" <?php echo ! empty($faq_cta_link['target']) && $faq_cta_link['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : ''; ?> aria-label="<?php echo esc_attr($faq_cta_link['title']); ?>">
 					<span><?php echo esc_html($faq_cta_link['title']); ?></span>
 					<span class="faq__cta-icon" aria-hidden="true">
 						<?php echo appian_get_svg_icon('arrow-right'); ?>
@@ -48,9 +48,9 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 
 		<div class="faq__faq" data-faq>
 			<?php if (! empty($faq_items) && is_array($faq_items)) : ?>
-				<?php 
+				<?php
 				$visible_index = 0;
-				foreach ($faq_items as $index => $item) : 
+				foreach ($faq_items as $index => $item) :
 					if (empty($item['question']) && empty($item['answer'])) {
 						continue;
 					}
@@ -61,7 +61,7 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 					$aria_expanded = $is_first ? 'true' : 'false';
 					$hidden_attr = $is_first ? '' : ' hidden';
 					$visible_index++;
-					?>
+				?>
 					<div class="<?php echo esc_attr($item_class); ?>" data-faq-item>
 						<h3 class="faq__question">
 							<button
@@ -75,7 +75,7 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 								</span>
 							</button>
 						</h3>
-						<div class="<?php echo esc_attr($panel_class); ?>" id="<?php echo esc_attr($panel_id); ?>" role="region"<?php echo $hidden_attr; ?>>
+						<div class="<?php echo esc_attr($panel_class); ?>" id="<?php echo esc_attr($panel_id); ?>" role="region" <?php echo $hidden_attr; ?>>
 							<?php echo wp_kses_post($item['answer']); ?>
 						</div>
 					</div>

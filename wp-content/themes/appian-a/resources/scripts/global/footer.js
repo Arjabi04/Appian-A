@@ -1,20 +1,24 @@
+// Validate the footer email value and return an error message string.
+
+// Trims trailing whitespace and rejects internal whitespace.
 function getFooterEmailError(value, options = {}) {
-  const email = (value || '').trim();
+  const rawEmail = value || '';
+  const email = rawEmail.trim();
   const showRequired = Boolean(options.showRequired);
 
   if (!email) return showRequired ? 'Email is required.' : '';
+  if (/\s/.test(rawEmail)) return 'Email must not contain whitespace.';
   if (email.length > 254) return 'Email must be 254 characters or less.';
 
+  // email validation: only one @ symbol allowed
+  // word limit before @
   const firstAt = email.indexOf('@');
   if (firstAt === -1) {
     if (email.length > 64) return 'Email local part (before @) must be 64 characters or less.';
     return 'Email must include an "@" symbol.';
   }
 
-  if (email.indexOf('@', firstAt + 1) !== -1) {
-    return 'Email must contain a single "@" symbol.';
-  }
-
+  // word limit after @
   const localPart = email.slice(0, firstAt);
   const domainPart = email.slice(firstAt + 1);
 
@@ -27,9 +31,13 @@ function getFooterEmailError(value, options = {}) {
   return '';
 }
 
+// Check only the domain length portion of the email (after @).
 function getFooterEmailDomainLengthError(value) {
-  const email = (value || '').trim();
+  const rawEmail = value || '';
+  const email = rawEmail.trim();
   if (!email) return '';
+  // Reject any whitespace characters anywhere in the raw input.
+  if (/\s/.test(rawEmail)) return 'Email must not contain whitespace.';
 
   const firstAt = email.indexOf('@');
   if (firstAt === -1) return '';
@@ -41,6 +49,8 @@ function getFooterEmailDomainLengthError(value) {
   return domainPart.length > 189 ? 'Email domain (after @) must be 189 characters or less.' : '';
 }
 
+// Enforce maximum lengths for the full email and its local part.
+// Does not alter internal whitespace handling — that is validated elsewhere.
 function enforceEmailLengthLimit(rawValue) {
   const value = rawValue || '';
 
@@ -63,6 +73,7 @@ function enforceEmailLengthLimit(rawValue) {
   return rebuilt;
 }
 
+// Return a human-friendly message explaining why truncation happened.
 function getTruncationMessage(originalValue) {
   const value = originalValue || '';
   if (!value) return '';
@@ -86,6 +97,7 @@ function getTruncationMessage(originalValue) {
   return '';
 }
 
+// Log an event when the user submits an empty footer email (server-side hook).
 function logEmptyEmailSubmit(form) {
   const url = form?.dataset?.footerAjaxUrl;
   if (!url) return;
@@ -106,6 +118,7 @@ function logEmptyEmailSubmit(form) {
   }).catch(() => {});
 }
 
+// Initialize footer email input validation for all footer forms on the page.
 function initFooterEmailValidation() {
   const forms = document.querySelectorAll('.site-footer__form');
   if (!forms.length) return;
@@ -113,11 +126,14 @@ function initFooterEmailValidation() {
   forms.forEach((form) => {
     const input = form.querySelector('#footer-email');
     const errorEl = form.querySelector('[data-footer-email-error]');
+    const submitBtn = form.querySelector('[type="submit"]');
     if (!input) return;
 
     let hasSubmitted = false;
+    let isSubscribed = false;
     let lastTruncationMessage = '';
 
+    // Render validation messages and set ARIA state on the input.
     const render = (message) => {
       const effectiveMessage = message || lastTruncationMessage;
       if (!hasSubmitted) {
@@ -135,12 +151,15 @@ function initFooterEmailValidation() {
       return !message;
     };
 
+    // Keep input responsive: enforce length limits and update message.
     input.addEventListener('input', () => {
+      if (isSubscribed) return;
       const original = input.value;
       const enforced = enforceEmailLengthLimit(original);
       lastTruncationMessage = '';
 
       if (enforced !== original) {
+        // If we had to truncate, show a truncation message and restore cursor.
         lastTruncationMessage = getTruncationMessage(original) || 'Email is too long.';
         const cursor = input.selectionStart;
         input.value = enforced;
@@ -158,19 +177,31 @@ function initFooterEmailValidation() {
     });
 
     input.addEventListener('blur', () => {
+      if (isSubscribed) return;
       if (hasSubmitted) {
         validate({ showRequired: true });
       }
     });
 
     form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (isSubscribed) return;
+
       hasSubmitted = true;
       const ok = validate({ showRequired: true });
       if (!ok) {
-        e.preventDefault();
         input.focus();
         if (!input.value.trim()) logEmptyEmailSubmit(form);
+        return;
       }
+
+      isSubscribed = true;
+      lastTruncationMessage = '';
+      if (errorEl) errorEl.textContent = 'THANK YOU FOR SUBSCRIPTION';
+      input.setAttribute('aria-invalid', 'false');
+      input.value = '';
+      input.disabled = true;
+      if (submitBtn) submitBtn.disabled = true;
     });
   });
 }

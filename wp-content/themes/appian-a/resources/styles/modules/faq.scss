@@ -81,7 +81,7 @@
 
   &__item {
     border-top: 1px solid rgba($secondary, 0.3);
-
+    scroll-margin-top: 96px;
     &.is-open {
       .faq__icon .accordion-icon {
         transform: rotate(45deg);
@@ -110,12 +110,7 @@
     font-size: 18px;
     letter-spacing: 0em;
     // color: $secondary;
-<<<<<<< HEAD
     color: var(--secondary-dark);
-    ;
-=======
-    color: var(--secondary-dark);;
->>>>>>> e67cfa1 (using variables for consistency)
     text-align: left;
   }
 
@@ -131,7 +126,7 @@
       width: 100%;
       height: 100%;
       display: inline-flex;
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease;
 
       svg {
         width: 100%;
@@ -146,7 +141,7 @@
     max-height: 0;
     opacity: 0;
     padding: 0;
-    transition: max-height 0.3s ease-in-out, opacity 0.2s, padding 0.2s ease-in-out;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s, padding 0.3s ease-in-out;
 
     &.is-open {
       opacity: 1;
