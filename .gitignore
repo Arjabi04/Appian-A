@@ -93,3 +93,4 @@ wp-config-local.php
 # symlink of db.php of query-monitor plugin
 wp-content/db.php
 wp-content/themes/appian-a/yarn.lock
+wp-content/themes/appian-a/.yarn/install-state.gz
