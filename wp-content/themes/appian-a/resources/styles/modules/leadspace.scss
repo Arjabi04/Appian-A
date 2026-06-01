@@ -21,26 +21,12 @@
         border-radius: 50%;
         bottom: 74px; // Mobile bottom offset
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate3d(-50%, 0, 0); // promote to its own layer (Firefox clip stability)
         overflow: hidden;
         z-index: 2;
         pointer-events: none;
-    }
-
-    // Lower border outline circle
-    &__eclipse--78 {
-        position: absolute;
-        width: max(744px, 170vw);
-        height: max(744px, 170vw);
-        border-radius: 50%;
-        bottom: 74px; // Mobile bottom offset
-        left: 50%;
-        transform: translateX(-50%);
-        border: 8px solid var(--Secondary, #101922);
-        opacity: 0.1;
-        background: transparent;
-        z-index: 3;
-        pointer-events: none;
+        isolation: isolate; // own stacking context so the circular video mask is clean in Firefox
+        clip-path: circle(50% at 50% 50%); // hardware-accelerated circular clip — Firefox dropped the overflow:hidden + border-radius mask
     }
 
     // Mobile: fill the whole circle so the dark overlay never sits over empty
@@ -53,6 +39,7 @@
         object-fit: cover;
         object-position: center;
         display: block;
+        backface-visibility: hidden; // avoid clipping flicker on the GPU-composited layer (Firefox)
     }
 
     &__overlay {
@@ -115,18 +102,14 @@
         display: none;
     }
 
-    // Red rim arc — overlay sized/positioned identically to the video circle
-    // (&__eclipse--76) so it tracks the rim responsively. The arc is drawn in a
-    // 2000 viewBox at radius 1018, so the red stroke sits just OUTSIDE the video
-    // edge (same proportion at every breakpoint). The section's overflow:hidden
-    // clips the off-screen ends to a clean edge-to-edge sweep.
+
     &__arc {
         position: absolute;
         left: 50%;
-        transform: translateX(-50%);
-        width: max(744px, 170vw); // matches &__eclipse--76 mobile
+        transform: translate3d(-50%, 0, 0);
+        width: max(744px, 170vw);
         height: max(744px, 170vw);
-        bottom: 74px;
+        bottom: 66px; // 8px below the video circle (bottom 74px) — opens the mobile gap
         z-index: 4;
         pointer-events: none;
     }
@@ -138,41 +121,40 @@
         overflow: visible;
     }
 
+
+    &__arc-ring {
+        fill: none;
+        stroke: var(--Secondary, #101922);
+        stroke-width: 12px;
+        stroke-linecap: round;
+        opacity: 0.12;
+    }
+
     &__arc-path {
-        // A segment (--arc-start, ~24% — matches Figma's resting arc) is already
-        // drawn at rest on the left of the curve; it grows along the rim to the
-        // right as --arc-progress goes 0 -> 1 while scrolling the hero.
+
+        fill: none;
         stroke: var(--Primary-Red, #D72027);
         stroke-width: 8px;
-        stroke-dasharray: var(--arc-length, 1800);
-        stroke-dashoffset: calc(var(--arc-length, 1800) * (1 - var(--arc-start, 0.162)) * (1 - var(--arc-progress, 0)));
         stroke-linecap: round;
-        transition: stroke-dashoffset 0.1s ease-out;
+        --arc-start: 0.44; // mobile: red reaches ~40% across the curve, matching Figma
     }
 
     // TABLET INTERMEDIATE SCALING
     @include media-breakpoint-up(md) {
         height: 750px;
 
-        // Tablet/desktop: the large circle is fully covered by a bottom-anchored
-        // 16/9 video (original framing).
+
         &__video {
             inset: auto;
             bottom: 0;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: auto;
-            aspect-ratio: 16 / 9;
+            transform: translate3d(-50%, 0, 0);
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
         }
 
         &__eclipse--76 {
-            width: 1300px;
-            height: 1300px;
-            bottom: 60px;
-        }
-
-        &__eclipse--78 {
             width: 1300px;
             height: 1300px;
             bottom: 60px;
@@ -202,27 +184,34 @@
         }
 
         &__arc {
-            width: 1300px; // matches &__eclipse--78 tablet
+            width: 1300px;
             height: 1300px;
             bottom: 60px;
+        }
+
+        // Tablet: drop the long mobile resting red; the JS visibility floor keeps
+        // it on-screen (~0.24 here). Tune this value to lengthen the tablet red.
+        &__arc-path {
+            --arc-start: 0.16;
         }
     }
 
     // DESKTOP OVERRIDES
     @include media-breakpoint-up(lg) {
-        height: calc(100vh - var(--site-header-bar-height, 90.2px));
 
-        &__eclipse--76 {
-            width: 2000px;
-            height: 2000px;
-            bottom: calc(50% - 264px);
+        height: max(668px, 46.389vw); // 668/1440*100
+
+
+        &__video {
+            height: max(56.25vw, 668px); // 16:9 of 100vw, floored to the hero so it never gaps
+            bottom: calc(-1 * max(70px, 4.861vw)); // 70/1440*100 — cancels the circle's bottom gap
         }
 
-        &__eclipse--78 {
-            width: 2044px;
-            height: 2044px;
-            bottom: calc(50% - 286px);
-            border-width: 8px;
+
+        &__eclipse--76 {
+            width: max(2000px, 138.888vw); // 2000/1440*100
+            height: max(2000px, 138.888vw);
+            bottom: calc(50% - max(264px, 18.333vw)); // 264/1440*100
         }
 
         &__inner {
@@ -242,10 +231,24 @@
             line-height: 1.2; // 120%
         }
 
+        // Arc tracks eclipse--76 exactly (same width/height/bottom) so the red
+        // rim stays glued to the video edge at every viewport width.
         &__arc {
-            width: 2000px; // matches &__eclipse--76 desktop (red center unchanged)
-            height: 2000px;
-            bottom: calc(50% - 264px);
+            width: max(2000px, 138.888vw);
+            height: max(2000px, 138.888vw);
+            bottom: calc(50% - max(264px, 18.333vw));
+        }
+
+
+        &__arc-path {
+            --arc-start: 0.16;
+        }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+        &__arc-path {
+            transition: none;
         }
     }
 }
