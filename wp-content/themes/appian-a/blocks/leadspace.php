@@ -4,8 +4,7 @@
 		<video class="leadspace__video" src="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace.mp4'); ?>" autoplay muted loop playsinline preload="metadata"></video>
 		<div class="leadspace__overlay" aria-hidden="true"></div>
 	</div>
-	<div class="leadspace__eclipse leadspace__eclipse--78" aria-hidden="true"></div>
-	
+
 	<div class="leadspace__arc" aria-hidden="true">
 		<svg
 			class="leadspace__arc-svg"
@@ -15,6 +14,14 @@
 			focusable="false"
 			preserveAspectRatio="xMidYMid meet"
 		>
+			<path
+				class="leadspace__arc-ring"
+				d="M 220 1654 A 1018 1018 0 0 0 1780 1654"
+				stroke="#101922"
+				stroke-width="8"
+				stroke-linecap="round"
+				vector-effect="non-scaling-stroke"
+			/>
 			<path
 				class="leadspace__arc-path"
 				d="M 220 1654 A 1018 1018 0 0 0 1780 1654"
