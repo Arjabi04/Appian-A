@@ -46,6 +46,13 @@ function initLeadspace() {
         const scale = (arcWidth > 0 ? arcWidth : ARC_VIEWBOX) / ARC_VIEWBOX;
         const floor = visibilityFloor(arcWidth);
 
+        // Dynamically scale stroke-width to emulate vector-effect="non-scaling-stroke"
+        // without triggering cross-browser SVG dashing compositor bugs.
+        const ring = section.querySelector('.leadspace__arc-ring');
+        if (ring && scale > 0) {
+            ring.style.strokeWidth = 12 / scale;
+        }
+
         paths.forEach(path => {
             let totalLength;
             try {
@@ -58,9 +65,14 @@ function initLeadspace() {
             const cssStart = parseFloat(getComputedStyle(path).getPropertyValue('--arc-start')) || 0.162;
             const arcStart = Math.min(0.7, Math.max(cssStart, floor));
 
-            path._dash = totalLength * scale;
+            // Dashes are calculated in native SVG user-units (viewBox scale)
+            path._dash = totalLength;
             path._arcStart = arcStart;
             path.style.strokeDasharray = path._dash;
+            
+            if (scale > 0) {
+                path.style.strokeWidth = 8 / scale;
+            }
         });
     }
 

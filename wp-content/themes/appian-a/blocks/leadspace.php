@@ -20,7 +20,6 @@
 				stroke="#101922"
 				stroke-width="8"
 				stroke-linecap="round"
-				vector-effect="non-scaling-stroke"
 			/>
 			<path
 				class="leadspace__arc-path"
@@ -28,7 +27,6 @@
 				stroke="#D72027"
 				stroke-width="8"
 				stroke-linecap="round"
-				vector-effect="non-scaling-stroke"
 			/>
 		</svg>
 	</div>
