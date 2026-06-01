@@ -23,6 +23,8 @@
 
 	<?php wp_body_open(); ?>
 
+	<a class="skip-link" href="#primary">Skip to content</a>
+
 	<div id="page" class="site">
 
 		<?php get_template_part('template-parts/site-header/site-header'); ?>

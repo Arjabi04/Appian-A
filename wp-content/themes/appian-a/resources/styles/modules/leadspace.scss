@@ -1,0 +1,251 @@
+@import "bootstrap/scss/functions";
+@import "../settings/bootstrap-variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+
+.leadspace {
+    position: relative;
+    width: 100%;
+    height: 668px; // Mobile block height
+    overflow: hidden;
+    background: var(--White, #FFF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__eclipse--76 {
+        position: absolute;
+        width: max(744px, 170vw);
+        height: max(744px, 170vw);
+        border-radius: 50%;
+        bottom: 74px; // Mobile bottom offset
+        left: 50%;
+        transform: translateX(-50%);
+        overflow: hidden;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    // Lower border outline circle
+    &__eclipse--78 {
+        position: absolute;
+        width: max(744px, 170vw);
+        height: max(744px, 170vw);
+        border-radius: 50%;
+        bottom: 74px; // Mobile bottom offset
+        left: 50%;
+        transform: translateX(-50%);
+        border: 8px solid var(--Secondary, #101922);
+        opacity: 0.1;
+        background: transparent;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    // Mobile: fill the whole circle so the dark overlay never sits over empty
+    // space (which read as a gray band between the header and the video).
+    &__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(25deg, #000 28.68%, rgba(0, 0, 0, 0) 92.02%);
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    &__inner {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 289px; // Mobile bottom offset for text content
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        padding-left: 29px;
+        padding-right: 28px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        width: 100%;
+        max-width: 318px; // Mobile heading width
+        text-align: center;
+    }
+
+    &__eyebrow {
+        color: var(--White, #FFF);
+        font-family: $font-family-sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    &__heading {
+        color: var(--White, #FFF);
+        font-family: $font-family-heading;
+        font-size: 48px; // Heading D1 (Mobile)
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.1; // 110%
+        text-align: center;
+        margin: 0;
+    }
+
+    // Mobile shows the short heading; tablet/desktop the full sentence.
+    &__heading-mobile {
+        display: inline;
+    }
+
+    &__heading-desktop {
+        display: none;
+    }
+
+    // Red rim arc — overlay sized/positioned identically to the video circle
+    // (&__eclipse--76) so it tracks the rim responsively. The arc is drawn in a
+    // 2000 viewBox at radius 1018, so the red stroke sits just OUTSIDE the video
+    // edge (same proportion at every breakpoint). The section's overflow:hidden
+    // clips the off-screen ends to a clean edge-to-edge sweep.
+    &__arc {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: max(744px, 170vw); // matches &__eclipse--76 mobile
+        height: max(744px, 170vw);
+        bottom: 74px;
+        z-index: 4;
+        pointer-events: none;
+    }
+
+    &__arc-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        overflow: visible;
+    }
+
+    &__arc-path {
+        // A segment (--arc-start, ~24% — matches Figma's resting arc) is already
+        // drawn at rest on the left of the curve; it grows along the rim to the
+        // right as --arc-progress goes 0 -> 1 while scrolling the hero.
+        stroke: var(--Primary-Red, #D72027);
+        stroke-width: 8px;
+        stroke-dasharray: var(--arc-length, 1800);
+        stroke-dashoffset: calc(var(--arc-length, 1800) * (1 - var(--arc-start, 0.162)) * (1 - var(--arc-progress, 0)));
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.1s ease-out;
+    }
+
+    // TABLET INTERMEDIATE SCALING
+    @include media-breakpoint-up(md) {
+        height: 750px;
+
+        // Tablet/desktop: the large circle is fully covered by a bottom-anchored
+        // 16/9 video (original framing).
+        &__video {
+            inset: auto;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+
+        &__eclipse--76 {
+            width: 1300px;
+            height: 1300px;
+            bottom: 60px;
+        }
+
+        &__eclipse--78 {
+            width: 1300px;
+            height: 1300px;
+            bottom: 60px;
+        }
+
+        &__inner {
+            bottom: 220px;
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+
+        &__content {
+            max-width: 654px;
+        }
+
+        &__heading {
+            font-size: 40px; // Transitioning towards H3 Desktop size
+            line-height: 1.2;
+        }
+
+        &__heading-mobile {
+            display: none;
+        }
+
+        &__heading-desktop {
+            display: inline;
+        }
+
+        &__arc {
+            width: 1300px; // matches &__eclipse--78 tablet
+            height: 1300px;
+            bottom: 60px;
+        }
+    }
+
+    // DESKTOP OVERRIDES
+    @include media-breakpoint-up(lg) {
+        height: calc(100vh - var(--site-header-bar-height, 90.2px));
+
+        &__eclipse--76 {
+            width: 2000px;
+            height: 2000px;
+            bottom: calc(50% - 264px);
+        }
+
+        &__eclipse--78 {
+            width: 2044px;
+            height: 2044px;
+            bottom: calc(50% - 286px);
+            border-width: 8px;
+        }
+
+        &__inner {
+            top: calc(50% - 34.5px);
+            bottom: auto;
+            transform: translateY(-50%);
+            padding-left: 304px;
+            padding-right: 304px;
+        }
+
+        &__content {
+            max-width: 832px;
+        }
+
+        &__heading {
+            font-size: 40px; // Heading H3 (Desktop)
+            line-height: 1.2; // 120%
+        }
+
+        &__arc {
+            width: 2000px; // matches &__eclipse--76 desktop (red center unchanged)
+            height: 2000px;
+            bottom: calc(50% - 264px);
+        }
+    }
+}

@@ -4,7 +4,16 @@ const header = document.querySelector(".site-header");
 
 if (toggleBtn && nav && header) {
     const dropdownButtons = nav.querySelectorAll(".site-header__menu-button");
+    const dropdownHoverItems = nav.querySelectorAll(".site-header__menu-item--dropdown");
     const DESKTOP_BREAKPOINT_PX = 1200;
+    const closeOtherDropdowns = (currentItem) => {
+        nav.querySelectorAll(".site-header__menu-item--open").forEach((item) => {
+            if (item === currentItem) return;
+            item.classList.remove("site-header__menu-item--open");
+            const btn = item.querySelector(".site-header__menu-button");
+            if (btn) btn.setAttribute("aria-expanded", "false");
+        });
+    };
 
     let lockedScrollY = 0;
 
@@ -84,9 +93,57 @@ if (toggleBtn && nav && header) {
     //  Throttled Accordion Dropdowns
     dropdownButtons.forEach((button) => {
         button.addEventListener("click", throttle(() => {
+            // Desktop dropdowns are hover/focus driven only.
+            if (window.innerWidth >= DESKTOP_BREAKPOINT_PX) {
+                return;
+            }
             const parentItem = button.closest(".site-header__menu-item");
+            closeOtherDropdowns(parentItem);
             const isOpen = parentItem.classList.toggle("site-header__menu-item--open");
             button.setAttribute("aria-expanded", String(isOpen));
         }));
     });
+
+    // Desktop-only: show overlay while hovering a dropdown parent item.
+    let overlay = document.getElementById("site-header-overlay");
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.id = "site-header-overlay";
+        overlay.setAttribute("aria-hidden", "true");
+        // Insert after the header so the overlay starts below it and inherits header CSS vars if needed.
+        header.insertAdjacentElement("afterend", overlay);
+    }
+
+    const setOverlayOpen = (isOpen) => {
+        if (window.innerWidth < DESKTOP_BREAKPOINT_PX) {
+            overlay.classList.remove("is-active");
+            return;
+        }
+        overlay.classList.toggle("is-active", Boolean(isOpen));
+    };
+
+    const syncOverlayState = () => {
+        if (window.innerWidth < DESKTOP_BREAKPOINT_PX) {
+            setOverlayOpen(false);
+            return;
+        }
+
+        const hasActiveDropdown =
+            Boolean(nav.querySelector(".site-header__menu-item--dropdown:hover")) ||
+            Boolean(nav.querySelector(".site-header__menu-item--dropdown:focus-within"));
+
+        setOverlayOpen(hasActiveDropdown);
+    };
+
+    dropdownHoverItems.forEach((item) => {
+        item.addEventListener("mouseenter", syncOverlayState);
+        item.addEventListener("mouseleave", syncOverlayState);
+        item.addEventListener("focusin", syncOverlayState);
+        item.addEventListener("focusout", () => {
+            // Delay so `document.activeElement` is updated before we re-check `:focus-within`.
+            setTimeout(syncOverlayState, 0);
+        });
+    });
+
+    window.addEventListener("resize", throttle(() => setOverlayOpen(false), 200));
 }

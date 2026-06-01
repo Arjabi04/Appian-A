@@ -238,12 +238,6 @@
         }
     }
 
-    &__fax {
-        @include media-breakpoint-up(lg) {
-            display: none;
-        }
-    }
-
     // Social
 
     &__social {
@@ -252,7 +246,7 @@
         transition: opacity 0.2s ease-in-out;
 
         @include media-breakpoint-up(lg) {
-            margin-top: ($spacer * 5.8125);
+            margin-top: ($spacer * 4);
         }
 
         img {

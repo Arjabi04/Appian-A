@@ -3,10 +3,15 @@ add_action('acf/init', function () {
     if (function_exists('acf_register_block_type')) {
 
         $boilerplateModules = [
-            'leadspace' => 'Leadspace',
-            'about'     => 'About',
-            'our-work'  => 'Our Work',
-            'styleguide' => 'Style Guide',
+            'leadspace'      => 'Leadspace',
+            'about'          => 'About',
+            'our-work'       => 'Our Work',
+            'styleguide'     => 'Style Guide',
+            'secondary-hero' => 'Secondary Hero',
+            'faq'            => 'FAQ',
+            'testimonial'    => 'Testimonial',
+            'our-story'    => 'Our Story',
+            'two-column'     => 'Two Column',
         ];
 
         foreach ($boilerplateModules as $key => $mModule) {
@@ -66,6 +71,5 @@ add_action('acf/init', function () {
                 },
             ));
         }
-        
     }
 });

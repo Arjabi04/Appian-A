@@ -1,0 +1,216 @@
+@import "../common";
+
+.m-two-column {
+    width: 100%;
+    overflow: hidden;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        @include media-breakpoint-up(lg) {
+            flex-direction: row;
+        }
+    }
+
+    &__card {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 375 / 480; // Mobile aspect-ratio (exactly matches 480px height at 375px width)
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        // Fluid padding from mobile (28px left, 48px top) to desktop (80px left, 88px top)
+        padding-top: clamp(3rem, 2.12rem + 3.76vw, 5.5rem);
+        padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
+        padding-right: 1.75rem; // 28px
+        padding-bottom: 0;
+
+        &--service {
+            .m-two-column__content {
+                flex-direction: column;
+            }
+        }
+
+        @include media-breakpoint-up(md) {
+            aspect-ratio: 768 / 480; // Tablet aspect-ratio (keeps height at 480px on standard tablet width)
+            padding-right: 4rem; // 64px
+        }
+
+        @include media-breakpoint-up(lg) {
+            width: 50%;
+            aspect-ratio: 720 / 700; // Desktop aspect-ratio (exactly matches 700px height at 720px width)
+            padding-right: 0;
+        }
+    }
+
+    &__image-wrapper {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    &__picture {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        max-width: none;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: var(--overlay-50, rgba(0, 0, 0, 0.50));
+        z-index: 2;
+    }
+
+    &__content {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column-reverse; // Eyebrow below heading on mobile
+        align-items: flex-start;
+        gap: 1.5rem; // 24px
+        width: 100%;
+        pointer-events: none; // Click goes through to button link
+
+        @include media-breakpoint-up(lg) {
+            flex-direction: column; // Eyebrow above heading on desktop
+        }
+    }
+
+    &__eyebrow {
+        color: $white;
+        font-family: $font-family-sans-serif;
+        font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem); // Fluid 12px to 14px
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; // 18px
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        width: clamp(9.4375rem, 8.89rem + 2.35vw, 11rem); // Fluid 151px to 176px
+        height: clamp(1.125rem, 1.06rem + 0.28vw, 1.3125rem); // Fluid 18px to 21px
+        white-space: nowrap;
+
+        @include media-breakpoint-up(md) {
+            width: auto;
+            height: auto;
+        }
+
+        @include media-breakpoint-up(lg) {
+            font-size: 0.875rem; // 14px on desktop
+            letter-spacing: 1.4px;
+            width: 11rem; // 176px
+            height: 1.3125rem; // 21px
+        }
+    }
+
+    &__heading {
+        color: $white;
+        font-family: $font-family-heading;
+        font-size: clamp(2.5rem, 1.97rem + 2.25vw, 4rem); // Fluid 40px to 64px
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%; // 48px
+        margin: 0;
+        width: clamp(15.75rem, 11.17rem + 19.53vw, 28.75rem); // Fluid 252px to 460px
+        height: clamp(6rem, 4.72rem + 5.45vw, 9.625rem); // Fluid 96px to 154px
+
+        @include media-breakpoint-up(md) {
+            width: 100%;
+            height: auto;
+            max-width: 460px;
+        }
+
+        @include media-breakpoint-up(lg) {
+            font-size: 4rem; // 64px on desktop
+            width: 28.75rem; // 460px
+            height: 9.625rem; // 154px
+        }
+    }
+
+    &__button {
+        position: absolute;
+
+        // Fluid button positioning
+        right: clamp(1.75rem, 1.05rem + 2.96vw, 3.75rem); // Fluid 28px to 60px
+        bottom: clamp(2rem, 1.66rem + 1.45vw, 3rem); // Fluid 32px to 48px
+
+        // Fluid button sizing
+        width: clamp(3.25rem, 2.9rem + 1.45vw, 4.25rem); // Fluid 52px to 68px
+        height: clamp(3.25rem, 2.9rem + 1.45vw, 4.25rem); // Fluid 52px to 68px
+
+        background: var(--primary-red, #{$primary-red});
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 4;
+        transition: background-color 0.25s ease-in-out, transform 0.2s ease-in-out;
+        outline: none;
+
+        &:hover,
+        &:focus-visible {
+            background: var(--dark-red, #{$dark-red});
+            transform: scale(1.05);
+        }
+
+        @include media-breakpoint-up(lg) {
+            right: 3.75rem; // 60px
+            bottom: 3rem; // 48px
+            width: 4.25rem; // 68px
+            height: 4.25rem; // 68px
+        }
+    }
+
+    &__button-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 1.25rem; // 20px
+        height: 1.25rem; // 20px
+
+        color: $white;
+
+        @include media-breakpoint-up(lg) {
+            width: 1.5rem; // 24px
+            height: 1.5rem; // 24px
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            transition: transform 0.25s ease-in-out;
+
+            path {
+                stroke-width: 1.6px; // Mobile thickness
+
+                @include media-breakpoint-up(lg) {
+                    stroke-width: 2px; // Desktop thickness
+                }
+            }
+        }
+    }
+
+    // SVG icon hover effect
+    &__button:hover {
+        .m-two-column__button-inner svg {
+            transform: translateX(4px);
+        }
+    }
+}

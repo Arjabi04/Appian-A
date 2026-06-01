@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * Outside Traineeship Biolerplate functions and definitions
@@ -7,24 +8,25 @@
  *
  * @package Outside_Traineeship_Biolerplate
  */
-if ( ! defined( '_S_VERSION' ) ) {
+if (! defined('_S_VERSION')) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
+	define('_S_VERSION', '1.0.0');
 }
-function vite_assets($entry) {
-    static $manifest;
-    if (!$manifest) {
-        $manifestPath = __DIR__ . '/public/.vite/manifest.json';
+function vite_assets($entry)
+{
+	static $manifest;
+	if (!$manifest) {
+		$manifestPath = __DIR__ . '/public/.vite/manifest.json';
 
-        $manifest = json_decode(
-            file_get_contents($manifestPath),
-            true
-        );
-    }
-    if (!isset($manifest[$entry])) {
-        return null;
-    }
-    return get_template_directory_uri() . '/public/' . $manifest[$entry]['file'];
+		$manifest = json_decode(
+			file_get_contents($manifestPath),
+			true
+		);
+	}
+	if (!isset($manifest[$entry])) {
+		return null;
+	}
+	return get_template_directory_uri() . '/public/' . $manifest[$entry]['file'];
 }
 
 /**
@@ -34,17 +36,18 @@ function vite_assets($entry) {
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
-function outside_traineeship_biolerplate_setup() {
+function outside_traineeship_biolerplate_setup()
+{
 	/*
 		* Make theme available for translation.
 		* Translations can be filed in the /languages/ directory.
 		* If you're building a theme based on Outside Traineeship Biolerplate, use a find and replace
 		* to change 'outside-traineeship-biolerplate' to the name of your theme in all the template files.
 		*/
-	load_theme_textdomain( 'outside-traineeship-biolerplate', get_template_directory() . '/languages' );
+	load_theme_textdomain('outside-traineeship-biolerplate', get_template_directory() . '/languages');
 
 	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support('automatic-feed-links');
 
 	/*
 		* Let WordPress manage the document title.
@@ -52,20 +55,20 @@ function outside_traineeship_biolerplate_setup() {
 		* hard-coded <title> tag in the document head, and expect WordPress to
 		* provide it for us.
 		*/
-	add_theme_support( 'title-tag' );
+	add_theme_support('title-tag');
 
 	/*
 		* Enable support for Post Thumbnails on posts and pages.
 		*
 		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		*/
-	add_theme_support( 'post-thumbnails' );
+	add_theme_support('post-thumbnails');
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1'  => esc_html__( 'Primary', 'outside-traineeship-biolerplate' ),
-			'primary' => esc_html__( 'Primary Navigation', 'outside-traineeship-biolerplate' ),
+			'menu-1'  => esc_html__('Primary', 'outside-traineeship-biolerplate'),
+			'primary' => esc_html__('Primary Navigation', 'outside-traineeship-biolerplate'),
 		)
 	);
 
@@ -99,7 +102,7 @@ function outside_traineeship_biolerplate_setup() {
 	);
 
 	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+	add_theme_support('customize-selective-refresh-widgets');
 
 	/**
 	 * Add support for core custom logo.
@@ -116,7 +119,7 @@ function outside_traineeship_biolerplate_setup() {
 		)
 	);
 }
-add_action( 'after_setup_theme', 'outside_traineeship_biolerplate_setup' );
+add_action('after_setup_theme', 'outside_traineeship_biolerplate_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -125,22 +128,24 @@ add_action( 'after_setup_theme', 'outside_traineeship_biolerplate_setup' );
  *
  * @global int $content_width
  */
-function outside_traineeship_biolerplate_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'outside_traineeship_biolerplate_content_width', 640 );
+function outside_traineeship_biolerplate_content_width()
+{
+	$GLOBALS['content_width'] = apply_filters('outside_traineeship_biolerplate_content_width', 640);
 }
-add_action( 'after_setup_theme', 'outside_traineeship_biolerplate_content_width', 0 );
+add_action('after_setup_theme', 'outside_traineeship_biolerplate_content_width', 0);
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function outside_traineeship_biolerplate_widgets_init() {
+function outside_traineeship_biolerplate_widgets_init()
+{
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'outside-traineeship-biolerplate' ),
+			'name'          => esc_html__('Sidebar', 'outside-traineeship-biolerplate'),
 			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'outside-traineeship-biolerplate' ),
+			'description'   => esc_html__('Add widgets here.', 'outside-traineeship-biolerplate'),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -148,19 +153,21 @@ function outside_traineeship_biolerplate_widgets_init() {
 		)
 	);
 }
-add_action( 'widgets_init', 'outside_traineeship_biolerplate_widgets_init' );
+add_action('widgets_init', 'outside_traineeship_biolerplate_widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
-function outside_traineeship_biolerplate_scripts() {
-	wp_enqueue_style('app-css', vite_assets ('resources/styles/app.scss'), true, null, );
-    wp_enqueue_script('app-js', vite_assets ('resources/scripts/app.js'), [''], null, true);
+function outside_traineeship_biolerplate_scripts()
+{
+	wp_enqueue_style('app-css', vite_assets('resources/styles/app.scss'), true, null,);
+	wp_enqueue_script('app-js', vite_assets('resources/scripts/app.js'), [''], null, true);
 }
 add_action('wp_enqueue_scripts', 'outside_traineeship_biolerplate_scripts', 2);
 
 
-function is_block_preview(){
+function is_block_preview()
+{
 	return is_admin() ? true : false;
 }
 
@@ -188,101 +195,104 @@ require get_template_directory() . '/acf-block.php';
 require get_template_directory() . '/inc/svg-icons.php';
 require get_template_directory() . '/inc/acf-options.php';
 require get_template_directory() . '/inc/class-header-walker.php';
-
+require_once get_template_directory() . '/inc/newsletter-submissions.php';
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
+if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
 require_once get_template_directory() . '/inc/vite.php';
 
-function appian_footer_email_empty_ajax() {
-	if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'appian_footer_email' ) ) {
-		wp_send_json_error( [ 'message' => 'invalid_nonce' ], 403 );
+function appian_footer_email_empty_ajax()
+{
+	if (! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'appian_footer_email')) {
+		wp_send_json_error(['message' => 'invalid_nonce'], 403);
 	}
 
-	error_log( 'Footer subscribe: empty email submitted.' );
+	error_log('Footer subscribe: empty email submitted.');
 	wp_send_json_success();
 }
 
-add_action( 'wp_ajax_appian_footer_email_empty', 'appian_footer_email_empty_ajax' );
-add_action( 'wp_ajax_nopriv_appian_footer_email_empty', 'appian_footer_email_empty_ajax' );
+add_action('wp_ajax_appian_footer_email_empty', 'appian_footer_email_empty_ajax');
+add_action('wp_ajax_nopriv_appian_footer_email_empty', 'appian_footer_email_empty_ajax');
 
-function theme_assets() {
+function theme_assets()
+{
 
-    $is_dev = defined('WP_ENV')
-        && WP_ENV === 'development';
+	$is_dev = defined('WP_ENV')
+		&& WP_ENV === 'development';
 
-    // Vite HMR
-    if ( $is_dev ) {
+	// Vite HMR
+	if ($is_dev) {
 
-        wp_enqueue_script(
-            'vite-client',
-            'http://localhost:5173/@vite/client',
-            [],
-            null,
-            true
-        );
+		wp_enqueue_script(
+			'vite-client',
+			'http://localhost:5173/@vite/client',
+			[],
+			null,
+			true
+		);
 
-        wp_enqueue_script(
-            'theme-app',
-            'http://localhost:5173/resources/scripts/app.js',
-            [],
-            null,
-            true
-        );
+		wp_enqueue_script(
+			'theme-app',
+			'http://localhost:5173/resources/scripts/app.js',
+			[],
+			null,
+			true
+		);
 
-        return;
-    }
+		return;
+	}
 
-    $manifest = theme_vite_manifest();
+	$manifest = theme_vite_manifest();
 
-    $entry = $manifest['resources/scripts/app.js'] ?? false;
+	$entry = $manifest['resources/scripts/app.js'] ?? false;
 
-    if ( ! $entry ) {
-        return;
-    }
+	if (! $entry) {
+		return;
+	}
 
-    // CSS
-    if ( ! empty( $entry['css'] ) ) {
+	// CSS
+	if (! empty($entry['css'])) {
 
-        foreach ( $entry['css'] as $css ) {
+		foreach ($entry['css'] as $css) {
 
-            wp_enqueue_style(
-                'theme-app',
-                get_template_directory_uri() . '/public/' . $css,
-                [],
-                null
-            );
-        }
-    }
+			wp_enqueue_style(
+				'theme-app',
+				get_template_directory_uri() . '/public/' . $css,
+				[],
+				null
+			);
+		}
+	}
 
-    // JS
-    wp_enqueue_script(
-        'theme-app',
-        get_template_directory_uri() . '/public/' . $entry['file'],
-        [],
-        null,
-        true
-    );
+	// JS
+	wp_enqueue_script(
+		'theme-app',
+		get_template_directory_uri() . '/public/' . $entry['file'],
+		[],
+		null,
+		true
+	);
 }
 
-add_action( 'wp_enqueue_scripts', 'theme_assets' );
+add_action('wp_enqueue_scripts', 'theme_assets');
 
 /**
  * Enqueue block editor assets (Gutenberg) built by Vite.
  */
-function theme_block_editor_assets() {
+function theme_block_editor_assets()
+{
 
-	$is_dev = defined( 'WP_ENV' )
+	$is_dev = defined('WP_ENV')
 		&& WP_ENV === 'development';
 
 	/**
 	 * Development (Vite HMR)
 	 */
-	if ( $is_dev ) {
+	if ($is_dev) {
 
 		// Vite client
 		wp_enqueue_script(
@@ -314,22 +324,21 @@ function theme_block_editor_assets() {
 
 	$entry = $manifest['resources/scripts/editor.js'] ?? false;
 
-	if ( ! $entry ) {
+	if (! $entry) {
 		return;
 	}
 
 	// Enqueue extracted CSS from manifest
-	if ( ! empty( $entry['css'] ) ) {
+	if (! empty($entry['css'])) {
 
-		foreach ( $entry['css'] as $css ) {
-            wp_enqueue_style(
-                'theme-editor-css',
-                get_template_directory_uri() . '/public/' . $css,
-                [],
-                null
-            );
-        }
-
+		foreach ($entry['css'] as $css) {
+			wp_enqueue_style(
+				'theme-editor-css',
+				get_template_directory_uri() . '/public/' . $css,
+				[],
+				null
+			);
+		}
 	}
 
 	// Enqueue JS
@@ -347,4 +356,39 @@ add_action(
 	'theme_block_editor_assets'
 );
 
-add_action( 'enqueue_block_editor_assets', 'theme_block_editor_assets' );
+add_action('enqueue_block_editor_assets', 'theme_block_editor_assets');
+
+/**
+ * Validate ACF phone number fields to ensure they match US phone number formats.
+ *
+ * Accepts formats like (301) 816-2088, 301-816-2088, 301.816.2088, 3018162088, +13018162088.
+ *
+ * @param bool   $valid The validation status.
+ * @param mixed  $value The value of the field.
+ * @param array  $field The field array.
+ * @param string $input The input name.
+ * @return bool|string True if valid, error message string if invalid.
+ */
+function appian_validate_header_phone($valid, $value, $field, $input)
+{
+	if (! $valid || empty($value)) {
+		return $valid;
+	}
+
+	// Regex matching US phone formats like:
+	// - (301) 816-2088
+	// - 301-816-2088
+	// - 301.816.2088
+	// - 3018162088
+	// - +13018162088
+	$pattern = '/^\+?1?[\s.-]?(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/';
+
+	if (! preg_match($pattern, $value)) {
+		return 'Please enter a valid US phone number e.g. (301) 816-2088';
+	}
+
+	return $valid;
+}
+add_filter('acf/validate_value/name=phone_number', 'appian_validate_header_phone', 10, 4);
+add_filter('acf/validate_value/name=header_phone', 'appian_validate_header_phone', 10, 4);
+add_filter('acf/validate_value/name=fax_number', 'appian_validate_header_phone', 10, 4);

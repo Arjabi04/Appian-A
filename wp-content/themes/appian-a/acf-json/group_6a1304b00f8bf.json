@@ -185,7 +185,7 @@
                             "label": "Street Address",
                             "name": "street_address",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "textarea",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -197,9 +197,9 @@
                             "default_value": "",
                             "maxlength": "",
                             "allow_in_bindings": 0,
+                            "rows": "",
                             "placeholder": "",
-                            "prepend": "",
-                            "append": ""
+                            "new_lines": ""
                         }
                     ]
                 },
@@ -262,6 +262,27 @@
                             "append": ""
                         },
                         {
+                            "key": "field_6a15ccfa392dc",
+                            "label": "Fax number",
+                            "name": "fax_number",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
                             "key": "field_6a13062cbe5f1",
                             "label": "Email Address",
                             "name": "email_address",
@@ -300,6 +321,27 @@
                     },
                     "layout": "row",
                     "sub_fields": [
+                        {
+                            "key": "field_6a130665be5f2",
+                            "label": "Explore Eyebrow",
+                            "name": "explore_eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
                         {
                             "key": "field_6a13066bbe5f3",
                             "label": "Explore Links",
@@ -363,27 +405,6 @@
                                     "parent_repeater": "field_6a13066bbe5f3"
                                 }
                             ]
-                        },
-                        {
-                            "key": "field_6a130665be5f2",
-                            "label": "Explore Eyebrow",
-                            "name": "explore_eyebrow",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "allow_in_bindings": 0,
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": ""
                         }
                     ]
                 },
@@ -520,5 +541,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1779639449
+    "modified": 1779813641
 }

@@ -89,51 +89,62 @@
                 border-bottom: 1px solid $neutral-100;
             }
 
-            .site-header__menu-link,
-            .site-header__menu-button {
-                width: 100%;
-                justify-content: space-between;
-                padding-block: 24px;
-                font-size: 18px;
-                line-height: 28px;
-            }
+	            .site-header__menu-link,
+	            .site-header__menu-button {
+	                width: 100%;
+	                justify-content: space-between;
+	                padding-block: 24px;
+	                font-size: 18px;
+	                line-height: 150%;
+	                font-weight: 500;
+	            }
 
-            /* First item only */
-.site-header__menu-item:first-child .site-header__menu-link {
-    padding-top: 0;
-    padding-bottom: 24px;
-}
+	            /* First item only */
+	            .site-header__menu-item:first-child > .site-header__menu-link,
+	            .site-header__menu-item:first-child > .site-header__menu-button {
+	                padding-top: 0;
+	                padding-bottom: 24px;
+	            }
 
-            .site-header__menu-button[aria-expanded="true"] ~ .site-header__dropdown {
-                display: flex;
-                padding-top: 12px;
-                padding-bottom: 24px;
-            }
+		            .site-header__menu-button[aria-expanded="true"] ~ .site-header__dropdown {
+		                display: flex;
+		                margin-top: 0;
+		                padding-top: 0;
+		                padding-bottom: 24px;
+		            }
 
-            .site-header__dropdown {
-                position: static;
-                min-width: 100%;
-                display: none;
-                padding: 0;
-                box-shadow: none;
-                transform: none;
-            }
+		            .site-header__dropdown {
+		                position: static;
+		                min-width: 100%;
+		                display: none;
+		                padding: 0;
+		                gap: 12px;
+		                box-shadow: none;
+		                transform: none;
+		            }
 
-            .site-header__dropdown-link {
-                padding-inline: 18px;
-                font-size: 18px;
-                line-height: 27px;
-            }
+		            .site-header__dropdown-link {
+		                padding-left: 16px;
+		                padding-right: 0;
+		                font-size: 18px;
+		                line-height: 150%;
+		                font-weight: 400;
+		                padding-block: 0;
+		            }
 
-            .site-header__mobile-footer {
-                flex: 0 0 auto;
-                display: flex;
-                align-items: flex-end;
-                justify-content: space-between;
-                padding: 24px 0 calc(40px + env(safe-area-inset-bottom, 0px));
-                background-color: $white;
-                border-top: 1px solid $neutral-75;
-            }
+		            .site-header__dropdown-item:first-child > .site-header__dropdown-link,
+		            .site-header__dropdown-item:last-child > .site-header__dropdown-link {
+		                padding-block: 0;
+		            }
+
+	            .site-header__mobile-footer {
+	                flex: 0 0 auto;
+	                display: flex;
+	                align-items: flex-end;
+	                justify-content: space-between;
+	                padding: 24px 0 calc(16px + env(safe-area-inset-bottom, 0px));
+	                background-color: $white;
+	            }
 
             .site-header__contact {
                 display: flex;
@@ -189,6 +200,9 @@
         padding: 0;
         border: 0;
         background: transparent;
+        color: $neutral-600;
+        -webkit-appearance: none;
+        appearance: none;
         font-size: 16px;
         font-weight: 500;
         line-height: 24px;
@@ -202,36 +216,54 @@
         }
     }
 
-    &__menu-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 24px;
+	    &__menu-icon {
+	        display: flex;
+	        align-items: center;
+	        justify-content: center;
+	        width: 24px;
+	        height: 24px;
+	        box-sizing: border-box;
+	        padding: 4px;
 
         img {
             display: block;
             transition: transform 0.2s ease;
         }
-    }
 
-    &__menu-button[aria-expanded="true"] .site-header__menu-icon img {
-        transform: rotate(180deg);
-    }
+	        svg,
+	        img {
+	            width: 100%;
+	            height: 100%;
+	            transition: transform 0.2s ease;
+	        }
+	    }
+
+	    &__menu-button[aria-expanded="true"] .site-header__menu-icon img,
+	    &__menu-button[aria-expanded="true"] .site-header__menu-icon svg {
+	        transform: rotate(180deg);
+	    }
+
+	    @media (min-width: 1200px) {
+	        // Desktop dropdowns are hover-driven; rotate the arrow while open.
+	        &__menu-item--dropdown:hover .site-header__menu-icon svg,
+	        &__menu-item--dropdown:hover .site-header__menu-icon img {
+	            transform: rotate(180deg);
+	        }
+	    }
 
     &__dropdown {
         position: absolute;
-        left: 0;
-        top: calc(100% + 8px);
+        left: -20px;
+        top: calc(100% + 5px);
         min-width: 240px;
         display: none;
         flex-direction: column;
-        gap: 18px;
+        gap: 12px;
         margin: 0;
-        padding: 24px 0;
+        padding: 8px 0 16px 0;
         list-style: none;
         background-color: $white;
-        border-radius: 8px;
+        border-radius: 0px 0px 8px 8px;
     }
 
 		    &__dropdown-link {
@@ -268,6 +300,7 @@
         letter-spacing: -0.02em;
         text-transform: uppercase;
         color: $neutral-600;
+        letter-spacing: 3%;
     }
 
     &__contact-number {
@@ -276,8 +309,9 @@
         gap: 8px;
         font-size: 18px;
         font-weight: 400;
-        line-height: 27px;
-        letter-spacing: -0.02em;
+        line-height: 24px;
+        // Figma "2%" letter-spacing ~= 0.02em in CSS.
+        letter-spacing: 0.02em;
         color: $neutral-600;
         white-space: nowrap;
 
@@ -409,15 +443,15 @@
        Desktop
     ========================================================= */
 
-    @media (min-width: 1200px) {
-        --site-header-bar-height: 90.2px;
+		    @media (min-width: 1200px) {
+		        --site-header-bar-height: 90.2px;
 
         &__container {
             grid-template-columns: 120px 1fr auto;
             column-gap: 40px;
             max-width: 1440px;
             width: 100%;
-            padding: 22px 80px;
+            padding: 0px 80px;
             margin: 0 auto;
         }
 
@@ -512,11 +546,30 @@
             transform: rotate(0deg);
         }
 
-        &__dropdown {
-            .site-header__menu-item--dropdown:hover & {
-                display: flex;
-            }
-        }
+	        &__dropdown {
+	            .site-header__menu-item--dropdown:hover &,
+	            .site-header__menu-item--dropdown:focus-within & {
+	                display: flex;
+	            }
+	        }
+
+	        // Bridge the hover gap between the top-level item and its dropdown
+	        // so the menu doesn't close while moving the mouse to the dropdown.
+	        &__menu-item--dropdown {
+	            &::after {
+	                content: "";
+	                position: absolute;
+	                left: 0;
+	                right: 0;
+	                top: 100%;
+	                height: 8px;
+	            }
+	        }
+
+	        &__dropdown-link {
+	            font-size: 16px;
+	            line-height: 24px;
+	        }
 
         &__contact {
             grid-column: 3;
@@ -555,5 +608,23 @@ body.site-header-menu-open {
     &::-webkit-scrollbar {
         width: 0;
         height: 0;
+    }
+}
+
+// Desktop dropdown overlay: show light-red tint behind dropdown/header and above page content.
+#site-header-overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--site-header-bar-height, 72px));
+    bottom: 0;
+    background-color: rgba($light-red, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 200;
+
+    &.is-active {
+        opacity: 1;
     }
 }

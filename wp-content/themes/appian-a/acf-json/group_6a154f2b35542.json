@@ -1,9 +1,9 @@
 {
-    "key": "group_6a12cf669d2e8",
-    "title": "Header Settings",
+    "key": "group_6a154f2b35542",
+    "title": "header settings",
     "fields": [
         {
-            "key": "field_6a12cf661ec46",
+            "key": "field_6a154f2b7f692",
             "label": "Logo",
             "name": "logo",
             "aria-label": "",
@@ -29,8 +29,8 @@
             "preview_size": "medium"
         },
         {
-            "key": "field_6a12d03f1ec47",
-            "label": "Phone Number",
+            "key": "field_6a154f686cb4b",
+            "label": "Phone number",
             "name": "phone_number",
             "aria-label": "",
             "type": "text",
@@ -42,7 +42,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "(301) 816-2088",
+            "default_value": "",
             "maxlength": "",
             "allow_in_bindings": 0,
             "placeholder": "",
@@ -50,8 +50,8 @@
             "append": ""
         },
         {
-            "key": "field_6a12d0971ec48",
-            "label": "LinkedIn URL",
+            "key": "field_6a154fb1b640a",
+            "label": "Linkedin url",
             "name": "linkedin_url",
             "aria-label": "",
             "type": "url",
@@ -89,5 +89,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1779621235
+    "modified": 1779781565
 }
