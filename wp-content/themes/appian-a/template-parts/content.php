@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template part for displaying posts
  *
@@ -10,24 +11,6 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php
-		if ( is_singular() ) :
-			the_title( '<h1 class="entry-title">', '</h1>' );
-		else :
-			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-		endif;
-
-		if ( 'post' === get_post_type() ) :
-			?>
-			<div class="entry-meta">
-				<?php
-				outside_traineeship_biolerplate_posted_on();
-				outside_traineeship_biolerplate_posted_by();
-				?>
-			</div><!-- .entry-meta -->
-		<?php endif; ?>
-	</header><!-- .entry-header -->
 
 	<?php outside_traineeship_biolerplate_post_thumbnail(); ?>
 
@@ -37,27 +20,25 @@
 			sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'outside-traineeship-biolerplate' ),
+					__('Continue reading<span class="screen-reader-text"> "%s"</span>', 'outside-traineeship-biolerplate'),
 					array(
 						'span' => array(
 							'class' => array(),
 						),
 					)
 				),
-				wp_kses_post( get_the_title() )
+				wp_kses_post(get_the_title())
 			)
 		);
 
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'outside-traineeship-biolerplate' ),
+				'before' => '<div class="page-links">' . esc_html__('Pages:', 'outside-traineeship-biolerplate'),
 				'after'  => '</div>',
 			)
 		);
 		?>
 	</div><!-- .entry-content -->
 
-	<footer class="entry-footer">
-		<?php outside_traineeship_biolerplate_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
+
 </article><!-- #post-<?php the_ID(); ?> -->
