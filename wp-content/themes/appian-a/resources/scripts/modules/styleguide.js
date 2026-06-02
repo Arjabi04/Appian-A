@@ -8,10 +8,31 @@ function initStyleguide() {
     const form = container.querySelector('.m-styleguide__form');
     const copyCodeBtns = container.querySelectorAll('[data-copy-code]');
 
+    // Toast helper
+    function showToast(message) {
+        let toast = container.querySelector('.m-styleguide__toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'm-styleguide__toast';
+            container.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.classList.add('is-visible');
+
+        if (toast.timeoutId) {
+            clearTimeout(toast.timeoutId);
+        }
+
+        toast.timeoutId = setTimeout(() => {
+            toast.classList.remove('is-visible');
+        }, 2000);
+    }
+
     // Clipboard copy helper
-    function copyText(text) {
+    function copyText(text, message = 'Copied to clipboard!') {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text)
+                .then(() => showToast(message))
                 .catch(err => console.error('Clipboard copy failed:', err));
         }
     }
@@ -35,7 +56,7 @@ function initStyleguide() {
         item.addEventListener('click', () => {
             const colorVal = item.getAttribute('data-color');
             if (colorVal) {
-                copyText(colorVal);
+                copyText(colorVal, `Copied color: ${colorVal}`);
             }
         });
     });
@@ -90,7 +111,7 @@ function initStyleguide() {
         item.addEventListener('click', () => {
             const name = item.getAttribute('data-icon-class') || '';
             const phpSnippet = `<?php echo appian_get_svg_icon( '${name}' ); ?>`;
-            copyText(phpSnippet);
+            copyText(phpSnippet, `Copied icon snippet for '${name}'`);
         });
     });
 
@@ -100,7 +121,7 @@ function initStyleguide() {
             const codeBlock = btn.closest('.m-styleguide__example-block');
             const codeEl = codeBlock ? codeBlock.querySelector('code') : null;
             if (codeEl) {
-                copyText(codeEl.textContent);
+                copyText(codeEl.textContent, 'Copied code snippet!');
             }
         });
     });

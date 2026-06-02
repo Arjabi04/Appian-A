@@ -124,7 +124,11 @@ $render_card = static function (string $card_type, array $data) {
 				<span class="m-two-column__eyebrow"><?php echo esc_html($data['eyebrow']); ?></span>
 			<?php endif; ?>
 			<?php if (! empty($data['heading'])) : ?>
-				<h2 class="m-two-column__heading"><?php echo wp_kses_post($data['heading']); ?></h2>
+				<?php
+				$heading_clean = wp_kses_post($data['heading']);
+				$heading_clean = preg_replace('/<\/?p[^>]*>/i', '', $heading_clean);
+				?>
+				<h2 class="m-two-column__heading"><?php echo $heading_clean; ?></h2>
 			<?php endif; ?>
 		</div>
 

@@ -40,6 +40,19 @@
     width: 1.5rem;
     height: 1.5rem;
     flex-shrink: 0;
+    overflow: hidden;
+
+    & > * {
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      animation: buttonArrowLeave 0.5s ease-in-out;
+    }
+  }
+
+  &:hover,
+  &.is-hover {
+    svg > * {
+      animation: buttonArrowHover 0.5s ease-in-out forwards;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -120,17 +133,9 @@
     gap: 0.5rem;
     font-weight: 500;
 
-    svg {
-      transition: translate 0.35s ease;
-    }
-
     &:hover,
     &:focus {
       background: transparent;
-
-      svg {
-        translate: 0.5rem;
-      }
     }
 
     &:active {
@@ -220,5 +225,43 @@
 .c-cta-link {
   &:hover {
     text-decoration: underline;
+  }
+}
+
+@keyframes buttonArrowHover {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translateX(1.5rem);
+    opacity: 0;
+  }
+  46% {
+    transform: translateX(-1.5rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes buttonArrowLeave {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translateX(-1.5rem);
+    opacity: 0;
+  }
+  46% {
+    transform: translateX(1.5rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }

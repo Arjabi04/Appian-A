@@ -13,9 +13,9 @@
 }
 
 $sg-form-border: rgba($black, 0.68);
-$sg-input-height: 3.25rem;           // 52px
+$sg-input-height: 3.25rem; // 52px
 $sg-input-radius: $border-radius-lg; // 8px = 0.5rem
-$sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
+$sg-input-padding: 0.875rem 1.5rem; // 14px 24px
 
 .m-styleguide {
   font-family: $font-family-sans-serif;
@@ -415,6 +415,7 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
     position: relative;
 
     &.is-error {
+
       .m-styleguide__form-input,
       .m-styleguide__form-select {
         border-color: $primary-red;
@@ -425,7 +426,7 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
         }
       }
 
-      & + .m-styleguide__form-error {
+      &+.m-styleguide__form-error {
         display: block;
       }
     }
@@ -533,6 +534,7 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
   }
 
   .is-disabled {
+
     &.btn-primary,
     &.btn-secondary,
     &.btn-outline {
@@ -566,10 +568,6 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
 
       .btn-link {
         color: $btn-tertiary-hover;
-
-        svg {
-          translate: 0.5rem;
-        }
       }
     }
 
@@ -578,10 +576,6 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
 
       .btn-link {
         color: $btn-tertiary-hover;
-
-        svg {
-          translate: 0.5rem;
-        }
       }
     }
 
@@ -699,10 +693,6 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
 
       &:hover {
         color: $btn-tertiary-hover;
-
-        svg {
-          translate: 0.5rem;
-        }
       }
 
       // Desktop: Tertiary Big variant
@@ -717,6 +707,34 @@ $sg-input-padding: 0.875rem 1.5rem;  // 14px 24px
           }
         }
       }
+    }
+  }
+
+  &__toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    transform: translateY(1rem);
+    background: rgba(33, 37, 41, 0.95);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
