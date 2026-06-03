@@ -80,12 +80,7 @@ class Header_Walker extends Walker_Nav_Menu {
 				$output .= '<button type="button" class="site-header__menu-button" aria-expanded="false" aria-label="' . esc_attr($t) . ' submenu"' . $curr . '>';
 				$output .= '<span>' . esc_html($t) . '</span>';
 				$output .= '<span class="site-header__menu-icon">';
-				
-				$svg = function_exists('appian_get_svg_icon') ? appian_get_svg_icon('arrow-down') : '';
-				if (empty($svg)) {
-					$svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>';
-				}
-				$output .= $svg;
+				$output .= '<img src="' . esc_url( get_template_directory_uri() . '/resources/images/svgs/header-bottom-arrow.svg' ) . '" alt="" aria-hidden="true" width="11" height="6">';
 				$output .= '</span>';
 				$output .= '</button>';
 			} else {

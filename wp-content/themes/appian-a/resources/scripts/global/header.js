@@ -3,9 +3,16 @@ const nav = document.querySelector(".site-header__nav");
 const header = document.querySelector(".site-header");
 
 if (toggleBtn && nav && header) {
+    const navScroll = nav.querySelector(".site-header__nav-scroll");
+    const menu = nav.querySelector(".site-header__menu");
     const dropdownButtons = nav.querySelectorAll(".site-header__menu-button");
     const dropdownHoverItems = nav.querySelectorAll(".site-header__menu-item--dropdown");
     const DESKTOP_BREAKPOINT_PX = 1200;
+    const HEADER_SCROLL_DELTA_PX = 8;
+    const HEADER_TOP_OFFSET_PX = 20;
+    const MIN_DESKTOP_MENU_GAP_PX = 6;
+    const MIN_DESKTOP_MENU_FONT_SIZE_PX = 10;
+
     const closeOtherDropdowns = (currentItem) => {
         nav.querySelectorAll(".site-header__menu-item--open").forEach((item) => {
             if (item === currentItem) return;
@@ -16,6 +23,9 @@ if (toggleBtn && nav && header) {
     };
 
     let lockedScrollY = 0;
+    let lastScrollY = window.scrollY;
+    let isScrollTicking = false;
+    let isNavFitTicking = false;
 
     // throttle helper func
     function throttle(func, limit = 300) {
@@ -50,6 +60,7 @@ if (toggleBtn && nav && header) {
     }
 
     function setMenuOpen(isOpen) {
+        header.classList.remove("site-header--hidden");
         nav.classList.toggle("site-header__nav--mobile-active", isOpen);
         header.classList.toggle("site-header--menu-open", isOpen);
         toggleBtn.setAttribute("aria-expanded", String(isOpen));
@@ -73,15 +84,118 @@ if (toggleBtn && nav && header) {
         setMenuOpen(!isOpen);
     }
 
+    function resetDesktopNavFit() {
+        header.style.removeProperty("--site-header-menu-gap");
+        header.style.removeProperty("--site-header-menu-font-size");
+
+        if (navScroll) {
+            navScroll.style.maxWidth = "";
+        }
+    }
+
+    function getDesktopMenuWidth(gap) {
+        const menuItems = Array.from(menu.children);
+        const menuItemsWidth = menuItems.reduce((totalWidth, item) => {
+            return totalWidth + item.getBoundingClientRect().width;
+        }, 0);
+
+        return menuItemsWidth + (Math.max(menuItems.length - 1, 0) * gap);
+    }
+
+    function fitDesktopNav() {
+        if (!navScroll || !menu || window.innerWidth < DESKTOP_BREAKPOINT_PX) {
+            resetDesktopNavFit();
+            isNavFitTicking = false;
+            return;
+        }
+
+        resetDesktopNavFit();
+
+        // Keep the nav-scroll area inside the real grid column so it never covers the emergency contact.
+        const availableWidth = Math.floor(nav.getBoundingClientRect().width);
+        if (availableWidth <= 0) {
+            resetDesktopNavFit();
+            isNavFitTicking = false;
+            return;
+        }
+
+        navScroll.style.maxWidth = `${availableWidth}px`;
+
+        const menuStyles = window.getComputedStyle(menu);
+        const firstMenuControl = menu.querySelector(".site-header__menu-link, .site-header__menu-button");
+        const controlStyles = firstMenuControl ? window.getComputedStyle(firstMenuControl) : null;
+        const startingGap = parseFloat(menuStyles.columnGap || menuStyles.gap) || 40;
+        const startingFontSize = controlStyles ? parseFloat(controlStyles.fontSize) || 16 : 16;
+        let gap = startingGap;
+        let fontSize = startingFontSize;
+
+        header.style.setProperty("--site-header-menu-gap", `${gap}px`);
+        header.style.setProperty("--site-header-menu-font-size", `${fontSize}px`);
+
+        // First tighten only the gap, then the font. This keeps the menu inside its grid column and away from contact.
+        while (gap > MIN_DESKTOP_MENU_GAP_PX && getDesktopMenuWidth(gap) > availableWidth) {
+            gap = Math.max(MIN_DESKTOP_MENU_GAP_PX, gap - 2);
+            header.style.setProperty("--site-header-menu-gap", `${gap}px`);
+        }
+
+        while (fontSize > MIN_DESKTOP_MENU_FONT_SIZE_PX && getDesktopMenuWidth(gap) > availableWidth) {
+            fontSize = Math.max(MIN_DESKTOP_MENU_FONT_SIZE_PX, fontSize - 0.5);
+            header.style.setProperty("--site-header-menu-font-size", `${fontSize}px`);
+        }
+
+        isNavFitTicking = false;
+    }
+
+    function queueDesktopNavFit() {
+        if (isNavFitTicking) return;
+        isNavFitTicking = true;
+        window.requestAnimationFrame(fitDesktopNav);
+    }
+
+    function syncHeaderVisibility() {
+        const currentScrollY = Math.max(window.scrollY, 0);
+        const scrollDifference = currentScrollY - lastScrollY;
+        const isMenuOpen = nav.classList.contains("site-header__nav--mobile-active");
+
+        // Always keep the navbar visible at the top of the page and while the hamburger is open.
+        if (isMenuOpen || currentScrollY <= HEADER_TOP_OFFSET_PX) {
+            header.classList.remove("site-header--hidden");
+        } else if (scrollDifference > HEADER_SCROLL_DELTA_PX) {
+            // Hide the navbar while scrolling down so it moves with the page content.
+            header.classList.add("site-header--hidden");
+        } else if (scrollDifference < -HEADER_SCROLL_DELTA_PX) {
+            // Bring the navbar back as soon as the user starts scrolling up.
+            header.classList.remove("site-header--hidden");
+        }
+
+        lastScrollY = currentScrollY;
+        isScrollTicking = false;
+    }
+
     // Throttled Mobile Menu Toggle
     toggleBtn.addEventListener("click", throttle(toggleMenu));
+    queueDesktopNavFit();
+
+    // Use requestAnimationFrame so scroll changes do not fight the hamburger layout.
+    window.addEventListener("scroll", () => {
+        if (isScrollTicking) return;
+        isScrollTicking = true;
+        window.requestAnimationFrame(syncHeaderVisibility);
+    }, { passive: true });
 
     // Ensure mobile menu state never leaks into desktop layout.
     window.addEventListener("resize", throttle(() => {
-        if (window.innerWidth >= DESKTOP_BREAKPOINT_PX) {
+        queueDesktopNavFit();
+
+        if (window.innerWidth >= DESKTOP_BREAKPOINT_PX && nav.classList.contains("site-header__nav--mobile-active")) {
             setMenuOpen(false);
         }
     }, 200));
+
+    if ("ResizeObserver" in window) {
+        const headerResizeObserver = new ResizeObserver(queueDesktopNavFit);
+        headerResizeObserver.observe(header);
+    }
 
     // Close on Escape.
     document.addEventListener("keydown", (event) => {
