@@ -90,8 +90,7 @@ function initLeadspace() {
             const progress = getProgress();
             paths.forEach(path => {
                 const dash = path._dash || 1800;
-                const arcStart = path._arcStart !== undefined ? path._arcStart : 0.162;
-                path.style.strokeDashoffset = dash * (1 - arcStart) * (1 - progress);
+                path.style.strokeDashoffset = dash * (1 - progress);
             });
             ticking = false;
         });

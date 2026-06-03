@@ -196,10 +196,14 @@
         transition: background-color 0.25s ease-in-out, transform 0.2s ease-in-out;
         outline: none;
 
-        &:hover,
-        &:focus-visible {
+        &:hover {
             background: var(--dark-red, #{$dark-red});
             transform: scale(1.05);
+        }
+
+        &:focus-visible {
+            outline: 0.125rem solid $primary-red;
+            outline-offset: 0.25rem;
         }
 
         @include media-breakpoint-up(lg) {
