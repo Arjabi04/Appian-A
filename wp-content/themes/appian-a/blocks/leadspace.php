@@ -1,7 +1,7 @@
 <section class="leadspace" aria-label="Excellence Built Through Years of Trust">
 
 	<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true">
-		<video class="leadspace__video" src="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace.mp4'); ?>" autoplay muted loop playsinline preload="metadata"></video>
+		<video class="leadspace__video" src="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace.mp4'); ?>" poster="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace-poster.png'); ?>" autoplay muted loop playsinline preload="metadata"></video>
 		<div class="leadspace__overlay" aria-hidden="true"></div>
 	</div>
 

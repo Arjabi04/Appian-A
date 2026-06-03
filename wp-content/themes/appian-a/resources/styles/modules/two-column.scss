@@ -17,17 +17,22 @@
     &__card {
         position: relative;
         width: 100%;
-        aspect-ratio: 375 / 480; // Mobile aspect-ratio (exactly matches 480px height at 375px width)
         overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        min-height: clamp(30rem, 25.16rem + 20.66vw, 43.75rem);
+        gap: 2rem;
 
-        // Fluid padding from mobile (28px left, 48px top) to desktop (80px left, 88px top)
+        // Fluid padding:
+        // Left padding scales from 28px to 80px
+        // Right padding scales from 28px to 60px (matches the button offset)
+        // Top padding scales from 48px to 88px
+        // Bottom padding scales from 32px to 48px (matches the button offset)
         padding-top: clamp(3rem, 2.12rem + 3.76vw, 5.5rem);
         padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
-        padding-right: 1.75rem; // 28px
-        padding-bottom: 0;
+        padding-right: clamp(1.75rem, 1.05rem + 2.96vw, 3.75rem);
+        padding-bottom: clamp(2rem, 1.66rem + 1.45vw, 3rem);
 
         &--service {
             .m-two-column__content {
@@ -35,15 +40,9 @@
             }
         }
 
-        @include media-breakpoint-up(md) {
-            aspect-ratio: 768 / 480; // Tablet aspect-ratio (keeps height at 480px on standard tablet width)
-            padding-right: 4rem; // 64px
-        }
-
         @include media-breakpoint-up(lg) {
             width: 50%;
-            aspect-ratio: 720 / 700; // Desktop aspect-ratio (exactly matches 700px height at 720px width)
-            padding-right: 0;
+            flex-grow: 1;
         }
     }
 
@@ -102,9 +101,9 @@
         line-height: 150%; // 18px
         letter-spacing: 1.2px;
         text-transform: uppercase;
-        width: clamp(9.4375rem, 8.89rem + 2.35vw, 11rem); // Fluid 151px to 176px
-        height: clamp(1.125rem, 1.06rem + 0.28vw, 1.3125rem); // Fluid 18px to 21px
-        white-space: nowrap;
+        width: auto;
+        height: auto;
+        white-space: normal;
 
         @include media-breakpoint-up(md) {
             width: auto;
@@ -114,8 +113,8 @@
         @include media-breakpoint-up(lg) {
             font-size: 0.875rem; // 14px on desktop
             letter-spacing: 1.4px;
-            width: 11rem; // 176px
-            height: 1.3125rem; // 21px
+            width: auto;
+            height: auto;
         }
     }
 
@@ -127,8 +126,10 @@
         font-weight: 700;
         line-height: 120%; // 48px
         margin: 0;
-        width: clamp(15.75rem, 11.17rem + 19.53vw, 28.75rem); // Fluid 252px to 460px
-        height: clamp(6rem, 4.72rem + 5.45vw, 9.625rem); // Fluid 96px to 154px
+        width: 100%;
+        max-width: 460px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
 
         @include media-breakpoint-up(md) {
             width: 100%;
@@ -138,17 +139,17 @@
 
         @include media-breakpoint-up(lg) {
             font-size: 4rem; // 64px on desktop
-            width: 28.75rem; // 460px
-            height: 9.625rem; // 154px
+            width: 100%;
+            max-width: 460px;
+            height: auto;
         }
     }
 
     &__button {
-        position: absolute;
-
-        // Fluid button positioning
-        right: clamp(1.75rem, 1.05rem + 2.96vw, 3.75rem); // Fluid 28px to 60px
-        bottom: clamp(2rem, 1.66rem + 1.45vw, 3rem); // Fluid 32px to 48px
+        position: relative;
+        align-self: flex-end;
+        margin-top: auto;
+        flex-shrink: 0;
 
         // Fluid button sizing
         width: clamp(3.25rem, 2.9rem + 1.45vw, 4.25rem); // Fluid 52px to 68px
@@ -169,8 +170,6 @@
         }
 
         @include media-breakpoint-up(lg) {
-            right: 3.75rem; // 60px
-            bottom: 3rem; // 48px
             width: 4.25rem; // 68px
             height: 4.25rem; // 68px
         }

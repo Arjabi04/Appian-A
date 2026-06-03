@@ -2,9 +2,10 @@
 $logo = get_field('logo', 'option');
 $phone = get_field('phone_number', 'option');
 $linkedin = get_field('linkedin_url', 'option');
+$contact_label = get_field('contact_label', 'option');
 
 // If none of the fields have content, do not render the block.
-if (empty($logo) && empty($phone) && empty($linkedin)) {
+if (empty($logo) && empty($phone) && empty($linkedin) && empty($contact_label)) {
     return;
 }
 
@@ -45,7 +46,9 @@ if (! empty($phone)) {
                 <?php endif; ?>
                 <div class="site-header__contact-wrapper">
                     <a href="<?php echo esc_url($phone_href); ?>" class="site-header__contact" aria-label="<?php echo esc_attr($phone); ?>">
-                        <span class="site-header__contact-label">24/7 Emergency Services</span>
+                        <?php if (! empty($contact_label)) : ?>
+                            <span class="site-header__contact-label"><?php echo esc_html($contact_label); ?></span>
+                        <?php endif; ?>
                         <span class="site-header__contact-number">
                             <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/call.svg" alt="" aria-hidden="true" width="18" height="18">
                             <span><?php echo esc_html($phone); ?></span>
@@ -56,7 +59,9 @@ if (! empty($phone)) {
         </nav>
         <?php if (! empty($phone)) : ?>
             <a href="<?php echo esc_url($phone_href); ?>" class="site-header__contact" aria-label="<?php echo esc_attr($phone); ?>">
-                <span class="site-header__contact-label">24/7 Emergency Services</span>
+                <?php if (! empty($contact_label)) : ?>
+                    <span class="site-header__contact-label"><?php echo esc_html($contact_label); ?></span>
+                <?php endif; ?>
                 <span class="site-header__contact-number">
                     <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/call.svg" alt="" aria-hidden="true" width="18" height="18">
                     <span><?php echo esc_html($phone); ?></span>
