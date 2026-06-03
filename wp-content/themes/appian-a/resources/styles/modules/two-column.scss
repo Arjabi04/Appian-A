@@ -34,9 +34,43 @@
         padding-right: clamp(1.75rem, 1.05rem + 2.96vw, 3.75rem);
         padding-bottom: clamp(2rem, 1.66rem + 1.45vw, 3rem);
 
+        &--construction {
+            .m-two-column__image {
+                object-position: 43% 11%;
+                transform: scale(1.15);
+
+                @include media-breakpoint-up(lg) {
+                    object-position: 39% 41%;
+                    transform: scale(1.2);
+                }
+            }
+        }
+
         &--service {
             .m-two-column__content {
                 flex-direction: column;
+            }
+
+            .m-two-column__heading {
+                max-width: 260px;
+
+                @include media-breakpoint-up(md) {
+                    max-width: 340px;
+                }
+
+                @include media-breakpoint-up(lg) {
+                    max-width: 380px;
+                }
+            }
+
+            .m-two-column__image {
+                object-position: 75% center;
+                transform: scale(1.15);
+
+                @include media-breakpoint-up(lg) {
+                    object-position: 22% center;
+                    transform: scale(1.15);
+                }
             }
         }
 
@@ -65,9 +99,9 @@
         position: absolute;
         width: 100%;
         height: 100%;
+        max-width: none;
         object-fit: cover;
         object-position: center;
-        max-width: none;
     }
 
     &__overlay {
@@ -85,7 +119,6 @@
         align-items: flex-start;
         gap: 1.5rem; // 24px
         width: 100%;
-        pointer-events: none; // Click goes through to button link
 
         @include media-breakpoint-up(lg) {
             flex-direction: column; // Eyebrow above heading on desktop
