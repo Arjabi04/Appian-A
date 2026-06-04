@@ -6,6 +6,7 @@ if (toggleBtn && nav && header) {
     const navScroll = nav.querySelector(".site-header__nav-scroll");
     const menu = nav.querySelector(".site-header__menu");
     const dropdownButtons = nav.querySelectorAll(".site-header__menu-button");
+    const dropdownLinks = nav.querySelectorAll(".site-header__dropdown-link");
     const dropdownHoverItems = nav.querySelectorAll(".site-header__menu-item--dropdown");
     const DESKTOP_BREAKPOINT_PX = 1200;
     const HEADER_SCROLL_DELTA_PX = 8;
@@ -235,6 +236,15 @@ if (toggleBtn && nav && header) {
         }
         overlay.classList.toggle("is-active", Boolean(isOpen));
     };
+
+    dropdownLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            if (window.innerWidth < DESKTOP_BREAKPOINT_PX) return;
+
+            link.blur();
+            setOverlayOpen(false);
+        });
+    });
 
     const syncOverlayState = () => {
         if (window.innerWidth < DESKTOP_BREAKPOINT_PX) {

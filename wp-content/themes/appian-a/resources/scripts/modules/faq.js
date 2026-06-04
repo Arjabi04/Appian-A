@@ -1,20 +1,7 @@
+import { initRevealOnIntersect } from '../utils/section-divider.js';
+
 function initFaqDividerAnimation(context = document) {
-    const dividers = context.querySelectorAll('.faq__section-divider-wrap');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            // Reveal divider once 50% of it is visible
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    dividers.forEach((divider) => {
-        divider.classList.add('is-ready');
-        observer.observe(divider);
-    });
+    initRevealOnIntersect('.faq__section-divider-wrap', context, { threshold: 0.5 });
 }
 
 function initFaqProcess(context = document) {
