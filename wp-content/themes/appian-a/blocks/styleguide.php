@@ -104,6 +104,11 @@ $typography_caption = [
     ['c3', 'Caption 3'],
 ];
 
+$typography_buttons_links = [
+    ['btn-text-lg', 'Button Text Lg'],
+    ['nav-text',    'Nav Text'],
+];
+
 require_once get_template_directory() . '/inc/svg-icons.php';
 $icons = appian_get_svg_icons();
 
@@ -212,11 +217,12 @@ background-color: var(--dark-red);'
 
             <?php
             $typo_groups = [
-                'Display'     => $typography_display,
-                'Headings'    => $typography_headings,
-                'Subheadings' => $typography_subheadings,
-                'Body'        => $typography_body,
-                'Captions'    => $typography_caption,
+                'Display'        => $typography_display,
+                'Headings'       => $typography_headings,
+                'Subheadings'    => $typography_subheadings,
+                'Body'           => $typography_body,
+                'Captions'       => $typography_caption,
+                'Button / Link'  => $typography_buttons_links,
             ];
             ?>
             <?php foreach ($typo_groups as $group_label => $group_items) : ?>

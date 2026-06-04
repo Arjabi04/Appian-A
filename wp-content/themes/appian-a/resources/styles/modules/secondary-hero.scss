@@ -1,8 +1,4 @@
-@import "bootstrap/scss/functions";
-@import "../settings/bootstrap-variables";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
+@import "../common";
 
 @keyframes kenburns {
     0% {
@@ -17,20 +13,22 @@
 .m-secondary-hero {
     position: relative;
     width: 100%;
-    aspect-ratio: 23.4375 / 18.9375;
-    min-height: 16rem;
+    min-height: clamp(16rem, 80.8vw, 38.75rem);
     overflow: hidden;
     background-size: cover;
     background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding-top: clamp(2.5rem, 1.355rem + 2.88vw, 6.25rem);
+    padding-bottom: clamp(2.5rem, 1.355rem + 2.88vw, 6.25rem);
+    padding-left: clamp(1.75rem, 0.504rem + 3.13vw, 5rem);
+    padding-right: 1.81rem;
 
     @media (min-width: 768px) {
-        aspect-ratio: auto;
-        height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px);
         min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px);
     }
 
     @media (min-width: 1200px) {
-        height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px);
         min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px);
     }
 
@@ -63,36 +61,27 @@
     }
 
     &__content {
-        position: absolute;
-        bottom: clamp(2.5rem, 1.355rem + 2.88vw, 6.25rem);
-        left: clamp(1.75rem, 0.504rem + 3.13vw, 5rem);
-        right: 1.81rem;
+        position: relative;
+        z-index: 2;
+        width: 100%;
     }
 
     &__heading {
         color: $white;
-        font-family: $font-family-heading;
-        font-size: clamp(3rem, 1.2rem + 4.5vw, 7.5rem);
-        font-style: normal;
-        font-weight: $font-weight-bold;
-        line-height: 110%;
         margin: 0;
     }
 
     @include media-breakpoint-up(lg) {
+        padding-top: 6.25rem;
+        padding-bottom: 6.25rem;
+        padding-left: 5rem;
+
         &__overlay {
             opacity: 0.5;
         }
 
         &__content {
-            bottom: 6.25rem;
-            left: 5rem;
-            right: auto;
             max-width: 52.5rem;
-        }
-
-        &__heading {
-            line-height: 100%;
         }
     }
 }

@@ -1,7 +1,7 @@
 <section class="leadspace" aria-label="Excellence Built Through Years of Trust">
 
 	<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true">
-		<video class="leadspace__video" src="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace.mp4'); ?>" poster="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace-poster.png'); ?>" autoplay muted loop playsinline preload="metadata"></video>
+		<video class="leadspace__video" src="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace.mp4'); ?>" poster="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace-poster.png'); ?>" autoplay muted loop playsinline preload="auto" fetchpriority="high"></video>
 		<div class="leadspace__overlay" aria-hidden="true"></div>
 	</div>
 
@@ -33,8 +33,8 @@
 
 	<div class="leadspace__inner">
 		<div class="leadspace__content">
-			<p class="leadspace__eyebrow">Excellence Built Through Years of Trust</p>
-			<h1 class="leadspace__heading">
+			<p class="leadspace__eyebrow body-sm-all">Excellence Built Through Years of Trust</p>
+			<h1 class="leadspace__heading d1">
 				<span class="leadspace__heading-mobile">A History of Excellence.</span>
 				<span class="leadspace__heading-desktop">A history of excellence built on dedication, innovation, and consistently delivering outstanding results.</span>
 			</h1>

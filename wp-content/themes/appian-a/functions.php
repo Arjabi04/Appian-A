@@ -392,3 +392,34 @@ function appian_validate_header_phone($valid, $value, $field, $input)
 add_filter('acf/validate_value/name=phone_number', 'appian_validate_header_phone', 10, 4);
 add_filter('acf/validate_value/name=header_phone', 'appian_validate_header_phone', 10, 4);
 add_filter('acf/validate_value/name=fax_number', 'appian_validate_header_phone', 10, 4);
+
+/**
+ * Preload background assets for leadspace and secondary-hero blocks in the head.
+ */
+function appian_preload_hero_assets() {
+	if ( ! is_singular() ) {
+		return;
+	}
+
+	// 1. Preload leadspace video and poster if present
+	if ( has_block( 'acf/leadspace' ) ) {
+		$video_url  = get_template_directory_uri() . '/resources/leadspace.mp4';
+		$poster_url = get_template_directory_uri() . '/resources/leadspace-poster.png';
+
+		echo '	<link rel="preload" as="image" href="' . esc_url( $poster_url ) . '" fetchpriority="high">' . "\n";
+		echo '	<link rel="preload" as="video" href="' . esc_url( $video_url ) . '" fetchpriority="high">' . "\n";
+	}
+
+	// 2. Preload secondary-hero background image if present
+	if ( has_block( 'acf/secondary-hero' ) ) {
+		$secondary_hero_group = get_field( 'secondary_hero' );
+		$hero_image           = $secondary_hero_group['secondaryhero__image'] ?? [];
+		$hero_image_url       = $hero_image['url'] ?? '';
+
+		if ( ! empty( $hero_image_url ) ) {
+			echo '	<link rel="preload" as="image" href="' . esc_url( $hero_image_url ) . '" fetchpriority="high">' . "\n";
+		}
+	}
+}
+add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
+
