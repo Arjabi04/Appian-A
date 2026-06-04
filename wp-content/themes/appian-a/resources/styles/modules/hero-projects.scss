@@ -1,0 +1,44 @@
+@import "../common";
+
+.hero-projects {
+    padding-top: 64px;
+    // padding-bottom: 10px;
+
+    @include media-breakpoint-up(xl) {
+        padding-top: 100px;
+    }
+
+    &__projects {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 50px 28px 90px;
+
+        @include media-breakpoint-up(xl) {
+            grid-template-columns: repeat(4, minmax(0, 4fr));
+            column-gap: 12px;
+            row-gap: 10px;
+            margin: 80px 80px 110px;
+        }
+    }
+
+    &__feature-image {
+        width: 100%;
+        aspect-ratio: 317 / 228;
+        overflow: hidden;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            height: auto;
+            aspect-ratio: 634 / 456;
+            grid-column: span 2;
+        }
+    }
+}

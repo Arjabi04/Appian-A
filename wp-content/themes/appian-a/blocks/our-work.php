@@ -36,19 +36,19 @@ if (empty($block) || empty($work_items)) {
                     $aria_selected = $is_first ? 'true' : 'false';
                     $tab_id        = 'our-work-tab-' . $nav_index;
                     $panel_id      = 'our-work-panel-' . $nav_index;
-                    ?>
+                ?>
                     <li class="<?php echo esc_attr($li_class); ?>">
                         <a class="<?php echo esc_attr($a_class); ?>"
-                           id="<?php echo esc_attr($tab_id); ?>"
-                           data-bs-target="#<?php echo esc_attr($panel_id); ?>"
-                           href="#"
-                           role="tab"
-                           aria-controls="<?php echo esc_attr($panel_id); ?>"
-                           aria-selected="<?php echo esc_attr($aria_selected); ?>"<?php echo $aria_current; ?>>
+                            id="<?php echo esc_attr($tab_id); ?>"
+                            data-bs-target="#<?php echo esc_attr($panel_id); ?>"
+                            href="#"
+                            role="tab"
+                            aria-controls="<?php echo esc_attr($panel_id); ?>"
+                            aria-selected="<?php echo esc_attr($aria_selected); ?>" <?php echo $aria_current; ?>>
                             <?php echo esc_html($item['tab_label'] ?? ''); ?>
                         </a>
                     </li>
-                    <?php
+                <?php
                     $nav_index++;
                 endforeach;
                 ?>
@@ -77,11 +77,11 @@ if (empty($block) || empty($work_items)) {
                 }
 
                 $panel_class = 'our-work__content align-items-center justify-content-center ' . ($is_first ? 'd-flex' : 'd-none');
-                ?>
+            ?>
                 <div class="<?php echo esc_attr($panel_class); ?>"
-                     id="<?php echo esc_attr($panel_id); ?>"
-                     role="tabpanel"
-                     aria-labelledby="<?php echo esc_attr($tab_id); ?>">
+                    id="<?php echo esc_attr($panel_id); ?>"
+                    role="tabpanel"
+                    aria-labelledby="<?php echo esc_attr($tab_id); ?>">
                     <div class="our-work__description flex-grow-1">
                         <div class="description d-flex flex-column">
                             <?php if (!empty($item['title'])) : ?>
@@ -100,10 +100,10 @@ if (empty($block) || empty($work_items)) {
 
                     <div class="our-work__image d-flex flex-start">
                         <img src="<?php echo esc_url($image_url); ?>"
-                             alt="<?php echo esc_attr($image_alt); ?>" />
+                            alt="<?php echo esc_attr($image_alt); ?>" />
                     </div>
                 </div>
-                <?php
+            <?php
                 $panel_index++;
             endforeach;
             ?>
@@ -141,7 +141,7 @@ if (empty($block) || empty($work_items)) {
                         $image_alt = $item['image']['alt'];
                     }
                 }
-                ?>
+            ?>
                 <div class="<?php echo esc_attr($card_class); ?>">
                     <h2 class="accordion-header">
                         <button
@@ -184,7 +184,7 @@ if (empty($block) || empty($work_items)) {
                         </div>
                     </div>
                 </div>
-                <?php
+            <?php
                 $acc_index++;
             endforeach;
             ?>
