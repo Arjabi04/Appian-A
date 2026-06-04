@@ -19,11 +19,13 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 	<?php if (! empty($faq_section_title)) : ?>
 		<header class="faq__section-header" aria-label="<?php echo esc_attr($faq_section_title); ?>">
 			<h2 class="faq__section-title"><?php echo esc_html($faq_section_title); ?></h2>
-			<img
-				class="faq__section-divider"
-				src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
-				alt=""
-				aria-hidden="true" />
+			<div class="faq__section-divider-wrap">
+				<img
+					class="faq__section-divider"
+					src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
+					alt=""
+					aria-hidden="true" />
+			</div>
 		</header>
 	<?php endif; ?>
 	<div class="faq__grid">
