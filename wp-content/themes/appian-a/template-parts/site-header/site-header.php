@@ -8,7 +8,6 @@ $contact_label = get_field('contact_label', 'option');
 if (empty($logo) && empty($phone) && empty($linkedin) && empty($contact_label)) {
     return;
 }
-
 $phone_href = '';
 if (! empty($phone)) {
     $cleanphone = preg_replace('/[^0-9]/', '', $phone);
@@ -18,7 +17,7 @@ if (! empty($phone)) {
 <header class="site-header">
     <div class="site-header__container">
         <?php if (! empty($logo) && is_array($logo) && ! empty($logo['url'])) : ?>
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="site-header__logo" aria-label="Appian Home">
+            <a href="<?php echo esc_url(home_url('/home')); ?>" class="site-header__logo" aria-label="Appian Home">
                 <img src="<?php echo esc_url($logo['url']); ?>" alt="<?php echo esc_attr($logo['alt']); ?>" class="site-header__logo-image">
             </a>
         <?php endif; ?>

@@ -1,13 +1,9 @@
-@import "bootstrap/scss/functions";
-@import "../settings/bootstrap-variables";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
+@import "../common";
 
 .leadspace {
     position: relative;
     width: 100%;
-    height: 668px; // Mobile block height
+    min-height: 668px; // Mobile block height
     overflow: hidden;
     background: var(--White, #FFF);
     display: flex;
@@ -21,12 +17,12 @@
         border-radius: 50%;
         bottom: 74px; // Mobile bottom offset
         left: 50%;
-        transform: translate3d(-50%, 0, 0); // promote to its own layer (Firefox clip stability)
+        transform: translate3d(-50%, 0, 0);
         overflow: hidden;
         z-index: 2;
         pointer-events: none;
-        isolation: isolate; // own stacking context so the circular video mask is clean in Firefox
-        clip-path: circle(50% at 50% 50%); // hardware-accelerated circular clip — Firefox dropped the overflow:hidden + border-radius mask
+        isolation: isolate;
+        clip-path: circle(50% at 50% 50%);
     }
 
     // Mobile: fill the whole circle so the dark overlay never sits over empty
@@ -75,22 +71,20 @@
 
     &__eyebrow {
         color: var(--White, #FFF);
-        font-family: $font-family-sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.5;
         margin: 0;
     }
 
     &__heading {
         color: var(--White, #FFF);
-        font-family: $font-family-heading;
-        font-size: 48px; // Heading D1 (Mobile)
-        font-style: normal;
-        font-weight: 700;
-        line-height: 1.1; // 110%
         text-align: center;
         margin: 0;
+
+        &.d1 {
+            @include media-breakpoint-up(md) {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+        }
     }
 
     // Mobile shows the short heading; tablet/desktop the full sentence.
@@ -141,18 +135,8 @@
 
     // TABLET INTERMEDIATE SCALING
     @include media-breakpoint-up(md) {
-        height: 750px;
-
-
-        &__video {
-            inset: auto;
-            bottom: 0;
-            left: 50%;
-            transform: translate3d(-50%, 0, 0);
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-        }
+        min-height: 750px;
+        height: auto;
 
         &__eclipse--76 {
             width: 1300px;
@@ -168,11 +152,6 @@
 
         &__content {
             max-width: 654px;
-        }
-
-        &__heading {
-            font-size: 40px; // Transitioning towards H3 Desktop size
-            line-height: 1.2;
         }
 
         &__heading-mobile {
@@ -198,13 +177,17 @@
 
     // DESKTOP OVERRIDES
     @include media-breakpoint-up(lg) {
-
-        height: max(668px, 46.389vw); // 668/1440*100
+        min-height: max(668px, 46.389vw); // 668/1440*100
+        height: auto;
 
 
         &__video {
-            height: max(56.25vw, 668px); // 16:9 of 100vw, floored to the hero so it never gaps
+            inset: auto;
             bottom: calc(-1 * max(70px, 4.861vw)); // 70/1440*100 — cancels the circle's bottom gap
+            left: 50%;
+            transform: translate3d(-50%, 0, 0);
+            width: 100vw;
+            height: max(56.25vw, 668px); // 16:9 of 100vw, floored to the hero so it never gaps
         }
 
 
@@ -224,11 +207,6 @@
 
         &__content {
             max-width: 832px;
-        }
-
-        &__heading {
-            font-size: 40px; // Heading H3 (Desktop)
-            line-height: 1.2; // 120%
         }
 
         // Arc tracks eclipse--76 exactly (same width/height/bottom) so the red

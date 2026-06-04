@@ -173,6 +173,23 @@
   --typo-c3-mobile-size: 12px;
   --typo-c3-mobile-lh: 150%;
   --typo-c3-weight-label: Medium / Uppercase;
+
+  // Button & Link Text
+  --typo-btn-text-lg-font: #{$font-family-sans-serif};
+  --typo-btn-text-lg-weight: 500;
+  --typo-btn-text-lg-weight-label: Medium;
+  --typo-btn-text-lg-desktop-size: 16px;
+  --typo-btn-text-lg-desktop-lh: 150%;
+  --typo-btn-text-lg-mobile-size: 16px;
+  --typo-btn-text-lg-mobile-lh: 150%;
+
+  --typo-nav-text-font: #{$font-family-sans-serif};
+  --typo-nav-text-weight: 500;
+  --typo-nav-text-weight-label: Medium;
+  --typo-nav-text-desktop-size: 16px;
+  --typo-nav-text-desktop-lh: 150%;
+  --typo-nav-text-mobile-size: 16px;
+  --typo-nav-text-mobile-lh: 150%;
 }
 
 h1,
@@ -199,6 +216,7 @@ h6,
   font-weight: 700;
   font-size: 3rem; // 48px
   line-height: 1.1; // 110%
+
   @include media-breakpoint-up(md) {
     font-size: 7.5rem; // 120px
     line-height: 1.0; // 100%
@@ -210,6 +228,7 @@ h6,
   font-weight: 400;
   font-size: 2.5rem; // 40px
   line-height: 0.9; // 90%
+
   @include media-breakpoint-up(md) {
     font-size: 5.5rem; // 88px
     line-height: 1.2; // 120%
@@ -217,60 +236,72 @@ h6,
 }
 
 // Headings
-h1, .h1 {
+h1,
+.h1 {
   font-weight: 700;
   font-size: 2.5rem; // 40px
   line-height: 1.2; // 120%
+
   @include media-breakpoint-up(md) {
     font-size: 4rem; // 64px
     line-height: 1.1; // 110%
   }
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-weight: 700;
   font-size: 2rem; // 32px
   line-height: 1.4; // 140%
+
   @include media-breakpoint-up(md) {
     font-size: 3rem; // 48px
     line-height: 1.1; // 110%
   }
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-weight: 700;
   font-size: 1.75rem; // 28px
   line-height: 1.4; // 140%
+
   @include media-breakpoint-up(md) {
     font-size: 2.5rem; // 40px
     line-height: 1.2; // 120%
   }
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-weight: 700;
   font-size: 1.75rem; // 28px
   line-height: 1.4; // 140%
+
   @include media-breakpoint-up(md) {
     font-size: 2rem; // 32px
     line-height: 1.4; // 140%
   }
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-weight: 500;
   font-size: 1.125rem; // 18px
   line-height: 1.6; // 160%
+
   @include media-breakpoint-up(md) {
     font-size: 1.75rem; // 28px
     line-height: 1.4; // 140%
   }
 }
 
-h6, .h6 {
+h6,
+.h6 {
   font-weight: 500;
   font-size: 1.25rem; // 20px
   line-height: 1.4; // 140%
+
   @include media-breakpoint-up(md) {
     font-size: 1.5rem; // 24px
     line-height: 1.38; // 138%
@@ -290,6 +321,7 @@ h6, .h6 {
   font-weight: 500; // Medium
   font-size: 1.5rem; // 24px
   line-height: 1.38; // 138%
+
   @include media-breakpoint-up(md) {
     font-size: 1.75rem; // 28px
     line-height: 1.4; // 140%
@@ -301,6 +333,7 @@ h6, .h6 {
   font-weight: 500; // Medium
   font-size: 1.5rem; // 24px
   line-height: 1.38; // 138%
+
   @include media-breakpoint-up(md) {
     font-size: 1.25rem; // 20px
     line-height: 1.4; // 140%
@@ -312,6 +345,7 @@ h6, .h6 {
   font-weight: 400; // Book
   font-size: 1.125rem; // 18px
   line-height: 1.6; // 160%
+
   @include media-breakpoint-up(md) {
     font-size: 1.125rem; // 18px
     line-height: 1.1; // 110%
@@ -324,6 +358,7 @@ h6, .h6 {
   font-weight: 500;
   font-size: 1.5rem; // 24px
   line-height: 1.2; // 120%
+
   @include media-breakpoint-up(md) {
     font-size: 1.75rem; // 28px
     line-height: 1.5; // 150%
@@ -356,6 +391,7 @@ h6, .h6 {
   font-weight: 400;
   font-size: 0.75rem; // 12px
   line-height: 1.5; // 150%
+
   @include media-breakpoint-up(md) {
     font-size: 0.875rem; // 14px
     line-height: 1.5; // 150%
@@ -367,6 +403,7 @@ h6, .h6 {
   font-weight: 500;
   font-size: 0.875rem; // 14px
   line-height: 1.4; // 140%
+
   @include media-breakpoint-up(md) {
     line-height: 1.5; // 150%
   }
@@ -387,6 +424,7 @@ h6, .h6 {
   letter-spacing: 0.1em;
   font-size: 0.75rem; // 12px
   line-height: 1.5; // 150%
+
   @include media-breakpoint-up(md) {
     font-size: 0.875rem; // 14px
   }
@@ -416,4 +454,21 @@ h6, .h6 {
   line-height: 1.25rem; // 20px (~120%)
   letter-spacing: 0.0625rem; // 1px
   font-weight: 600;
+}
+
+// Button & Link Text
+.btn-text-lg {
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  font-size: 1rem; // 16px
+  line-height: 1.5; // 150%
+  letter-spacing: 0;
+}
+
+.nav-text {
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  font-size: 1rem; // 16px
+  line-height: 1.5; // 150%
+  letter-spacing: 0;
 }
