@@ -1,0 +1,184 @@
+@import "../custom";
+
+.our-work {
+    &__wrapper {
+        padding-block: 64px;
+
+        @include media-breakpoint-up(md) {
+            padding-block: 110px;
+        }
+    }
+
+    &__divider-wrap {
+        width: 120px;
+        max-width: 100%;
+        margin-top: 16px;
+        margin-inline: auto;
+
+        @include media-breakpoint-up(md) {
+            width: 230px;
+        }
+    }
+
+    &__desktop {
+        display: none;
+
+        @include media-breakpoint-up(md) {
+            display: block;
+            padding-inline: 40px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            padding-inline: 0;
+        }
+    }
+
+    &__nav {
+        @include media-breakpoint-up(md) {
+            padding-top: 72px;
+            padding-bottom: 70px;
+        }
+    }
+
+    &__nav-item {
+        @include media-breakpoint-up(md) {
+            margin: 0;
+            border: 1px solid $primary-red;
+            padding: 16px 24px;
+            color: $primary-red;
+            font-family: "General Sans";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            letter-spacing: 0;
+            text-align: left;
+        }
+
+        &--active {
+            @include media-breakpoint-up(md) {
+                background-color: $primary-red;
+                color: $white;
+            }
+        }
+
+        .nav-link {
+            color: inherit;
+            padding: 0;
+        }
+    }
+
+    &__accordion {
+        padding-top: 36px;
+
+        @include media-breakpoint-up(md) {
+            display: none;
+        }
+
+        .accordion-item {
+            border: none !important;
+            padding-inline: 28px;
+        }
+
+        .accordion-button {
+            margin-bottom: 0 !important;
+            padding: 18px 24px !important;
+            color: $primary-red;
+            background-color: transparent;
+            border: 1px solid $primary-red;
+            font-family: "General Sans";
+            font-size: 14px !important;
+            font-weight: 500;
+            line-height: 1.4;
+            letter-spacing: 0;
+            text-align: left;
+            transition: padding 0.3s ease, margin-bottom 0.3s ease, color 0.3s ease, background-color 0.3s ease !important;
+
+            &::after {
+                content: "" !important;
+                width: 12px !important;
+                height: 8px !important;
+                background-size: 12px 8px !important;
+            }
+
+            &.collapsed {
+                padding-left: 12px !important;
+
+                &::after {
+                    background-image: url("../../images/svgs/arrow-down-red.svg") !important;
+                }
+            }
+
+            &:not(.collapsed) {
+                margin-bottom: 16px !important;
+                color: $white !important;
+                background-color: $primary-red !important;
+
+                &::after {
+                    background-image: url("../../images/svgs/arrow-down-white.svg") !important;
+                }
+            }
+        }
+        // .accordion-button:last-child {
+        //         margin-bottom: 0 !important;
+        //     }
+    }
+
+    &__card {
+        margin-bottom: 0;
+
+        + .our-work__card {
+            margin-top: 24px;
+        }
+    }
+
+    &__content {
+        @include media-breakpoint-up(md) {
+            width: fit-content;
+            max-width: 972px;
+            margin-inline: auto;
+            gap: 52px;
+        }
+    }
+
+    &__description {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        @include media-breakpoint-up(md) {
+            padding-bottom: 0;
+        }
+
+        .description {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            @include media-breakpoint-up(md) {
+                gap: 24px;
+            }
+
+            &__title,
+            &__content {
+                margin: 0;
+            }
+        }
+    }
+
+    &__image {
+        img {
+            display: block;
+            width: 100%;
+            height: 186px;
+            object-fit: cover;
+
+            @include media-breakpoint-up(md) {
+                height: auto;
+            }
+        }
+
+        @include media-breakpoint-up(md) {
+            flex: 0 0 43%;
+        }
+    }
+}

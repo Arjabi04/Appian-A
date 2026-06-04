@@ -1,0 +1,30 @@
+.section-divider {
+    max-width: 100%;
+    overflow: hidden;
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: transform 0.9s ease-out;
+    }
+
+    &.is-ready {
+        .section-divider__image {
+            transform: translateX(-100%);
+        }
+    }
+
+    &.is-ready.is-visible {
+        .section-divider__image {
+            transform: translateX(0);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-divider__image {
+        transform: translateX(0);
+        transition: none;
+    }
+}
