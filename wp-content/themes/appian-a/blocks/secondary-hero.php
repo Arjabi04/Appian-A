@@ -5,7 +5,6 @@
  */
 
 $secondary_hero_group = get_field('secondary_hero');
-// $secondary_hero_group = is_array($secondary_hero_group) ? $secondary_hero_group : [];
 
 $hero_image   = $secondary_hero_group['secondaryhero__image'] ?? [];
 $hero_image   = is_array($hero_image) ? $hero_image : [];
@@ -25,13 +24,15 @@ if (empty($hero_image_url) && empty($hero_heading)) {
         <img
             class="m-secondary-hero__image"
             src="<?php echo esc_url($hero_image_url); ?>"
-            alt="<?php echo esc_attr($hero_image_alt); ?>" />
+            alt="<?php echo esc_attr($hero_image_alt); ?>"
+            loading="eager"
+            fetchpriority="high" />
         <div class="m-secondary-hero__overlay"></div>
     <?php endif; ?>
 
     <?php if (! empty($hero_heading)) : ?>
         <div class="m-secondary-hero__content">
-            <h1 class="m-secondary-hero__heading"><?php echo esc_html($hero_heading); ?></h1>
+            <h1 class="m-secondary-hero__heading d1"><?php echo esc_html($hero_heading); ?></h1>
         </div>
     <?php endif; ?>
 </section>
