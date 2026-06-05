@@ -10,7 +10,8 @@ add_action('acf/init', function () {
             'secondary-hero' => 'Secondary Hero',
             'faq'            => 'FAQ',
             'testimonial'    => 'Testimonial',
-            'our-story'    => 'Our Story',
+            'our-story'      => 'Our Story',
+            'our-history'    => 'Our History',
             'two-column'     => 'Two Column',
         ];
 
