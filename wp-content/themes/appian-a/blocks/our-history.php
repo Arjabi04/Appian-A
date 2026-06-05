@@ -23,9 +23,11 @@ $history_slides = [
 <section class="m-our-history" aria-label="Our History">
     <div class="m-our-history__header text-center w-100 mb-0">
         <h2 class="m-our-history__title h2 m-0">Our History</h2>
-        <img class="m-our-history__divider"
-            src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>" alt=""
-            aria-hidden="true" />
+        <div class="m-our-history__divider-wrap">
+            <img class="m-our-history__divider"
+                src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>" alt=""
+                aria-hidden="true" />
+        </div>
     </div>
     <div class="m-our-history__carousel" data-history-carousel>
         <div class="m-our-history__track" data-history-track>

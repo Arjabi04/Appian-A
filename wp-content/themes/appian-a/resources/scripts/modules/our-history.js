@@ -2,7 +2,27 @@ import Swiper from 'swiper';
 import { Navigation, FreeMode, Mousewheel } from 'swiper/modules';
 import 'bootstrap/js/dist/modal';
 
+function initOurHistoryDividerAnimation(context = document) {
+    const dividers = context.querySelectorAll('.m-our-history__divider-wrap');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            // Reveal divider once 50% of it is visible
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    dividers.forEach((divider) => {
+        divider.classList.add('is-ready');
+        observer.observe(divider);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initOurHistoryDividerAnimation(document);
     const carousels = document.querySelectorAll('[data-history-carousel]');
 
     carousels.forEach((carousel) => {
@@ -142,3 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ACF block preview support
+if (window.acf) {
+    window.acf.addAction('render_block_preview/type=our-history', () => {
+        initOurHistoryDividerAnimation(document);
+    });
+}
