@@ -104,7 +104,7 @@
   --typo-body-xlarge-font: #{$font-family-sans-serif};
   --typo-body-xlarge-weight: 500;
   --typo-body-xlarge-desktop-size: 28px;
-  --typo-body-xlarge-desktop-lh: 150%;
+  --typo-body-xlarge-desktop-lh: 125%;
   --typo-body-xlarge-mobile-size: 24px;
   --typo-body-xlarge-mobile-lh: 120%;
   --typo-body-xlarge-weight-label: Medium;
@@ -120,9 +120,9 @@
   --typo-body-font: #{$font-family-sans-serif};
   --typo-body-weight: 400;
   --typo-body-desktop-size: 16px;
-  --typo-body-desktop-lh: 140%;
+  --typo-body-desktop-lh: 150%;
   --typo-body-mobile-size: 16px;
-  --typo-body-mobile-lh: 140%;
+  --typo-body-mobile-lh: 150%;
   --typo-body-weight-label: Regular;
 
   --typo-body-small-font: #{$font-family-sans-serif};
@@ -355,13 +355,14 @@ h6,
 // Body Text
 .body-xlarge {
   font-family: $font-family-sans-serif;
+  font-style: normal;
   font-weight: 500;
   font-size: 1.5rem; // 24px
   line-height: 1.2; // 120%
 
   @include media-breakpoint-up(md) {
     font-size: 1.75rem; // 28px
-    line-height: 1.5; // 150%
+    line-height: 1.25; // 125%
   }
 }
 
@@ -374,9 +375,10 @@ h6,
 
 .body {
   font-family: $font-family-sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 1rem; // 16px
-  line-height: 1.4; // 140%
+  line-height: 1.5; // 150%
 }
 
 .body-medium {
@@ -388,6 +390,7 @@ h6,
 
 .body-small {
   font-family: $font-family-sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 0.75rem; // 12px
   line-height: 1.5; // 150%
