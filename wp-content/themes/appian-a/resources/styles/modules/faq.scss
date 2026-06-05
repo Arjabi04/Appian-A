@@ -30,26 +30,6 @@
     width: 230px;
     max-width: 100%;
     margin-top: 16px;
-    overflow: hidden;
-  }
-
-  &__section-divider {
-    display: block;
-    width: 100%;
-    height: auto;
-    transition: transform 0.9s ease-out;
-  }
-
-  &__section-divider-wrap.is-ready {
-    .faq__section-divider {
-      transform: translateX(-100%);
-    }
-  }
-
-  &__section-divider-wrap.is-ready.is-visible {
-    .faq__section-divider {
-      transform: translateX(0);
-    }
   }
 
   &__grid {
@@ -98,7 +78,7 @@
   }
 
   &__item {
-    border-top: 1px solid rgba($secondary, 0.5);
+    border-top: 1px solid rgba($secondary, 0.8);
     scroll-margin-top: 96px;
     &.is-open {
       .faq__icon .accordion-icon {
@@ -159,7 +139,7 @@
     max-height: 0;
     opacity: 0;
     padding: 0;
-    transition: max-height 0.5s ease-in-out, opacity 0.5s, padding 0.5s ease-in-out;
+    transition: max-height 0.8s ease-in-out, opacity 0.8s, padding 0.8s ease-in-out;
 
     &.is-open {
       opacity: 1;
@@ -200,13 +180,6 @@
   &__question {
     margin: 0;
     /* This completely wipes out the default browser orange margin! */
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .faq__section-divider {
-    transform: translateX(0);
-    transition: none;
   }
 }
 
