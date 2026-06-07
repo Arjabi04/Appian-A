@@ -396,25 +396,67 @@ add_filter('acf/validate_value/name=fax_number', 'appian_validate_header_phone',
 /**
  * Preload background assets for leadspace and secondary-hero blocks in the head.
  */
+function appian_get_first_block_data( $block_name, $blocks = null ) {
+	if ( null === $blocks ) {
+		$post = get_post();
+		if ( ! $post ) {
+			return [];
+		}
+
+		$blocks = parse_blocks( $post->post_content );
+	}
+
+	foreach ( $blocks as $block ) {
+		if ( ! empty( $block['blockName'] ) && $block_name === $block['blockName'] ) {
+			$data = $block['attrs']['data'] ?? [];
+			return is_array( $data ) ? $data : [];
+		}
+
+		if ( ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
+			$nested_data = appian_get_first_block_data( $block_name, $block['innerBlocks'] );
+			if ( ! empty( $nested_data ) ) {
+				return $nested_data;
+			}
+		}
+	}
+
+	return [];
+}
+
+function appian_get_block_media_url( $value ) {
+	if ( is_array( $value ) ) {
+		return $value['url'] ?? '';
+	}
+
+	if ( is_numeric( $value ) ) {
+		return wp_get_attachment_url( (int) $value ) ?: '';
+	}
+
+	return is_string( $value ) ? $value : '';
+}
+
 function appian_preload_hero_assets() {
 	if ( ! is_singular() ) {
 		return;
 	}
 
-	// 1. Preload leadspace video and poster if present
 	if ( has_block( 'acf/leadspace' ) ) {
-		$video_url  = get_template_directory_uri() . '/resources/leadspace.mp4';
-		$poster_url = get_template_directory_uri() . '/resources/leadspace-poster.png';
+		$leadspace_data = appian_get_first_block_data( 'acf/leadspace' );
+		$video_url      = appian_get_block_media_url( $leadspace_data['leadspace_group_background_video'] ?? '' );
+		$poster_url     = appian_get_block_media_url( $leadspace_data['leadspace_group_background_image'] ?? '' );
 
-		echo '	<link rel="preload" as="image" href="' . esc_url( $poster_url ) . '" fetchpriority="high">' . "\n";
-		echo '	<link rel="preload" as="video" href="' . esc_url( $video_url ) . '" fetchpriority="high">' . "\n";
+		if ( ! empty( $poster_url ) ) {
+			echo '	<link rel="preload" as="image" href="' . esc_url( $poster_url ) . '" fetchpriority="high">' . "\n";
+		}
+
+		if ( ! empty( $video_url ) ) {
+			echo '	<link rel="preload" as="video" href="' . esc_url( $video_url ) . '" fetchpriority="high">' . "\n";
+		}
 	}
 
-	// 2. Preload secondary-hero background image if present
 	if ( has_block( 'acf/secondary-hero' ) ) {
-		$secondary_hero_group = get_field( 'secondary_hero' );
-		$hero_image           = $secondary_hero_group['secondaryhero__image'] ?? [];
-		$hero_image_url       = $hero_image['url'] ?? '';
+		$secondary_hero_data = appian_get_first_block_data( 'acf/secondary-hero' );
+		$hero_image_url      = appian_get_block_media_url( $secondary_hero_data['secondary_hero_secondaryhero__image'] ?? '' );
 
 		if ( ! empty( $hero_image_url ) ) {
 			echo '	<link rel="preload" as="image" href="' . esc_url( $hero_image_url ) . '" fetchpriority="high">' . "\n";
@@ -422,4 +464,3 @@ function appian_preload_hero_assets() {
 	}
 }
 add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
-

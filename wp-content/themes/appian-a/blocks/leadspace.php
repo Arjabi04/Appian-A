@@ -1,7 +1,54 @@
-<section class="leadspace" aria-label="Excellence Built Through Years of Trust">
+<?php
 
+$leadspace_group = get_field('leadspace_group');
+$leadspace_group = is_array($leadspace_group) ? $leadspace_group : get_field('leadspace');
+$leadspace_group = is_array($leadspace_group) ? $leadspace_group : [];
+
+$leadspace_video = $leadspace_group['background_video'] ?? [];
+$leadspace_video = is_array($leadspace_video) ? $leadspace_video : [];
+
+$leadspace_image = $leadspace_group['background_image'] ?? [];
+$leadspace_image = is_array($leadspace_image) ? $leadspace_image : [];
+
+$eyebrow_text = $leadspace_group['eyebrow_text'] ?? '';
+$heading_mobile = $leadspace_group['heading_mobile'] ?? '';
+$heading_desktop = $leadspace_group['heading_desktop'] ?? '';
+
+$video_url = $leadspace_video['url'] ?? '';
+$image_url = $leadspace_image['url'] ?? '';
+$image_alt = $leadspace_image['alt'] ?? '';
+
+$has_media = ! empty($video_url) || ! empty($image_url);
+$has_text = ! empty($eyebrow_text) || ! empty($heading_mobile) || ! empty($heading_desktop);
+
+if (! $has_media || ! $has_text) {
+	return;
+}
+
+$section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadspace';
+?>
+
+<section class="leadspace" aria-label="<?php echo esc_attr($section_label); ?>">
 	<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true">
-		<video class="leadspace__video" src="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace.mp4'); ?>" poster="<?php echo esc_url(get_template_directory_uri() . '/resources/leadspace-poster.png'); ?>" autoplay muted loop playsinline preload="auto" fetchpriority="high"></video>
+		<?php if (! empty($video_url)) : ?>
+			<video
+				class="leadspace__video"
+				src="<?php echo esc_url($video_url); ?>"
+				<?php if (! empty($image_url)) : ?>poster="<?php echo esc_url($image_url); ?>"<?php endif; ?>
+				autoplay
+				muted
+				loop
+				playsinline
+				preload="auto"
+				fetchpriority="high"></video>
+		<?php elseif (! empty($image_url)) : ?>
+			<img
+				class="leadspace__image"
+				src="<?php echo esc_url($image_url); ?>"
+				alt="<?php echo esc_attr($image_alt); ?>"
+				loading="eager"
+				fetchpriority="high" />
+		<?php endif; ?>
 		<div class="leadspace__overlay" aria-hidden="true"></div>
 	</div>
 
@@ -33,12 +80,19 @@
 
 	<div class="leadspace__inner">
 		<div class="leadspace__content">
-			<p class="leadspace__eyebrow body-sm-all">Excellence Built Through Years of Trust</p>
-			<h1 class="leadspace__heading d1">
-				<span class="leadspace__heading-mobile">A History of Excellence.</span>
-				<span class="leadspace__heading-desktop">A history of excellence built on dedication, innovation, and consistently delivering outstanding results.</span>
-			</h1>
+			<?php if (! empty($eyebrow_text)) : ?>
+				<p class="leadspace__eyebrow body-sm-all"><?php echo esc_html($eyebrow_text); ?></p>
+			<?php endif; ?>
+			<?php if (! empty($heading_mobile) || ! empty($heading_desktop)) : ?>
+				<h1 class="leadspace__heading d1">
+					<?php if (! empty($heading_mobile)) : ?>
+						<span class="leadspace__heading-mobile"><?php echo esc_html($heading_mobile); ?></span>
+					<?php endif; ?>
+					<?php if (! empty($heading_desktop)) : ?>
+						<span class="leadspace__heading-desktop"><?php echo esc_html($heading_desktop); ?></span>
+					<?php endif; ?>
+				</h1>
+			<?php endif; ?>
 		</div>
 	</div>
-
 </section>

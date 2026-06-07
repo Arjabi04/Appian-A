@@ -27,7 +27,8 @@
 
     // Mobile: fill the whole circle so the dark overlay never sits over empty
     // space (which read as a gray band between the header and the video).
-    &__video {
+    &__video,
+    &__image {
         position: absolute;
         inset: 0;
         width: 100%;
@@ -181,7 +182,8 @@
         height: auto;
 
 
-        &__video {
+        &__video,
+        &__image {
             inset: auto;
             bottom: calc(-1 * max(70px, 4.861vw)); // 70/1440*100 — cancels the circle's bottom gap
             left: 50%;
