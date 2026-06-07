@@ -1,10 +1,10 @@
 {
-    "key": "group_6a0d9fe50f2e9",
+    "key": "group_6a255da0e9b24",
     "title": "Our Work",
     "fields": [
         {
-            "key": "field_6a0d9fe54e5b2",
-            "label": "Our Work",
+            "key": "field_6a255da177a92",
+            "label": "our-work",
             "name": "our_work",
             "aria-label": "",
             "type": "group",
@@ -19,9 +19,9 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_6a0da0e84e5b5",
-                    "label": "title",
-                    "name": "title",
+                    "key": "field_6a255f8177a93",
+                    "label": "Section Title",
+                    "name": "section_title",
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
@@ -40,9 +40,9 @@
                     "append": ""
                 },
                 {
-                    "key": "field_6a0da1ff4e5b8",
-                    "label": "tab",
-                    "name": "tab",
+                    "key": "field_6a255f9477a94",
+                    "label": "Work Items",
+                    "name": "work_items",
                     "aria-label": "",
                     "type": "repeater",
                     "instructions": "",
@@ -53,18 +53,18 @@
                         "class": "",
                         "id": ""
                     },
-                    "layout": "block",
+                    "layout": "row",
                     "pagination": 0,
-                    "min": 0,
+                    "min": 1,
                     "max": 0,
                     "collapsed": "",
                     "button_label": "Add Row",
                     "rows_per_page": 20,
                     "sub_fields": [
                         {
-                            "key": "field_6a0da2264e5b9",
-                            "label": "tab-title",
-                            "name": "tab_title",
+                            "key": "field_6a25606f77a95",
+                            "label": "Tab Label",
+                            "name": "tab_label",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -81,12 +81,12 @@
                             "placeholder": "",
                             "prepend": "",
                             "append": "",
-                            "parent_repeater": "field_6a0da1ff4e5b8"
+                            "parent_repeater": "field_6a255f9477a94"
                         },
                         {
-                            "key": "field_6a0da28c4e5ba",
-                            "label": "tab-header",
-                            "name": "tab_header",
+                            "key": "field_6a25607f77a96",
+                            "label": "Title",
+                            "name": "title",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -103,14 +103,14 @@
                             "placeholder": "",
                             "prepend": "",
                             "append": "",
-                            "parent_repeater": "field_6a0da1ff4e5b8"
+                            "parent_repeater": "field_6a255f9477a94"
                         },
                         {
-                            "key": "field_6a0da2c74e5bb",
-                            "label": "tab-content",
-                            "name": "tab_content",
+                            "key": "field_6a25608877a97",
+                            "label": "Description",
+                            "name": "description",
                             "aria-label": "",
-                            "type": "wysiwyg",
+                            "type": "textarea",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -120,17 +120,17 @@
                                 "id": ""
                             },
                             "default_value": "",
+                            "maxlength": "",
                             "allow_in_bindings": 0,
-                            "tabs": "all",
-                            "toolbar": "full",
-                            "media_upload": 1,
-                            "delay": 0,
-                            "parent_repeater": "field_6a0da1ff4e5b8"
+                            "rows": "",
+                            "placeholder": "",
+                            "new_lines": "",
+                            "parent_repeater": "field_6a255f9477a94"
                         },
                         {
-                            "key": "field_6a0da2da4e5bc",
-                            "label": "tab-image",
-                            "name": "tab_image",
+                            "key": "field_6a25609577a98",
+                            "label": "Image",
+                            "name": "image",
                             "aria-label": "",
                             "type": "image",
                             "instructions": "",
@@ -152,7 +152,7 @@
                             "mime_types": "",
                             "allow_in_bindings": 0,
                             "preview_size": "medium",
-                            "parent_repeater": "field_6a0da1ff4e5b8"
+                            "parent_repeater": "field_6a255f9477a94"
                         }
                     ]
                 }
@@ -180,5 +180,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1779280428
+    "modified": 1780836175
 }
