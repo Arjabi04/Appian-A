@@ -1,5 +1,16 @@
+<?php
+$block         = get_field('our_work');
+$work_items    = $block['work_items'] ?? [];
+$section_title = $block['section_title'] ?? '';
+
+if (empty($block) || empty($work_items)) {
+    return;
+}
+?>
 <section class="our-work__wrapper" id="our-work">
-    <header class="our-work__header h2 text-center">Our Work</header>
+    <?php if (!empty($section_title)) : ?>
+        <header class="our-work__header h2 text-center"><?php echo esc_html($section_title); ?></header>
+    <?php endif; ?>
     <div class="our-work__divider-wrap section-divider d-flex justify-content-center" data-section-divider>
         <img
             class="our-work__section-divider section-divider__image"
@@ -9,192 +20,175 @@
     </div>
 
     <div class="our-work__desktop">
-        <ul class="our-work__nav d-flex flex-wrap list-unstyled justify-content-center gap-4 m-0" aria-label="Our Work Categories">
-            <li class="our-work__nav-item our-work__nav-item--active">
-                <a class="nav-link active" aria-current="page" href="#">Modern</a>
-            </li>
-            <li class="our-work__nav-item">
-                <a class="nav-link" href="#">Reliable</a>
-            </li>
-            <li class="our-work__nav-item">
-                <a class="nav-link" href="#">Innovative</a>
-            </li>
-            <li class="our-work__nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Trusted</a>
-            </li>
-        </ul>
+        <?php if (!empty($work_items)) : ?>
+            <ul class="our-work__nav d-flex flex-wrap list-unstyled justify-content-center gap-4 m-0" aria-label="Our Work Categories">
+                <?php
+                $nav_index = 0;
+                foreach ($work_items as $item) :
+                    if (empty($item['tab_label']) && empty($item['title']) && empty($item['description'])) {
+                        continue;
+                    }
 
-        <div class="our-work__content align-items-center d-flex justify-content-center">
-            <div class="our-work__description flex-grow-1">
-                <div class="description d-flex flex-column">
-                    <h3 class="description__title m-0">
-                        Modern Infrastructure Solutions
-                    </h3>
+                    $is_first      = ($nav_index === 0);
+                    $li_class      = 'our-work__nav-item' . ($is_first ? ' our-work__nav-item--active' : '');
+                    $a_class       = 'nav-link' . ($is_first ? ' active' : '');
+                    $aria_current  = $is_first ? ' aria-current="page"' : '';
+                    $aria_selected = $is_first ? 'true' : 'false';
+                    $tab_id        = 'our-work-tab-' . $nav_index;
+                    $panel_id      = 'our-work-panel-' . $nav_index;
+                    ?>
+                    <li class="<?php echo esc_attr($li_class); ?>">
+                        <a class="<?php echo esc_attr($a_class); ?>"
+                           id="<?php echo esc_attr($tab_id); ?>"
+                           data-bs-target="#<?php echo esc_attr($panel_id); ?>"
+                           href="#"
+                           role="tab"
+                           aria-controls="<?php echo esc_attr($panel_id); ?>"
+                           aria-selected="<?php echo esc_attr($aria_selected); ?>"<?php echo $aria_current; ?>>
+                            <?php echo esc_html($item['tab_label'] ?? ''); ?>
+                        </a>
+                    </li>
+                    <?php
+                    $nav_index++;
+                endforeach;
+                ?>
+            </ul>
 
-                    <p class="description__content body-large mb-0">
-                        Delivering durable, efficient, and future-ready construction projects with precision and expertise.
-                    </p>
+            <?php
+            $panel_index = 0;
+            foreach ($work_items as $item) :
+                if (empty($item['tab_label']) && empty($item['title']) && empty($item['description'])) {
+                    continue;
+                }
+
+                $is_first  = ($panel_index === 0);
+                $tab_id    = 'our-work-tab-' . $panel_index;
+                $panel_id  = 'our-work-panel-' . $panel_index;
+                $image_url = get_template_directory_uri() . '/resources/images/construction-department.png';
+                $image_alt = '';
+
+                if (!empty($item['image']) && is_array($item['image'])) {
+                    if (!empty($item['image']['url'])) {
+                        $image_url = $item['image']['url'];
+                    }
+                    if (!empty($item['image']['alt'])) {
+                        $image_alt = $item['image']['alt'];
+                    }
+                }
+
+                $panel_class = 'our-work__content align-items-center justify-content-center ' . ($is_first ? 'd-flex' : 'd-none');
+                ?>
+                <div class="<?php echo esc_attr($panel_class); ?>"
+                     id="<?php echo esc_attr($panel_id); ?>"
+                     role="tabpanel"
+                     aria-labelledby="<?php echo esc_attr($tab_id); ?>">
+                    <div class="our-work__description flex-grow-1">
+                        <div class="description d-flex flex-column">
+                            <?php if (!empty($item['title'])) : ?>
+                                <h3 class="description__title m-0">
+                                    <?php echo esc_html($item['title']); ?>
+                                </h3>
+                            <?php endif; ?>
+
+                            <?php if (!empty($item['description'])) : ?>
+                                <p class="description__content body-large mb-0">
+                                    <?php echo nl2br(esc_html($item['description'])); ?>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <div class="our-work__image d-flex flex-start">
+                        <img src="<?php echo esc_url($image_url); ?>"
+                             alt="<?php echo esc_attr($image_alt); ?>" />
+                    </div>
                 </div>
-            </div>
-
-            <div class="our-work__image d-flex flex-start">
-                <img
-                    src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/construction-department.png'); ?>"
-                    alt="Our Work Image" />
-            </div>
-        </div>
+                <?php
+                $panel_index++;
+            endforeach;
+            ?>
+        <?php endif; ?>
     </div>
 
 
     <!-- mobile accordian -->
-    <div class="our-work__accordion accordion" id="ourWorkAccordion">
-        <!-- modern -->
-        <div class="our-work__card our-work__card--active accordion-item">
-            <h2 class="accordion-header">
-                <button
-                    class="our-work__nav-item our-work__nav-item--active accordion-button shadow-none w-100"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#modern"
-                    aria-expanded="true"
-                    aria-controls="modern">
+    <?php if (!empty($work_items)) : ?>
+        <div class="our-work__accordion accordion" id="ourWorkAccordion">
+            <?php
+            $acc_index = 0;
+            foreach ($work_items as $item) :
+                if (empty($item['tab_label']) && empty($item['title']) && empty($item['description'])) {
+                    continue;
+                }
 
-                    <span class="nav-link active">
-                        Modern Infrastructure Solutions
-                    </span>
+                $is_first      = ($acc_index === 0);
+                $target_id     = 'our-work-item-' . $acc_index;
+                $card_class    = 'our-work__card' . ($is_first ? ' our-work__card--active' : '') . ' accordion-item';
+                $btn_class     = 'our-work__nav-item' . ($is_first ? ' our-work__nav-item--active' : '') . ' accordion-button' . ($is_first ? '' : ' collapsed') . ' shadow-none w-100';
+                $span_class    = 'nav-link' . ($is_first ? ' active' : '');
+                $aria_expanded = $is_first ? 'true' : 'false';
+                $panel_class   = 'accordion-collapse collapse' . ($is_first ? ' show' : '');
+                $desc_class    = 'our-work__description' . ($is_first ? '' : ' flex-grow-1');
+                $title_class   = 'description__title' . ($is_first ? '' : ' m-0');
+                $image_url     = get_template_directory_uri() . '/resources/images/construction-department.png';
+                $image_alt     = '';
 
-                </button>
-            </h2>
+                if (!empty($item['image']) && is_array($item['image'])) {
+                    if (!empty($item['image']['url'])) {
+                        $image_url = $item['image']['url'];
+                    }
+                    if (!empty($item['image']['alt'])) {
+                        $image_alt = $item['image']['alt'];
+                    }
+                }
+                ?>
+                <div class="<?php echo esc_attr($card_class); ?>">
+                    <h2 class="accordion-header">
+                        <button
+                            class="<?php echo esc_attr($btn_class); ?>"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#<?php echo esc_attr($target_id); ?>"
+                            aria-expanded="<?php echo esc_attr($aria_expanded); ?>"
+                            aria-controls="<?php echo esc_attr($target_id); ?>">
 
-            <div id="modern" class="accordion-collapse collapse show" data-bs-parent="#ourWorkAccordion">
-                <div class="accordion-body p-0">
-                    <div class="our-work__content align-items-center d-flex justify-content-center">
-                        <div class="our-work__description">
-                            <div class="our-work__image d-flex flex-start">
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/construction-department.png'); ?>" alt="Our Work Image" />
-                            </div>
-                            <div class="description d-flex flex-column">
-                                <h3 class="description__title">Modern Infrastructure Solutions</h3>
-                                <p class="description__content body-large mb-0">
-                                    Delivering durable, efficient, and future-ready construction projects with precision and expertise.
-                                </p>
-                            </div>
-                        </div>
+                            <span class="<?php echo esc_attr($span_class); ?>">
+                                <?php echo esc_html($item['title'] ?? ''); ?>
+                            </span>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </button>
+                    </h2>
 
-        <!-- Reliable -->
-        <div class="our-work__card accordion-item">
-            <h2 class="accordion-header">
-                <button
-                    class="our-work__nav-item accordion-button collapsed shadow-none w-100"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#Reliable"
-                    aria-expanded="false"
-                    aria-controls="Reliable">
+                    <div id="<?php echo esc_attr($target_id); ?>" class="<?php echo esc_attr($panel_class); ?>" data-bs-parent="#ourWorkAccordion">
+                        <div class="accordion-body p-0">
+                            <div class="our-work__content align-items-center d-flex justify-content-center">
+                                <div class="<?php echo esc_attr($desc_class); ?>">
+                                    <div class="our-work__image d-flex flex-start">
+                                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" />
+                                    </div>
+                                    <div class="description d-flex flex-column">
+                                        <?php if (!empty($item['title'])) : ?>
+                                            <h3 class="<?php echo esc_attr($title_class); ?>">
+                                                <?php echo esc_html($item['title']); ?>
+                                            </h3>
+                                        <?php endif; ?>
 
-                    <span class="nav-link">
-                        Reliable Infrastructure Solutions
-                    </span>
-
-                </button>
-            </h2>
-
-            <div id="Reliable" class="accordion-collapse collapse" data-bs-parent="#ourWorkAccordion">
-                <div class="accordion-body p-0">
-                    <div class="our-work__content align-items-center d-flex justify-content-center">
-                        <div class="our-work__description flex-grow-1">
-                            <div class="our-work__image d-flex flex-start">
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/service-department.png'); ?>" alt="Our Work Image" />
-                            </div>
-                            <div class="description d-flex flex-column">
-                                <h3 class="description__title m-0">Reliable Infrastructure Solutions</h3>
-                                <p class="description__content body-large mb-0">
-                                    Delivering durable, efficient, and future-ready construction projects with precision and expertise.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- innovative -->
-        <div class="our-work__card accordion-item">
-            <h2 class="accordion-header">
-                <button
-                    class="our-work__nav-item accordion-button collapsed shadow-none w-100"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#innovative"
-                    aria-expanded="false"
-                    aria-controls="innovative">
-
-                    <span class="nav-link">
-                        Innovative Construction Services
-                    </span>
-
-                </button>
-            </h2>
-
-            <div id="innovative" class="accordion-collapse collapse" data-bs-parent="#ourWorkAccordion">
-                <div class="accordion-body p-0">
-                    <div class="our-work__content align-items-center d-flex justify-content-center">
-                        <div class="our-work__description flex-grow-1">
-                            <div class="our-work__image d-flex flex-start">
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/service-department.png'); ?>" alt="Our Work Image" />
-                            </div>
-                            <div class="description d-flex flex-column">
-                                <h3 class="description__title m-0">Innovative Construction Services</h3>
-                                <p class="description__content body-large mb-0">
-                                    Delivering durable, efficient, and future-ready construction projects with precision and expertise.
-                                </p>
+                                        <?php if (!empty($item['description'])) : ?>
+                                            <p class="description__content body-large mb-0">
+                                                <?php echo nl2br(esc_html($item['description'])); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <?php
+                $acc_index++;
+            endforeach;
+            ?>
         </div>
-        <!-- trsuted -->
-        <div class="our-work__card accordion-item">
-            <h2 class="accordion-header">
-                <button
-                    class="our-work__nav-item accordion-button collapsed shadow-none w-100"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#trusted"
-                    aria-expanded="false"
-                    aria-controls="trusted">
-
-                    <span class="nav-link">
-                        Trusted Project Builders </span>
-
-                </button>
-            </h2>
-
-            <div id="trusted" class="accordion-collapse collapse" data-bs-parent="#ourWorkAccordion">
-                <div class="accordion-body p-0">
-                    <div class="our-work__content align-items-center d-flex justify-content-center">
-                        <div class="our-work__description flex-grow-1">
-                            <div class="our-work__image d-flex flex-start">
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/service-department.png'); ?>" alt="Our Work Image" />
-                            </div>
-                            <div class="description d-flex flex-column">
-                                <h3 class="description__title m-0">Trusted Project Builders</h3>
-                                <p class="description__content body-large mb-0">
-                                    Delivering durable, efficient, and future-ready construction projects with precision and expertise.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    <?php endif; ?>
 
 </section>
