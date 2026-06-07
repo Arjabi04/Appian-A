@@ -220,6 +220,27 @@
                     "layout": "block",
                     "sub_fields": [
                         {
+                            "key": "field_6a13061fbe5ef",
+                            "label": "Contact Eyebrow",
+                            "name": "contact_eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
                             "key": "field_6a130626be5f0",
                             "label": "Phone Number",
                             "name": "phone_number",
@@ -520,5 +541,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1779813641
+    "modified": 1780644521
 }

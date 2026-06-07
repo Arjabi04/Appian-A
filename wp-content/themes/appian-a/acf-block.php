@@ -13,6 +13,7 @@ add_action('acf/init', function () {
             'our-story'      => 'Our Story',
             'our-history'    => 'Our History',
             'two-column'     => 'Two Column',
+            'hero-projects'  => 'Hero Projects',
         ];
 
         foreach ($boilerplateModules as $key => $mModule) {

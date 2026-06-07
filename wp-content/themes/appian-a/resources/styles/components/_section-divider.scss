@@ -9,6 +9,16 @@
         transition: transform 0.9s ease-out;
     }
 
+    &--responsive {
+        width: 120px;
+        margin-top: 16px;
+        margin-inline: auto;
+
+        @media (min-width: 768px) {
+            width: 230px;
+        }
+    }
+
     &.is-ready {
         .section-divider__image {
             transform: translateX(-100%);
