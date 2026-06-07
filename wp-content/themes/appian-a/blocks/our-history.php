@@ -89,10 +89,10 @@ $history_slides = [
             <div class="m-our-history-popup__image-wrapper w-100 overflow-hidden">
                 <img class="m-our-history-popup__image w-100 h-100 d-block" src="" alt="" />
             </div>
-            <div class="m-our-history-popup__content d-flex flex-column justify-content-end w-100">
-                <div class="m-our-history-popup__body d-flex flex-column justify-content-end w-100">
-                    <span class="m-our-history-popup__year d-block h2" id="popup-year"></span>
-                    <div class="m-our-history-popup__description-wrapper w-100 d-flex flex-column gap-4">
+            <div class="m-our-history-popup__content">
+                <div class="m-our-history-popup__body">
+                    <span class="m-our-history-popup__year" id="popup-year"></span>
+                    <div class="m-our-history-popup__description-wrapper">
                     </div>
                 </div>
             </div>

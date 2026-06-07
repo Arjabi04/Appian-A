@@ -4,7 +4,7 @@ $history-card-desktop: 400px;
 
 .m-our-history {
   position: relative;
-  padding: 80px 0 77px 0;
+  padding: 64px 0 77px 0;
   background-color: $white;
 
   &::before {
@@ -22,7 +22,7 @@ $history-card-desktop: 400px;
   }
 
   @include media-breakpoint-up(lg) {
-    padding: 120px 0 80px 0;
+    padding: 80px 0 80px 0;
   }
 
   &__header {
@@ -31,17 +31,28 @@ $history-card-desktop: 400px;
   }
 
   &__title {
+    font-family: var(--typo-h2-font);
+    font-weight: var(--typo-h2-weight);
+    font-size: var(--typo-h2-mobile-size);
+    line-height: var(--typo-h2-mobile-lh);
+
+    @include media-breakpoint-up(lg) {
+      font-size: var(--typo-h2-desktop-size);
+      line-height: var(--typo-h2-desktop-lh);
+    }
+
     color: var(--neutral-600, #{$neutral-600});
   }
 
   &__divider-wrap {
     width: 120px;
     max-width: 100%;
-    margin: 16px auto 0;
+    margin: 17px auto 0;
     overflow: hidden;
 
     @include media-breakpoint-up(lg) {
       width: 230px;
+      margin: 16px auto 0;
     }
 
     &.is-ready {
@@ -106,7 +117,7 @@ $history-card-desktop: 400px;
     @include media-breakpoint-up(lg) {
       flex-direction: row;
       align-items: stretch;
-      padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
+      padding-left: 80px;
       padding-right: 0;
       gap: 0;
     }
@@ -117,7 +128,7 @@ $history-card-desktop: 400px;
       @include media-breakpoint-up(lg) {
         content: "";
         display: block;
-        width: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
+        width: 80px;
         flex-shrink: 0;
       }
     }
@@ -219,7 +230,7 @@ $history-card-desktop: 400px;
   }
 
   &__image-wrapper {
-    aspect-ratio: 319 / 223; // Figma mobile image: 319×223px
+    aspect-ratio: 319 / 225; // Maintains figma proportions (319x225px) and avoids fixed height
     background-color: $gray-200;
 
     @include media-breakpoint-up(md) {
@@ -239,8 +250,8 @@ $history-card-desktop: 400px;
       width: 1px;
       align-self: stretch;
       background-color: var(--neutral-100, #{$neutral-100});
-      margin-left: clamp(2rem, -3.95rem + 9.6vw, 4.6875rem);
-      margin-right: clamp(2rem, -3.95rem + 9.6vw, 4.6875rem);
+      margin-left: 75px;
+      margin-right: 75px;
       flex-shrink: 0;
     }
   }
@@ -256,16 +267,21 @@ $history-card-desktop: 400px;
       align-items: center;
       gap: 16px;
       margin-top: 52px;
-      padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
+      padding-left: 80px;
     }
   }
 
   &__nav-btn {
     padding: 14px;
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     gap: 0;
     border: none;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
 
     &--left {
       svg {
@@ -299,44 +315,74 @@ $history-card-desktop: 400px;
   background-color: $white;
   z-index: 1100;
 
-  @include media-breakpoint-up(lg) {
+  @media (min-width: 1130px) {
     background-color: var(--dark, #{$dark});
   }
 
   &__overlay {
-    margin: 0;
-    max-width: none;
+    margin: 0 !important;
+    max-width: none !important;
     min-height: 100%;
     padding: 0;
     display: flex;
     width: 100%;
 
-    @include media-breakpoint-up(lg) {
-      padding: 106px 80px;
-      margin: 0 auto;
-      max-width: 1440px;
+    @media (min-width: 1130px) {
+      padding: 106px 0;
+      margin: 0 auto !important;
+      max-width: 1280px !important;
     }
   }
 
   &__container {
     background-color: $white;
     box-shadow: var(--box-shadow);
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important; // override Bootstrap's m-auto on mobile/tablet to remove vertical centering and top white gaps
 
-    @include media-breakpoint-up(lg) {
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    @media (min-width: 1130px) {
       max-width: 1280px;
-      min-height: 740px;
+      flex-direction: row !important;
+      align-items: stretch !important;
+      border-radius: var(--bs-modal-border-radius, 0.5rem) !important;
+      margin: auto !important; // restore auto margin for desktop centering
+    }
+
+    &:not(:has(.m-our-history-popup__content)) {
+      .m-our-history-popup__image-wrapper {
+        height: 100%;
+        flex-grow: 1;
+        aspect-ratio: auto;
+      }
+    }
+
+    &:not(:has(.m-our-history-popup__image-wrapper)) {
+      .m-our-history-popup__close {
+        img,
+        svg {
+          filter: none;
+        }
+      }
     }
   }
 
   &__close {
-    top: 24px;
-    right: 28px;
+    position: absolute;
+    top: calc(24px + env(safe-area-inset-top, 0px));
+    right: calc(24px + env(safe-area-inset-right, 0px)); // exactly 24px space from top and right matching Figma spec, adjusted for safe areas
     width: 28px;
     height: 28px;
     padding: 0;
     cursor: pointer;
     z-index: 10;
     transition: opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       opacity: 0.7;
@@ -356,10 +402,11 @@ $history-card-desktop: 400px;
       width: 100%;
       height: 100%;
       display: block;
-      filter: brightness(0) invert(1); // white on mobile to contrast against image
+      filter: brightness(0) invert(1) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.5)); // white on mobile with drop-shadow to be visible on any image background
     }
 
-    @include media-breakpoint-up(lg) {
+    @media (min-width: 1130px) {
+      top: 24px;
       right: 24px;
       width: 32px;
       height: 32px;
@@ -371,13 +418,33 @@ $history-card-desktop: 400px;
     }
   }
 
+  // Specificity override to ensure margins are not overridden by Bootstrap's `.m-auto` utility class in HTML
+  .m-our-history-popup &__container {
+    margin: 0 !important;
+
+    @media (min-width: 1130px) {
+      margin: auto !important;
+    }
+  }
+
   &__image-wrapper {
-    aspect-ratio: 75 / 52; // Mobile aspect-ratio (375x260)
+    aspect-ratio: 375 / 260; // Maintains mobile proportions (375x260px) and avoids fixed height
     background-color: $gray-200;
 
-    @include media-breakpoint-up(lg) {
-      width: 48.4375%; // (620 / 1280)
-      aspect-ratio: 31 / 37; // (620 / 740)
+    @include media-breakpoint-up(md) {
+      aspect-ratio: 400 / 251; // Tablet aspect-ratio (same as non-popup card)
+    }
+
+    @media (min-width: 1130px) {
+      width: 100%;
+      max-width: none;
+      aspect-ratio: auto;
+      flex-grow: 1;
+
+      .m-our-history-popup__container:has(.m-our-history-popup__content) & {
+        width: 48.4375%; // (620 / 1280)
+        max-width: 620px;
+      }
     }
   }
 
@@ -387,30 +454,71 @@ $history-card-desktop: 400px;
 
   &__content {
     padding: 40px 28px 64px 28px; // Mobile padding
+    padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
+    padding-right: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-grow: 1;
 
-    @include media-breakpoint-up(lg) {
-      width: 51.5625%; // (660 / 1280)
-      padding-left: clamp(2rem, -14.47rem + 26.56vw, 9.4375rem);
-      padding-right: clamp(1.5rem, -10.26rem + 18.97vw, 6.8125rem);
-      padding-top: clamp(2.5rem, -3.04rem + 8.93vw, 5rem);
-      padding-bottom: clamp(3rem, -3.09rem + 9.82vw, 5.75rem);
+    @media (min-width: 1130px) {
+      width: 100%;
+      padding-top: 128px;
+      padding-bottom: 92px;
+      padding-right: 109px;
+      padding-left: 109px;
+      flex-grow: 1;
+
+      .m-our-history-popup__container:has(.m-our-history-popup__image-wrapper) & {
+        width: 51.5625%; // (660 / 1280)
+        padding-left: 151px;
+
+        .m-our-history-popup__description-wrapper {
+          max-width: 400px;
+        }
+      }
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 32px; // Mobile gap 32px
+    width: 100%;
+
+    @media (min-width: 1130px) {
+      gap: 40px; // Desktop gap 40px
     }
   }
 
   &__year {
+    font-family: $font-family-sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 150%;
     color: var(--primary-red, #{$primary-red});
-    margin-bottom: 32px;
+    margin-bottom: 0;
+    display: block;
 
-    @include media-breakpoint-up(lg) {
-      margin-bottom: 40px;
+    @media (min-width: 1130px) {
+      font-size: 48px;
+      line-height: 100%;
     }
   }
 
   &__description-wrapper {
-    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 100%;
 
     p {
       color: var(--neutral-600, #{$neutral-600});
+      margin: 0;
     }
   }
 }
