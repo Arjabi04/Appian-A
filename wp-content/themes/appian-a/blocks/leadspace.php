@@ -31,6 +31,9 @@ $section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadsp
 <section class="leadspace" aria-label="<?php echo esc_attr($section_label); ?>">
 	<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true">
 		<?php if (! empty($video_url)) : ?>
+			<?php if (! empty($image_url)) : ?>
+				<link rel="preload" as="image" href="<?php echo esc_url($image_url); ?>" fetchpriority="high">
+			<?php endif; ?>
 			<video
 				class="leadspace__video"
 				src="<?php echo esc_url($video_url); ?>"
@@ -39,7 +42,7 @@ $section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadsp
 				muted
 				loop
 				playsinline
-				preload="auto"
+				preload="metadata"
 				fetchpriority="high"></video>
 		<?php elseif (! empty($image_url)) : ?>
 			<img

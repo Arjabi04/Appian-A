@@ -23,6 +23,7 @@
         pointer-events: none;
         isolation: isolate;
         clip-path: circle(50% at 50% 50%);
+        background-color: var(--Secondary, #101922);
     }
 
     // Mobile: fill the whole circle so the dark overlay never sits over empty
@@ -37,6 +38,7 @@
         object-position: center;
         display: block;
         backface-visibility: hidden; // avoid clipping flicker on the GPU-composited layer (Firefox)
+        background-color: var(--Secondary, #101922);
     }
 
     &__overlay {
