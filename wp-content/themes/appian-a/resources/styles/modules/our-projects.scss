@@ -1,20 +1,91 @@
 @import "../common";
 
 .our-projects {
-    padding-top: 100px;
+    
+    padding-top: 64px;
+    @include media-breakpoint-up(xl) {
+        padding-top: 100px;
+    }
 
     &__divider-wrap {
         margin-top: 16px;
     }
 
     &__filters-wrapper {
+        margin-top: 50px;
+         @include media-breakpoint-up(xl) {
         margin-top: 60px;
+         }
     }
 
     &__filters-shell {
+        position: relative;
         grid-column: 1 / -1;
         border-top: 1px solid $neutral-75;
         border-bottom: 1px solid $neutral-75;
+        overflow: visible;
+    }
+
+    &__filters-mobile {
+        position: relative;
+        z-index: 3;
+        padding-block: 16px;
+    }
+
+    &__filters-label,
+    &__filters-toggle {
+        color: $neutral-600;
+
+    }
+
+    &__filters-toggle {
+        &::after {
+            display: none;
+        }
+
+        img {
+            width: 12px;
+            height: 8px;
+            display: block;
+        }
+    }
+
+    &__dropdown-menu {
+        position: absolute;
+        right: 0;
+        left: auto;
+        margin-top: 16px !important;
+        padding: 8px 0;
+        border: 1px solid $neutral-100;
+        border-radius: 2px;
+        background-color: $white;
+        text-align: right;
+        z-index: 10;
+
+        li {
+            list-style: none;
+            margin: 0;
+        }
+
+        &:not(.show) {
+            display: none;
+        }
+    }
+
+    &__dropdown-item {
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+        border: 0;
+        background-color: transparent;
+        text-align: right;
+
+        &:hover,
+        &:focus-visible,
+        &:active {
+            color: $primary-red;
+            background-color: $gray-50;
+        }
     }
 
     &__filters {
@@ -55,9 +126,18 @@
         }
     }
 
+    &__card-item {
+        position: relative;
+    }
+
     &__pagination-wrapper {
-        margin-top: 70px;
-        padding-bottom: 100px;
+        margin-top: 50px;
+        padding-bottom: 80px;
+        
+        @include media-breakpoint-up(xl) {
+            margin-top: 70px;
+             padding-bottom: 100px;
+        }
     }
 
     &__pagination-nav {
@@ -65,7 +145,10 @@
     }
 
     &__pagination {
-        gap: 4px;
+        gap: 0px;
+        @include media-breakpoint-up(md) {
+            gap: 4px;
+        }
 
         .page-item.active .our-projects__page-link {
             background-color: $primary-red;
@@ -79,14 +162,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 48px;
-        min-height: 48px;
+        min-width: 40px;
+        min-height: 40px;
 
         color: $neutral-200;
         line-height: 1 !important;
         border: 1px solid $neutral-100;
         border-radius: 2px !important;
         background-color: $white;
+        @include media-breakpoint-up(md) {
+            min-width: 48px;
+            min-height: 48px;
+        }
 
         .page-item:not(.active) & {
         &:hover{

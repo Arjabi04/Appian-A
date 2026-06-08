@@ -1,17 +1,25 @@
 <?php
-$card_image  = $card_data['image']       ?? null;
-$category    = $card_data['category']    ?? '';
-$title       = $card_data['title']       ?? '';
+$project_card_args = isset($args) && is_array($args) ? $args : [];
+$project_card_featured = $project_card_args['featured'] ?? ($project_card_featured ?? false);
+$project_card_featured_label = $project_card_args['featured_label'] ?? ($project_card_featured_label ?? 'Featured');
+
+$card_image = $card_data['image'] ?? null;
+$category = $card_data['category'] ?? '';
+$title = $card_data['title'] ?? '';
 $description = $card_data['description'] ?? '';
-$link        = $card_data['link']        ?? null;
-$link_url    = $link['url']              ?? '#';
-$link_target = $link['target']           ?? '_self';
+$link = $card_data['link'] ?? null;
+$link_url = $link['url'] ?? '#';
+$link_target = $link['target'] ?? '_self';
 
 if (empty($title)) {
     return;
 }
 ?>
-<article class="project-card">
+<article class="project-card<?php echo $project_card_featured ? ' project-card--featured' : ''; ?>">
+    <?php if ($project_card_featured) : ?>
+        <span class="project-card__featured-tag body-sm-all"><?php echo esc_html($project_card_featured_label); ?></span>
+    <?php endif; ?>
+
     <?php if (!empty($card_image) && !empty($card_image['url'])) : ?>
         <img
             class="project-card__image"

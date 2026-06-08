@@ -13,7 +13,31 @@
     <div class="our-projects__filters-wrapper grid-container">
         <div class="grid-row">
             <div class="our-projects__filters-shell">
-                <ul class="our-projects__filters nav justify-content-center align-items-center list-unstyled d-flex" role="tablist" aria-label="Project filters">
+                <div class="our-projects__filters-mobile d-flex d-xl-none align-items-center justify-content-between" data-project-filter-dropdown>
+                    <span class="our-projects__filters-label h5 m-0 body-medium ">Filter by:</span>
+
+                    <div class="dropdown">
+                        <button
+                            class="our-projects__filters-toggle dropdown-toggle h5 m-0 d-flex align-items-center gap-2 bg-transparent border-0 p-0"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            data-bs-display="static"
+                            aria-expanded="false">
+                            <span class="body-large" data-project-filter-label>All Projects</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end our-projects__dropdown-menu" aria-label="Project filter options">
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">All Projects</button></li>
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">Renovation</button></li>
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">Waterproofing</button></li>
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">Plumbing</button></li>
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">Electrical</button></li>
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">HVAC</button></li>
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">Roofing</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <ul class="our-projects__filters nav justify-content-center align-items-center list-unstyled d-none d-xl-flex" role="tablist" aria-label="Project filters">
                     <li class="nav-item" role="presentation">
                         <button class="our-projects__filter nav-link body-sm-all m-0 p-0 bg-transparent" type="button" role="tab" aria-selected="true">All Projects</button>
                     </li>
@@ -43,7 +67,14 @@
     <div class="our-projects__cards-wrapper grid-container">
         <div class="grid-row">
             <div class="our-projects__cards-grid">
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
+                <div class="our-projects__card-item">
+                    <?php
+                    $project_card_featured = true;
+                    $project_card_featured_label = 'Featured';
+                    include get_template_directory() . '/template-parts/components/project-card.php';
+                    unset($project_card_featured, $project_card_featured_label);
+                    ?>
+                </div>
                 <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
                 <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
                 <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
