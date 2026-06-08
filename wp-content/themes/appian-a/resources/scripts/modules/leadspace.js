@@ -8,7 +8,7 @@ function initLeadspace() {
     const paths = section.querySelectorAll('.leadspace__arc-path');
     if (!paths.length) return;
 
-    const video = section.querySelector('.leadspace__video');
+    const video = section.querySelector('video.leadspace__video');
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 
