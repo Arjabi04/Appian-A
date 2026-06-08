@@ -14,7 +14,7 @@ if (empty($eyebrow) && empty($body) && empty($cta_link)) {
 }
 ?>
 
-<section class="our-story" aria-label="Our Story">
+<section class="our-story grid-container" aria-label="Our Story">
     <div class="our-story__inner">
         <?php if (!empty($eyebrow)) : ?>
             <p class="our-story__eyebrow"><?php echo esc_html($eyebrow); ?></p>
@@ -32,10 +32,10 @@ if (empty($eyebrow) && empty($body) && empty($cta_link)) {
             }
             ?>
             <div class="our-story__cta">
-                <a href="<?php echo esc_url($cta_link['url']); ?>" class="btn btn-primary btn--small our-story__cta-btn our-story__cta-btn--mobile"<?php echo $target_attr; ?>>
+                <a href="<?php echo esc_url($cta_link['url']); ?>" class="btn btn-primary btn--small our-story__cta-btn our-story__cta-btn--mobile" <?php echo $target_attr; ?>>
                     <?php echo esc_html($cta_link['title']); ?> <?php echo appian_get_svg_icon('arrow-right'); ?>
                 </a>
-                <a href="<?php echo esc_url($cta_link['url']); ?>" class="btn btn-primary our-story__cta-btn our-story__cta-btn--desktop"<?php echo $target_attr; ?>>
+                <a href="<?php echo esc_url($cta_link['url']); ?>" class="btn btn-primary our-story__cta-btn our-story__cta-btn--desktop" <?php echo $target_attr; ?>>
                     <?php echo esc_html($cta_link['title']); ?> <?php echo appian_get_svg_icon('arrow-right'); ?>
                 </a>
             </div>
