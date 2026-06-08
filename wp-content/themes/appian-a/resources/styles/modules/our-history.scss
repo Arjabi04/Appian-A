@@ -230,7 +230,7 @@ $history-card-desktop: 400px;
   }
 
   &__image-wrapper {
-    aspect-ratio: 319 / 225; // Maintains figma proportions (319x225px) and avoids fixed height
+    aspect-ratio: 319 / 225;
     background-color: $gray-200;
 
     @include media-breakpoint-up(md) {
@@ -348,7 +348,11 @@ $history-card-desktop: 400px;
       max-width: 1280px;
       flex-direction: row !important;
       align-items: stretch !important;
-      border-radius: var(--bs-modal-border-radius, 0.5rem) !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      border-top-right-radius: var(--bs-modal-border-radius, 0.5rem) !important;
+      border-bottom-right-radius: var(--bs-modal-border-radius, 0.5rem) !important;
+      overflow: hidden !important;
       margin: auto !important; // restore auto margin for desktop centering
     }
 
@@ -362,6 +366,7 @@ $history-card-desktop: 400px;
 
     &:not(:has(.m-our-history-popup__image-wrapper)) {
       .m-our-history-popup__close {
+
         img,
         svg {
           filter: none;
@@ -440,16 +445,19 @@ $history-card-desktop: 400px;
       max-width: none;
       aspect-ratio: auto;
       flex-grow: 1;
+      border-radius: 0 !important;
 
       .m-our-history-popup__container:has(.m-our-history-popup__content) & {
         width: 48.4375%; // (620 / 1280)
         max-width: 620px;
+        border-radius: 0 !important;
       }
     }
   }
 
   &__image {
     object-fit: cover;
+    border-radius: 0 !important;
   }
 
   &__content {
