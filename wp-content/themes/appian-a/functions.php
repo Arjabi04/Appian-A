@@ -413,8 +413,14 @@ function appian_preload_hero_assets() {
 	// 2. Preload secondary-hero background image if present
 	if ( has_block( 'acf/secondary-hero' ) ) {
 		$secondary_hero_group = get_field( 'secondary_hero' );
+		$hero_video           = $secondary_hero_group['secondaryhero__video'] ?? [];
 		$hero_image           = $secondary_hero_group['secondaryhero__image'] ?? [];
+		$hero_video_url       = is_array( $hero_video ) ? ( $hero_video['url'] ?? '' ) : '';
 		$hero_image_url       = $hero_image['url'] ?? '';
+
+		if ( ! empty( $hero_video_url ) ) {
+			echo '	<link rel="preload" as="video" href="' . esc_url( $hero_video_url ) . '" fetchpriority="high">' . "\n";
+		}
 
 		if ( ! empty( $hero_image_url ) ) {
 			echo '	<link rel="preload" as="image" href="' . esc_url( $hero_image_url ) . '" fetchpriority="high">' . "\n";
@@ -422,4 +428,3 @@ function appian_preload_hero_assets() {
 	}
 }
 add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
-
