@@ -1,0 +1,120 @@
+@import "../common";
+
+.our-projects {
+    padding-top: 100px;
+
+    &__divider-wrap {
+        margin-top: 16px;
+    }
+
+    &__filters-wrapper {
+        margin-top: 60px;
+    }
+
+    &__filters-shell {
+        grid-column: 1 / -1;
+        border-top: 1px solid $neutral-75;
+        border-bottom: 1px solid $neutral-75;
+    }
+
+    &__filters {
+        gap: 32px;
+        padding-block: 16px;
+        margin-bottom: 0;
+        @include media-breakpoint-up(xl) {
+            gap: 32px;
+        }
+    }
+
+    &__filter {
+        border: 0;
+        transition: color 0.3s ease, border-color 0.3s ease;
+
+        &:hover,
+        &:focus-visible {
+            color: $primary-red;
+        }
+    }
+
+    &__cards-wrapper {
+        margin-top: 40px;
+    }
+
+    &__cards-grid {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+
+        @include media-breakpoint-up(md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include media-breakpoint-up(xl) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    &__pagination-wrapper {
+        margin-top: 70px;
+        padding-bottom: 100px;
+    }
+
+    &__pagination-nav {
+        grid-column: 1 / -1;
+    }
+
+    &__pagination {
+        gap: 4px;
+
+        .page-item.active .our-projects__page-link {
+            background-color: $primary-red;
+            border-color: $primary-red;
+            color: $white;
+        }
+    }
+
+    &__page-link,
+    &__page-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 48px;
+        min-height: 48px;
+
+        color: $neutral-200;
+        line-height: 1 !important;
+        border: 1px solid $neutral-100;
+        border-radius: 2px !important;
+        background-color: $white;
+
+        .page-item:not(.active) & {
+        &:hover{
+            color: $primary-red !important;
+        }
+    }
+    }
+
+    &__page-arrow {
+        border-color: transparent;
+        padding: 0;
+
+        img {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+    }
+
+    &__page-arrow--prev {
+        img {
+            transform: rotate(90deg);
+        }
+    }
+
+    &__page-arrow--next {
+        img {
+            transform: rotate(-90deg);
+        }
+    }
+}
