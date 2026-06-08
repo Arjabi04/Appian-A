@@ -1,0 +1,207 @@
+@import "../common";
+
+.our-projects {
+    
+    padding-top: 64px;
+    @include media-breakpoint-up(xl) {
+        padding-top: 100px;
+    }
+
+    &__divider-wrap {
+        margin-top: 16px;
+    }
+
+    &__filters-wrapper {
+        margin-top: 50px;
+         @include media-breakpoint-up(xl) {
+        margin-top: 60px;
+         }
+    }
+
+    &__filters-shell {
+        position: relative;
+        grid-column: 1 / -1;
+        border-top: 1px solid $neutral-75;
+        border-bottom: 1px solid $neutral-75;
+        overflow: visible;
+    }
+
+    &__filters-mobile {
+        position: relative;
+        z-index: 3;
+        padding-block: 16px;
+    }
+
+    &__filters-label,
+    &__filters-toggle {
+        color: $neutral-600;
+
+    }
+
+    &__filters-toggle {
+        &::after {
+            display: none;
+        }
+
+        img {
+            width: 12px;
+            height: 8px;
+            display: block;
+        }
+    }
+
+    &__dropdown-menu {
+        position: absolute;
+        right: 0;
+        left: auto;
+        margin-top: 16px !important;
+        padding: 8px 0;
+        border: 1px solid $neutral-100;
+        border-radius: 2px;
+        background-color: $white;
+        text-align: right;
+        z-index: 10;
+
+        li {
+            list-style: none;
+            margin: 0;
+        }
+
+        &:not(.show) {
+            display: none;
+        }
+    }
+
+    &__dropdown-item {
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+        border: 0;
+        background-color: transparent;
+        text-align: right;
+
+        &:hover,
+        &:focus-visible,
+        &:active {
+            color: $primary-red;
+            background-color: $gray-50;
+        }
+    }
+
+    &__filters {
+        gap: 32px;
+        padding-block: 16px;
+        margin-bottom: 0;
+        @include media-breakpoint-up(xl) {
+            gap: 32px;
+        }
+    }
+
+    &__filter {
+        border: 0;
+        transition: color 0.3s ease, border-color 0.3s ease;
+
+        &:hover,
+        &:focus-visible {
+            color: $primary-red;
+        }
+    }
+
+    &__cards-wrapper {
+        margin-top: 40px;
+    }
+
+    &__cards-grid {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+
+        @include media-breakpoint-up(md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include media-breakpoint-up(xl) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    &__card-item {
+        position: relative;
+    }
+
+    &__pagination-wrapper {
+        margin-top: 50px;
+        padding-bottom: 80px;
+        
+        @include media-breakpoint-up(xl) {
+            margin-top: 70px;
+             padding-bottom: 100px;
+        }
+    }
+
+    &__pagination-nav {
+        grid-column: 1 / -1;
+    }
+
+    &__pagination {
+        gap: 0px;
+        @include media-breakpoint-up(md) {
+            gap: 4px;
+        }
+
+        .page-item.active .our-projects__page-link {
+            background-color: $primary-red;
+            border-color: $primary-red;
+            color: $white;
+        }
+    }
+
+    &__page-link,
+    &__page-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        min-height: 40px;
+
+        color: $neutral-200;
+        line-height: 1 !important;
+        border: 1px solid $neutral-100;
+        border-radius: 2px !important;
+        background-color: $white;
+        @include media-breakpoint-up(md) {
+            min-width: 48px;
+            min-height: 48px;
+        }
+
+        .page-item:not(.active) & {
+        &:hover{
+            color: $primary-red !important;
+        }
+    }
+    }
+
+    &__page-arrow {
+        border-color: transparent;
+        padding: 0;
+
+        img {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+    }
+
+    &__page-arrow--prev {
+        img {
+            transform: rotate(90deg);
+        }
+    }
+
+    &__page-arrow--next {
+        img {
+            transform: rotate(-90deg);
+        }
+    }
+}

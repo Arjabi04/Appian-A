@@ -14,6 +14,7 @@ add_action('acf/init', function () {
             'our-history'     => 'Our History',
             'two-column'      => 'Two Column',
             'tertiary-hero'   => 'Tertiary Hero',
+            'our-projects'   => 'Our Projects',
             'hero-projects'  => 'Hero Projects',
         ];
 

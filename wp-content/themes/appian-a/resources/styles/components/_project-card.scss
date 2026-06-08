@@ -71,9 +71,20 @@
 
     &__meta,
     &__content,
-    &__read-more {
+    &__read-more,
+    &__featured-tag {
         position: absolute;
         z-index: 1;
+    }
+
+    &__featured-tag {
+        top: 20px;
+        right: 20px;
+        margin: 0;
+        padding: 4px 16px;
+        color: $white;
+        background-color: $primary-red;
+        z-index: 2;
     }
 
     &__meta {
