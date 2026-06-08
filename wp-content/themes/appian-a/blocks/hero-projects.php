@@ -1,7 +1,19 @@
+<?php
+$block         = get_field('hero_projects');
+$section_title = $block['section_title']  ?? '';
+$feature_image = $block['feature_image']  ?? null;
+$project_cards = $block['project_cards']  ?? [];
+
+if (empty($block) || empty($project_cards)) {
+    return;
+}
+?>
 <section class="hero-projects">
-    <header class="hero-projects__header h2 text-center">
-        Hero Projects
-    </header>
+    <?php if (!empty($section_title)) : ?>
+        <header class="hero-projects__header h2 text-center">
+            <?php echo esc_html($section_title); ?>
+        </header>
+    <?php endif; ?>
 
     <div class="hero-projects__divider-wrap section-divider section-divider--responsive d-flex justify-content-center" data-section-divider>
         <img
@@ -12,22 +24,30 @@
     </div>
 
     <div class="hero-projects__projects">
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
+        <?php if (!empty($project_cards)) : ?>
+            <?php
+            $card_index = 0;
+            foreach ($project_cards as $card) :
+                $card_index++;
+                ?>
+                <div class="hero-projects__project-item"><?php $card_data = $card; include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
+                
+                <?php if ($card_index === 4 && !empty($feature_image) && !empty($feature_image['url'])) : ?>
+                    <div class="hero-projects__feature-image">
+                        <img
+                            src="<?php echo esc_url($feature_image['url']); ?>"
+                            alt="<?php echo esc_attr($feature_image['alt'] ?? ''); ?>">
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
 
-        <div class="hero-projects__feature-image">
-            <img
-                src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/heroProject-image.png'); ?>"
-                alt="Featured construction project overview">
-        </div>
-
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-        <div class="hero-projects__project-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
+            <?php if ($card_index < 4 && !empty($feature_image) && !empty($feature_image['url'])) : ?>
+                <div class="hero-projects__feature-image">
+                    <img
+                        src="<?php echo esc_url($feature_image['url']); ?>"
+                        alt="<?php echo esc_attr($feature_image['alt'] ?? ''); ?>">
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
     </div>
 </section>

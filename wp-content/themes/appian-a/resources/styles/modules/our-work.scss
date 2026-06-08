@@ -144,6 +144,7 @@
                 }
             }
         }
+
         // .accordion-button:last-child {
         //         margin-bottom: 0 !important;
         //     }
@@ -152,7 +153,7 @@
     &__card {
         margin-bottom: 0;
 
-        + .our-work__card {
+        +.our-work__card {
             margin-top: 24px;
         }
     }

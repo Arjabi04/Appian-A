@@ -64,13 +64,13 @@ if (empty($block) || empty($work_items)) {
                 $is_first  = ($panel_index === 0);
                 $tab_id    = 'our-work-tab-' . $panel_index;
                 $panel_id  = 'our-work-panel-' . $panel_index;
-                $image_url = get_template_directory_uri() . '/resources/images/construction-department.png';
+                $has_image = false;
+                $image_url = '';
                 $image_alt = '';
 
-                if (!empty($item['image']) && is_array($item['image'])) {
-                    if (!empty($item['image']['url'])) {
-                        $image_url = $item['image']['url'];
-                    }
+                if (!empty($item['image']) && is_array($item['image']) && !empty($item['image']['url'])) {
+                    $has_image = true;
+                    $image_url = $item['image']['url'];
                     if (!empty($item['image']['alt'])) {
                         $image_alt = $item['image']['alt'];
                     }
@@ -98,10 +98,12 @@ if (empty($block) || empty($work_items)) {
                         </div>
                     </div>
 
-                    <div class="our-work__image d-flex flex-start">
-                        <img src="<?php echo esc_url($image_url); ?>"
-                            alt="<?php echo esc_attr($image_alt); ?>" />
-                    </div>
+                    <?php if ($has_image) : ?>
+                        <div class="our-work__image d-flex flex-start">
+                            <img src="<?php echo esc_url($image_url); ?>"
+                                alt="<?php echo esc_attr($image_alt); ?>" />
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php
                 $panel_index++;
@@ -130,13 +132,13 @@ if (empty($block) || empty($work_items)) {
                 $panel_class   = 'accordion-collapse collapse' . ($is_first ? ' show' : '');
                 $desc_class    = 'our-work__description' . ($is_first ? '' : ' flex-grow-1');
                 $title_class   = 'description__title' . ($is_first ? '' : ' m-0');
-                $image_url     = get_template_directory_uri() . '/resources/images/construction-department.png';
+                $has_image     = false;
+                $image_url     = '';
                 $image_alt     = '';
 
-                if (!empty($item['image']) && is_array($item['image'])) {
-                    if (!empty($item['image']['url'])) {
-                        $image_url = $item['image']['url'];
-                    }
+                if (!empty($item['image']) && is_array($item['image']) && !empty($item['image']['url'])) {
+                    $has_image = true;
+                    $image_url = $item['image']['url'];
                     if (!empty($item['image']['alt'])) {
                         $image_alt = $item['image']['alt'];
                     }
@@ -163,9 +165,11 @@ if (empty($block) || empty($work_items)) {
                         <div class="accordion-body p-0">
                             <div class="our-work__content align-items-center d-flex justify-content-center">
                                 <div class="<?php echo esc_attr($desc_class); ?>">
-                                    <div class="our-work__image d-flex flex-start">
-                                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" />
-                                    </div>
+                                    <?php if ($has_image) : ?>
+                                        <div class="our-work__image d-flex flex-start">
+                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" />
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="description d-flex flex-column">
                                         <?php if (!empty($item['title'])) : ?>
                                             <h3 class="<?php echo esc_attr($title_class); ?>">
