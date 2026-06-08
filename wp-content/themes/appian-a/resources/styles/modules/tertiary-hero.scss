@@ -1,0 +1,122 @@
+@import "../common";
+
+.m-tertiary-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--darkest-red, #{$darkest-red});
+    width: 100%;
+
+    &__content-wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__text-container {
+        display: flex;
+        width: 100%;
+        min-height: 40.625rem;
+        padding: 2rem 1.75rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.625rem;
+    }
+
+    &__text-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        align-self: stretch;
+    }
+
+    &__eyebrow {
+        align-self: stretch;
+    }
+
+    &__heading {
+        align-self: stretch;
+    }
+
+    &__description {
+        align-self: stretch;
+    }
+
+    &__caption {
+        font-family: $font-family-sans-serif;
+        font-weight: 400;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: var(--etp-web-background, #fffdf9);
+    }
+
+    &__image-wrapper {
+        width: 100%;
+        overflow: hidden;
+        aspect-ratio: 375 / 424;
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 46.5% 16.09%;
+    }
+
+    @include media-breakpoint-up(lg) {
+        flex-direction: row;
+        align-items: stretch;
+        overflow: hidden;
+        min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px);
+
+        @media (min-width: 1200px) {
+            min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px);
+        }
+
+        &__content-wrapper {
+            flex: 1 1 0;
+            min-width: 0;
+            min-height: 0;
+            align-items: center;
+        }
+
+        &__text-container {
+            min-height: auto;
+            padding: 4rem 2.5rem;
+        }
+
+        &__text-box {
+            gap: 2rem;
+        }
+
+        &__image-wrapper {
+            flex: 1 1 0;
+            min-width: 0;
+            min-height: 0;
+            aspect-ratio: auto;
+            position: relative;
+        }
+
+        &__image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 46.5% 16.09%;
+        }
+
+        &__caption {
+            font-size: 0.875rem;
+        }
+
+        &__description {
+            letter-spacing: 0.36px;
+        }
+    }
+}
