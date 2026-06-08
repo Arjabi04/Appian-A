@@ -32,7 +32,8 @@
         min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px);
     }
 
-    &__image {
+    &__image,
+    &__video {
         position: absolute;
         top: 0;
         left: 0;
@@ -43,11 +44,13 @@
         min-height: 16rem;
         background-size: cover;
         background-position: center;
-        animation: kenburns 12s ease-in-out infinite alternate;
-
         @media (min-width: 768px) {
             min-height: initial;
         }
+    }
+
+    &__image {
+        animation: kenburns 12s ease-in-out infinite alternate;
     }
 
     &__overlay {

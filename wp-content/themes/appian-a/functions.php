@@ -455,8 +455,15 @@ function appian_preload_hero_assets() {
 	}
 
 	if ( has_block( 'acf/secondary-hero' ) ) {
-		$secondary_hero_data = appian_get_first_block_data( 'acf/secondary-hero' );
-		$hero_image_url      = appian_get_block_media_url( $secondary_hero_data['secondary_hero_secondaryhero__image'] ?? '' );
+		$secondary_hero_group = get_field( 'secondary_hero' );
+		$hero_video           = $secondary_hero_group['secondaryhero__video'] ?? [];
+		$hero_image           = $secondary_hero_group['secondaryhero__image'] ?? [];
+		$hero_video_url       = is_array( $hero_video ) ? ( $hero_video['url'] ?? '' ) : '';
+		$hero_image_url       = $hero_image['url'] ?? '';
+
+		if ( ! empty( $hero_video_url ) ) {
+			echo '	<link rel="preload" as="video" href="' . esc_url( $hero_video_url ) . '" fetchpriority="high">' . "\n";
+		}
 
 		if ( ! empty( $hero_image_url ) ) {
 			echo '	<link rel="preload" as="image" href="' . esc_url( $hero_image_url ) . '" fetchpriority="high">' . "\n";
