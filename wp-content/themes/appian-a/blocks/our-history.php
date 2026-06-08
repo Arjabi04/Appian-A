@@ -1,34 +1,60 @@
 <?php
-$history_slides = [
-    [
-        'year' => '1922',
-        'image_url' => get_template_directory_uri() . '/resources/images/history-1.png',
-        'image_alt' => 'Appian foundation in 1922',
-        'popup_description' => "The stock market crash had a tremendous impact on the company and Heffron himself. Known as a generous and sensitive man, Heffron signed a great number of promissory notes for employees to help them obtain loans during this time of financial difficulty. After the crash the banks came to Heffron to collect on the notes,\n\nAt the same time, his business shrank to one-tenth the size it was before 1929. He devoted himself to finding a way to pay off the notes as well as his own debts so that the business could once again thrive. Although he had lost dozens of accounts in the crash.\n\nHeffron still had one good customer, Potomac Electric Power. His good record with the giant utility bought in just enough business to keep the company afloat during those dark days.",
-    ],
-    [
-        'year' => '1928',
-        'image_url' => get_template_directory_uri() . '/resources/images/history-2.png',
-        'image_alt' => 'Appian expanding operations in 1928',
-        'popup_description' => "The stock market crash had a tremendous impact on the company and Heffron himself. Known as a generous and sensitive man, Heffron signed a great number of promissory notes for employees to help them obtain loans during this time of financial difficulty. After the crash the banks came to Heffron to collect on the notes,\n\nAt the same time, his business shrank to one-tenth the size it was before 1929. He devoted himself to finding a way to pay off the notes as well as his own debts so that the business could once again thrive. Although he had lost dozens of accounts in the crash.\n\nHeffron still had one good customer, Potomac Electric Power. His good record with the giant utility bought in just enough business to keep the company afloat during those dark days.",
-    ],
-    [
-        'year' => '1929',
-        'image_url' => get_template_directory_uri() . '/resources/images/history-3.png',
-        'image_alt' => 'Appian projects in 1929',
-        'popup_description' => "The stock market crash had a tremendous impact on the company and Heffron himself. Known as a generous and sensitive man, Heffron signed a great number of promissory notes for employees to help them obtain loans during this time of financial difficulty. After the crash the banks came to Heffron to collect on the notes,\n\nAt the same time, his business shrank to one-tenth the size it was before 1929. He devoted himself to finding a way to pay off the notes as well as his own debts so that the business could once again thrive. Although he had lost dozens of accounts in the crash.\n\nHeffron still had one good customer, Potomac Electric Power. His good record with the giant utility bought in just enough business to keep the company afloat during those dark days.",
-    ],
-];
+$our_history_group = get_field('our_history_group');
+// printr($our_history_group);
+$our_history_group = is_array($our_history_group) ? $our_history_group : get_field('our_history');
+$our_history_group = is_array($our_history_group) ? $our_history_group : [];
+
+$section_title = $our_history_group['section_title'] ?? '';
+$raw_slides = $our_history_group['history_slides'] ?? [];
+$raw_slides = is_array($raw_slides) ? $raw_slides : [];
+
+$history_slides = [];
+
+foreach ($raw_slides as $slide) {
+    $slide = is_array($slide) ? $slide : [];
+    $image = $slide['image'] ?? [];
+    $image = is_array($image) ? $image : [];
+
+    $year = trim((string) ($slide['year'] ?? ''));
+    $image_url = $image['url'] ?? '';
+    $image_alt = $image['alt'] ?? '';
+    $popup_description = trim((string) ($slide['popup_description'] ?? ''));
+    $link_text = trim((string) ($slide['link_text'] ?? ''));
+
+    if ('' === $year && '' === $image_url && '' === $popup_description) {
+        continue;
+    }
+
+    if ('' === $year || '' === $image_url || '' === $popup_description) {
+        continue;
+    }
+
+    $history_slides[] = [
+        'year' => $year,
+        'image_url' => $image_url,
+        'image_alt' => $image_alt,
+        'popup_description' => $popup_description,
+        'link_text' => '' !== $link_text ? $link_text : 'Continue Reading',
+    ];
+}
+
+if (empty($history_slides)) {
+    return;
+}
+
+$section_label = ! empty($section_title) ? $section_title : 'Our History';
 ?>
-<section class="m-our-history" aria-label="Our History">
-    <div class="m-our-history__header text-center w-100 mb-0">
-        <h2 class="m-our-history__title h2 m-0">Our History</h2>
-        <div class="m-our-history__divider-wrap">
-            <img class="m-our-history__divider"
-                src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>" alt=""
-                aria-hidden="true" />
+<section class="m-our-history" aria-label="<?php echo esc_attr($section_label); ?>">
+    <?php if (! empty($section_title)) : ?>
+        <div class="m-our-history__header text-center w-100 mb-0">
+            <h2 class="m-our-history__title h2 m-0"><?php echo esc_html($section_title); ?></h2>
+            <div class="m-our-history__divider-wrap">
+                <img class="m-our-history__divider"
+                    src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>" alt=""
+                    aria-hidden="true" />
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
     <div class="m-our-history__carousel" data-history-carousel>
         <div class="m-our-history__track" data-history-track>
             <?php foreach ($history_slides as $index => $slide): ?>
@@ -57,7 +83,7 @@ $history_slides = [
                             data-popup-image="<?php echo esc_url($slide['image_url']); ?>"
                             data-popup-image-alt="<?php echo esc_attr($slide['image_alt']); ?>"
                             data-popup-desc="<?php echo esc_attr($slide['popup_description']); ?>">
-                            Continue Reading
+                            <?php echo esc_html($slide['link_text']); ?>
                         </a>
                     </div>
                     <?php if ($index < count($history_slides) - 1): ?>
