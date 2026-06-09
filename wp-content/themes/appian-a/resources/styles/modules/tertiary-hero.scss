@@ -39,6 +39,8 @@
 
     &__heading {
         align-self: stretch;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 
     &__description {

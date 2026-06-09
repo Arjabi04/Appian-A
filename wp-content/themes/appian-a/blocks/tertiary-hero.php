@@ -37,13 +37,15 @@ $image       = $block['image']       ?? null;
             </div>
         </div>
     </div>
-    <div class="m-tertiary-hero__image-wrapper">
-        <img
-            class="m-tertiary-hero__image"
-            src="<?php echo esc_url(!empty($image['url']) ? $image['url'] : get_template_directory_uri() . '/resources/images/tertiarty-hero.png'); ?>"
-            alt="<?php echo esc_attr(!empty($image['alt']) ? $image['alt'] : 'Modern building construction aerial view'); ?>"
-            loading="eager"
-            fetchpriority="high" />
-    </div>
+    <?php if (!empty($image['url'])) : ?>
+        <div class="m-tertiary-hero__image-wrapper">
+            <img
+                class="m-tertiary-hero__image"
+                src="<?php echo esc_url($image['url']); ?>"
+                alt="<?php echo esc_attr(!empty($image['alt']) ? $image['alt'] : ''); ?>"
+                loading="eager"
+                fetchpriority="high" />
+        </div>
+    <?php endif; ?>
 </section>
 
