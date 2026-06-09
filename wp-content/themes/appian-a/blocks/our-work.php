@@ -10,14 +10,14 @@ if (empty($block) || empty($work_items)) {
 <section class="our-work__wrapper" id="our-work">
     <?php if (!empty($section_title)) : ?>
         <header class="our-work__header h2 text-center"><?php echo esc_html($section_title); ?></header>
+        <div class="our-work__divider-wrap section-divider d-flex justify-content-center" data-section-divider>
+            <img
+                class="our-work__section-divider section-divider__image"
+                src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
+                alt=""
+                aria-hidden="true" />
+        </div>
     <?php endif; ?>
-    <div class="our-work__divider-wrap section-divider d-flex justify-content-center" data-section-divider>
-        <img
-            class="our-work__section-divider section-divider__image"
-            src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
-            alt=""
-            aria-hidden="true" />
-    </div>
 
     <div class="our-work__desktop">
         <?php if (!empty($work_items)) : ?>
@@ -194,5 +194,4 @@ if (empty($block) || empty($work_items)) {
             ?>
         </div>
     <?php endif; ?>
-
 </section>

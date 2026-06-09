@@ -474,3 +474,30 @@ add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
 
 require get_template_directory() . '/inc/cpt-projects.php';
 
+add_filter('acf/upload_prefilter/name=image', 'our_work_restrict_image_upload');
+
+function our_work_restrict_image_upload($errors) {
+    $file = $_FILES['async-upload'] ?? null;
+    if ($file && isset($file['type']) && $file['type'] === 'image/gif') {
+        $errors[] = 'GIF files are not allowed in this field.';
+    }
+    return $errors;
+}
+
+add_filter('upload_mimes', 'our_work_allow_svg_upload');
+
+function our_work_allow_svg_upload($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+
+add_filter('wp_check_filetype_and_ext', 'our_work_fix_svg_mime', 10, 5);
+
+function our_work_fix_svg_mime($data, $file, $filename, $mimes, $real_mime) {
+    $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    if ($ext === 'svg') {
+        $data['ext']  = 'svg';
+        $data['type'] = 'image/svg+xml';
+    }
+    return $data;
+}
