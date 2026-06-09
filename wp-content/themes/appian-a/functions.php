@@ -471,3 +471,6 @@ function appian_preload_hero_assets() {
 	}
 }
 add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
+
+require get_template_directory() . '/inc/cpt-projects.php';
+

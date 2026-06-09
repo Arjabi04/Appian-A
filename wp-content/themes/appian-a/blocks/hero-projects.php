@@ -1,53 +1,63 @@
 <?php
-$block         = get_field('hero_projects');
-$section_title = $block['section_title']  ?? '';
-$feature_image = $block['feature_image']  ?? null;
-$project_cards = $block['project_cards']  ?? [];
+$projects       = get_field( 'hero_project_posts' );
+$featured_image = get_field( 'hero_projects_featured_image' );
+$heading        = get_field( 'hero_projects_heading' );
+$read_more_text = get_field( 'hero_projects_read_more_text' );
 
-if (empty($block) || empty($project_cards)) {
+if ( empty( $projects ) || ! is_array( $projects ) ) {
     return;
 }
+$featured_image_url = '';
+$featured_image_alt = '';
+if ( ! empty( $featured_image ) && is_array( $featured_image ) ) {
+    $featured_image_url = $featured_image['url'] ?? '';
+    $featured_image_alt = $featured_image['alt'] ?? '';
+}
+
+$projects_above = array_slice( $projects, 0, 4 );
+$projects_below = array_slice( $projects, 4 );
 ?>
+
 <section class="hero-projects">
-    <?php if (!empty($section_title)) : ?>
+    <?php
+    if ( ! empty( $heading ) ) : ?>
         <header class="hero-projects__header h2 text-center">
-            <?php echo esc_html($section_title); ?>
+            <?php echo esc_html( $heading ); ?>
         </header>
     <?php endif; ?>
-
     <div class="hero-projects__divider-wrap section-divider section-divider--responsive d-flex justify-content-center" data-section-divider>
         <img
             class="hero-projects__section-divider section-divider__image"
-            src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
+            src="<?php echo esc_url( get_template_directory_uri() . '/resources/images/svgs/divider.svg' ); ?>"
             alt=""
             aria-hidden="true" />
     </div>
-
     <div class="hero-projects__projects">
-        <?php if (!empty($project_cards)) : ?>
-            <?php
-            $card_index = 0;
-            foreach ($project_cards as $card) :
-                $card_index++;
-                ?>
-                <div class="hero-projects__project-item"><?php $card_data = $card; include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                
-                <?php if ($card_index === 4 && !empty($feature_image) && !empty($feature_image['url'])) : ?>
-                    <div class="hero-projects__feature-image">
-                        <img
-                            src="<?php echo esc_url($feature_image['url']); ?>"
-                            alt="<?php echo esc_attr($feature_image['alt'] ?? ''); ?>">
-                    </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
-
-            <?php if ($card_index < 4 && !empty($feature_image) && !empty($feature_image['url'])) : ?>
-                <div class="hero-projects__feature-image">
-                    <img
-                        src="<?php echo esc_url($feature_image['url']); ?>"
-                        alt="<?php echo esc_attr($feature_image['alt'] ?? ''); ?>">
-                </div>
-            <?php endif; ?>
+        <?php
+        foreach ( $projects_above as $project ) :
+            if ( empty( $project ) || ! ( $project instanceof WP_Post ) ) {
+                continue;
+            }
+            include get_template_directory() . '/template-parts/components/project-card.php';
+        endforeach;
+        ?>
+        
+        <?php
+        if ( ! empty( $featured_image_url ) ) : ?>
+            <div class="hero-projects__feature-image">
+                <img
+                    src="<?php echo esc_url( $featured_image_url ); ?>"
+                    alt="<?php echo esc_attr( $featured_image_alt ); ?>">
+            </div>
         <?php endif; ?>
+
+        <?php
+        foreach ( $projects_below as $project ) :
+            if ( empty( $project ) || ! ( $project instanceof WP_Post ) ) {
+                continue;
+            }
+            include get_template_directory() . '/template-parts/components/project-card.php';
+        endforeach;
+        ?>
     </div>
 </section>
