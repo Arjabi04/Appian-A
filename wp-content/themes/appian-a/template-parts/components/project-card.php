@@ -1,62 +1,105 @@
 <?php
-$project_card_args = isset($args) && is_array($args) ? $args : [];
-$project_card_featured = $project_card_args['featured'] ?? ($project_card_featured ?? false);
-$project_card_featured_label = $project_card_args['featured_label'] ?? ($project_card_featured_label ?? 'Featured');
 
-$card_image = $card_data['image'] ?? null;
-$category = $card_data['category'] ?? '';
-$title = $card_data['title'] ?? '';
-$description = $card_data['description'] ?? '';
-$link = $card_data['link'] ?? null;
-$link_url = $link['url'] ?? '#';
-$link_target = $link['target'] ?? '_self';
-
-if (empty($title)) {
+if ( empty( $project ) || ! ( $project instanceof WP_Post ) ) {
     return;
 }
-?>
-<article class="project-card<?php echo $project_card_featured ? ' project-card--featured' : ''; ?>">
-    <?php if ($project_card_featured) : ?>
-        <span class="project-card__featured-tag body-sm-all"><?php echo esc_html($project_card_featured_label); ?></span>
-    <?php endif; ?>
+$title = get_the_title( $project );
+if ( empty( $title ) ) {
+    return;
+}
 
-    <?php if (!empty($card_image) && !empty($card_image['url'])) : ?>
+$description = get_field( 'project_description', $project->ID );
+$link_url    = '';
+$link_target = '_self';
+$link_rel    = '';
+$link        = get_field( 'project_link', $project->ID );
+
+if ( ! empty( $link ) && is_array( $link ) ) {
+    $link_url    = $link['url']    ?? '';
+    $link_target = $link['target'] ?? '_self';
+    if ( empty( $link_target ) ) {
+        $link_target = '_self';
+    }
+    $link_rel = ( $link_target === '_blank' ) ? 'noopener noreferrer' : '';
+}
+
+$image_url = '';
+$image_alt = '';
+$thumbnail_id = get_post_thumbnail_id( $project->ID );
+
+if ( ! empty( $thumbnail_id ) ) {
+    $image_url = get_the_post_thumbnail_url( $project->ID, 'large' );
+    if ( ! empty( $image_url ) ) {
+        $image_alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+        if ( empty( $image_alt ) ) {
+            $image_alt = $title;
+        }
+    }
+}
+
+$category_label = '';
+$terms          = get_the_terms( $project->ID, 'project_category' );
+if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+    $term_names     = wp_list_pluck( $terms, 'name' );
+    $category_label = implode( ' | ', $term_names );
+}
+$show_read_more = ! empty( $read_more_text ) && is_string( $read_more_text );
+?>
+
+<article class="project-card">
+    <?php if ( ! empty( $image_url ) ) : ?>
         <img
             class="project-card__image"
-            src="<?php echo esc_url($card_image['url']); ?>"
-            alt="<?php echo esc_attr($card_image['alt'] ?? ''); ?>">
+            src="<?php echo esc_url( $image_url ); ?>"
+            alt="<?php echo esc_attr( $image_alt ); ?>">
     <?php endif; ?>
 
-    <div class="project-card__meta d-flex align-items-start">
-        <img
-            class="project-card__icon"
-            src="/wp-content/themes/appian-a/resources/images/svgs/i-icon.svg"
-            alt=""
-            aria-hidden="true">
-
-        <?php if (!empty($category)) : ?>
+    <?php if ( ! empty( $category_label ) ) : ?>
+        <div class="project-card__meta d-flex align-items-start">
+            <img
+                class="project-card__icon"
+                src="<?php echo esc_url( get_template_directory_uri() . '/resources/images/svgs/i-icon.svg' ); ?>"
+                alt=""
+                aria-hidden="true">
             <span class="project-card__category body-xsmall">
-                <?php
-                $category_parts = preg_split('/\s+/', trim($category));
-                $first_word = !empty($category_parts[0]) ? $category_parts[0] : '';
-                ?>
-                <span class="d-inline d-xl-none"><?php echo esc_html($category); ?></span>
-                <span class="d-none d-xl-inline"><?php echo esc_html($first_word); ?></span>
+                <?php echo esc_html( $category_label ); ?>
             </span>
-        <?php endif; ?>
-    </div>
+        </div>
+    <?php endif; ?>
 
-    <div class="project-card__content">
-        <h3 class="project-card__title h6"><?php echo esc_html($title); ?></h3>
-        <?php if (!empty($description)) : ?>
-            <p class="project-card__description body-xsmall"><?php echo nl2br(esc_html($description)); ?></p>
-        <?php endif; ?>
-    </div>
+    <?php if ( ! empty( $title ) || ! empty( $description ) ) : ?>
+        <div class="project-card__content">
+            <?php if ( ! empty( $title ) ) : ?>
+                <h3 class="project-card__title h6">
+                    <?php echo esc_html( $title ); ?>
+                </h3>
+            <?php endif; ?>
+            <?php if ( ! empty( $description ) ) : ?>
+                <p class="project-card__description body-xsmall">
+                    <?php echo esc_html( $description ); ?>
+                </p>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
-    <a href="<?php echo esc_url($link_url); ?>" class="project-card__read-more"<?php echo $link_target === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
-        <span class="project-card__arrow" aria-hidden="true">
-            <img src="/wp-content/themes/appian-a/resources/images/svgs/arrow-right.svg" alt="">
-        </span>
-        <span class="project-card__read-more-text"><?php echo esc_html(!empty($link['title']) ? $link['title'] : 'read more'); ?></span>
-    </a>
+    <?php if ( $show_read_more ) : ?>
+        <div class="project-card__read-more">
+            <span class="project-card__arrow" aria-hidden="true">
+                <img
+                    src="<?php echo esc_url( get_template_directory_uri() . '/resources/images/svgs/arrow-right.svg' ); ?>"
+                    alt="">
+            </span>
+            <?php
+            if ( ! empty( $link_url ) ) {
+                $target_attr = ! empty( $link_target ) ? ' target="' . esc_attr( $link_target ) . '"' : '';
+                $rel_attr    = ! empty( $link_rel )    ? ' rel="' . esc_attr( $link_rel ) . '"'       : '';
+                echo '<a href="' . esc_url( $link_url ) . '"' . $target_attr . $rel_attr . '>'
+                    . '<span class="project-card__read-more-text">' . esc_html( $read_more_text ) . '</span>'
+                    . '</a>';
+            } else {
+                echo '<span class="project-card__read-more-text">' . esc_html( $read_more_text ) . '</span>';
+            }
+            ?>
+        </div>
+    <?php endif; ?>
 </article>
