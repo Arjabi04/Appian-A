@@ -23,12 +23,6 @@
         justify-content: flex-start;
         min-height: clamp(30rem, 25.16rem + 20.66vw, 43.75rem);
         gap: 2rem;
-
-        // Fluid padding:
-        // Left padding scales from 28px to 80px
-        // Right padding scales from 28px to 60px (matches the button offset)
-        // Top padding scales from 48px to 88px
-        // Bottom padding scales from 32px to 48px (matches the button offset)
         padding-top: clamp(3rem, 2.12rem + 3.76vw, 5.5rem);
         padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
         padding-right: clamp(1.75rem, 1.05rem + 2.96vw, 3.75rem);
@@ -103,20 +97,20 @@
         position: relative;
         z-index: 3;
         display: flex;
-        flex-direction: column-reverse; // Eyebrow below heading on mobile
+        flex-direction: column-reverse;
         align-items: flex-start;
         gap: 1.5rem; // 24px
         width: 100%;
 
         @include media-breakpoint-up(lg) {
-            flex-direction: column; // Eyebrow above heading on desktop
+            flex-direction: column;
         }
     }
 
     &__eyebrow {
         color: $white;
         font-family: $font-family-sans-serif;
-        font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem); // Fluid 12px to 14px
+        font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
         font-style: normal;
         font-weight: 500;
         line-height: 150%; // 18px
@@ -142,7 +136,7 @@
     &__heading {
         color: $white;
         font-family: $font-family-heading;
-        font-size: clamp(2.5rem, 1.97rem + 2.25vw, 4rem); // Fluid 40px to 64px
+        font-size: clamp(2.5rem, 1.97rem + 2.25vw, 4rem);
         font-style: normal;
         font-weight: 700;
         line-height: 120%; // 48px
@@ -171,10 +165,8 @@
         align-self: flex-end;
         margin-top: auto;
         flex-shrink: 0;
-
-        // Fluid button sizing
-        width: clamp(3.25rem, 2.9rem + 1.45vw, 4.25rem); // Fluid 52px to 68px
-        height: clamp(3.25rem, 2.9rem + 1.45vw, 4.25rem); // Fluid 52px to 68px
+        width: clamp(3.25rem, 2.9rem + 1.45vw, 4.25rem);
+        height: clamp(3.25rem, 2.9rem + 1.45vw, 4.25rem);
 
         background: var(--primary-red, #{$primary-red});
         display: flex;
@@ -184,9 +176,15 @@
         transition: background-color 0.25s ease-in-out, transform 0.2s ease-in-out;
         outline: none;
 
-        &:hover {
+        @media (hover: hover) and (pointer: fine) {
+            &:hover {
+                background: var(--btn-hover-bg, #{$btn-hover-dark});
+                transform: scale(1.05);
+            }
+        }
+
+        &:active {
             background: var(--btn-hover-bg, #{$btn-hover-dark});
-            transform: scale(1.05);
         }
 
         &:focus-visible {
@@ -221,7 +219,7 @@
             display: block;
             overflow: hidden;
 
-            & > * {
+            &>* {
                 transition: transform 0.35s ease, opacity 0.35s ease;
                 animation: buttonArrowLeave 0.5s ease-in-out;
             }
@@ -236,9 +234,8 @@
         }
     }
 
-    // SVG icon hover effect
     &__button:hover {
-        .m-two-column__button-inner svg > * {
+        .m-two-column__button-inner svg>* {
             animation: buttonArrowHover 0.5s ease-in-out forwards;
         }
     }
