@@ -1,7 +1,7 @@
-<section class="our-projects">
-    <header class="our-projects__header h2 text-center">
+<section class="our-projects grid-container">
+    <h2 class="our-projects__header h2 text-center">
         Our Projects
-    </header>
+    </h2>
 
     <div class="our-projects__divider-wrap section-divider section-divider--responsive d-flex justify-content-center" data-section-divider>
         <img
@@ -10,7 +10,7 @@
             alt=""
             aria-hidden="true" />
     </div>
-    <div class="our-projects__filters-wrapper grid-container">
+    <div class="our-projects__filters-wrapper ">
         <div class="grid-row">
             <div class="our-projects__filters-shell">
                 <div class="our-projects__filters-mobile d-flex d-xl-none align-items-center justify-content-between" data-project-filter-dropdown>
@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <div class="our-projects__cards-wrapper grid-container">
+    <div class="our-projects__cards-wrapper ">
         <div class="grid-row">
             <div class="our-projects__cards-grid">
                 <div class="our-projects__card-item">
@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <div class="our-projects__pagination-wrapper grid-container">
+    <div class="our-projects__pagination-wrapper ">
         <div class="grid-row">
             <nav class="our-projects__pagination-nav" aria-label="Projects pagination">
                 <ul class="pagination our-projects__pagination justify-content-center mb-0 d-flex list-unstyled">

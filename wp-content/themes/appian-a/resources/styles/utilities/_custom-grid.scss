@@ -2,14 +2,11 @@
     width: 100%;
     padding-inline: 28px;
 
+    max-width: 1440px;
+    margin-inline: auto;
+
     @include media-breakpoint-up(xl) {
         padding-inline: 80px;
-    }
-
-    @media (min-width: 1441px) {
-        max-width: 1440px;
-        margin-inline: auto;
-        padding-inline: 0;
     }
 }
 

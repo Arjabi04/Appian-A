@@ -5,7 +5,8 @@
   background-image: none; 
 
   @include media-breakpoint-up(lg) {
-    padding: 180px 0; 
+    padding: 180px; 
+    padding-inline: 0px !important;
   }
 
   &__inner {

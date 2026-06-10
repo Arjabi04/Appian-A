@@ -1,6 +1,9 @@
 @import "../common";
 
 .hero-projects {
+    &__header {
+        color: $neutral-600;
+    }
     padding-top: 64px;
     // padding-bottom: 10px;
 
