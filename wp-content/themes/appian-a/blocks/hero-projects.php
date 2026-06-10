@@ -32,9 +32,9 @@ if ($has_projects) {
 <section class="hero-projects">
     <?php
     if (! empty($heading)) : ?>
-        <header class="hero-projects__header h2 text-center">
+        <h2 class="hero-projects__header h2 text-center">
             <?php echo esc_html($heading); ?>
-        </header>
+        </h2>
         <div class="hero-projects__divider-wrap section-divider section-divider--responsive d-flex justify-content-center" data-section-divider>
             <img
                 class="hero-projects__section-divider section-divider__image"

@@ -17,7 +17,7 @@ $partner_images = [
     'our-partners-1.png',
 ];
 ?>
-<section class="partners" aria-label="Our Partners">
+<section class="partners grid-container" aria-label="Our Partners">
     <h2 class="partners__heading h2 text-center">Our Partners</h2>
 
     <div class="partners__divider section-divider section-divider--responsive d-flex justify-content-center" data-section-divider>
@@ -28,7 +28,7 @@ $partner_images = [
             aria-hidden="true">
     </div>
 
-    <div class="partners__grid-wrapper grid-container">
+    <div class="partners__grid-wrapper r">
         <div class="partners__grid ">
             <?php foreach ($partner_images as $partner_image) : ?>
                 <div class="partners__cell">
