@@ -3,6 +3,12 @@ $block         = get_field('our_work');
 $work_items    = $block['work_items'] ?? [];
 $section_title = $block['section_title'] ?? '';
 
+if (is_array($work_items)) {
+    $work_items = array_filter($work_items, function ($item) {
+        return !empty($item['tab_label']) || !empty($item['title']) || !empty($item['description']);
+    });
+}
+
 if (empty($block) || empty($work_items)) {
     return;
 }
