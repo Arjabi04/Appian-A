@@ -231,12 +231,12 @@
 
 	    &__menu-icon {
 	        display: flex;
-	        align-items: center;
+	        align-items: flex-end;
 	        justify-content: center;
 	        width: 24px;
 	        height: 24px;
 	        box-sizing: border-box;
-	        padding: 4px;
+	        padding: 6px;
 	        // padding-top: 10px; 
 
         img {

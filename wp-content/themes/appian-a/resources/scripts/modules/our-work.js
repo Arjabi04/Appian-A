@@ -11,17 +11,17 @@ function initOurWorkTabs(container = document) {
             tabLinks.forEach(l => {
                 l.classList.remove('active');
                 l.removeAttribute('aria-current');
-                const parent = l.closest('.our-work__nav-item');
-                if (parent) {
-                    parent.classList.remove('our-work__nav-item--active');
+                const navItem = l.querySelector('.our-work__nav-item');
+                if (navItem) {
+                    navItem.classList.remove('our-work__nav-item--active');
                 }
             });
 
             this.classList.add('active');
             this.setAttribute('aria-current', 'page');
-            const parent = this.closest('.our-work__nav-item');
-            if (parent) {
-                parent.classList.add('our-work__nav-item--active');
+            const navItem = this.querySelector('.our-work__nav-item');
+            if (navItem) {
+                navItem.classList.add('our-work__nav-item--active');
             }
 
             const targetSelector = this.getAttribute('data-bs-target');

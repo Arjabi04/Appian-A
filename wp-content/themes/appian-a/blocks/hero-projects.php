@@ -29,7 +29,7 @@ if ($has_projects) {
 }
 ?>
 
-<section class="hero-projects">
+<section class="hero-projects grid-container">
     <?php
     if (! empty($heading)) : ?>
         <h2 class="hero-projects__header h2 text-center">

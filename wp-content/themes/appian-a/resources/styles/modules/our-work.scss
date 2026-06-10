@@ -1,4 +1,4 @@
-@import "../common";
+@import "../custom";
 
 .our-work {
     &__wrapper {
@@ -27,7 +27,6 @@
     &__header {
         position: relative;
         z-index: 2;
-        color: $neutral-600;
     }
 
     &__divider-wrap {
@@ -104,6 +103,12 @@
         .accordion-item {
             border: none !important;
             padding-inline: 28px;
+            background-color: transparent;
+        }
+
+        .accordion-collapse,
+        .accordion-body {
+            background-color: transparent;
         }
 
         .accordion-button {
@@ -145,7 +150,6 @@
                 }
             }
         }
-
         // .accordion-button:last-child {
         //         margin-bottom: 0 !important;
         //     }
@@ -154,8 +158,8 @@
     &__card {
         margin-bottom: 0;
 
-        +.our-work__card {
-            margin-top: 24px;
+        + .our-work__card {
+            margin-top: 28px;
         }
     }
 
@@ -189,6 +193,7 @@
             &__title,
             &__content {
                 margin: 0;
+                color: $neutral-600;
             }
         }
     }
@@ -196,12 +201,13 @@
     &__image {
         img {
             display: block;
-            width: 100%;
-            height: 186px;
             object-fit: cover;
-
+            min-width: 100%;
+            min-height: 186px;
+            
             @include media-breakpoint-up(md) {
-                height: auto;
+                min-width: 420px;
+                min-height: 408px;
             }
         }
 
