@@ -1,0 +1,127 @@
+@import "../common";
+
+.m-video-module {
+    width: 100%;
+    padding-block: 3rem;
+
+    @include media-breakpoint-up(xl) {
+        padding-block: 5rem;
+    }
+
+    &__col {
+        grid-column: 1 / -1;
+        gap: 1.5rem;
+
+        @include media-breakpoint-up(xl) {
+            gap: 2.5rem;
+        }
+    }
+
+    &__wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        place-items: center;
+        position: relative;
+    }
+
+    &__video {
+        grid-area: 1 / 1;
+        height: auto;
+        aspect-ratio: 319 / 280;
+        object-fit: cover;
+        border-radius: 0;
+
+        @include media-breakpoint-up(xl) {
+            aspect-ratio: 1280 / 656;
+        }
+    }
+
+    &__overlay {
+        grid-area: 1 / 1;
+        z-index: 2;
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    &__play-btn {
+        pointer-events: auto;
+        background: var(--primary-red);
+        color: $white;
+        aspect-ratio: 1;
+        cursor: pointer;
+        padding: 1.5rem;
+        font-size: 1.25rem;
+
+        transition: transform 0.2s ease, background-color 0.2s ease;
+
+        &:hover,
+        &:focus {
+            background-color: var(--dark-red);
+            transform: scale(1.05);
+            outline: 2px solid $white;
+            outline-offset: 4px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            padding: 2rem;
+            font-size: 1.5rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+
+            &:hover,
+            &:focus {
+                transform: none;
+            }
+        }
+    }
+
+    &__icon {
+        display: none;
+        line-height: 1;
+
+        svg {
+            width: 1em;
+            height: 1em;
+            display: block;
+
+            &,
+            * {
+                color: $white !important;
+                fill: $white !important;
+                stroke: $white !important;
+            }
+        }
+
+        &--play {
+            display: flex;
+        }
+    }
+
+    &.is-playing {
+        .m-video-module__icon--play {
+            display: none;
+        }
+
+        .m-video-module__icon--pause {
+            display: flex;
+        }
+
+        .m-video-module__overlay {
+            opacity: 0;
+        }
+
+        &.show-controls {
+            .m-video-module__overlay {
+                opacity: 1;
+            }
+        }
+    }
+}
