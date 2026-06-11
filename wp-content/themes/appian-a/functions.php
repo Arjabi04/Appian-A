@@ -499,3 +499,8 @@ function our_work_fix_svg_mime($data, $file, $filename, $mimes, $real_mime) {
     }
     return $data;
 }
+
+/**
+ * Disable Contact Form 7 default stylesheet.
+ */
+add_filter( 'wpcf7_load_css', '__return_false' );

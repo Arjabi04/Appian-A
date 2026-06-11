@@ -19,6 +19,7 @@ add_action('acf/init', function () {
             'video-module'   => 'Video Module',
             'our-partners'    => 'Our Partners',
             'content-information-section' => 'Content Information Section',
+            'contact-form'    => 'Contact Form',
         ];
 
         foreach ($boilerplateModules as $key => $mModule) {

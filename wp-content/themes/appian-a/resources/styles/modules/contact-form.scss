@@ -1,0 +1,319 @@
+@import "../common";
+
+.m-contact-form {
+    padding-block: 120px; // Mobile padding top/bottom
+    background-color: $white;
+    width: 100%;
+    
+    @include media-breakpoint-up(lg) {
+        padding-block: 128px; // Desktop padding top/bottom
+    }
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 60px; // Mobile gap between content and form
+        width: 100%;
+
+        @include media-breakpoint-up(lg) {
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 40px; // Responsive gap on desktop
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--Spacing-Content-body-button, 48px);
+        width: 100%;
+        max-width: 100%;
+
+        @include media-breakpoint-up(lg) {
+            flex: 0 1 545px;
+            max-width: 545px;
+        }
+    }
+
+    &__heading-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--Spacing-Content-heading-body, 24px);
+        align-self: stretch;
+    }
+
+    &__heading {
+        margin: 0;
+        align-self: stretch;
+        color: var(--neutral-600, #111);
+    }
+
+    &__text {
+        margin: 0;
+        color: var(--neutral-600, #111);
+        align-self: stretch;
+
+        @include media-breakpoint-up(lg) {
+            max-width: 444px;
+        }
+    }
+
+    &__form-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 100%;
+
+        @include media-breakpoint-up(lg) {
+            flex: 0 1 618px;
+            max-width: 618px;
+        }
+
+        // Contact Form 7 container styling
+        .wpcf7 {
+            width: 100%;
+        }
+
+        .wpcf7-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            align-self: stretch;
+            width: 100%;
+        }
+
+        // Field rows
+        .m-contact-form__row {
+            display: flex;
+            flex-direction: column;
+            align-self: stretch;
+            width: 100%;
+
+            &--name {
+                gap: 36px; // Gap between First Name & Last Name
+
+                @include media-breakpoint-up(lg) {
+                    flex-direction: row;
+                    align-items: flex-start;
+                }
+            }
+        }
+
+        // Contact Form 7 wrap spans
+        .wpcf7-form-control-wrap {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            gap: 8px;
+            align-self: stretch;
+            width: 100%;
+
+            // When there is validation error
+            &:has(.wpcf7-not-valid-tip) {
+                gap: 16px;
+
+                input, select {
+                    border: 1px solid var(--primary-red, #D72027) !important;
+                }
+            }
+        }
+
+        // Text inputs (First Name, Last Name, Email, Phone, Move-in Date)
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            border-radius: var(--Spacing-Radius-input-field, 8px);
+            padding: 14px 24px;
+            font-family: "General Sans", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.5; // 24px
+            outline: none;
+            background-color: transparent;
+            color: var(--neutral-600, #111);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+            // Default border for email, phone, move-in
+            border: 1.5px solid var(--overlay-30, rgba(0, 0, 0, 0.30));
+
+            @include media-breakpoint-up(lg) {
+                border: 1.5px solid var(--overlay-68, rgba(0, 0, 0, 0.68));
+            }
+
+            &::placeholder {
+                color: var(--neutral-600, #111);
+                opacity: 0.65;
+                transition: opacity 0.2s ease;
+            }
+
+            &:focus {
+                border-color: var(--neutral-600, #111) !important;
+            }
+        }
+
+        // Specific border for First Name / Last Name inputs as per Figma
+        .wpcf7-form-control-wrap[data-name="first-name"] input,
+        .wpcf7-form-control-wrap[data-name="last-name"] input {
+            border: 1.5px solid var(--neutral-600, #111);
+
+            &::placeholder {
+                opacity: 1; // Full opacity as per Figma
+            }
+        }
+
+        // Select (dropdown) styling
+        select.wpcf7-select {
+            width: 100%;
+            border-radius: var(--Spacing-Radius-input-field, 8px);
+            padding: 14px 48px 14px 24px; // extra right padding to prevent text overlapping arrow
+            font-family: "General Sans", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.5; // 24px
+            outline: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+            
+            // Custom select arrow background
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%23111111' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 24px center;
+            background-size: 24px 24px;
+
+            // Borders as per Figma
+            border: 1.5px solid var(--neutral-600, #111);
+
+            // Placeholder color for select
+            color: var(--overlay-30, rgba(0, 0, 0, 0.30));
+
+            @include media-breakpoint-up(lg) {
+                border: 1.5px solid var(--overlay-68, rgba(0, 0, 0, 0.68));
+                color: rgba(17, 17, 17, 0.65); // Neutral-600 at 0.65 opacity
+            }
+
+            option {
+                color: var(--neutral-600, #111);
+                background-color: $white;
+            }
+
+            &:focus {
+                border-color: var(--neutral-600, #111) !important;
+            }
+        }
+
+        // Custom Radio Buttons
+        .wpcf7-radio {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px; // Gap inside lists as per Figma
+            align-self: stretch;
+
+            .wpcf7-list-item {
+                margin: 0;
+                display: block;
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                gap: 8px; // Gap: 8px as per Figma
+                cursor: pointer;
+                margin: 0;
+                color: var(--neutral-600, #111);
+                font-family: "General Sans", sans-serif;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.5;
+            }
+
+            input[type="radio"] {
+                appearance: none;
+                width: 24px;
+                height: 24px;
+                border: 1.5px solid var(--neutral-600, #111);
+                border-radius: 50%;
+                outline: none;
+                display: grid;
+                place-content: center;
+                cursor: pointer;
+                background-color: transparent;
+                margin: 0;
+                transition: border-color 0.2s ease;
+
+                &::before {
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    transform: scale(0);
+                    transition: 120ms transform ease-in-out;
+                    background-color: var(--neutral-600, #111);
+                }
+
+                &:checked {
+                    &::before {
+                        transform: scale(1);
+                    }
+                }
+
+                &:focus-visible {
+                    outline: 1.5px solid var(--neutral-600, #111);
+                    outline-offset: 2px;
+                }
+            }
+        }
+
+        // Submit Button custom styles (extend .btn .btn-primary)
+        .m-contact-form__submit-btn {
+            align-self: flex-start;
+            
+            // Fix input/button flex rendering differences if any
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            
+            @include media-breakpoint-up(lg) {
+                align-self: flex-start;
+            }
+        }
+
+        // Error message style (tip) from CF7
+        .wpcf7-not-valid-tip {
+            color: var(--primary-red, #D72027);
+            font-family: "General Sans", sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.5; // 21px
+            display: block;
+            margin: 0;
+            align-self: stretch;
+        }
+
+        // Global response output (success/failure container)
+        .wpcf7-response-output {
+            margin: 0;
+            padding: 16px 24px;
+            border-radius: var(--Spacing-Radius-input-field, 8px);
+            font-family: "General Sans", sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            width: 100%;
+            align-self: stretch;
+            border: 1.5px solid transparent;
+        }
+    }
+}
