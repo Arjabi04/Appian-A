@@ -17,7 +17,7 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 
 <section class="faq-module">
 	<?php if (! empty($faq_section_title)) : ?>
-		<h2 class="faq__section-header" aria-label="<?php echo esc_attr($faq_section_title); ?>">
+		<div class="faq__section-header">
 			<h2 class="faq__section-title"><?php echo esc_html($faq_section_title); ?></h2>
 			<div class="faq__section-divider-wrap section-divider" data-section-divider>
 				<img
@@ -26,7 +26,7 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 					alt=""
 					aria-hidden="true" />
 			</div>
-		</h2>
+		</div>
 	<?php endif; ?>
 	<div class="faq__grid">
 		<div class="faq__process">
