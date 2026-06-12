@@ -1,10 +1,11 @@
 @import "../common";
 
+
 .m-contact-form {
     padding-block: 120px; // Mobile padding top/bottom
     background-color: $white;
     width: 100%;
-    
+
     @include media-breakpoint-up(lg) {
         padding-block: 128px; // Desktop padding top/bottom
     }
@@ -104,7 +105,7 @@
             }
         }
 
-        // Contact Form 7 wrap spans
+
         .wpcf7-form-control-wrap {
             display: flex;
             flex-direction: column;
@@ -114,11 +115,11 @@
             align-self: stretch;
             width: 100%;
 
-            // When there is validation error
             &:has(.wpcf7-not-valid-tip) {
                 gap: 16px;
 
-                input, select {
+                input,
+                select {
                     border: 1px solid var(--primary-red, #D72027) !important;
                 }
             }
@@ -183,7 +184,7 @@
             background-color: transparent;
             cursor: pointer;
             transition: border-color 0.2s ease;
-            
+
             // Custom select arrow background
             appearance: none;
             background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%23111111' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
@@ -279,12 +280,12 @@
         // Submit Button custom styles (extend .btn .btn-primary)
         .m-contact-form__submit-btn {
             align-self: flex-start;
-            
+
             // Fix input/button flex rendering differences if any
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            
+
             @include media-breakpoint-up(lg) {
                 align-self: flex-start;
             }
@@ -303,7 +304,7 @@
             align-self: stretch;
         }
 
-        // Global response output (success/failure container)
+
         .wpcf7-response-output {
             margin: 0;
             padding: 16px 24px;
