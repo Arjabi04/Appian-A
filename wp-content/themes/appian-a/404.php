@@ -42,8 +42,8 @@ $cta_target  = $cta_button['target']          ?? '_self';
 			<p class="sh3 "><?php echo esc_html($description); ?></p>
 		<?php endif; ?>
 		<?php if (!empty($cta_button) && !empty($cta_url)) : ?>
-			<?php $cta_is_blank = ( $cta_target === '_blank' ); ?>
-			<a href="<?php echo esc_url($cta_url); ?>" class="btn btn-primary" target="<?php echo esc_attr($cta_target); ?>" <?php if ( $cta_is_blank ) : ?>rel="noopener noreferrer"<?php endif; ?>><?php echo esc_html($cta_text); ?><?php echo appian_get_svg_icon('arrow-right'); ?></a>
+			<?php $cta_is_blank = ($cta_target === '_blank'); ?>
+			<a href="<?php echo esc_url($cta_url); ?>" class="btn btn-primary" target="<?php echo esc_attr($cta_target); ?>" <?php if ($cta_is_blank) : ?>rel="noopener noreferrer" <?php endif; ?>><?php echo esc_html($cta_text); ?><?php echo appian_get_svg_icon('arrow-right'); ?></a>
 		<?php endif; ?>
 	</div>
 
