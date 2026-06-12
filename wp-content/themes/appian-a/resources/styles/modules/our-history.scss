@@ -4,8 +4,9 @@ $history-card-desktop: 400px;
 
 .m-our-history {
   position: relative;
-  padding: 64px 0 77px 0;
+  padding-block: 64px 77px;
   background-color: $white;
+  overflow-x: hidden;
 
   &::before {
     content: "";
@@ -21,8 +22,14 @@ $history-card-desktop: 400px;
     pointer-events: none;
   }
 
-  @include media-breakpoint-up(lg) {
-    padding: 80px 0 80px 0;
+  @include media-breakpoint-up(md) {
+    padding-block: 80px;
+  }
+
+  .grid-container {
+    @include media-breakpoint-up(md) {
+      padding-inline: 80px;
+    }
   }
 
   &__header {
@@ -36,7 +43,7 @@ $history-card-desktop: 400px;
     font-size: var(--typo-h2-mobile-size);
     line-height: var(--typo-h2-mobile-lh);
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       font-size: var(--typo-h2-desktop-size);
       line-height: var(--typo-h2-desktop-lh);
     }
@@ -50,7 +57,7 @@ $history-card-desktop: 400px;
     margin: 17px auto 0;
     overflow: hidden;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       width: 230px;
       margin: 16px auto 0;
     }
@@ -77,11 +84,11 @@ $history-card-desktop: 400px;
     fill: var(--primary-red, #{$primary-red});
     transition: transform 0.9s ease-out;
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(sm) {
       height: 5px;
     }
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       aspect-ratio: 230 / 9;
     }
   }
@@ -90,15 +97,17 @@ $history-card-desktop: 400px;
     position: relative;
     z-index: 2;
     margin-top: 76px;
+    overflow: visible;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       margin-top: 102px;
-      overflow-x: hidden;
+      overflow: visible;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       padding-bottom: 12px;
       margin-bottom: -12px;
+      clip-path: inset(-50px -100vw -50px 0px);
 
       &::-webkit-scrollbar {
         display: none;
@@ -110,27 +119,18 @@ $history-card-desktop: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
-    padding-right: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
+    padding-inline: 0;
     gap: 64px;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       flex-direction: row;
       align-items: stretch;
-      padding-left: 80px;
-      padding-right: 0;
+      padding-inline: 0;
       gap: 0;
     }
 
     &::after {
       display: none;
-
-      @include media-breakpoint-up(lg) {
-        content: "";
-        display: block;
-        width: 80px;
-        flex-shrink: 0;
-      }
     }
   }
 
@@ -140,16 +140,23 @@ $history-card-desktop: 400px;
     align-items: flex-start;
     flex-shrink: 0;
     width: 100%;
+    position: relative;
 
     @include media-breakpoint-up(md) {
-      max-width: 100%;
-    }
-
-    @include media-breakpoint-up(lg) {
       flex-direction: row;
       align-items: stretch;
-      width: auto;
+      width: $history-card-desktop;
       max-width: none;
+
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -75px; // Centered in Swiper's 150px gap
+        width: 1px;
+        background-color: var(--neutral-100, #{$neutral-100});
+      }
     }
   }
 
@@ -161,12 +168,8 @@ $history-card-desktop: 400px;
     gap: 24px;
 
     @include media-breakpoint-up(md) {
-      max-width: 100%;
-    }
-
-    @include media-breakpoint-up(lg) {
-      width: max(#{$history-card-desktop}, calc((100vw - 462px) / 3));
-      max-width: none;
+      max-width: $history-card-desktop;
+      width: 100%;
       gap: 32px;
     }
   }
@@ -175,7 +178,7 @@ $history-card-desktop: 400px;
     color: var(--neutral-600, #{$neutral-600});
 
     &--mobile {
-      @include media-breakpoint-up(lg) {
+      @include media-breakpoint-up(md) {
         display: none;
       }
     }
@@ -183,7 +186,7 @@ $history-card-desktop: 400px;
     &--desktop {
       display: none;
 
-      @include media-breakpoint-up(lg) {
+      @include media-breakpoint-up(md) {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -204,13 +207,16 @@ $history-card-desktop: 400px;
       text-decoration: none;
     }
 
-    &:focus,
+    &:focus {
+      outline: none;
+    }
+
     &:focus-visible {
       outline: 2px solid var(--primary-red, #{$primary-red});
       outline-offset: 2px;
     }
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       margin-top: -12px;
     }
   }
@@ -222,7 +228,7 @@ $history-card-desktop: 400px;
     gap: 24px;
     width: 100%;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       gap: 28px;
     }
   }
@@ -236,11 +242,12 @@ $history-card-desktop: 400px;
   }
 
   &__image-wrapper {
+    width: 100%;
     aspect-ratio: 319 / 225;
     background-color: $gray-200;
 
     @include media-breakpoint-up(md) {
-      aspect-ratio: 400 / 251; // wider proportion for tablet — fills the card naturally
+      aspect-ratio: 400 / 251;
     }
   }
 
@@ -248,32 +255,20 @@ $history-card-desktop: 400px;
     object-fit: cover;
   }
 
-  &__divider-line {
-    display: none;
 
-    @include media-breakpoint-up(lg) {
-      display: block;
-      width: 1px;
-      align-self: stretch;
-      background-color: var(--neutral-100, #{$neutral-100});
-      margin-left: 75px;
-      margin-right: 75px;
-      flex-shrink: 0;
-    }
-  }
 
   &__nav {
     position: relative;
     z-index: 2;
     display: none;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       gap: 16px;
       margin-top: 52px;
-      padding-left: 80px;
+      padding-left: 0;
     }
   }
 

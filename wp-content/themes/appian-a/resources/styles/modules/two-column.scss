@@ -59,6 +59,18 @@
         @include media-breakpoint-up(lg) {
             width: 50%;
             flex-grow: 1;
+
+            &--construction {
+                @media (min-width: 1440px) {
+                    padding-left: calc(50vw - 720px + 80px);
+                }
+            }
+
+            &--service {
+                @media (min-width: 1440px) {
+                    padding-right: calc(50vw - 720px + 80px);
+                }
+            }
         }
     }
 

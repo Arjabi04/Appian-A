@@ -42,15 +42,29 @@
     flex-shrink: 0;
     overflow: hidden;
 
-    & > * {
+    &>* {
       transition: transform 0.35s ease, opacity 0.35s ease;
-      animation: buttonArrowLeave 0.5s ease-in-out;
     }
   }
 
-  &:hover,
+  @media (hover: hover) and (pointer: fine) {
+    &.has-hovered {
+      &:not(:hover):not(.is-hover) {
+        svg>* {
+          animation: buttonArrowLeave 0.5s ease-in-out;
+        }
+      }
+    }
+
+    &:hover {
+      svg>* {
+        animation: buttonArrowHover 0.5s ease-in-out forwards;
+      }
+    }
+  }
+
   &.is-hover {
-    svg > * {
+    svg>* {
       animation: buttonArrowHover 0.5s ease-in-out forwards;
     }
   }
@@ -160,6 +174,7 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
+
       &:hover,
       &:focus,
       &:active {
@@ -233,14 +248,17 @@
     transform: translateX(0);
     opacity: 1;
   }
+
   45% {
     transform: translateX(1.5rem);
     opacity: 0;
   }
+
   46% {
     transform: translateX(-1.5rem);
     opacity: 0;
   }
+
   100% {
     transform: translateX(0);
     opacity: 1;
@@ -252,14 +270,17 @@
     transform: translateX(0);
     opacity: 1;
   }
+
   45% {
     transform: translateX(-1.5rem);
     opacity: 0;
   }
+
   46% {
     transform: translateX(1.5rem);
     opacity: 0;
   }
+
   100% {
     transform: translateX(0);
     opacity: 1;
