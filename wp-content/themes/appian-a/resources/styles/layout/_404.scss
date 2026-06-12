@@ -6,9 +6,9 @@
     overflow: hidden;
     padding-block: 40px;
     color: $neutral-600;
-    min-height: calc(100vh - 122px); //72 for header 40 for padding
+    min-height: calc(100vh - 72px); 
     @include media-breakpoint-up(xl) {
-        min-height: calc(100vh - 130px); //90 for ehader 40 for padding
+        min-height: calc(100vh - 90px);
         } 
 
     &__background {
@@ -23,7 +23,7 @@
         position: relative;
         z-index: 1;
 
-        display: flex;
+        // display: flex;
         flex-direction: column;
         justify-content: center; 
         align-items: center; 
@@ -31,9 +31,9 @@
         gap: 24px;
         text-align: center;
 
-        min-height: calc(100vh - 122px); //72 for header 40 for padding
+        min-height: calc(100vh - 72px); //72 for header 40 for padding
         @include media-breakpoint-up(xl) {
-            min-height: calc(100vh - 130px); //90 for ehader 40 for padding
+            min-height: calc(100vh - 90px); //90 for ehader 40 for padding
         } 
     }
 
