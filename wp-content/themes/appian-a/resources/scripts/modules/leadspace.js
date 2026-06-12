@@ -9,6 +9,14 @@ function initLeadspace() {
     if (!paths.length) return;
 
     const video = section.querySelector('video.leadspace__video');
+    if (video) {
+        if (!video.paused || video.readyState >= 3) {
+            video.classList.add('is-playing');
+        }
+        video.addEventListener('playing', () => {
+            video.classList.add('is-playing');
+        });
+    }
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 

@@ -204,6 +204,12 @@ $history-card-desktop: 400px;
       text-decoration: none;
     }
 
+    &:focus,
+    &:focus-visible {
+      outline: 2px solid var(--primary-red, #{$primary-red});
+      outline-offset: 2px;
+    }
+
     @include media-breakpoint-up(lg) {
       margin-top: -12px;
     }
@@ -346,6 +352,7 @@ $history-card-desktop: 400px;
 
     @media (min-width: 1130px) {
       max-width: 1280px;
+      min-height: 740px;
       flex-direction: row !important;
       align-items: stretch !important;
       border-top-left-radius: 0 !important;
@@ -450,6 +457,8 @@ $history-card-desktop: 400px;
       .m-our-history-popup__container:has(.m-our-history-popup__content) & {
         width: 48.4375%; // (620 / 1280)
         max-width: 620px;
+        height: 740px;
+        align-self: flex-start;
         border-radius: 0 !important;
       }
     }
@@ -467,10 +476,11 @@ $history-card-desktop: 400px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     flex-grow: 1;
 
     @media (min-width: 1130px) {
+      justify-content: flex-start;
       width: 100%;
       padding-top: 128px;
       padding-bottom: 92px;
@@ -492,7 +502,7 @@ $history-card-desktop: 400px;
   &__body {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 32px; // Mobile gap 32px
     width: 100%;

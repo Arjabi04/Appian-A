@@ -30,7 +30,7 @@ $section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadsp
 
 <section class="leadspace" aria-label="<?php echo esc_attr($section_label); ?>">
 	<?php if ($has_media) : ?>
-		<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true">
+		<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true" <?php if (! empty($image_url)) : ?>style="background-image: url('<?php echo esc_url($image_url); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
 			<?php if (! empty($video_url)) : ?>
 				<?php if (! empty($image_url)) : ?>
 					<link rel="preload" as="image" href="<?php echo esc_url($image_url); ?>" fetchpriority="high">

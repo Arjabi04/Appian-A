@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!track || slides.length === 0) return;
 
         let swiperInstance = null;
-        const mediaQuery = window.matchMedia('(min-width: 992px)');
+        const mediaQuery = window.matchMedia('(min-width: 1025px)');
 
         const updateButtons = (swiper) => {
             if (!btnLeft || !btnRight) return;
