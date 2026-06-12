@@ -183,7 +183,8 @@
             }
         }
 
-        &:active {
+        &:active,
+        &.is-clicked {
             background: var(--btn-hover-bg, #{$btn-hover-dark});
         }
 
@@ -234,7 +235,16 @@
         }
     }
 
-    &__button:hover {
+    @media (hover: hover) and (pointer: fine) {
+        &__button:hover {
+            .m-two-column__button-inner svg>* {
+                animation: buttonArrowHover 0.5s ease-in-out forwards;
+            }
+        }
+    }
+
+    &__button.is-clicked,
+    &__button:active {
         .m-two-column__button-inner svg>* {
             animation: buttonArrowHover 0.5s ease-in-out forwards;
         }

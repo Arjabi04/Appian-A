@@ -7,6 +7,22 @@ $view_all_link = $block['view_all_link'] ?? null;
 if (empty($block)) {
     return;
 }
+
+$has_partners = false;
+if (is_array($partners)) {
+    foreach ($partners as $item) {
+        if (! empty($item['logo']) && ! empty($item['logo']['url'])) {
+            $has_partners = true;
+            break;
+        }
+    }
+}
+
+$has_view_all = ! empty($view_all_link) && ! empty($view_all_link['url']);
+
+if (empty($section_title) && ! $has_partners && ! $has_view_all) {
+    return;
+}
 ?>
 
 <section class="partners grid-container" aria-label="Our Partners">
