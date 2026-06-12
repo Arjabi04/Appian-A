@@ -16,8 +16,8 @@ $eyebrow     = $error_404['eyebrow']          ?? '';
 $heading     = $error_404['heading']          ?? '';
 $description = $error_404['description']      ?? '';
 $cta_button  = $error_404['cta_button']       ?? null;
-$cta_url     = $cta_button['url']             ?? '#';
-$cta_text    = $cta_button['title']           ?? 'Go to Homepage';
+$cta_url     = $cta_button['url']             ?? '';
+$cta_text    = $cta_button['title']           ?? '';
 $cta_target  = $cta_button['target']          ?? '_self';
 ?>
 <section class="error-404 not-found ">
