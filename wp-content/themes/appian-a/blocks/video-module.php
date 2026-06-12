@@ -1,6 +1,20 @@
 <?php
-$video_url = get_template_directory_uri() . '/resources/leadspace.mp4';
-$poster_url = get_template_directory_uri() . '/resources/leadspace-poster.png';
+$video_module_group = get_field('video_module_group');
+$video_module_group = is_array($video_module_group) ? $video_module_group : get_field('video_module');
+$video_module_group = is_array($video_module_group) ? $video_module_group : [];
+
+$video_file = $video_module_group['video_file'] ?? [];
+$video_file = is_array($video_file) ? $video_file : [];
+
+$poster_image = $video_module_group['poster_image'] ?? [];
+$poster_image = is_array($poster_image) ? $poster_image : [];
+
+$video_url = $video_file['url'] ?? '';
+$poster_url = $poster_image['url'] ?? '';
+
+if (empty($video_url)) {
+    return;
+}
 
 $id = 'video-module-' . uniqid();
 $classes = 'm-video-module';
@@ -14,11 +28,11 @@ $classes = 'm-video-module';
                     <video
                         class="m-video-module__video w-100"
                         src="<?php echo esc_url($video_url); ?>"
-                        <?php if (! empty($poster_url)) : ?>poster="<?php echo esc_url($poster_url); ?>"<?php endif; ?>
+                        <?php if (! empty($poster_url)) : ?>poster="<?php echo esc_url($poster_url); ?>" <?php endif; ?>
                         preload="metadata"
                         playsinline>
                     </video>
-                    
+
                     <div class="m-video-module__overlay d-flex justify-content-center align-items-center">
                         <button
                             class="m-video-module__play-btn d-flex justify-content-center align-items-center rounded-circle border-0"
