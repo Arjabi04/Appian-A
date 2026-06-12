@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!track || slides.length === 0) return;
 
         let swiperInstance = null;
-        const mediaQuery = window.matchMedia('(min-width: 1025px)');
+        const mediaQuery = window.matchMedia('(min-width: 768px)');
 
         const updateButtons = (swiper) => {
             if (!btnLeft || !btnRight) return;
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             swiperInstance = new Swiper(carousel, {
                 modules: [Navigation, FreeMode, Mousewheel],
                 slidesPerView: 'auto',
+                spaceBetween: 150,
                 grabCursor: true,
                 freeMode: {
                     enabled: true,
