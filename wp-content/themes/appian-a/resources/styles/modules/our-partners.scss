@@ -1,5 +1,17 @@
 @import "../common";
 
+.grid-container{
+        width: 100%;
+        padding-inline: 0px !important;
+
+        max-width: 1440px;
+        // margin-inline: auto;
+
+     @include media-breakpoint-up(xl) {
+        padding-inline: 0px !important;
+    }
+}
+
 .partners {
     padding-top: 48px;
     padding-bottom: 48px;
