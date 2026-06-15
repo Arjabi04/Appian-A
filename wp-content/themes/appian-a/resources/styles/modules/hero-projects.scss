@@ -5,23 +5,25 @@
         color: $neutral-600;
     }
     padding-top: 64px;
-    // padding-bottom: 10px;
-
+    padding-bottom: 90px;
+    
     @include media-breakpoint-up(xl) {
         padding-top: 100px;
+        padding-bottom: 110px;
     }
 
     &__projects {
         display: grid;
         grid-template-columns: 1fr;
         gap: 12px;
-        margin: 50px 28px 90px;
+        margin-top: 50px;
 
         @include media-breakpoint-up(xl) {
             grid-template-columns: repeat(4, minmax(0, 4fr));
             column-gap: 12px;
             row-gap: 10px;
-            margin: 80px 80px 110px;
+            margin-top: 80px;
+            // margin-bottom: 110px;
         }
     }
 
