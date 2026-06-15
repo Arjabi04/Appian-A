@@ -7,18 +7,13 @@ $leadspace_group = is_array($leadspace_group) ? $leadspace_group : [];
 $leadspace_video = $leadspace_group['background_video'] ?? [];
 $leadspace_video = is_array($leadspace_video) ? $leadspace_video : [];
 
-$leadspace_image = $leadspace_group['background_image'] ?? [];
-$leadspace_image = is_array($leadspace_image) ? $leadspace_image : [];
-
 $eyebrow_text = $leadspace_group['eyebrow_text'] ?? '';
 $heading_mobile = $leadspace_group['heading_mobile'] ?? '';
 $heading_desktop = $leadspace_group['heading_desktop'] ?? '';
 
 $video_url = $leadspace_video['url'] ?? '';
-$image_url = $leadspace_image['url'] ?? '';
-$image_alt = $leadspace_image['alt'] ?? '';
 
-$has_media = ! empty($video_url) || ! empty($image_url);
+$has_media = ! empty($video_url);
 $has_text = ! empty($eyebrow_text) || ! empty($heading_mobile) || ! empty($heading_desktop);
 
 if (! $has_media && ! $has_text) {
@@ -30,28 +25,17 @@ $section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadsp
 
 <section class="leadspace" aria-label="<?php echo esc_attr($section_label); ?>">
 	<?php if ($has_media) : ?>
-		<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true" <?php if (! empty($image_url)) : ?>style="background-image: url('<?php echo esc_url($image_url); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
+		<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true">
 			<?php if (! empty($video_url)) : ?>
-				<?php if (! empty($image_url)) : ?>
-					<link rel="preload" as="image" href="<?php echo esc_url($image_url); ?>" fetchpriority="high">
-				<?php endif; ?>
 				<video
 					class="leadspace__video"
 					src="<?php echo esc_url($video_url); ?>"
-					<?php if (! empty($image_url)) : ?>poster="<?php echo esc_url($image_url); ?>"<?php endif; ?>
 					autoplay
 					muted
 					loop
 					playsinline
 					preload="metadata"
 					fetchpriority="high"></video>
-			<?php elseif (! empty($image_url)) : ?>
-				<img
-					class="leadspace__image"
-					src="<?php echo esc_url($image_url); ?>"
-					alt="<?php echo esc_attr($image_alt); ?>"
-					loading="eager"
-					fetchpriority="high" />
 			<?php endif; ?>
 			<div class="leadspace__overlay" aria-hidden="true"></div>
 		</div>

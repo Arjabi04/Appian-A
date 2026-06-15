@@ -195,14 +195,34 @@
             }
         }
 
-        &:active,
-        &.is-clicked {
-            background: var(--btn-hover-bg, #{$btn-hover-dark});
+        @media (hover: hover) and (pointer: fine) {
+            &:active,
+            &.is-clicked {
+                background: var(--btn-hover-bg, #{$btn-hover-dark});
+            }
         }
 
+        @media (hover: none), (pointer: coarse) {
+            &:active,
+            &:hover,
+            &:focus,
+            &.is-clicked {
+                background: var(--primary-red, #{$primary-red}) !important;
+                transform: none !important;
+                
+                .m-two-column__button-inner {
+                    color: $white !important;
+                    svg > * {
+                        animation: none !important;
+                        transition: none !important;
+                    }
+                }
+            }
+        }
+
+        &:focus,
         &:focus-visible {
-            outline: 0.125rem solid $primary-red;
-            outline-offset: 0.25rem;
+            outline: none;
         }
 
         @include media-breakpoint-up(lg) {
@@ -234,7 +254,6 @@
 
             &>* {
                 transition: transform 0.35s ease, opacity 0.35s ease;
-                animation: buttonArrowLeave 0.5s ease-in-out;
             }
 
             path {
@@ -248,17 +267,23 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
+        &__button.has-hovered:not(:hover):not(.is-clicked) {
+            .m-two-column__button-inner svg>* {
+                animation: buttonArrowLeave 0.5s ease-in-out;
+            }
+        }
+
         &__button:hover {
             .m-two-column__button-inner svg>* {
                 animation: buttonArrowHover 0.5s ease-in-out forwards;
             }
         }
-    }
 
-    &__button.is-clicked,
-    &__button:active {
-        .m-two-column__button-inner svg>* {
-            animation: buttonArrowHover 0.5s ease-in-out forwards;
+        &__button.is-clicked,
+        &__button:active {
+            .m-two-column__button-inner svg>* {
+                animation: buttonArrowHover 0.5s ease-in-out forwards;
+            }
         }
     }
 }

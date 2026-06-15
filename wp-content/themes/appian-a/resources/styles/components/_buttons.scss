@@ -56,20 +56,38 @@
       }
     }
 
-    &:hover {
+    &:hover,
+    &.is-hover {
       svg>* {
         animation: buttonArrowHover 0.5s ease-in-out forwards;
       }
     }
   }
 
-  &.is-hover {
-    svg>* {
-      animation: buttonArrowHover 0.5s ease-in-out forwards;
+  -webkit-tap-highlight-color: transparent;
+
+  @media (hover: none), (pointer: coarse) {
+    &:active,
+    &:hover,
+    &:focus {
+      color: var(--btn-color, #{$white}) !important;
+      background-color: var(--btn-bg, transparent) !important;
+      border-color: var(--btn-border-color, transparent) !important;
+
+      svg > * {
+        animation: none !important;
+        transition: none !important;
+      }
     }
   }
 
   @media (hover: hover) and (pointer: fine) {
+    &:focus,
+    &:active {
+      background-color: var(--btn-focus-bg, transparent);
+      color: var(--btn-focus-color);
+    }
+
     &:hover {
       background-color: var(--btn-hover-bg, transparent);
       color: var(--btn-hover-color, #{$white});
@@ -78,14 +96,9 @@
   }
 
   &:focus,
+  &:focus-visible,
   &:active {
-    background-color: var(--btn-focus-bg, transparent);
-    color: var(--btn-focus-color);
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid $neutral-600;
-    outline-offset: 0.25rem;
+    outline: none;
   }
 
   &--small {

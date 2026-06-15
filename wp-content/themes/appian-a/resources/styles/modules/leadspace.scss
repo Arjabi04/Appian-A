@@ -26,8 +26,6 @@
         background-color: var(--Secondary, #101922);
     }
 
-    // Mobile: fill the whole circle so the dark overlay never sits over empty
-    // space (which read as a gray band between the header and the video).
     &__video,
     &__image {
         position: absolute;
@@ -37,7 +35,7 @@
         object-fit: cover;
         object-position: center;
         display: block;
-        backface-visibility: hidden; // avoid clipping flicker on the GPU-composited layer (Firefox)
+        backface-visibility: hidden;
         background-color: var(--Secondary, #101922);
     }
 
@@ -85,12 +83,24 @@
     &__eyebrow {
         color: var(--White, #FFF);
         margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-word;
+        overflow-wrap: break-word;
     }
 
     &__heading {
         color: var(--White, #FFF);
         text-align: center;
         margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-word;
+        overflow-wrap: break-word;
 
         &.d1 {
             @include media-breakpoint-up(md) {
@@ -143,12 +153,11 @@
         stroke: var(--Primary-Red, #D72027);
         stroke-width: 8px;
         stroke-linecap: round;
-        --arc-start: 0.44; // mobile: red reaches ~40% across the curve, matching Figma
+        --arc-start: 0.44;
         stroke-dasharray: 1800;
         stroke-dashoffset: 1800;
     }
 
-    // TABLET INTERMEDIATE SCALING
     @include media-breakpoint-up(md) {
         min-height: 750px;
         height: auto;
@@ -183,14 +192,12 @@
             bottom: 60px;
         }
 
-        // Tablet: drop the long mobile resting red; the JS visibility floor keeps
-        // it on-screen (~0.24 here). Tune this value to lengthen the tablet red.
         &__arc-path {
             --arc-start: 0.16;
         }
     }
 
-    // DESKTOP OVERRIDES
+
     @include media-breakpoint-up(lg) {
         min-height: max(668px, 46.389vw); // 668/1440*100
         height: auto;
@@ -199,11 +206,11 @@
         &__video,
         &__image {
             inset: auto;
-            bottom: calc(-1 * max(70px, 4.861vw)); // 70/1440*100 — cancels the circle's bottom gap
+            bottom: calc(-1 * max(70px, 4.861vw));
             left: 50%;
             transform: translate3d(-50%, 0, 0);
             width: 100vw;
-            height: max(56.25vw, 668px); // 16:9 of 100vw, floored to the hero so it never gaps
+            height: max(56.25vw, 668px);
         }
 
 
@@ -225,8 +232,6 @@
             max-width: 832px;
         }
 
-        // Arc tracks eclipse--76 exactly (same width/height/bottom) so the red
-        // rim stays glued to the video edge at every viewport width.
         &__arc {
             width: max(2000px, 138.888vw);
             height: max(2000px, 138.888vw);
