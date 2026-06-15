@@ -15,6 +15,7 @@
     width: 100%;
     min-height: clamp(16rem, 80.8vw, 38.75rem);
     overflow: hidden;
+    background-color: $secondary;
     background-size: cover;
     background-position: center;
     display: flex;

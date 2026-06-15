@@ -44,9 +44,10 @@ if (! empty($terms) && ! is_wp_error($terms)) {
     $category_label = implode(' | ', $term_names);
 }
 $show_read_more = ! empty($read_more_text) && is_string($read_more_text);
+$is_clickable = ! empty($link_url);
 ?>
 
-<article class="project-card">
+<article class="project-card<?php echo $is_clickable ? ' project-card--clickable' : ''; ?>">
     <?php if (! empty($image_url)) : ?>
         <img
             class="project-card__image"
@@ -90,16 +91,18 @@ $show_read_more = ! empty($read_more_text) && is_string($read_more_text);
                     alt="">
             </span>
             <?php
-            if (! empty($link_url)) {
-                $target_attr = ! empty($link_target) ? ' target="' . esc_attr($link_target) . '"' : '';
-                $rel_attr    = ! empty($link_rel)    ? ' rel="' . esc_attr($link_rel) . '"'       : '';
-                echo '<a href="' . esc_url($link_url) . '"' . $target_attr . $rel_attr . '>'
-                    . '<span class="project-card__read-more-text">' . esc_html($read_more_text) . '</span>'
-                    . '</a>';
-            } else {
-                echo '<span class="project-card__read-more-text">' . esc_html($read_more_text) . '</span>';
-            }
+            echo '<span class="project-card__read-more-text">' . esc_html($read_more_text) . '</span>';
             ?>
         </div>
+    <?php endif; ?>
+
+    <?php if ($is_clickable) : ?>
+        <a
+            class="project-card__overlay-link"
+            href="<?php echo esc_url($link_url); ?>"
+            <?php if (! empty($link_target)) : ?>target="<?php echo esc_attr($link_target); ?>"<?php endif; ?>
+            <?php if (! empty($link_rel)) : ?>rel="<?php echo esc_attr($link_rel); ?>"<?php endif; ?>
+            aria-label="<?php echo esc_attr($title); ?>">
+        </a>
     <?php endif; ?>
 </article>
