@@ -10,9 +10,12 @@ function initLeadspace() {
 
     const video = section.querySelector('video.leadspace__video');
     if (video) {
-        if (!video.paused || video.readyState >= 3) {
+        if (!video.paused || video.readyState >= 2) {
             video.classList.add('is-playing');
         }
+        video.addEventListener('loadeddata', () => {
+            video.classList.add('is-playing');
+        });
         video.addEventListener('playing', () => {
             video.classList.add('is-playing');
         });

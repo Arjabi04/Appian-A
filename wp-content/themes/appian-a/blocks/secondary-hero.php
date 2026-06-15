@@ -22,6 +22,9 @@ if (empty($hero_video_url) && empty($hero_image_url) && empty($hero_heading)) {
 }
 ?>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <section class="m-secondary-hero" aria-label="<?php echo esc_attr(! empty($hero_heading) ? $hero_heading : 'Secondary Hero'); ?>">
     <?php if (! empty($hero_video_url)) : ?>
         <video
