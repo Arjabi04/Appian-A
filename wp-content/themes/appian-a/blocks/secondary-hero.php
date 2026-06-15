@@ -37,6 +37,15 @@ if (empty($hero_video_url) && empty($hero_image_url) && empty($hero_heading)) {
             playsinline
             preload="auto"
             fetchpriority="high"></video>
+        <script>
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const video = document.currentScript.previousElementSibling;
+                if (video) {
+                    video.removeAttribute('autoplay');
+                    video.pause();
+                }
+            }
+        </script>
         <div class="m-secondary-hero__overlay"></div>
     <?php elseif (! empty($hero_image_url)) : ?>
         <img
