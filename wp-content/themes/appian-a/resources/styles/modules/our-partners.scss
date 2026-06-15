@@ -217,6 +217,10 @@
         color: $primary-red;
         text-align: center;
 
+        &:visited {
+            color: $primary-red;
+        }
+
         &:hover,
         &:focus-visible {
             color: $primary-red;
