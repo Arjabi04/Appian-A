@@ -8,17 +8,30 @@ if (empty($block)) {
     return;
 }
 
-$has_partners = false;
+$rendered_partners = [];
+
 if (is_array($partners)) {
     foreach ($partners as $item) {
         if (! empty($item['logo']) && ! empty($item['logo']['url'])) {
-            $has_partners = true;
-            break;
+            $rendered_partners[] = $item;
         }
     }
 }
 
+$has_partners = ! empty($rendered_partners);
+
 $has_view_all = ! empty($view_all_link) && ! empty($view_all_link['url']);
+$partner_count = count($rendered_partners);
+$mobile_span = 2 - ($partner_count % 2);
+$desktop_span = 4 - ($partner_count % 4);
+
+if ($mobile_span === 0) {
+    $mobile_span = 2;
+}
+
+if ($desktop_span === 0) {
+    $desktop_span = 4;
+}
 
 if (empty($section_title) && ! $has_partners && ! $has_view_all) {
     return;
@@ -44,16 +57,12 @@ if (empty($section_title) && ! $has_partners && ! $has_view_all) {
     <?php endif; ?>
 
     <?php if (! empty($partners) || (! empty($view_all_link) && ! empty($view_all_link['url']))) : ?>
-        <div class="partners__grid-wrapper r">
+        <div class="partners__grid-wrapper">
             <div class="partners__grid">
 
-                <?php if (! empty($partners)) : ?>
-                    <?php foreach ($partners as $item) : ?>
+                <?php if (! empty($rendered_partners)) : ?>
+                    <?php foreach ($rendered_partners as $item) : ?>
                         <?php
-                        if (empty($item['logo']) || empty($item['logo']['url'])) {
-                            continue;
-                        }
-
                         $logo_url      = $item['logo']['url'] ?? '';
                         $logo_alt      = $item['logo']['alt'] ?? '';
                         $has_link      = ! empty($item['link']['url']);
@@ -63,16 +72,18 @@ if (empty($section_title) && ! $has_partners && ! $has_view_all) {
                         ?>
 
                         <div class="partners__cell">
-                            <?php if ($has_link) : ?>
-                                <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>" <?php if ($link_is_blank) : ?> rel="noopener noreferrer" <?php endif; ?>>
-                                <?php endif; ?>
-                                <img
-                                    class="partners__logo"
-                                    src="<?php echo esc_url($logo_url); ?>"
-                                    alt="<?php echo esc_attr($logo_alt); ?>">
+                            <div class="partners__logo-box">
                                 <?php if ($has_link) : ?>
-                                </a>
-                            <?php endif; ?>
+                                    <a class="partners__logo-link" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>" <?php if ($link_is_blank) : ?> rel="noopener noreferrer" <?php endif; ?>>
+                                    <?php endif; ?>
+                                    <img
+                                        class="partners__logo"
+                                        src="<?php echo esc_url($logo_url); ?>"
+                                        alt="<?php echo esc_attr($logo_alt); ?>">
+                                    <?php if ($has_link) : ?>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                     <?php endforeach; ?>
@@ -86,7 +97,9 @@ if (empty($section_title) && ! $has_partners && ! $has_view_all) {
                     $view_rel    = ($view_target === '_blank') ? ' rel="noopener noreferrer"' : '';
                     $view_tag    = '<a class="partners__link btn-text-lg" href="' . esc_url($view_url) . '" target="' . esc_attr($view_target) . '"' . $view_rel . '>';
                     ?>
-                    <div class="partners__cell partners__cell--link">
+                    <div
+                        class="partners__cell partners__cell--link"
+                        style="--partners-span-mobile: <?php echo esc_attr($mobile_span); ?>; --partners-span-desktop: <?php echo esc_attr($desktop_span); ?>;">
                         <?php echo $view_tag; ?>
                         <?php echo esc_html($view_text); ?>
                         </a>
