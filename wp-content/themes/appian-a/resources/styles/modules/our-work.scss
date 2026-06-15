@@ -76,6 +76,11 @@
             line-height: 1.4;
             letter-spacing: 0;
             text-align: left;
+            transition: 0.3s;
+
+            &:hover {
+                transform: translateY(-2px); 
+            }
         }
 
         &--active {
@@ -199,20 +204,25 @@
     }
 
     &__image {
+        width: 100%;
+
+        @include media-breakpoint-up(md) {
+            max-width: 420px;
+        }
+
         img {
             display: block;
+            width: 100%;
+            aspect-ratio: 320 / 186;
             object-fit: cover;
-            min-width: 100%;
-            min-height: 186px;
             
             @include media-breakpoint-up(md) {
-                min-width: 420px;
-                min-height: 408px;
+                aspect-ratio: 420 / 408;
             }
         }
 
-        @include media-breakpoint-up(md) {
-            flex: 0 0 43%;
-        }
+        // @include media-breakpoint-up(md) {
+        //     flex: 0 0 43%;
+        // }
     }
 }
