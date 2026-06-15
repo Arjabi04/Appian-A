@@ -8,20 +8,8 @@ if (empty($title)) {
     return;
 }
 
-$description = get_field('project_description', $project->ID);
-$link_url    = '';
-$link_target = '_self';
-$link_rel    = '';
-$link        = get_field('project_link', $project->ID);
-
-if (! empty($link) && is_array($link)) {
-    $link_url    = $link['url']    ?? '';
-    $link_target = $link['target'] ?? '_self';
-    if (empty($link_target)) {
-        $link_target = '_self';
-    }
-    $link_rel = ($link_target === '_blank') ? 'noopener noreferrer' : '';
-}
+$caption  = get_field('project_description', $project->ID);
+$link_url = get_permalink($project->ID);
 
 $image_url = '';
 $image_alt = '';
@@ -68,16 +56,16 @@ $is_clickable = ! empty($link_url);
         </div>
     <?php endif; ?>
 
-    <?php if (! empty($title) || ! empty($description)) : ?>
+    <?php if (! empty($title) || ! empty($caption)) : ?>
         <div class="project-card__content">
             <?php if (! empty($title)) : ?>
                 <h3 class="project-card__title h6">
                     <?php echo esc_html($title); ?>
                 </h3>
             <?php endif; ?>
-            <?php if (! empty($description)) : ?>
+            <?php if (! empty($caption)) : ?>
                 <p class="project-card__description body-xsmall">
-                    <?php echo esc_html($description); ?>
+                    <?php echo esc_html($caption); ?>
                 </p>
             <?php endif; ?>
         </div>
@@ -97,12 +85,6 @@ $is_clickable = ! empty($link_url);
     <?php endif; ?>
 
     <?php if ($is_clickable) : ?>
-        <a
-            class="project-card__overlay-link"
-            href="<?php echo esc_url($link_url); ?>"
-            <?php if (! empty($link_target)) : ?>target="<?php echo esc_attr($link_target); ?>"<?php endif; ?>
-            <?php if (! empty($link_rel)) : ?>rel="<?php echo esc_attr($link_rel); ?>"<?php endif; ?>
-            aria-label="<?php echo esc_attr($title); ?>">
-        </a>
+        <a class="project-card__overlay-link" href="<?php echo esc_url($link_url); ?>" aria-label="<?php echo esc_attr($title); ?>"></a>
     <?php endif; ?>
 </article>

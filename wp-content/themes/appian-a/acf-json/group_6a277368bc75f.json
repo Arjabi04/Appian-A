@@ -24,11 +24,11 @@
             "append": ""
         },
         {
-            "key": "field_6a27742debc68",
-            "label": "Project Link",
-            "name": "project_link",
+            "key": "field_project_hero_image",
+            "label": "Hero Banner Image",
+            "name": "project_hero_image",
             "aria-label": "",
-            "type": "link",
+            "type": "image",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -38,6 +38,15 @@
                 "id": ""
             },
             "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
             "allow_in_bindings": 0
         }
     ],
@@ -62,5 +71,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1780973465
+    "modified": 1781538096
 }

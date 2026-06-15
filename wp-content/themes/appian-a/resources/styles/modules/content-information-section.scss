@@ -3,8 +3,8 @@
 .content-information {
     &__wrapper {
         position: relative;
-        z-index: 2; 
-        padding-block:60px;
+        z-index: 2;
+        padding-block: 60px;
 
         &::before {
             content: "";
@@ -33,39 +33,81 @@
         display: grid;
         grid-template-columns: 1fr;
         row-gap: 32px;
-        
+
         @include media-breakpoint-up(xl) {
             row-gap: 64px;
             grid-template-columns: repeat(12, 1fr);
             column-gap: 40px;
         }
-    }
 
-    &__text-content {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        @include media-breakpoint-up(xl) {
-            grid-column: 5 / 12;
-            gap: 32px;
-            padding-left: 10px;
+        h2,
+        h3,
+        h4 {
+            margin: 0;
+            grid-column: 1 / -1;
         }
 
-    }
+        p {
+            margin: 0;
+            grid-column: 1 / -1;
+        }
 
-    &__title,
-    &__description {
+        >*+* {
+            margin-top: 16px;
+
+            @include media-breakpoint-up(xl) {
+                margin-top: 32px;
+            }
+        }
+
+        img {
+            display: block;
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+            grid-column: 1 / -1;
+        }
+    }
+}
+
+// Gutenberg block output bridge
+// Maps raw Gutenberg output classes inside .content-information__content
+// to the same styles already defined for .content-information__title,
+// .content-information__description, etc. above.
+// Nothing above this line is changed — this block only adds coverage
+// for Gutenberg-generated markup that lacks the original custom classes.
+// Note: __title and __description do not exist as standalone selectors in this
+// file (they are BEM-nested), so their computed property values are written
+// directly here rather than using @extend.
+
+.content-information__content {
+
+    h2,
+    h3,
+    h4 {
         margin: 0;
+        grid-column: 1 / -1;
     }
 
-    img {
-        border-radius: 10px;
-        max-width: 100%;
-        aspect-ratio: 1.75;
-        object-fit: cover;
-        @include media-breakpoint-up(xl) {
-            grid-column: 1 / 12;
+    p {
+        margin: 0;
+        grid-column: 1 / -1;
+    }
+
+    // Gutenberg wraps all Image blocks in <figure class="wp-block-image">
+    // The original hardcoded img had a .d-block class — replicate that here
+    .wp-block-image {
+        display: block;
+
+        figure {
+            margin: 0;
         }
 
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
     }
 }

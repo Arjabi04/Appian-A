@@ -13,12 +13,10 @@ add_action('acf/init', function () {
             'our-story'       => 'Our Story',
             'our-history'     => 'Our History',
             'two-column'      => 'Two Column',
-            'tertiary-hero'   => 'Tertiary Hero',
             'our-projects'   => 'Our Projects',
             'hero-projects'  => 'Hero Projects',
             'video-module'   => 'Video Module',
             'our-partners'    => 'Our Partners',
-            'content-information-section' => 'Content Information Section',
             'contact-form'    => 'Contact Form',
         ];
 

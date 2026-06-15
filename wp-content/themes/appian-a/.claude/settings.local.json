@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn build:*)",
+      "Bash(tr:*)",
+      "Bash(for file in \"resources/images/preview/leadspace.webp\" \"resources/leadspace.mp4\" \"blocks/leadspace.php\" \"resources/scripts/modules/leadspace.js\" \"resources/styles/modules/leadspace.scss\")",
+      "Bash(do)",
+      "Bash(if [ -f \"/Users/aarohan/Projects/Appian-A/$file\" ])",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(else)",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(test:*)",
+      "Bash(grep:*)",
+      "Bash(git log:*)",
+      "mcp__plugin_figma_figma__get_design_context",
+      "mcp__plugin_figma_figma__get_metadata",
+      "mcp__plugin_figma_figma__get_screenshot",
+      "Bash(curl:*)",
+      "Bash(npm run *)",
+      "Bash(node *)",
+      "Bash(perl -0pi -e 's/\\\\bupdatePathLengths\\\\\\(\\\\\\)/updateArcMetrics\\(\\)/g' resources/scripts/modules/leadspace.js)"
+    ]
+  }
+}
