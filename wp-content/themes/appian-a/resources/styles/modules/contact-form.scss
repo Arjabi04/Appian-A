@@ -138,14 +138,14 @@ $contact-input-padding : 0.875rem 1.5rem;
         width: 100%;
         min-width: 0;
         box-sizing: border-box;
-        height: 3.25rem; // 52px — matches Figma
-        padding: $contact-input-padding; // 14px 24px
-        border-radius: $contact-input-radius; // 8px
+        height: 3.25rem;
+        padding: $contact-input-padding;
+        border-radius: $contact-input-radius;
         background-color: $white;
         font-family: $font-family-sans-serif;
-        font-size: 1rem; // 16px
+        font-size: 1rem;
         font-weight: $font-weight-normal; // 400
-        line-height: 1.5; // 150% — matches Figma
+        line-height: 1.5;
         color: var(--neutral-600, #{$neutral-600});
         border: 1.5px solid var(--neutral-600, #{$neutral-600});
 
@@ -194,7 +194,7 @@ $contact-input-padding : 0.875rem 1.5rem;
         -webkit-appearance: none;
         appearance: none;
         cursor: pointer;
-        height: 3.25rem; // 52px — matches Figma
+        height: 3.25rem;
         padding: 0.875rem 3.625rem 0.875rem 1.5rem;
         background-image: url("@images/svgs/dropdown-form.svg");
         background-repeat: no-repeat;
@@ -277,9 +277,9 @@ $contact-input-padding : 0.875rem 1.5rem;
         margin-top: 0;
         color: var(--primary-red, #{$primary-red});
         font-family: $font-family-sans-serif;
-        font-size: 0.875rem; // 14px
-        font-weight: $font-weight-normal; // 400
-        line-height: 1.5; // 150% — matches Figma
+        font-size: 0.875rem;
+        font-weight: $font-weight-normal;
+        line-height: 1.5;
         overflow-wrap: break-word;
         word-wrap: break-word;
 
