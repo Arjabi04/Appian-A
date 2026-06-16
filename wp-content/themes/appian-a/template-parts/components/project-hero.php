@@ -21,13 +21,12 @@ $description = get_the_excerpt($project_id);
 $image_url = '';
 $image_alt = '';
 
-// Use dedicated hero banner image if set
 $hero_image = get_field('project_hero_image', $project_id);
 if (! empty($hero_image) && is_array($hero_image) && ! empty($hero_image['url'])) {
     $image_url = $hero_image['url'];
     $image_alt = ! empty($hero_image['alt']) ? $hero_image['alt'] : $heading;
 } else {
-    // Fallback to featured image if no hero image is set
+    // Fallback 
     $thumbnail_id = get_post_thumbnail_id($project_id);
     if (! empty($thumbnail_id)) {
         $image_url = get_the_post_thumbnail_url($project_id, 'full');
