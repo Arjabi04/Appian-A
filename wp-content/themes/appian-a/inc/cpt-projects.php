@@ -30,7 +30,7 @@ function appian_register_project_cpt() {
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-hammer',
-        'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
+        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
         'show_in_rest'       => true,
     );
 
@@ -62,8 +62,10 @@ function appian_register_project_category_taxonomy() {
         'query_var'         => true,
         'rewrite'           => array( 'slug' => 'project-category' ),
         'show_in_rest'      => true,
+        'taxonomies'=> array('category'),
+        'supports'           => array( 'title', 'editor', 'thumbnail' ),
     );
-
+ 
     register_taxonomy( 'project_category', array( 'project' ), $args );
 }
 add_action( 'init', 'appian_register_project_category_taxonomy' );
