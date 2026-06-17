@@ -20,12 +20,40 @@ if (
     return;
 }
 
+$image_position = get_field('hero_projects_image_position');
+if (empty($image_position) || ! is_numeric($image_position) || $image_position < 1) {
+    $image_position = 5;
+}
+$image_position = (int) $image_position;
+
+$is_conflict_position = ($image_position % 4 === 0);
+
 $projects_above = array();
 $projects_below = array();
 
 if ($has_projects) {
-    $projects_above = array_slice($projects, 0, 4);
-    $projects_below = array_slice($projects, 4);
+    if ($is_conflict_position) {
+        $cards_before_image = max(0, $image_position - 2);
+
+        $displaced_card = null;
+        if (isset($projects[$cards_before_image])) {
+            $displaced_card = $projects[$cards_before_image];
+        }
+
+        $projects_above = array_slice($projects, 0, $cards_before_image);
+
+        $remaining = array_slice($projects, $cards_before_image + 1);
+
+        if (! empty($displaced_card)) {
+            array_unshift($remaining, $displaced_card);
+        }
+
+        $projects_below = $remaining;
+    } else {
+        $cards_before_image = max(0, $image_position - 1);
+        $projects_above = array_slice($projects, 0, $cards_before_image);
+        $projects_below = array_slice($projects, $cards_before_image);
+    }
 }
 ?>
 
