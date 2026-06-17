@@ -196,6 +196,7 @@ require get_template_directory() . '/inc/svg-icons.php';
 require get_template_directory() . '/inc/acf-options.php';
 require get_template_directory() . '/inc/class-header-walker.php';
 require_once get_template_directory() . '/inc/newsletter-submissions.php';
+require_once get_template_directory() . '/inc/contact-submissions.php';
 /**
  * Load Jetpack compatibility file.
  */

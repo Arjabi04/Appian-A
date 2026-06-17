@@ -1,14 +1,19 @@
-<section class="m-contact-form" aria-label="Contact Form">
+<?php
+$contact_form_heading = get_field('contact_form_heading') ?: 'A New Chapter in Student Living';
+$contact_form_text    = get_field('contact_form_text') ?: 'Quisque quis nisl vel elit tristique mollis vel ut ex. Integer et est enim. Nullam sagittis nibh sit amet ornare pretium. Sed eget tellus a ex sagittis accumsan lobortis id ipsum.';
+?>
+
+<section class="m-contact-form" aria-label="<?php echo esc_attr($contact_form_heading); ?>">
     <div class="grid-container">
         <div class="m-contact-form__inner">
 
             <div class="m-contact-form__content">
                 <div class="m-contact-form__heading-body">
                     <h2 class="m-contact-form__heading h2 m-0 text-break">
-                        A New Chapter in Student Living
+                        <?php echo esc_html($contact_form_heading); ?>
                     </h2>
                     <p class="m-contact-form__text body-sm-all m-0 text-break">
-                        Quisque quis nisl vel elit tristique mollis vel ut ex. Integer et est enim. Nullam sagittis nibh sit amet ornare pretium. Sed eget tellus a ex sagittis accumsan lobortis id ipsum.
+                        <?php echo esc_html($contact_form_text); ?>
                     </p>
                 </div>
             </div>
@@ -39,6 +44,9 @@
                         <div class="c-contact-form__field">
                             <input type="tel" name="phone" id="phone"
                                 class="c-contact-form__input body"
+                                inputmode="numeric"
+                                maxlength="10"
+                                pattern="[0-9]{10}"
                                 placeholder="Phone Number *" required>
                         </div>
 
@@ -50,17 +58,17 @@
                         </div>
 
                         <div class="c-contact-form__field c-contact-form__field--select">
-                            <select name="unit-type" id="unit-type"
+                            <input type="hidden" name="unit-type" id="unit-type">
+                            <button type="button" id="unit-type-toggle"
                                 class="c-contact-form__input c-contact-form__select body"
-                                required>
-                                <option value="">Unit Type *</option>
-                                <option value="Studio">Studio</option>
-                                <option value="1 Bedroom">1 Bedroom</option>
-                                <option value="2 Bedroom">2 Bedroom</option>
-                            </select>
+                                aria-expanded="false"
+                                aria-controls="unit-preference-options"
+                                data-unit-toggle>
+                                <span data-unit-toggle-label>Unit Type *</span>
+                            </button>
                         </div>
 
-                        <div class="c-contact-form__field c-contact-form__field--radio">
+                        <div class="c-contact-form__field c-contact-form__field--radio" id="unit-preference-options" hidden>
                             <div class="c-contact-form__radio-group">
                                 <span class="c-contact-form__radio-item">
                                     <label class="body">
@@ -89,6 +97,10 @@
                                 <?php echo appian_get_svg_icon('arrow-right'); ?>
                             </button>
                         </div>
+
+                        <p class="c-contact-form__success body-sm-all m-0" data-contact-form-success hidden>
+                            Thank you for contacting us.
+                        </p>
 
                     </form>
                 </div>
