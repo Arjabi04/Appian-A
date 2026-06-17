@@ -1,9 +1,13 @@
 <?php
 $heading        = get_field('our_projects_heading');
-$projects       = get_field('our_projects_posts');
 $read_more_text = get_field('our_projects_read_more_text');
 
-$has_projects = ! empty($projects) && is_array($projects);
+$our_projects_query = new WP_Query([
+    'post_type'      => 'project',
+    'posts_per_page' => 12, // placeholder — confirm real value later
+    'paged'          => max(1, get_query_var('paged') ?: (get_query_var('page') ?: 1)),
+]);
+$has_projects = $our_projects_query->have_posts();
 
 if (empty($heading) && ! $has_projects) {
     return;
@@ -82,15 +86,16 @@ if (empty($heading) && ! $has_projects) {
         <div class="our-projects__cards-wrapper">
             <div class="grid-row">
                 <div class="our-projects__cards-grid">
-                    <?php foreach ($projects as $project) :
-                        if (empty($project) || ! ($project instanceof WP_Post)) {
-                            continue;
-                        }
+                    <?php while ($our_projects_query->have_posts()) :
+                        $our_projects_query->the_post();
+                        $project = get_post();
                         ?>
                         <div class="our-projects__card-item">
                             <?php include get_template_directory() . '/template-parts/components/project-card.php'; ?>
                         </div>
-                    <?php endforeach; ?>
+                    <?php endwhile;
+                    wp_reset_postdata();
+                    ?>
                 </div>
             </div>
         </div>
