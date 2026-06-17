@@ -33,7 +33,10 @@ $classes = 'm-video-module';
                         playsinline>
                     </video>
 
-                    <div class="m-video-module__overlay d-flex justify-content-center align-items-center">
+                    <div class="m-video-module__overlay d-flex justify-content-center align-items-center<?php echo ! empty($poster_url) ? ' has-poster' : ''; ?>"
+                         <?php if (! empty($poster_url)) : ?>
+                             style="--poster-url: url('<?php echo esc_url($poster_url); ?>');"
+                         <?php endif; ?>>
                         <button
                             class="m-video-module__play-btn d-flex justify-content-center align-items-center rounded-circle border-0"
                             type="button"
