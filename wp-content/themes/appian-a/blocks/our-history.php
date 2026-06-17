@@ -1,41 +1,46 @@
 <?php
 $our_history_group = get_field('our_history_group');
-// printr($our_history_group);
 $our_history_group = is_array($our_history_group) ? $our_history_group : get_field('our_history');
 $our_history_group = is_array($our_history_group) ? $our_history_group : [];
 
 $section_title = $our_history_group['section_title'] ?? '';
-$raw_slides = $our_history_group['history_slides'] ?? [];
-$raw_slides = is_array($raw_slides) ? $raw_slides : [];
-
 $history_slides = [];
 
-foreach ($raw_slides as $slide) {
-    $slide = is_array($slide) ? $slide : [];
-    $image = $slide['image'] ?? [];
-    $image = is_array($image) ? $image : [];
+// Show history items by the WP Admin Order field first, then by the year title.
+$history_query = new WP_Query([
+	'post_type' => 'history_item',
+	'post_status' => 'publish',
+	'posts_per_page' => -1,
+	'orderby' => [
+		'menu_order' => 'ASC',
+		'title' => 'ASC',
+	],
+]);
 
-    $year = trim((string) ($slide['year'] ?? ''));
-    $image_url = $image['url'] ?? '';
-    $image_alt = $image['alt'] ?? '';
-    $popup_description = trim((string) ($slide['popup_description'] ?? ''));
-    $link_text = trim((string) ($slide['link_text'] ?? ''));
+if ($history_query->have_posts()) {
+	while ($history_query->have_posts()) {
+		$history_query->the_post();
 
-    if ('' === $year && '' === $image_url && '' === $popup_description) {
-        continue;
-    }
+		$year = get_the_title();
+		$image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+		$image_alt = get_post_meta(get_post_thumbnail_id(get_the_ID()), '_wp_attachment_image_alt', true);
+		$popup_description = get_post_meta(get_the_ID(), 'history_popup_description', true);
+		$link_text = get_post_meta(get_the_ID(), 'history_link_text', true);
 
-    if ('' === $year || '' === $image_url || '' === $popup_description) {
-        continue;
-    }
+		if (!$year || !$image_url || !$popup_description) {
+			continue;
+		}
 
-    $history_slides[] = [
-        'year' => $year,
-        'image_url' => $image_url,
-        'image_alt' => $image_alt,
-        'popup_description' => $popup_description,
-        'link_text' => '' !== $link_text ? $link_text : 'Continue Reading',
-    ];
+		$history_slides[] = [
+			'year' => $year,
+			'image_url' => $image_url,
+			'image_alt' => $image_alt,
+			'popup_description' => $popup_description,
+			'link_text' => $link_text ? $link_text : 'Continue Reading',
+		];
+	}
+
+	wp_reset_postdata();
 }
 
 if (empty($history_slides)) {

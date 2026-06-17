@@ -195,6 +195,7 @@ require get_template_directory() . '/acf-block.php';
 require get_template_directory() . '/inc/svg-icons.php';
 require get_template_directory() . '/inc/acf-options.php';
 require get_template_directory() . '/inc/class-header-walker.php';
+require_once get_template_directory() . '/inc/history-items.php';
 require_once get_template_directory() . '/inc/newsletter-submissions.php';
 require_once get_template_directory() . '/inc/contact-submissions.php';
 /**
@@ -527,4 +528,3 @@ function our_work_fix_svg_mime($data, $file, $filename, $mimes, $real_mime) {
     }
     return $data;
 }
-
