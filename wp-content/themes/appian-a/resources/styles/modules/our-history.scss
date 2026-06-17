@@ -107,7 +107,7 @@ $history-card-desktop: 400px;
       scrollbar-width: none;
       padding-bottom: 12px;
       margin-bottom: -12px;
-      clip-path: inset(-50px -100vw -50px 0px);
+      clip-path: inset(-50px -100vw -50px -10px);
 
       &::-webkit-scrollbar {
         display: none;

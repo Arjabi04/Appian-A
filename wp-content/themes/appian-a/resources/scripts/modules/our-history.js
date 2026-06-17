@@ -39,6 +39,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let swiperInstance = null;
         const mediaQuery = window.matchMedia('(min-width: 768px)');
 
+        const handleFocusIn = (e) => {
+            const slide = e.target.closest('[data-history-slide]');
+            if (slide && swiperInstance) {
+                const slideIndex = Array.from(slides).indexOf(slide);
+                if (slideIndex !== -1 && swiperInstance.activeIndex !== slideIndex) {
+                    swiperInstance.slideTo(slideIndex);
+                }
+            }
+        };
+
+        const handleScroll = (e) => {
+            if (e.target && e.target.scrollLeft !== 0) {
+                e.target.scrollLeft = 0;
+            }
+        };
+
         const updateButtons = (swiper) => {
             if (!btnLeft || !btnRight) return;
             if (swiper.isBeginning) {
@@ -97,6 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
+
+            carousel.addEventListener('focusin', handleFocusIn);
+            carousel.addEventListener('scroll', handleScroll);
+            parent.addEventListener('scroll', handleScroll);
+            track.addEventListener('scroll', handleScroll);
         };
 
         const destroySwiper = () => {
@@ -107,6 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Restore track CSS paddings
             track.style.paddingLeft = '';
             track.style.paddingRight = '';
+
+            carousel.removeEventListener('focusin', handleFocusIn);
+            carousel.removeEventListener('scroll', handleScroll);
+            parent.removeEventListener('scroll', handleScroll);
+            track.removeEventListener('scroll', handleScroll);
 
             if (btnLeft) btnLeft.removeAttribute('disabled');
             if (btnRight) btnRight.removeAttribute('disabled');
