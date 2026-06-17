@@ -153,7 +153,7 @@ $history-card-desktop: 400px;
         position: absolute;
         top: 0;
         bottom: 0;
-        right: -75px; // Centered in Swiper's 150px gap
+        right: -75px;
         width: 1px;
         background-color: var(--neutral-100, #{$neutral-100});
       }
@@ -329,9 +329,9 @@ $history-card-desktop: 400px;
     width: 100%;
 
     @media (min-width: 1130px) {
-      padding: 106px 0;
+      padding: 50px 40px;
       margin: 0 auto !important;
-      max-width: 1280px !important;
+      max-width: 1360px !important;
     }
   }
 
@@ -340,7 +340,7 @@ $history-card-desktop: 400px;
     box-shadow: var(--box-shadow);
     border: none !important;
     border-radius: 0 !important;
-    margin: 0 !important; // override Bootstrap's m-auto on mobile/tablet to remove vertical centering and top white gaps
+    margin: 0 !important;
 
     flex-direction: column !important;
     align-items: stretch !important;
@@ -355,7 +355,7 @@ $history-card-desktop: 400px;
       border-top-right-radius: var(--bs-modal-border-radius, 0.5rem) !important;
       border-bottom-right-radius: var(--bs-modal-border-radius, 0.5rem) !important;
       overflow: hidden !important;
-      margin: auto !important; // restore auto margin for desktop centering
+      margin: auto !important;
     }
 
     &:not(:has(.m-our-history-popup__content)) {
@@ -380,7 +380,7 @@ $history-card-desktop: 400px;
   &__close {
     position: absolute;
     top: calc(24px + env(safe-area-inset-top, 0px));
-    right: calc(24px + env(safe-area-inset-right, 0px)); // exactly 24px space from top and right matching Figma spec, adjusted for safe areas
+    right: calc(24px + env(safe-area-inset-right, 0px));
     width: 28px;
     height: 28px;
     padding: 0;
@@ -409,7 +409,7 @@ $history-card-desktop: 400px;
       width: 100%;
       height: 100%;
       display: block;
-      filter: brightness(0) invert(1) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.5)); // white on mobile with drop-shadow to be visible on any image background
+      filter: brightness(0) invert(1) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.5));
     }
 
     @media (min-width: 1130px) {
@@ -425,7 +425,6 @@ $history-card-desktop: 400px;
     }
   }
 
-  // Specificity override to ensure margins are not overridden by Bootstrap's `.m-auto` utility class in HTML
   .m-our-history-popup &__container {
     margin: 0 !important;
 
@@ -435,11 +434,11 @@ $history-card-desktop: 400px;
   }
 
   &__image-wrapper {
-    aspect-ratio: 375 / 260; // Maintains mobile proportions (375x260px) and avoids fixed height
+    aspect-ratio: 375 / 260;
     background-color: $gray-200;
 
     @include media-breakpoint-up(md) {
-      aspect-ratio: 400 / 251; // Tablet aspect-ratio (same as non-popup card)
+      aspect-ratio: 400 / 251;
     }
 
     @media (min-width: 1130px) {
