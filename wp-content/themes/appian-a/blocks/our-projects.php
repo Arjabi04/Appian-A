@@ -1,15 +1,29 @@
-<section class="our-projects grid-container">
-    <h2 class="our-projects__header h2 text-center">
-        Our Projects
-    </h2>
+<?php
+$heading        = get_field('our_projects_heading');
+$projects       = get_field('our_projects_posts');
+$read_more_text = get_field('our_projects_read_more_text');
 
-    <div class="our-projects__divider-wrap section-divider section-divider--responsive d-flex justify-content-center" data-section-divider>
-        <img
-            class="our-projects__section-divider section-divider__image"
-            src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
-            alt=""
-            aria-hidden="true" />
-    </div>
+$has_projects = ! empty($projects) && is_array($projects);
+
+if (empty($heading) && ! $has_projects) {
+    return;
+}
+?>
+<section class="our-projects grid-container">
+    <?php if (! empty($heading)) : ?>
+        <h2 class="our-projects__header h2 text-center">
+            <?php echo esc_html($heading); ?>
+        </h2>
+
+        <div class="our-projects__divider-wrap section-divider section-divider--responsive d-flex justify-content-center" data-section-divider>
+            <img
+                class="our-projects__section-divider section-divider__image"
+                src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
+                alt=""
+                aria-hidden="true" />
+        </div>
+    <?php endif; ?>
+
     <div class="our-projects__filters-wrapper ">
         <div class="grid-row">
             <div class="our-projects__filters-shell">
@@ -64,31 +78,23 @@
         </div>
     </div>
 
-    <div class="our-projects__cards-wrapper ">
-        <div class="grid-row">
-            <div class="our-projects__cards-grid">
-                <div class="our-projects__card-item">
-                    <?php
-                    $project_card_featured = true;
-                    $project_card_featured_label = 'Featured';
-                    include get_template_directory() . '/template-parts/components/project-card.php';
-                    unset($project_card_featured, $project_card_featured_label);
-                    ?>
+    <?php if ($has_projects) : ?>
+        <div class="our-projects__cards-wrapper">
+            <div class="grid-row">
+                <div class="our-projects__cards-grid">
+                    <?php foreach ($projects as $project) :
+                        if (empty($project) || ! ($project instanceof WP_Post)) {
+                            continue;
+                        }
+                        ?>
+                        <div class="our-projects__card-item">
+                            <?php include get_template_directory() . '/template-parts/components/project-card.php'; ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
-                <div class="our-projects__card-item"><?php include get_template_directory() . '/template-parts/components/project-card.php'; ?></div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 
     <div class="our-projects__pagination-wrapper ">
         <div class="grid-row">
