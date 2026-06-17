@@ -526,3 +526,4 @@ function our_work_fix_svg_mime($data, $file, $filename, $mimes, $real_mime) {
     }
     return $data;
 }
+

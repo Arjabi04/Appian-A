@@ -50,6 +50,16 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_hero_projects_image_position",
+            "label": "Image Position",
+            "name": "hero_projects_image_position",
+            "type": "number",
+            "instructions": "Note: if you enter a multiple of 4 (4, 8, 12...), the card that would normally appear at that position will be moved to right after the image instead, so the image can fit cleanly across 2 columns.",
+            "default_value": 5,
+            "min": 1,
+            "required": 0
+        },
+        {
             "key": "field_6a2775121af0a",
             "label": "Project Posts",
             "name": "hero_project_posts",
