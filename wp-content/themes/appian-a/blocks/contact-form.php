@@ -1,8 +1,9 @@
 <?php
-$contact_form_heading = get_field('contact_form_heading') ?: 'A New Chapter in Student Living';
-$contact_form_text    = get_field('contact_form_text') ?: 'Quisque quis nisl vel elit tristique mollis vel ut ex. Integer et est enim. Nullam sagittis nibh sit amet ornare pretium. Sed eget tellus a ex sagittis accumsan lobortis id ipsum.';
-?>
+$contact_group = get_field('contact_group');
+$contact_form_heading  = $contact_group['heading'] ?? '';
+$contact_form_text     = $contact_group['description'] ?? '';
 
+?>
 <section class="m-contact-form" aria-label="<?php echo esc_attr($contact_form_heading); ?>">
     <div class="grid-container">
         <div class="m-contact-form__inner">
@@ -44,9 +45,7 @@ $contact_form_text    = get_field('contact_form_text') ?: 'Quisque quis nisl vel
                         <div class="c-contact-form__field">
                             <input type="tel" name="phone" id="phone"
                                 class="c-contact-form__input body"
-                                inputmode="numeric"
-                                maxlength="10"
-                                pattern="[0-9]{10}"
+                                inputmode="tel"
                                 placeholder="Phone Number *" required>
                         </div>
 
