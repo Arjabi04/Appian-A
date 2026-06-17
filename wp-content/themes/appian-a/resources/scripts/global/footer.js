@@ -183,7 +183,7 @@ function initFooterEmailValidation() {
       }
     });
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (isSubscribed) return;
 
@@ -192,6 +192,20 @@ function initFooterEmailValidation() {
       if (!ok) {
         input.focus();
         if (!input.value.trim()) logEmptyEmailSubmit(form);
+        return;
+      }
+
+      const data = new FormData(form);
+      data.append('action', 'submit_newsletter_subscription');
+
+      const response = await fetch(form.dataset.footerAjaxUrl || '/wp-admin/admin-ajax.php', {
+        method: 'POST',
+        body: data,
+        credentials: 'same-origin',
+      });
+
+      if (!response.ok) {
+        if (errorEl) errorEl.textContent = 'Please try again.';
         return;
       }
 

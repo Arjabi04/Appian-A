@@ -72,6 +72,7 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
 
                         <input
                             id="footer-email"
+                            name="email"
                             type="email"
                             class="site-footer__input body"
                             placeholder="<?php echo esc_attr($subscribe_group['subscribe_placeholder'] ?? ''); ?>"
