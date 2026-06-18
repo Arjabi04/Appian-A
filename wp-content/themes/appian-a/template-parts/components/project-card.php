@@ -7,6 +7,9 @@ $title = get_the_title($project);
 if (empty($title)) {
     return;
 }
+$project_card_args = isset($args) && is_array($args) ? $args : [];
+$project_card_featured = $project_card_args['featured'] ?? (get_field('project_featured', $project->ID) ?: false);
+$project_card_featured_label = $project_card_args['featured_label'] ?? (get_field('project_featured_label', $project->ID) ?: 'Featured');
 
 $caption  = get_field('project_description', $project->ID);
 $link_url = get_permalink($project->ID);
@@ -35,7 +38,11 @@ $show_read_more = ! empty($read_more_text) && is_string($read_more_text);
 $is_clickable = ! empty($link_url);
 ?>
 
-<article class="project-card<?php echo $is_clickable ? ' project-card--clickable' : ''; ?>">
+<article class="project-card<?php echo $is_clickable ? ' project-card--clickable' : ''; ?><?php echo $project_card_featured ? ' project-card--featured' : ''; ?>">
+    <?php if ($project_card_featured) : ?>
+        <span class="project-card__featured-tag body-sm-all"><?php echo esc_html($project_card_featured_label); ?></span>
+    <?php endif; ?>
+
     <?php if (! empty($image_url)) : ?>
         <img
             class="project-card__image"

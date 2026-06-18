@@ -46,8 +46,57 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": "",
             "allow_in_bindings": 0
+        },
+        {
+            "key": "field_project_featured",
+            "label": "Featured?",
+            "name": "project_featured",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Toggle this option to display the Featured tag on this project card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_project_featured_label",
+            "label": "Featured Label",
+            "name": "project_featured_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Label for the featured tag (defaults to 'Featured' if left empty).",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_project_featured",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Featured",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [

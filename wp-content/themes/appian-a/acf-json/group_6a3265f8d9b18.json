@@ -24,37 +24,6 @@
             "append": ""
         },
         {
-            "key": "field_our_projects_posts",
-            "label": "Project Posts",
-            "name": "our_projects_posts",
-            "aria-label": "",
-            "type": "relationship",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "post_type": [
-                "project"
-            ],
-            "post_status": "",
-            "taxonomy": "",
-            "filters": [
-                "search",
-                "post_type"
-            ],
-            "return_format": "object",
-            "min": "",
-            "max": "",
-            "allow_in_bindings": 0,
-            "elements": "",
-            "bidirectional": 0,
-            "bidirectional_target": []
-        },
-        {
             "key": "field_our_projects_read_more_text",
             "label": "Read More Text",
             "name": "our_projects_read_more_text",
@@ -97,5 +66,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1781687800
+    "modified": 1781696385
 }
