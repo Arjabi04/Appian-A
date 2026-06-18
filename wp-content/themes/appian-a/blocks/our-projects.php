@@ -1,6 +1,12 @@
 <?php
 $heading = get_field('our_projects_heading');
 $read_more_text = get_field('our_projects_read_more_text');
+$project_categories = get_terms([
+    'taxonomy'   => 'project_category',
+    'hide_empty' => true,
+    'orderby'    => 'name',
+    'order'      => 'ASC',
+]);
 
 
 $paged = max(1, (int) (get_query_var('paged') ?: (get_query_var('page') ?: 1)));
@@ -9,6 +15,11 @@ $our_projects_query = new WP_Query([
     'post_type'      => 'project',
     'posts_per_page' => 12,
     'paged'          => $paged,
+    'meta_key'       => 'project_featured',
+    'orderby'        => [
+        'meta_value_num' => 'DESC',
+        'date'           => 'DESC',
+    ],
 ]);
 $has_projects = $our_projects_query->have_posts();
 
@@ -51,18 +62,15 @@ if (empty($heading) && !$has_projects) {
                             aria-label="Project filter options">
                             <li><button class="dropdown-item our-projects__dropdown-item" type="button">All
                                     Projects</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Renovation</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Waterproofing</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Plumbing</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Electrical</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">HVAC</button>
-                            </li>
-                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">Roofing</button>
-                            </li>
+                            <?php if (! empty($project_categories) && ! is_wp_error($project_categories)) : ?>
+                                <?php foreach ($project_categories as $project_category) : ?>
+                                    <li>
+                                        <button class="dropdown-item our-projects__dropdown-item" type="button">
+                                            <?php echo esc_html($project_category->name); ?>
+                                        </button>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
@@ -74,30 +82,16 @@ if (empty($heading) && !$has_projects) {
                         <button class="our-projects__filter nav-link body-sm-all m-0 p-0 bg-transparent" type="button"
                             role="tab" aria-selected="true">All Projects</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Renovation</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Waterproofing</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Plumbing</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Electrical</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">HVAC</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Roofing</button>
-                    </li>
+                    <?php if (! empty($project_categories) && ! is_wp_error($project_categories)) : ?>
+                        <?php foreach ($project_categories as $project_category) : ?>
+                            <li class="nav-item" role="presentation">
+                                <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
+                                    role="tab" aria-selected="false">
+                                    <?php echo esc_html($project_category->name); ?>
+                                </button>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
