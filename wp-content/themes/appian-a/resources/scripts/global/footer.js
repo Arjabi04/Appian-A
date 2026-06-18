@@ -212,6 +212,10 @@ function initFooterEmailValidation() {
       isSubscribed = true;
       lastTruncationMessage = '';
       if (errorEl) errorEl.textContent = 'THANK YOU FOR SUBSCRIPTION';
+      const subscribeContainer = form.closest('.site-footer__subscribe');
+      if (subscribeContainer) {
+        subscribeContainer.classList.add('site-footer__subscribe--success');
+      }
       input.setAttribute('aria-invalid', 'false');
       input.value = '';
       input.disabled = true;

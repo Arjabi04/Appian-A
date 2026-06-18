@@ -192,31 +192,35 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
 
             <?php if (!empty($social_links)) : ?>
 
-                <?php foreach ($social_links as $social_link) : ?>
-                    <?php
-                    $link = $social_link['url'];
-                    $href = $link['url'] ?? '';
-                    $target = $link['target'] ?? '_self';
-                    $rel = ($target === '_blank') ? 'noopener noreferrer' : '';
-                    $label = $social_link['platform_name_'] ?? ($link['title'] ?? 'Social link');
-                    ?>
+                <div class="site-footer__socials">
 
-                    <a
-                        class="site-footer__social"
-                        href="<?php echo esc_url($href); ?>"
-                        target="<?php echo esc_attr($target); ?>"
-                        <?php if (!empty($rel)) : ?>rel="<?php echo esc_attr($rel); ?>"<?php endif; ?>
-                        aria-label="<?php echo esc_attr($label); ?>">
+                    <?php foreach ($social_links as $social_link) : ?>
+                        <?php
+                        $link = $social_link['url'];
+                        $href = $link['url'] ?? '';
+                        $target = $link['target'] ?? '_self';
+                        $rel = ($target === '_blank') ? 'noopener noreferrer' : '';
+                        $label = $social_link['platform_name_'] ?? ($link['title'] ?? 'Social link');
+                        ?>
 
-                        <img
-                            src="<?php echo esc_url($social_link['icon']['url']); ?>"
-                            alt="<?php echo esc_attr($social_link['icon']['alt'] ?? ''); ?>"
-                            width="24"
-                            height="24" />
+                        <a
+                            class="site-footer__social"
+                            href="<?php echo esc_url($href); ?>"
+                            target="<?php echo esc_attr($target); ?>"
+                            <?php if (!empty($rel)) : ?>rel="<?php echo esc_attr($rel); ?>"<?php endif; ?>
+                            aria-label="<?php echo esc_attr($label); ?>">
 
-                    </a>
+                            <img
+                                src="<?php echo esc_url($social_link['icon']['url']); ?>"
+                                alt="<?php echo esc_attr($social_link['icon']['alt'] ?? ''); ?>"
+                                width="24"
+                                height="24" />
 
-                <?php endforeach; ?>
+                        </a>
+
+                    <?php endforeach; ?>
+
+                </div>
 
             <?php endif; ?>
 
