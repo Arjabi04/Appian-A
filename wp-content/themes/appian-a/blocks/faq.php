@@ -18,7 +18,7 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 <section class="faq-module">
 	<?php if (! empty($faq_section_title)) : ?>
 		<div class="faq__section-header">
-			<h2 class="faq__section-title"><?php echo esc_html($faq_section_title); ?></h2>
+			<h2 class="faq__section-title h2 text-center"><?php echo esc_html($faq_section_title); ?></h2>
 			<div class="faq__section-divider-wrap section-divider" data-section-divider>
 				<img
 					class="faq__section-divider section-divider__image"
@@ -31,10 +31,10 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 	<div class="faq__grid">
 		<div class="faq__process">
 			<?php if (! empty($faq_heading)) : ?>
-				<h2 class="faq__heading"><?php echo esc_html($faq_heading); ?></h2>
+				<h2 class="faq__heading h5"><?php echo esc_html($faq_heading); ?></h2>
 			<?php endif; ?>
 			<?php if (! empty($faq_description)) : ?>
-				<p class="faq__description">
+				<p class="faq__description body-sm-all">
 					<?php echo esc_html($faq_description); ?>
 				</p>
 			<?php endif; ?>
@@ -48,37 +48,44 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 			<?php endif; ?>
 		</div>
 
-		<div class="faq__faq" data-faq>
+		<div class="faq__faq accordion" id="faqAccordion">
 			<?php if (! empty($faq_items) && is_array($faq_items)) : ?>
 				<?php
 				$visible_index = 0;
-				foreach ($faq_items as $index => $item) :
+				foreach ($faq_items as $item) :
 					if (empty($item['question']) && empty($item['answer'])) {
 						continue;
 					}
+
 					$is_first = ($visible_index === 0);
-					$panel_id = 'faq-panel-' . ($visible_index + 1);
-					$item_class = $is_first ? 'faq__item is-open' : 'faq__item';
-					$panel_class = $is_first ? 'faq__panel is-open' : 'faq__panel';
-					$aria_expanded = $is_first ? 'true' : 'false';
-					$hidden_attr = $is_first ? '' : ' hidden';
+					$item_id = 'faq-item-' . $visible_index;
+					$heading_id = 'faq-heading-' . $visible_index;
+					$button_class = 'faq__toggle accordion-button shadow-none' . ($is_first ? '' : ' collapsed');
+					$panel_class = 'accordion-collapse collapse' . ($is_first ? ' show' : '');
 					$visible_index++;
 				?>
-					<div class="<?php echo esc_attr($item_class); ?>" data-faq-item>
-						<h3 class="faq__question">
+					<div class="faq__item accordion-item">
+						<h3 class="faq__question accordion-header" id="<?php echo esc_attr($heading_id); ?>">
 							<button
-								class="faq__toggle"
+								class="<?php echo esc_attr($button_class); ?>"
 								type="button"
-								aria-expanded="<?php echo esc_attr($aria_expanded); ?>"
-								aria-controls="<?php echo esc_attr($panel_id); ?>">
-								<span class="faq__question-text"><?php echo esc_html($item['question']); ?></span>
+								data-bs-toggle="collapse"
+								data-bs-target="#<?php echo esc_attr($item_id); ?>"
+								aria-expanded="<?php echo $is_first ? 'true' : 'false'; ?>"
+								aria-controls="<?php echo esc_attr($item_id); ?>">
+								<span class="faq__question-text sh3"><?php echo esc_html($item['question']); ?></span>
 								<span class="faq__icon" aria-hidden="true">
 									<?php echo appian_accordion_toggle_icon(); ?>
 								</span>
 							</button>
 						</h3>
-						<div class="<?php echo esc_attr($panel_class); ?>" id="<?php echo esc_attr($panel_id); ?>" role="region" <?php echo $hidden_attr; ?>>
-							<?php echo wp_kses_post($item['answer']); ?>
+						<div
+							id="<?php echo esc_attr($item_id); ?>"
+							class="<?php echo esc_attr($panel_class); ?>"
+							aria-labelledby="<?php echo esc_attr($heading_id); ?>">
+							<div class="accordion-body faq__panel-body body-small">
+								<?php echo wp_kses_post($item['answer']); ?>
+							</div>
 						</div>
 					</div>
 				<?php endforeach; ?>

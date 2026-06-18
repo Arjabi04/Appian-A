@@ -1,9 +1,9 @@
 {
-    "key": "group_6a1c15134c3e0",
-    "title": "FAQ",
+    "key": "group_6a334be61ac6f",
+    "title": "FAQ (copy)",
     "fields": [
         {
-            "key": "field_6a1c1513e5706",
+            "key": "field_6a334be61ca9f",
             "label": "Section Title",
             "name": "section_title",
             "aria-label": "",
@@ -24,7 +24,7 @@
             "append": ""
         },
         {
-            "key": "field_6a1c153ae5707",
+            "key": "field_6a334be61caa6",
             "label": "Heading",
             "name": "heading",
             "aria-label": "",
@@ -45,7 +45,7 @@
             "append": ""
         },
         {
-            "key": "field_6a1c1543e5708",
+            "key": "field_6a334be61caaa",
             "label": "Description",
             "name": "description",
             "aria-label": "",
@@ -66,7 +66,7 @@
             "new_lines": ""
         },
         {
-            "key": "field_6a1c154ee5709",
+            "key": "field_6a334be61caad",
             "label": "CTA Link",
             "name": "cta_link",
             "aria-label": "",
@@ -83,7 +83,7 @@
             "allow_in_bindings": 0
         },
         {
-            "key": "field_6a1c155ce570a",
+            "key": "field_6a334be61cab1",
             "label": "FAQ Items",
             "name": "faq_items",
             "aria-label": "",
@@ -105,7 +105,7 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_6a1c156ee570b",
+                    "key": "field_6a334be620149",
                     "label": "question",
                     "name": "question",
                     "aria-label": "",
@@ -124,10 +124,10 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": "field_6a1c155ce570a"
+                    "parent_repeater": "field_6a334be61cab1"
                 },
                 {
-                    "key": "field_6a1c1577e570c",
+                    "key": "field_6a334be62014e",
                     "label": "answer",
                     "name": "answer",
                     "aria-label": "",
@@ -146,7 +146,7 @@
                     "toolbar": "full",
                     "media_upload": 1,
                     "delay": 0,
-                    "parent_repeater": "field_6a1c155ce570a"
+                    "parent_repeater": "field_6a334be61cab1"
                 }
             ]
         }
@@ -156,7 +156,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/faq"
+                "value": "acf\/faq2"
             }
         ]
     ],
@@ -172,5 +172,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1781746655
+    "modified": 1781746673
 }

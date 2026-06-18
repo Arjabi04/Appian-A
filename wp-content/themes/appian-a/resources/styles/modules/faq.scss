@@ -17,13 +17,7 @@
 
   &__section-title {
     margin: 0;
-    font-family: var(--typo-h2-font, Georgia, "Times New Roman", serif);
-    text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 140%;
     color: $neutral-600;
-    text-transform: capitalize;
   }
 
   &__section-divider-wrap {
@@ -41,50 +35,42 @@
 
   &__heading {
     margin: 0;
-    font-family: var(--typo-h3-font, Georgia, "Times New Roman", serif);
-    text-align: center;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 160%;
-    color: var(--secondary-dark);
+    color: $secondary-dark;
     max-width: 302px;
-    text-align: left;
-    // text-transform: capitalize;
   }
 
   &__description {
     margin: 30px 0px;
-    font-family: "General Sans", sans-serif;
-    font-size: 14px;
-    line-height: 140%;
-    color: var(--secondary-dark);
-    font-weight: 500;
-    letter-spacing: 0em;
+    color: $secondary-dark;
+  
   }
 
   &__cta-button {
     margin-top: 30px;
   }
 
-  // &__cta-button:hover,
-  // &__cta-button:focus-visible {
-  //   background-color: #a82a2a;
-  // }
 
   &__faq {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    display: block;
   }
 
   &__item {
     border-top: 1px solid rgba($secondary, 0.8);
-    scroll-margin-top: 96px;
-    &.is-open {
+    border-bottom: 0;
+    background: transparent;
+    border-left: 0;
+    border-right: 0;
+    padding-bottom: 24px;
+
+    .faq__toggle:not(.collapsed) {
       .faq__icon .accordion-icon {
         transform: rotate(45deg);
       }
     }
+  }
+
+  &__item:not(:first-of-type) {
+    border-top: 1px solid rgba($secondary, 0.8);
   }
 
   &__toggle {
@@ -95,20 +81,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // gap: 16px;
-    cursor: pointer;
     text-align: left;
+    box-shadow: none !important;
+
+    &:not(.collapsed) {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    &::after {
+      display: none;
+    }
   }
 
   &__question-text {
-    font-family: var(--typo-sh3-font, #{$font-family-heading}, Georgia, "Times New Roman", serif);
-    font-size: 1.25rem; // ~20px
-    font-weight: 400;
-    line-height: 1.6;
-    font-size: 18px;
-    letter-spacing: 0em;
-    // color: $secondary;
-    color: var(--secondary-dark);
+    color: $secondary-dark;
     text-align: left;
   }
 
@@ -134,37 +121,14 @@
     }
   }
 
-  &__panel {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    padding: 0;
-    transition: max-height 0.8s ease-in-out, opacity 0.8s, padding 0.8s ease-in-out;
-
-    &.is-open {
-      opacity: 1;
-      max-height: 2000px;
-      padding: 24px 0px;
-    }
-
-    >* {
-      font-family: var(--typo-body-small-font,
-        #{$font-family-sans-serif},
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif);
-      font-size: 14px;
-      line-height: 1.5;
-      letter-spacing: 0em;
-      font-weight: 400;
-      color: var(--secondary-dark);
+  &__panel,
+  &__panel-body {
+    > * {
+      color: $secondary-dark;
     }
 
     p {
-      margin: 0 0 20px;
+      margin: 0 0 20px !important;
     }
 
     ul {
@@ -173,13 +137,16 @@
     }
   }
 
+  &__panel-body {
+    padding: 24px 0px;
+  }
+
   &__list-heading {
     margin: 20px 0px;
   }
 
   &__question {
     margin: 0;
-    /* This completely wipes out the default browser orange margin! */
   }
 }
 
@@ -190,22 +157,12 @@
 
   .faq__section-title {
     margin: 0;
-    font-family: var(--typo-h2-font, Georgia, "Times New Roman", serif);
-    text-align: center;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 110%;
     color: $neutral-600;
     text-transform: capitalize;
   }
 
   .faq__heading {
     margin: 0;
-    font-family: var(--typo-h5-font, Georgia, "Times New Roman", serif);
-    text-align: center;
-    font-size: 28px;
-    font-weight: 400;
-    line-height: 140%;
     color: $dark;
     max-width: 302px;
     text-align: left;
@@ -223,12 +180,12 @@
 
   .faq__description {
     margin: 30px 0px;
-    font-family: "General Sans", sans-serif;
-    font-size: 14px;
-    line-height: 150%;
-    color: var(--secondary-dark);
-    font-weight: 500;
-    letter-spacing: 0em;
+    // font-family: "General Sans", sans-serif;
+    // font-size: 14px;
+    // line-height: 150%;
+    color: $secondary-dark;
+    // font-weight: 500;
+    // letter-spacing: 0em;
   }
 
   .faq__toggle {
@@ -239,12 +196,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // gap: 16px;
-    cursor: pointer;
     text-align: left;
   }
 
-  .faq__panel.is-open {
+  .faq__panel-body {
     padding: 32px 0px;
   }
 
