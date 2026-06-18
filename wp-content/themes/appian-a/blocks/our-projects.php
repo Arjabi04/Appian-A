@@ -1,15 +1,19 @@
 <?php
 $heading = get_field('our_projects_heading');
 $read_more_text = get_field('our_projects_read_more_text');
+// Load project categories so we can build the filter buttons.
+$project_categories = get_terms([
+    'taxonomy'   => 'project_category',
+    'hide_empty' => true,
+    'orderby'    => 'name',
+    'order'      => 'ASC',
+]);
 
 
 $paged = max(1, (int) (get_query_var('paged') ?: (get_query_var('page') ?: 1)));
 
-$our_projects_query = new WP_Query([
-    'post_type'      => 'project',
-    'posts_per_page' => 12,
-    'paged'          => $paged,
-]);
+// Show featured projects first, then sort the rest by newest.
+$our_projects_query = new WP_Query(appian_get_our_projects_query_args($paged));
 $has_projects = $our_projects_query->have_posts();
 
 
@@ -17,7 +21,11 @@ if (empty($heading) && !$has_projects) {
     return;
 }
 ?>
-<section class="our-projects grid-container">
+<section
+    class="our-projects grid-container"
+    <?php // Give JS the AJAX URL and read more text it needs after filtering. ?>
+    data-projects-ajax-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
+    data-read-more-text="<?php echo esc_attr($read_more_text ?: ''); ?>">
     <?php if (!empty($heading)): ?>
         <h2 class="our-projects__header h2 text-center">
             <?php echo esc_html($heading); ?>
@@ -45,24 +53,25 @@ if (empty($heading) && !$has_projects) {
                         <button
                             class="our-projects__filters-toggle dropdown-toggle h5 m-0 d-flex align-items-center gap-2 bg-transparent border-0 p-0"
                             type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                            <span class="body-large" data-project-filter-label>All Projects</span>
+                            <span class="btn-text-lg" data-project-filter-label>All Projects</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end our-projects__dropdown-menu"
                             aria-label="Project filter options">
-                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">All
+                            <li><button class="dropdown-item our-projects__dropdown-item" type="button" data-project-filter="all">All
                                     Projects</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Renovation</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Waterproofing</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Plumbing</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item"
-                                    type="button">Electrical</button></li>
-                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">HVAC</button>
-                            </li>
-                            <li><button class="dropdown-item our-projects__dropdown-item" type="button">Roofing</button>
-                            </li>
+                            <?php if (! empty($project_categories) && ! is_wp_error($project_categories)) : ?>
+                                <?php foreach ($project_categories as $project_category) : ?>
+                                    <li>
+                                        <?php // Store the category slug so JS can send it in the AJAX request. ?>
+                                        <button
+                                            class="dropdown-item our-projects__dropdown-item"
+                                            type="button"
+                                            data-project-filter="<?php echo esc_attr($project_category->slug); ?>">
+                                            <?php echo esc_html($project_category->name); ?>
+                                        </button>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
@@ -72,32 +81,23 @@ if (empty($heading) && !$has_projects) {
                     role="tablist" aria-label="Project filters">
                     <li class="nav-item" role="presentation">
                         <button class="our-projects__filter nav-link body-sm-all m-0 p-0 bg-transparent" type="button"
+                            data-project-filter="all"
                             role="tab" aria-selected="true">All Projects</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Renovation</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Waterproofing</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Plumbing</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Electrical</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">HVAC</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="our-projects__filter nav-link body-small m-0 p-0 bg-transparent" type="button"
-                            role="tab" aria-selected="false">Roofing</button>
-                    </li>
+                    <?php if (! empty($project_categories) && ! is_wp_error($project_categories)) : ?>
+                        <?php foreach ($project_categories as $project_category) : ?>
+                            <li class="nav-item" role="presentation">
+                                <?php // Store the category slug so JS can send it in the AJAX request. ?>
+                                <button
+                                    class="our-projects__filter nav-link body-sm-all m-0 p-0 bg-transparent"
+                                    type="button"
+                                    data-project-filter="<?php echo esc_attr($project_category->slug); ?>"
+                                    role="tab" aria-selected="false">
+                                    <?php echo esc_html($project_category->name); ?>
+                                </button>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
