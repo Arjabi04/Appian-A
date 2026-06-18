@@ -4,43 +4,43 @@ $our_history_group = is_array($our_history_group) ? $our_history_group : get_fie
 $our_history_group = is_array($our_history_group) ? $our_history_group : [];
 
 $section_title = $our_history_group['section_title'] ?? '';
-$history_slides = [];
+
 
 // Show history items by the WP Admin Order field first, then by the year title.
 $history_query = new WP_Query([
-	'post_type' => 'history_item',
-	'post_status' => 'publish',
-	'posts_per_page' => -1,
-	'orderby' => [
-		'menu_order' => 'ASC',
-		'title' => 'ASC',
-	],
+    'post_type' => 'history_item',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'orderby' => [
+        'menu_order' => 'ASC',
+        'title' => 'ASC',
+    ],
 ]);
 
 if ($history_query->have_posts()) {
-	while ($history_query->have_posts()) {
-		$history_query->the_post();
+    while ($history_query->have_posts()) {
+        $history_query->the_post();
 
-		$year = get_the_title();
-		$image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
-		$image_alt = get_post_meta(get_post_thumbnail_id(get_the_ID()), '_wp_attachment_image_alt', true);
-		$popup_description = get_post_meta(get_the_ID(), 'history_popup_description', true);
-		$link_text = get_post_meta(get_the_ID(), 'history_link_text', true);
+        $year = get_the_title();
+        $image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+        $image_alt = get_post_meta(get_post_thumbnail_id(get_the_ID()), '_wp_attachment_image_alt', true);
+        $popup_description = get_post_meta(get_the_ID(), 'history_popup_description', true);
+        $link_text = get_post_meta(get_the_ID(), 'history_link_text', true);
 
-		if (!$year || !$image_url || !$popup_description) {
-			continue;
-		}
+        if (!$year || !$image_url || !$popup_description) {
+            continue;
+        }
 
-		$history_slides[] = [
-			'year' => $year,
-			'image_url' => $image_url,
-			'image_alt' => $image_alt,
-			'popup_description' => $popup_description,
-			'link_text' => $link_text ? $link_text : 'Continue Reading',
-		];
-	}
+        $history_slides[] = [
+            'year' => $year,
+            'image_url' => $image_url,
+            'image_alt' => $image_alt,
+            'popup_description' => $popup_description,
+            'link_text' => $link_text ? $link_text : 'Continue Reading',
+        ];
+    }
 
-	wp_reset_postdata();
+    wp_reset_postdata();
 }
 
 if (empty($history_slides)) {
