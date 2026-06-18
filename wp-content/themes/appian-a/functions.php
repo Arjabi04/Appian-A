@@ -198,6 +198,7 @@ require get_template_directory() . '/inc/class-header-walker.php';
 require_once get_template_directory() . '/inc/history-items.php';
 require_once get_template_directory() . '/inc/newsletter-submissions.php';
 require_once get_template_directory() . '/inc/contact-submissions.php';
+require_once get_template_directory() . '/inc/our-projects-ajax.php';
 /**
  * Load Jetpack compatibility file.
  */

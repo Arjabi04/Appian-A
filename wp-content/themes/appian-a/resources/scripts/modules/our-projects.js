@@ -4,6 +4,61 @@ import { Dropdown } from 'bootstrap';
 function initOurProjects(container = document) {
     initSectionDividerAnimation(container);
 
+    const sections = container.querySelectorAll('.our-projects');
+
+    sections.forEach((section) => {
+        const filterButtons = section.querySelectorAll('[data-project-filter]');
+        const label = section.querySelector('[data-project-filter-label]');
+        const cardsWrapper = section.querySelector('#our-projects-cards');
+        const ajaxUrl = section.dataset.projectsAjaxUrl;
+        const readMoreText = section.dataset.readMoreText || '';
+
+        if (!cardsWrapper || !ajaxUrl) return;
+
+        // Keep the desktop active state matched with the current filter.
+        const updateDesktopState = (currentFilter) => {
+            section.querySelectorAll('.our-projects__filter').forEach((filterButton) => {
+                filterButton.setAttribute(
+                    'aria-selected',
+                    filterButton.dataset.projectFilter === currentFilter ? 'true' : 'false'
+                );
+            });
+        };
+
+        const loadProjects = async (category) => {
+            // Send the selected category to WordPress.
+            const formData = new FormData();
+            formData.append('action', 'appian_filter_our_projects');
+            formData.append('category', category);
+            formData.append('read_more_text', readMoreText);
+
+            const response = await fetch(ajaxUrl, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+
+            if (!result?.success) return;
+
+            // Replace the cards with the filtered HTML.
+            cardsWrapper.innerHTML = result.data.cards;
+            updateDesktopState(category);
+        };
+
+        filterButtons.forEach((button) => {
+            button.onclick = async () => {
+                const selectedFilter = button.dataset.projectFilter || 'all';
+
+                if (label) {
+                    label.textContent = button.textContent.trim();
+                }
+
+                await loadProjects(selectedFilter);
+            };
+        });
+    });
+
     const dropdownContainers = container.querySelectorAll('[data-project-filter-dropdown]');
 
     dropdownContainers.forEach((dropdownContainer) => {
