@@ -62,7 +62,7 @@ if (! $show_color_block && ! $has_person_name) {
     <?php if ($has_person_name) : ?>
         <div class="m-testimonial__annotation">
             <span class="m-testimonial__arrow" aria-hidden="true"></span>
-            <p class="m-testimonial__name body-large">
+            <p class="m-testimonial__name body-large text-center m-0">
                 <?php echo esc_html($person_name); ?>
             </p>
         </div>
