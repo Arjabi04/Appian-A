@@ -22,9 +22,6 @@ if (empty($person_image_url) && empty($person_name) && empty($quote_text)) {
 }
 ?>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <section class="m-testimonial" aria-label="Testimonial">
     <div class="m-testimonial__red-block"></div>
 

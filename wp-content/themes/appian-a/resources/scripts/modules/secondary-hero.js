@@ -1,17 +1,17 @@
 function initSecondaryHero() {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    
+
     function handleMotionPreference(e) {
         document.querySelectorAll('video.m-secondary-hero__video').forEach(video => {
             if (e.matches) {
                 video.pause();
             } else {
                 // Ensure it plays if reduced motion is disabled
-                video.play().catch(() => {});
+                video.play().catch(() => { });
             }
         });
     }
-    
+
     handleMotionPreference(mediaQuery);
     mediaQuery.addEventListener('change', handleMotionPreference);
 }

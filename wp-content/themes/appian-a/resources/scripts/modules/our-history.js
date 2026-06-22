@@ -23,6 +23,33 @@ function initOurHistoryDividerAnimation(context = document) {
 
 document.addEventListener('DOMContentLoaded', () => {
     initOurHistoryDividerAnimation(document);
+
+    let isPointer = false;
+    document.addEventListener('pointerdown', () => {
+        isPointer = true;
+    }, { passive: true });
+    document.addEventListener('keydown', () => {
+        isPointer = false;
+    }, { passive: true });
+
+    document.addEventListener('focus', (event) => {
+        const target = event.target;
+        if (target && target.matches('[data-history-link]')) {
+            if (isPointer) {
+                target.classList.add('is-pointer-focus');
+            } else {
+                target.classList.remove('is-pointer-focus');
+            }
+        }
+    }, true);
+
+    document.addEventListener('blur', (event) => {
+        const target = event.target;
+        if (target && target.matches('[data-history-link]')) {
+            target.classList.remove('is-pointer-focus');
+        }
+    }, true);
+
     const carousels = document.querySelectorAll('[data-history-carousel]');
 
     carousels.forEach((carousel) => {
@@ -43,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const slide = e.target.closest('[data-history-slide]');
             if (slide && swiperInstance) {
                 const slideIndex = Array.from(slides).indexOf(slide);
-                if (slideIndex !== -1 && swiperInstance.activeIndex !== slideIndex) {
+                if (slideIndex !== -1) {
                     swiperInstance.slideTo(slideIndex);
                 }
             }
@@ -72,8 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const initSwiper = () => {
             const paddingLeft = parseFloat(window.getComputedStyle(track).paddingLeft) || 0;
-
-            // Remove padding from track so Swiper's slidesOffset coordinates are correct
             track.style.paddingLeft = '0';
             track.style.paddingRight = '0';
 
@@ -125,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 swiperInstance.destroy(true, true);
                 swiperInstance = null;
             }
-            // Restore track CSS paddings
             track.style.paddingLeft = '';
             track.style.paddingRight = '';
 
@@ -190,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ACF block preview support
 if (window.acf) {
     window.acf.addAction('render_block_preview/type=our-history', () => {
         initOurHistoryDividerAnimation(document);
