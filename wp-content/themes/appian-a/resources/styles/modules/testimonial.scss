@@ -53,10 +53,10 @@
         margin-left: 5.7%;
         height: auto;
         aspect-ratio: 332.143 / 280;
-        object-fit: cover;
-        object-position: top center;
+        object-fit: contain;
+        object-position: top ;
         z-index: 2;
-
+        
         @include media-breakpoint-up(lg) {
             width: 100%;
             max-width: 74rem;
