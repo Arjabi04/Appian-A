@@ -1,12 +1,32 @@
 @import "../common";
 
 .m-testimonial {
+    --testimonial-block-color: #{$primary-red}; //using interpolation
+    --testimonial-arrow-color: #{$primary-red};
+    --testimonial-arrow-image: none;
+
     position: relative;
     width: 100%;
     background: $white;
     overflow: visible;
     display: grid;
     grid-template-columns: 1fr;
+
+    &--bg-light-red {
+        --testimonial-block-color: #{$light-red};
+    }
+
+    &--bg-ultra-light-red {
+        --testimonial-block-color: #{$ultra-light-red};
+    }
+
+    &--arrow-light-red {
+        --testimonial-arrow-color: #{$light-red};
+    }
+
+    &--arrow-ultra-light-red {
+        --testimonial-arrow-color: #{$ultra-light-red};
+    }
 
     &__red-block {
         grid-row: 1;
@@ -15,7 +35,7 @@
         position: relative;
         width: 100%;
         height: 9.875rem;
-        background: var(--primary-red);
+        background: var(--testimonial-block-color);
         z-index: 1;
 
         @include media-breakpoint-up(lg) {
@@ -65,8 +85,15 @@
     }
 
     &__arrow {
+        display: block;
         width: 2.625rem;
         height: 3.4375rem;
+        flex: 0 0 auto;
+        background-color: var(--testimonial-arrow-color);
+        mask-image: var(--testimonial-arrow-image);
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
         transform: scaleY(-1);
 
         @include media-breakpoint-up(lg) {
@@ -78,12 +105,7 @@
 
     &__name {
         width: 7.4375rem;
-        color: var(--secondary-dark);
-        text-align: center;
-        font-size: 1.125rem;
-        font-weight: 400;
-        line-height: 150%;
-        letter-spacing: 0.0225rem;
+        color: $secondary-dark;
         margin: 0;
 
         @include media-breakpoint-up(lg) {
@@ -153,12 +175,6 @@
 
     &__quote-text {
         align-self: stretch;
-        color: var(--secondary-dark);
-        font-family: "General Sans", sans-serif;
-        font-size: 1.125rem;
-        font-weight: 400;
-        line-height: 150%;
-        letter-spacing: 0.0225rem;
-        margin: 0;
+        color: $secondary-dark;
     }
 }

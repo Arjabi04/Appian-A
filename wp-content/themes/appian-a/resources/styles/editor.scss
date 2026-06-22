@@ -53,3 +53,29 @@ body.js.block-editor-page {
 .interface-navigable-region.interface-interface-skeleton__sidebar:empty {
   display: none;
 }
+
+.acf-field.appian-acf-color-field .acf-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.appian-acf-color-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.appian-acf-color-swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+  flex: 0 0 auto;
+}
+
+.appian-acf-color-value {
+  color: #344054;
+  font-size: 12px;
+  line-height: 1.4;
+}
