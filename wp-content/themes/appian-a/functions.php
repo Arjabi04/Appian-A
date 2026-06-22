@@ -476,7 +476,7 @@ function appian_preload_hero_assets() {
 }
 add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
 
-fadd_action('wp_head', function () {
+add_action('wp_head', function () {
     $fonts = [
         'Appian Fonts/RecklessNeue/RecklessNeue-Bold.woff',
         'Appian Fonts/RecklessNeue/RecklessNeue-Book.woff',
