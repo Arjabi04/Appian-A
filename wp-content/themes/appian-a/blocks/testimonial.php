@@ -13,38 +13,62 @@ $person_image = $testimonial_group['person_image'] ?? [];
 $person_image = is_array($person_image) ? $person_image : [];
 $person_name  = $testimonial_group['person_name'] ?? '';
 $quote_text   = $testimonial_group['quote_text'] ?? '';
+$default_theme = $testimonial_group['theme'] ?? 'primary-red';
+$background_theme = $testimonial_group['background_theme'] ?? $default_theme;
+$arrow_theme      = $testimonial_group['arrow_theme'] ?? $default_theme;
+
+$allowed_themes = array(
+    'primary-red',
+    'light-red',
+    'ultra-light-red',
+);
+
+if (! in_array($background_theme, $allowed_themes, true)) {
+    $background_theme = 'primary-red';
+}
+
+if (! in_array($arrow_theme, $allowed_themes, true)) {
+    $arrow_theme = 'primary-red';
+}
 
 $person_image_url = $person_image['url'] ?? '';
 $person_image_alt = $person_image['alt'] ?? '';
+$arrow_image_url  = get_template_directory_uri() . '/resources/images/svgs/arrow.svg';
+$has_person_image = !empty($person_image_url);
+$has_quote_text   = !empty($quote_text);
+$has_person_name  = $has_person_image && ! empty($person_name);
+$show_color_block   = $has_person_image || $has_quote_text;
 
-if (empty($person_image_url) && empty($person_name) && empty($quote_text)) {
+if (! $show_color_block && ! $has_person_name) {
     return;
 }
 ?>
 
-<section class="m-testimonial" aria-label="Testimonial">
-    <div class="m-testimonial__red-block"></div>
+<section
+    class="m-testimonial m-testimonial--bg-<?php echo esc_attr($background_theme); ?> m-testimonial--arrow-<?php echo esc_attr($arrow_theme); ?>"
+    style="--testimonial-arrow-image: url('<?php echo esc_url($arrow_image_url); ?>');"
+    aria-label="Testimonial">
+    <?php if ($show_color_block) : ?>
+        <div class="m-testimonial__red-block"></div>
+    <?php endif; ?>
 
-    <?php if (! empty($person_image_url)) : ?>
+    <?php if ($has_person_image) : ?>
         <img
             class="m-testimonial__person"
             src="<?php echo esc_url($person_image_url); ?>"
             alt="<?php echo esc_attr(! empty($person_image_alt) ? $person_image_alt : $person_name); ?>" />
     <?php endif; ?>
 
-    <?php if (! empty($person_name)) : ?>
+    <?php if ($has_person_name) : ?>
         <div class="m-testimonial__annotation">
-            <img
-                class="m-testimonial__arrow"
-                src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/arrow.svg'); ?>"
-                alt="" />
-            <p class="m-testimonial__name">
+            <span class="m-testimonial__arrow" aria-hidden="true"></span>
+            <p class="m-testimonial__name body-large text-center m-0">
                 <?php echo esc_html($person_name); ?>
             </p>
         </div>
     <?php endif; ?>
 
-    <?php if (! empty($quote_text)) : ?>
+    <?php if ($has_quote_text) : ?>
         <div class="m-testimonial__quote-box">
             <div class="m-testimonial__quote-bg-container">
                 <picture>
@@ -58,7 +82,7 @@ if (empty($person_image_url) && empty($person_name) && empty($quote_text)) {
                 </picture>
             </div>
             <div class="m-testimonial__quote-content">
-                <p class="m-testimonial__quote-text">
+                <p class="m-testimonial__quote-text body-large m-0">
                     <?php echo esc_html($quote_text); ?>
                 </p>
             </div>
