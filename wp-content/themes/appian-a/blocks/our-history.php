@@ -50,9 +50,6 @@ if (empty($history_slides)) {
 $section_label = ! empty($section_title) ? $section_title : 'Our History';
 ?>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <section class="m-our-history" aria-label="<?php echo esc_attr($section_label); ?>">
     <div class="grid-container">
         <?php if (! empty($section_title)) : ?>

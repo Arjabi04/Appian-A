@@ -476,32 +476,22 @@ function appian_preload_hero_assets() {
 }
 add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
 
-function appian_preload_critical_fonts() {
-	if ( is_admin() ) {
-		return;
-	}
+fadd_action('wp_head', function () {
+    $fonts = [
+        'Appian Fonts/RecklessNeue/RecklessNeue-Bold.woff',
+        'Appian Fonts/RecklessNeue/RecklessNeue-Book.woff',
+        'Appian Fonts/RecklessNeue/RecklessNeue-Medium.woff',
+        'Appian Fonts/GeneralSans/GeneralSans-Regular.woff',
+        'Appian Fonts/GeneralSans/GeneralSans-Medium.woff',
+    ];
 
-	$is_dev = defined( 'WP_ENV' ) && 'development' === WP_ENV;
-	if ( $is_dev ) {
-		return;
-	}
-
-	$fonts = [
-		'resources/fonts/Appian Fonts/RecklessNeue/RecklessNeue-Book.woff',
-		'resources/fonts/Appian Fonts/RecklessNeue/RecklessNeue-Medium.woff',
-		'resources/fonts/Appian Fonts/GeneralSans/GeneralSans-Regular.woff',
-		'resources/fonts/Appian Fonts/GeneralSans/GeneralSans-Medium.woff',
-	];
-
-	foreach ( $fonts as $font ) {
-		$font_url = vite_assets( $font );
-		if ( $font_url ) {
-			$type = str_ends_with( $font, '.woff2' ) ? 'font/woff2' : 'font/woff';
-			echo '	<link rel="preload" href="' . esc_url( $font_url ) . '" as="font" type="' . esc_attr( $type ) . '" crossorigin>' . "\n";
-		}
-	}
-}
-add_action( 'wp_head', 'appian_preload_critical_fonts', 1 );
+    foreach ($fonts as $font) {
+        $url = vite_assets('resources/fonts/' . $font);
+        if ($url) {
+            echo '<link rel="preload" href="' . esc_url($url) . '" as="font" type="font/woff" crossorigin="anonymous">' . "\n";
+        }
+    }
+}, 1);
 
 require get_template_directory() . '/inc/cpt-projects.php';
 

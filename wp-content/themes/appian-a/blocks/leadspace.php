@@ -23,9 +23,6 @@ if (! $has_media && ! $has_text) {
 $section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadspace';
 ?>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <section class="leadspace" aria-label="<?php echo esc_attr($section_label); ?>">
 	<?php if ($has_media) : ?>
 		<div class="leadspace__eclipse leadspace__eclipse--76" aria-hidden="true">

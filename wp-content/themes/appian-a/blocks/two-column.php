@@ -150,9 +150,6 @@ $render_card = static function (string $card_type, array $data) {
 };
 ?>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <section class="m-two-column">
 	<div class="m-two-column__container">
 		<?php if ($has_construction) : ?>

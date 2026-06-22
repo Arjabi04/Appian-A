@@ -216,6 +216,14 @@ $history-card-desktop: 400px;
       outline-offset: 2px;
     }
 
+    &.is-pointer-focus {
+      &:focus,
+      &:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+
     @include media-breakpoint-up(md) {
       margin-top: -12px;
     }
@@ -510,7 +518,7 @@ $history-card-desktop: 400px;
     font-family: $font-family-sans-serif;
     font-weight: 500;
     font-size: 32px;
-    line-height: 150%;
+    line-height: 120%;
     color: var(--primary-red, #{$primary-red});
     margin-bottom: 0;
     display: block;
