@@ -2,6 +2,8 @@ function initVideoModule() {
     const blocks = document.querySelectorAll('.m-video-module');
     if (!blocks.length) return;
 
+    let currentlyPlaying = null;
+
     blocks.forEach(block => {
         if (block.dataset.initialized) return;
         block.dataset.initialized = 'true';
@@ -29,6 +31,11 @@ function initVideoModule() {
 
         video.addEventListener('click', togglePlayback);
         video.addEventListener('play', () => {
+            if (currentlyPlaying && currentlyPlaying !== video) {
+                currentlyPlaying.pause();
+            }
+            currentlyPlaying = video;
+
             block.classList.add('is-playing');
             block.classList.remove('show-controls');
             controlBtn.setAttribute('aria-label', 'Pause video');
@@ -36,6 +43,10 @@ function initVideoModule() {
         });
 
         video.addEventListener('pause', () => {
+            if (currentlyPlaying === video) {
+                currentlyPlaying = null;
+            }
+
             block.classList.remove('is-playing');
             block.classList.remove('show-controls');
             controlBtn.setAttribute('aria-label', 'Play video');
