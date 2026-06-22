@@ -50,14 +50,15 @@ function appian_render_our_projects_cards($query, $read_more_text = '') {
 }
 
 function appian_filter_our_projects_ajax() {
-    // Read the selected category from the AJAX request.
-    $category_slug = isset($_POST['category']) ? sanitize_key(wp_unslash($_POST['category'])) : 'all';
+    $category_slug  = isset($_POST['category']) ? sanitize_key(wp_unslash($_POST['category'])) : 'all';
     $read_more_text = isset($_POST['read_more_text']) ? sanitize_text_field(wp_unslash($_POST['read_more_text'])) : '';
+    $paged          = isset($_POST['paged']) ? max(1, (int) $_POST['paged']) : 1;
 
-    $query = new WP_Query(appian_get_our_projects_query_args(1, $category_slug));
+    $query = new WP_Query(appian_get_our_projects_query_args($paged, $category_slug));
 
     wp_send_json_success([
-        'cards' => appian_render_our_projects_cards($query, $read_more_text),
+        'cards'      => appian_render_our_projects_cards($query, $read_more_text),
+        'pagination' => render_projects_pagination($query, $paged),
     ]);
 }
 add_action('wp_ajax_appian_filter_our_projects', 'appian_filter_our_projects_ajax');

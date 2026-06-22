@@ -10,10 +10,13 @@ function initOurProjects(container = document) {
         const filterButtons = section.querySelectorAll('[data-project-filter]');
         const label = section.querySelector('[data-project-filter-label]');
         const cardsWrapper = section.querySelector('#our-projects-cards');
+        const paginationWrapper = section.querySelector('#our-projects-pagination');
         const ajaxUrl = section.dataset.projectsAjaxUrl;
         const readMoreText = section.dataset.readMoreText || '';
 
         if (!cardsWrapper || !ajaxUrl) return;
+
+        let currentFilter = 'all';
 
         // Keep the desktop active state matched with the current filter.
         const updateDesktopState = (currentFilter) => {
@@ -25,11 +28,11 @@ function initOurProjects(container = document) {
             });
         };
 
-        const loadProjects = async (category) => {
-            // Send the selected category to WordPress.
+        const loadProjects = async (category, paged = 1) => {
             const formData = new FormData();
             formData.append('action', 'appian_filter_our_projects');
             formData.append('category', category);
+            formData.append('paged', paged);
             formData.append('read_more_text', readMoreText);
 
             const response = await fetch(ajaxUrl, {
@@ -41,9 +44,12 @@ function initOurProjects(container = document) {
 
             if (!result?.success) return;
 
-            // Replace the cards with the filtered HTML.
             cardsWrapper.innerHTML = result.data.cards;
+            if (paginationWrapper) {
+                paginationWrapper.innerHTML = result.data.pagination;
+            }
             updateDesktopState(category);
+            currentFilter = category;
         };
 
         filterButtons.forEach((button) => {
@@ -54,9 +60,26 @@ function initOurProjects(container = document) {
                     label.textContent = button.textContent.trim();
                 }
 
-                await loadProjects(selectedFilter);
+                await loadProjects(selectedFilter, 1);
             };
         });
+
+        if (paginationWrapper) {
+            paginationWrapper.addEventListener('click', async (event) => {
+                const link = event.target.closest('.our-projects__page-link, .our-projects__page-arrow');
+                if (!link || link.closest('.disabled')) return;
+
+                event.preventDefault();
+
+                const url = new URL(link.href, window.location.origin);
+                const requestedPage = parseInt(url.searchParams.get('paged'), 10);
+                if (!requestedPage) return;
+
+                await loadProjects(currentFilter, requestedPage);
+
+                cardsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
     });
 
     const dropdownContainers = container.querySelectorAll('[data-project-filter-dropdown]');

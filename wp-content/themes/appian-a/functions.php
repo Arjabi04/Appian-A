@@ -198,6 +198,7 @@ require get_template_directory() . '/inc/class-header-walker.php';
 require_once get_template_directory() . '/inc/history-items.php';
 require_once get_template_directory() . '/inc/newsletter-submissions.php';
 require_once get_template_directory() . '/inc/contact-submissions.php';
+require get_template_directory() . '/inc/pagination.php';
 require_once get_template_directory() . '/inc/our-projects-ajax.php';
 /**
  * Load Jetpack compatibility file.
@@ -503,7 +504,6 @@ function appian_preload_critical_fonts() {
 add_action( 'wp_head', 'appian_preload_critical_fonts', 1 );
 
 require get_template_directory() . '/inc/cpt-projects.php';
-require get_template_directory() . '/inc/pagination.php';
 
 add_filter('wp_handle_upload_prefilter', 'our_work_block_gif_upload');
 
