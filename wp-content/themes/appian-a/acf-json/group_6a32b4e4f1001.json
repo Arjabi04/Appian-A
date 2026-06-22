@@ -38,32 +38,6 @@
                     "max_size": "",
                     "mime_types": "mp4,webm,mov",
                     "allow_in_bindings": 0
-                },
-                {
-                    "key": "field_6a32b4e4f1004",
-                    "label": "poster_image",
-                    "name": "poster_image",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "allow_in_bindings": 0,
-                    "preview_size": "medium"
                 }
             ]
         }
@@ -89,5 +63,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1780920000
+    "modified": 1782116868
 }

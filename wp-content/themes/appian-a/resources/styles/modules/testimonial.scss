@@ -54,7 +54,7 @@
         height: auto;
         aspect-ratio: 332.143 / 280;
         object-fit: contain;
-        object-position: top ;
+        object-position: bottom ;
         z-index: 2;
         
         @include media-breakpoint-up(lg) {
