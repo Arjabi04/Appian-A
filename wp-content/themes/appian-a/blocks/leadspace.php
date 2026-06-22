@@ -7,11 +7,15 @@ $leadspace_group = is_array($leadspace_group) ? $leadspace_group : [];
 $leadspace_video = $leadspace_group['background_video'] ?? [];
 $leadspace_video = is_array($leadspace_video) ? $leadspace_video : [];
 
+$leadspace_image = $leadspace_group['background_image'] ?? [];
+$leadspace_image = is_array($leadspace_image) ? $leadspace_image : [];
+
 $eyebrow_text = $leadspace_group['eyebrow_text'] ?? '';
 $heading_mobile = $leadspace_group['heading_mobile'] ?? '';
 $heading_desktop = $leadspace_group['heading_desktop'] ?? '';
 
-$video_url = $leadspace_video['url'] ?? '';
+$video_url  = $leadspace_video['url'] ?? '';
+$poster_url = $leadspace_image['url'] ?? '';
 
 $has_media = ! empty($video_url);
 $has_text = ! empty($eyebrow_text) || ! empty($heading_mobile) || ! empty($heading_desktop);
@@ -30,6 +34,7 @@ $section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadsp
 				<video
 					class="leadspace__video"
 					src="<?php echo esc_url($video_url); ?>"
+					<?php if (! empty($poster_url)) : ?>poster="<?php echo esc_url($poster_url); ?>"<?php endif; ?>
 					autoplay
 					muted
 					loop
