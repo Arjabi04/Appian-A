@@ -6,7 +6,11 @@ $video_module_group = is_array($video_module_group) ? $video_module_group : [];
 $video_file = $video_module_group['video_file'] ?? [];
 $video_file = is_array($video_file) ? $video_file : [];
 
+$poster_image = $video_module_group['poster_image'] ?? [];
+$poster_image = is_array($poster_image) ? $poster_image : [];
+
 $video_url = $video_file['url'] ?? '';
+$poster_url = $poster_image['url'] ?? '';
 
 if (empty($video_url)) {
     return;
@@ -24,6 +28,7 @@ $classes = 'm-video-module';
                     <video
                         class="m-video-module__video w-100"
                         src="<?php echo esc_url($video_url); ?>"
+                        <?php if (! empty($poster_url)) : ?>poster="<?php echo esc_url($poster_url); ?>" <?php endif; ?>
                         preload="metadata"
                         playsinline>
                     </video>

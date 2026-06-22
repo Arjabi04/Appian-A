@@ -49,29 +49,27 @@ if (
 ?>
 <section class="m-tertiary-hero" aria-label="Tertiary Hero">
     <div class="m-tertiary-hero__content-wrapper">
-        <div class="m-tertiary-hero__text-container">
-            <div class="m-tertiary-hero__text-box">
-                <?php if (! empty($eyebrow)) : ?>
-                    <p class="m-tertiary-hero__eyebrow sh3 text-white mb-0">
-                        <?php echo esc_html($eyebrow); ?>
-                    </p>
-                <?php endif; ?>
-                <?php if (! empty($heading)) : ?>
-                    <h2 class="m-tertiary-hero__heading h2 text-white mb-0">
-                        <?php echo esc_html($heading); ?>
-                    </h2>
-                <?php endif; ?>
-                <?php if (! empty($description)) : ?>
-                    <p class="m-tertiary-hero__description body-large text-white mb-0">
-                        <?php echo wp_kses_post($description); ?>
-                    </p>
-                <?php endif; ?>
-                <?php if (! empty($caption)) : ?>
-                    <p class="m-tertiary-hero__caption mb-0">
-                        <?php echo esc_html($caption); ?>
-                    </p>
-                <?php endif; ?>
-            </div>
+        <div class="m-tertiary-hero__text-box">
+            <?php if (! empty($eyebrow)) : ?>
+                <p class="m-tertiary-hero__eyebrow sh3 text-white mb-0">
+                    <?php echo esc_html($eyebrow); ?>
+                </p>
+            <?php endif; ?>
+            <?php if (! empty($heading)) : ?>
+                <h2 class="m-tertiary-hero__heading h2 text-white mb-0">
+                    <?php echo esc_html($heading); ?>
+                </h2>
+            <?php endif; ?>
+            <?php if (! empty($description)) : ?>
+                <p class="m-tertiary-hero__description body-large text-white mb-0">
+                    <?php echo wp_kses_post($description); ?>
+                </p>
+            <?php endif; ?>
+            <?php if (! empty($caption)) : ?>
+                <p class="m-tertiary-hero__caption mb-0">
+                    <?php echo esc_html($caption); ?>
+                </p>
+            <?php endif; ?>
         </div>
     </div>
     <?php if (! empty($image_url)) : ?>
