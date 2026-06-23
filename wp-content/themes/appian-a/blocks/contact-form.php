@@ -60,14 +60,14 @@ $contact_form_text     = $contact_group['description'] ?? '';
                             <input type="hidden" name="unit-type" id="unit-type">
                             <button type="button" id="unit-type-toggle"
                                 class="c-contact-form__input c-contact-form__select body"
-                                aria-expanded="false"
+                                aria-expanded="true"
                                 aria-controls="unit-preference-options"
                                 data-unit-toggle>
                                 <span data-unit-toggle-label>Unit Type *</span>
                             </button>
                         </div>
 
-                        <div class="c-contact-form__field c-contact-form__field--radio" id="unit-preference-options" hidden>
+                        <div class="c-contact-form__field c-contact-form__field--radio" id="unit-preference-options" role="radiogroup" aria-labelledby="unit-type-toggle">
                             <div class="c-contact-form__radio-group">
                                 <span class="c-contact-form__radio-item">
                                     <label class="body">
