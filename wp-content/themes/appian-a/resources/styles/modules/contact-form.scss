@@ -188,6 +188,7 @@ $contact-input-padding : 0.875rem 1.5rem;
                 line-height: 1.5;
                 height: auto;
                 min-height: 1.5rem;
+                text-align: left;
             }
 
             @include media-breakpoint-down(lg) {
@@ -295,8 +296,11 @@ $contact-input-padding : 0.875rem 1.5rem;
             appearance: none;
             flex-shrink: 0;
             width: 1.5rem;
+            height: 1.5rem;
             aspect-ratio: 1;
             margin: 0;
+            border: none;
+            background-color: transparent;
             cursor: pointer;
             background-image: url("@images/svgs/non-activated-radio.svg");
             background-repeat: no-repeat;
@@ -307,7 +311,10 @@ $contact-input-padding : 0.875rem 1.5rem;
                 background-image: url("@images/svgs/activated-radio.svg");
             }
 
-            &:focus,
+            &:focus {
+                outline: none;
+            }
+
             &:focus-visible {
                 outline: 2px solid var(--neutral-600, #{$neutral-600});
                 outline-offset: 2px;

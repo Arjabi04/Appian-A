@@ -28,7 +28,6 @@ function initLeadspace() {
     const ARC_R = 1018;
     const ARC_START_ANGLE = 140; // degrees, the left end of the drawn arc
 
-    // Cached section position so getProgress() doesn't thrash layout on scroll.
     let sectionTop = 0;
     let sectionHeight = 0;
     function updateSectionMetrics() {
@@ -45,21 +44,17 @@ function initLeadspace() {
         const cosT = Math.max(-1, Math.min(1, (tipX - ARC_CX) / ARC_R));
         const tipAngle = Math.acos(cosT) * 180 / Math.PI;
         const sweepRad = Math.max(0, ARC_START_ANGLE - tipAngle) * Math.PI / 180;
-        const sweepLen = sweepRad * ARC_R; // user units
-        return sweepLen / (Math.PI * ARC_R * (100 / 180)); // ÷ full ~100deg arc length
+        const sweepLen = sweepRad * ARC_R;
+        return sweepLen / (Math.PI * ARC_R * (100 / 180));
     }
 
     function updateArcMetrics() {
         updateSectionMetrics();
         const arc = section.querySelector('.leadspace__arc');
-        // SVG user-units -> rendered screen px. The arc element is max(2000px,
-        // 138.888vw), so above 1440px the SVG is scaled up (scale > 1).
         const arcWidth = arc ? arc.getBoundingClientRect().width : ARC_VIEWBOX;
         const scale = (arcWidth > 0 ? arcWidth : ARC_VIEWBOX) / ARC_VIEWBOX;
         const floor = visibilityFloor(arcWidth);
 
-        // Dynamically scale stroke-width to emulate vector-effect="non-scaling-stroke"
-        // without triggering cross-browser SVG dashing compositor bugs.
         const ring = section.querySelector('.leadspace__arc-ring');
         if (ring && scale > 0) {
             ring.style.strokeWidth = 12 / scale;
@@ -77,11 +72,10 @@ function initLeadspace() {
             const cssStart = parseFloat(getComputedStyle(path).getPropertyValue('--arc-start')) || 0.162;
             const arcStart = Math.min(0.7, Math.max(cssStart, floor));
 
-            // Dashes are calculated in native SVG user-units (viewBox scale)
             path._dash = totalLength;
             path._arcStart = arcStart;
             path.style.strokeDasharray = path._dash;
-            
+
             if (scale > 0) {
                 path.style.strokeWidth = 8 / scale;
             }
@@ -90,8 +84,8 @@ function initLeadspace() {
 
     function getProgress() {
         if (sectionHeight <= 0) return 0;
-        const scrolled = window.scrollY - sectionTop;
-        return Math.min(1, Math.max(0, scrolled / sectionHeight));
+        const scrolled = window.scrollY;
+        return Math.min(1, Math.max(0, scrolled / (sectionHeight * 0.6)));
     }
 
     let ticking = false;
@@ -102,7 +96,16 @@ function initLeadspace() {
             const progress = getProgress();
             paths.forEach(path => {
                 const dash = path._dash || 1800;
-                path.style.strokeDashoffset = dash * (1 - progress);
+                const arcStart = path._arcStart || 0;
+                if (progress <= 0) {
+                    path.style.strokeDashoffset = dash;
+                } else if (progress <= 0.05) {
+                    const phaseProgress = progress / 0.05;
+                    path.style.strokeDashoffset = dash * (1 - phaseProgress * arcStart);
+                } else {
+                    const phaseProgress = (progress - 0.05) / 0.95;
+                    path.style.strokeDashoffset = dash * (1 - arcStart) * (1 - phaseProgress);
+                }
             });
             ticking = false;
         });
@@ -118,7 +121,6 @@ function initLeadspace() {
             if (video) video.pause();
             window.removeEventListener('scroll', onScroll);
             window.removeEventListener('resize', onResize);
-            // Reduced motion: draw the rim fully (no scroll-driven growth).
             updateArcMetrics();
             paths.forEach(path => { path.style.strokeDashoffset = 0; });
         } else {

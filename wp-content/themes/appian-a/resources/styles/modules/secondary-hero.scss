@@ -22,8 +22,8 @@
     align-items: flex-end;
     padding-top: 0;
     padding-bottom: clamp(2.5rem, 1.355rem + 2.88vw, 6.25rem);
-    padding-left: clamp(1.75rem, 0.504rem + 3.13vw, 5rem);
-    padding-right: 1.81rem;
+    padding-left: 0;
+    padding-right: 0;
 
     @media (min-width: 768px) {
         min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px);
@@ -73,24 +73,29 @@
         position: relative;
         z-index: 2;
         width: 100%;
+        max-width: 1440px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: clamp(1.75rem, 0.504rem + 3.13vw, 5rem);
+        padding-right: clamp(1.75rem, 0.504rem + 3.13vw, 5rem);
     }
 
     &__heading {
         color: $white;
         margin: 0;
+
+        @include media-breakpoint-up(lg) {
+            max-width: 52.5rem;
+        }
     }
 
     @include media-breakpoint-up(lg) {
         padding-top: 6.25rem;
         padding-bottom: 6.25rem;
-        padding-left: 5rem;
+        padding-left: 0;
 
         &__overlay {
             opacity: 0.5;
-        }
-
-        &__content {
-            max-width: 52.5rem;
         }
     }
 }

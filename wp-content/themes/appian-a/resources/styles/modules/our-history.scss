@@ -127,6 +127,10 @@ $history-card-desktop: 400px;
       align-items: stretch;
       padding-inline: 0;
       gap: 0;
+
+      .m-our-history__carousel:not(.swiper-initialized) & {
+        gap: 150px;
+      }
     }
 
     &::after {
