@@ -17,7 +17,7 @@ if (! empty($phone)) {
 <header class="site-header">
     <div class="site-header__container">
         <?php if (! empty($logo) && is_array($logo) && ! empty($logo['url'])) : ?>
-            <a href="<?php echo esc_url(home_url('/home')); ?>" class="site-header__logo" aria-label="Appian Home">
+            <a href="" class="site-header__logo" aria-label="Appian Home">
                 <img src="<?php echo esc_url($logo['url']); ?>" alt="<?php echo esc_attr($logo['alt']); ?>" class="site-header__logo-image">
             </a>
         <?php endif; ?>
