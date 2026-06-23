@@ -35,6 +35,7 @@ function initLeadspace() {
         const rect = section.getBoundingClientRect();
         sectionTop = rect.top + window.scrollY;
         sectionHeight = rect.height;
+        section.style.setProperty('--leadspace-height', `${sectionHeight}px`);
     }
 
     function visibilityFloor(arcWidth) {

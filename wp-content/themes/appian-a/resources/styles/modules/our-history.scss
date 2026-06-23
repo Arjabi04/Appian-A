@@ -217,6 +217,7 @@ $history-card-desktop: 400px;
     }
 
     &.is-pointer-focus {
+
       &:focus,
       &:focus-visible {
         outline: none !important;

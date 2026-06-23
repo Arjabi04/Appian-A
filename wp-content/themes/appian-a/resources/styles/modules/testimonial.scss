@@ -46,6 +46,7 @@
     &__person {
         grid-row: 1;
         grid-column: 1;
+        align-self: end;
         position: relative;
         display: block;
         width: 88.6%;
@@ -54,15 +55,15 @@
         height: auto;
         aspect-ratio: 332.143 / 280;
         object-fit: contain;
-        object-position: bottom ;
+        object-position: bottom;
         z-index: 2;
-        
+
         @include media-breakpoint-up(lg) {
             width: 100%;
             max-width: 74rem;
             margin: 0 auto;
             aspect-ratio: 1184 / 862;
-            object-position: center;
+            object-position: bottom;
         }
     }
 
@@ -119,12 +120,14 @@
         position: relative;
         width: calc(100% - 2rem);
         max-width: 26.25rem;
-        margin: -3.25rem auto 0; /* -52px mobile */
+        margin: -3.25rem auto 0;
+        /* -52px mobile */
         filter: drop-shadow(0 0.625rem 1.25rem rgba(0, 0, 0, 0.08));
         z-index: 3;
 
         @include media-breakpoint-up(lg) {
-            margin: -5.6875rem auto 0; /* -91px desktop */
+            margin: -5.6875rem auto 0;
+            /* -91px desktop */
             width: 26.25rem;
             max-width: none;
         }
@@ -158,8 +161,6 @@
         width: 100%;
         padding: 1.5rem;
         /* 24px padding on mobile */
-        min-height: 13.75rem;
-        /* 220px content height on mobile */
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -168,8 +169,6 @@
         @include media-breakpoint-up(lg) {
             padding: 1.5rem 2rem;
             /* 24px top/bottom, 32px left/right on desktop */
-            min-height: 11.5rem;
-            /* 184px height on desktop */
         }
     }
 
