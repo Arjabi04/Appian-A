@@ -104,11 +104,11 @@ $contact-input-padding : 0.875rem 1.5rem;
         width: 100%;
 
         &--name {
-            gap: 2.25rem;
+            gap: 1.5rem;
 
             @include media-breakpoint-up(lg) {
                 flex-direction: row;
-                gap: 2.25rem;
+                gap: 1.5rem;
             }
 
             .c-contact-form__field {
@@ -132,9 +132,7 @@ $contact-input-padding : 0.875rem 1.5rem;
     }
 
     &__input {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: block;
         width: 100%;
         min-width: 0;
         box-sizing: border-box;
@@ -147,14 +145,24 @@ $contact-input-padding : 0.875rem 1.5rem;
         font-weight: $font-weight-normal; // 400
         line-height: 1.5;
         color: var(--neutral-600, #{$neutral-600});
-        border: 1.5px solid var(--neutral-600, #{$neutral-600});
+        border: 1.5px solid var(--overlay-30, rgba(0, 0, 0, 0.3));
+        -webkit-appearance: none;
+        appearance: none;
+
+        @include media-breakpoint-up(lg) {
+            border-color: var(--overlay-68, rgba(0, 0, 0, 0.68));
+        }
 
         &::placeholder {
-            color: var(--neutral-600, #{$neutral-600});
+            color: var(--overlay-30, rgba(0, 0, 0, 0.3));
             font-family: $font-family-sans-serif;
             font-size: 1rem;
             font-weight: $font-weight-normal;
             line-height: 1.5;
+
+            @include media-breakpoint-up(lg) {
+                color: var(--overlay-68, rgba(0, 0, 0, 0.68));
+            }
         }
 
         &:focus,
@@ -172,6 +180,27 @@ $contact-input-padding : 0.875rem 1.5rem;
 
             &::-webkit-datetime-edit-fields-wrapper {
                 padding: 0;
+            }
+
+            &::-webkit-date-and-time-value {
+                margin: 0;
+                padding: 0;
+                line-height: 1.5;
+                height: auto;
+                min-height: 1.5rem;
+            }
+
+            @include media-breakpoint-down(lg) {
+                &::-webkit-calendar-picker-indicator {
+                    display: none !important;
+                    -webkit-appearance: none !important;
+                }
+            }
+
+            &::-webkit-inner-spin-button,
+            &::-webkit-clear-button {
+                display: none !important;
+                -webkit-appearance: none !important;
             }
         }
 
@@ -191,6 +220,9 @@ $contact-input-padding : 0.875rem 1.5rem;
     }
 
     &__select {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         -webkit-appearance: none;
         appearance: none;
         cursor: pointer;
@@ -200,10 +232,16 @@ $contact-input-padding : 0.875rem 1.5rem;
         background-repeat: no-repeat;
         background-position: right 1.5rem center;
         background-size: 1.5rem 1.5rem;
-        color: rgba(0, 0, 0, 0.65);
         text-align: left;
+        color: var(--overlay-30, rgba(0, 0, 0, 0.3));
 
-        &:not(:has(option[value=""]:checked)) {
+        @include media-breakpoint-up(lg) {
+            color: var(--overlay-68, rgba(0, 0, 0, 0.68));
+        }
+
+        &:focus,
+        &:focus-visible,
+        &.has-value {
             color: var(--neutral-600, #{$neutral-600});
         }
 
@@ -212,12 +250,8 @@ $contact-input-padding : 0.875rem 1.5rem;
             background-color: $white;
         }
 
-        &.is-invalid:has(option[value=""]:checked) {
+        &.is-invalid {
             color: var(--primary-red, #{$primary-red}) !important;
-        }
-
-        &[aria-expanded="true"] {
-            color: var(--neutral-600, #{$neutral-600});
         }
     }
 
@@ -273,6 +307,7 @@ $contact-input-padding : 0.875rem 1.5rem;
                 background-image: url("@images/svgs/activated-radio.svg");
             }
 
+            &:focus,
             &:focus-visible {
                 outline: 2px solid var(--neutral-600, #{$neutral-600});
                 outline-offset: 2px;

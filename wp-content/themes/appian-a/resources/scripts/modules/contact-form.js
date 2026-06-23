@@ -28,11 +28,17 @@ function initDateField(root) {
 
     const showPicker = () => {
         dateField.type = 'date';
+        try {
+            if (typeof dateField.showPicker === 'function') {
+                dateField.showPicker();
+            }
+        } catch (e) {}
     };
 
     showPlaceholder();
 
     dateField.addEventListener('focus', showPicker);
+    dateField.addEventListener('click', showPicker);
     dateField.addEventListener('blur', showPlaceholder);
 }
 
@@ -51,8 +57,20 @@ function initUnitToggle(root) {
         toggle.setAttribute('aria-expanded', String(isOpen));
     };
 
+    let recentlyOpenedByFocus = false;
+
+    toggle.addEventListener('focus', () => {
+        if (toggle.getAttribute('aria-expanded') !== 'true') {
+            setOpen(true);
+            recentlyOpenedByFocus = true;
+            setTimeout(() => { recentlyOpenedByFocus = false; }, 200);
+        }
+    });
+
     toggle.addEventListener('click', () => {
-        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+        if (!recentlyOpenedByFocus) {
+            setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+        }
     });
 
     radios.forEach((radio) => {
@@ -60,10 +78,11 @@ function initUnitToggle(root) {
             if (hiddenInput) hiddenInput.value = radio.value;
             if (label) label.textContent = radio.value;
             toggle.classList.remove('is-invalid');
+            toggle.classList.add('has-value');
         });
     });
 
-    setOpen(false);
+    setOpen(true);
 }
 
 function initValidation(root) {
@@ -93,11 +112,61 @@ function initValidation(root) {
             && value !== ''
             && (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value < getTodayDateString());
 
-        if (!field.checkValidity() || isPhoneInvalid || isMoveInDateInvalid) {
+        const isNameInvalid = (field.name === 'first-name' || field.name === 'last-name')
+            && value !== ''
+            && !/^[a-zA-Z\s]+$/.test(value);
+
+        let isEmailInvalid = false;
+        let emailErrorMessage = 'Please enter a valid email address.';
+
+        if (field.type === 'email' && value !== '') {
+            if (value.length > 254) {
+                isEmailInvalid = true;
+                emailErrorMessage = 'Email must not exceed 254 characters.';
+            } else {
+                const parts = value.split('@');
+                if (parts.length !== 2) {
+                    isEmailInvalid = true;
+                } else {
+                    const [localPart, domainPart] = parts;
+                    if (localPart.length > 64) {
+                        isEmailInvalid = true;
+                        emailErrorMessage = 'Email local part must not exceed 64 characters.';
+                    } else if (domainPart.length > 255) {
+                        isEmailInvalid = true;
+                        emailErrorMessage = 'Email domain must not exceed 255 characters.';
+                    } else {
+                        const labels = domainPart.split('.');
+                        if (labels.length < 2 || labels.some(label => label.length === 0 || label.length > 63)) {
+                            isEmailInvalid = true;
+                            emailErrorMessage = 'Email domain structure is invalid.';
+                        } else {
+                            const domainRegex = /^[a-zA-Z0-9.-]+$/;
+                            if (!domainRegex.test(domainPart)) {
+                                isEmailInvalid = true;
+                                emailErrorMessage = 'Email domain must not contain special characters or emojis.';
+                            } else {
+                                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                                if (!emailRegex.test(value)) {
+                                    isEmailInvalid = true;
+                                    emailErrorMessage = 'Please enter a valid email address.';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!field.checkValidity() || isPhoneInvalid || isMoveInDateInvalid || isNameInvalid || isEmailInvalid) {
             field.classList.add('is-invalid');
             if (errorEl) {
                 if (value === '') {
                     errorEl.textContent = 'Please fill out this field.';
+                } else if (isNameInvalid) {
+                    errorEl.textContent = 'Please enter valid alphabetic characters only.';
+                } else if (isEmailInvalid) {
+                    errorEl.textContent = emailErrorMessage;
                 } else if (field.type === 'email') {
                     errorEl.textContent = 'Please enter a valid email address.';
                 } else if (field.name === 'phone') {
@@ -189,13 +258,14 @@ function initValidation(root) {
             const radioField = form.querySelector('.c-contact-form__field--radio');
             const successMessage = form.querySelector('[data-contact-form-success]');
             if (unitToggleLabel) unitToggleLabel.textContent = 'Unit Type *';
-            if (unitToggle) {
+             if (unitToggle) {
                 unitToggle.classList.remove('is-invalid');
-                unitToggle.setAttribute('aria-expanded', 'false');
+                unitToggle.classList.remove('has-value');
+                unitToggle.setAttribute('aria-expanded', 'true');
             }
             if (radioField) {
-                radioField.hidden = true;
-                radioField.classList.remove('is-open');
+                radioField.hidden = false;
+                radioField.classList.add('is-open');
             }
             if (successMessage) successMessage.hidden = false;
         }
