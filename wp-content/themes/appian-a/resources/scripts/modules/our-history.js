@@ -211,6 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
+
+        //clear image when pop up is closed
+        popup.addEventListener('hidden.bs.modal', () => {
+            const popupImage = popup.querySelector('.m-our-history-popup__image');
+            if (popupImage) {
+                popupImage.removeAttribute('src');
+                popupImage.alt = '';
+            }
+        });
     }
 });
 
