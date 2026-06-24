@@ -22,5 +22,12 @@ add_action( 'acf/init', function() {
 			'parent_slug' => 'global-settings',
 		) );
 
+		acf_add_options_sub_page([
+			'page_title'  => 'Social Links',
+			'menu_title'  => 'Social Links',
+			'menu_slug'   => 'global-settings-social-links',
+			'parent_slug' => 'global-settings',
+		]);
+
 	}
 } );

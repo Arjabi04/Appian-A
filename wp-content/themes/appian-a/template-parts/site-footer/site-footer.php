@@ -13,6 +13,8 @@ $address_group   = (isset($footer_fields['address_group']) && is_array($footer_f
 $contact_group   = (isset($footer_fields['contact_group']) && is_array($footer_fields['contact_group'])) ? $footer_fields['contact_group'] : [];
 $explore_group   = (isset($footer_fields['explore_group']) && is_array($footer_fields['explore_group'])) ? $footer_fields['explore_group'] : [];
 $social_group    = (isset($footer_fields['social_group']) && is_array($footer_fields['social_group'])) ? $footer_fields['social_group'] : [];
+$social_links = get_field('social_links', 'option');
+$social_items = $social_links['social_items'] ?? [];
 
 $appian_footer_warn = static function ($message) {
     if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -169,56 +171,30 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
             </div>
 
             <!-- Social Links -->
-            <?php
-            $social_links_field = $social_group['social_links'] ?? [];
-            if (!is_array($social_links_field) && $has_social_group) {
-                $appian_footer_warn('Footer social links field is not an array; hiding block.');
-            }
-
-            $social_links_raw = is_array($social_links_field) ? $social_links_field : [];
-            $social_links = array_values(array_filter($social_links_raw, static function ($item) {
-                if (!is_array($item)) return false;
-                if (empty($item['icon']['url'])) return false;
-                if (empty($item['url']) || !is_array($item['url'])) return false;
-                if (empty($item['url']['url'])) return false;
-                return true;
-            }));
-            ?>
-
-            <?php if ($has_social_group && empty($social_links_raw)) : ?>
-                <?php $appian_footer_warn('Footer social links block has no items; hiding block.'); ?>
-            <?php elseif (!empty($social_links_raw) && empty($social_links)) : ?>
-                <?php $appian_footer_warn('Footer social links block has no valid items; hiding block.'); ?>
-            <?php endif; ?>
-
-            <?php if (!empty($social_links)) : ?>
+            <?php if ( ! empty($social_items) ) : ?>
 
                 <div class="site-footer__socials">
 
-                    <?php foreach ($social_links as $social_link) : ?>
-                        <?php
-                        $link = $social_link['url'];
-                        $href = $link['url'] ?? '';
-                        $target = $link['target'] ?? '_self';
-                        $rel = ($target === '_blank') ? 'noopener noreferrer' : '';
-                        $label = $social_link['platform_name_'] ?? ($link['title'] ?? 'Social link');
-                        ?>
-
+                    <?php foreach ( $social_items as $item ) :
+                        $icon     = $item['icon']     ?? null;
+                        $platform = $item['platform'] ?? '';
+                        $url      = $item['url']      ?? '';
+                        if ( empty($url) ) continue;
+                    ?>
                         <a
                             class="site-footer__social"
-                            href="<?php echo esc_url($href); ?>"
-                            target="<?php echo esc_attr($target); ?>"
-                            <?php if (!empty($rel)) : ?>rel="<?php echo esc_attr($rel); ?>"<?php endif; ?>
-                            aria-label="<?php echo esc_attr($label); ?>">
-
-                            <img
-                                src="<?php echo esc_url($social_link['icon']['url']); ?>"
-                                alt="<?php echo esc_attr($social_link['icon']['alt'] ?? ''); ?>"
-                                width="24"
-                                height="24" />
-
+                            href="<?php echo esc_url($url); ?>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="<?php echo esc_attr($platform); ?>">
+                            <?php if ( ! empty($icon) && ! empty($icon['url']) ) : ?>
+                                <img
+                                    src="<?php echo esc_url($icon['url']); ?>"
+                                    alt="<?php echo esc_attr($platform); ?>"
+                                    width="24"
+                                    height="24">
+                            <?php endif; ?>
                         </a>
-
                     <?php endforeach; ?>
 
                 </div>
