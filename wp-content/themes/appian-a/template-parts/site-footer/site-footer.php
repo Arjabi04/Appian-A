@@ -45,7 +45,8 @@ $footer_logo_alt = $footer_logo['alt'] ?? '';
 
                     <img
                         src="<?php echo esc_url($footer_logo_url); ?>"
-                        alt="<?php echo esc_attr($footer_logo_alt); ?>" />
+                        alt="<?php echo esc_attr($footer_logo_alt); ?>"
+                        loading="lazy" />
 
                 </a>
             <?php endif; ?>

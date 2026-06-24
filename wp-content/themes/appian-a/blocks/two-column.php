@@ -104,7 +104,6 @@ $render_card = static function (string $card_type, array $data) {
 	<div class="m-two-column__card m-two-column__card--<?php echo esc_attr($card_type); ?>">
 		<?php if (! empty($data['image_url']) || ! empty($data['mobile_image_url'])) : ?>
 			<?php
-			// Use the desktop image for all breakpoints; fallback to mobile image if desktop is empty
 			$display_image_url = ! empty($data['image_url']) ? $data['image_url'] : $data['mobile_image_url'];
 			?>
 			<div class="m-two-column__image-wrapper">
@@ -113,8 +112,8 @@ $render_card = static function (string $card_type, array $data) {
 						class="m-two-column__image"
 						src="<?php echo esc_url($display_image_url); ?>"
 						alt="<?php echo esc_attr($data['image_alt']); ?>"
-						loading="eager"
-						fetchpriority="high" />
+						loading="lazy"
+						/>
 				</picture>
 			</div>
 		<?php endif; ?>

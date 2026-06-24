@@ -27,12 +27,13 @@ function initDateField(root) {
     };
 
     const showPicker = () => {
+        if (dateField.type === 'date') return;
         dateField.type = 'date';
         try {
             if (typeof dateField.showPicker === 'function') {
                 dateField.showPicker();
             }
-        } catch (e) {}
+        } catch (e) { }
     };
 
     showPlaceholder();
@@ -82,6 +83,45 @@ function initUnitToggle(root) {
         });
     });
 
+    // Close on click/touchstart outside of the toggle and radioField (supporting iOS click propagation)
+    const handleOutsideClick = (e) => {
+        if (!toggle.contains(e.target) && !radioField.contains(e.target)) {
+            setOpen(false);
+        }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    document.addEventListener('touchstart', handleOutsideClick, { passive: true });
+
+    const form = root.querySelector('.c-contact-form__form');
+    if (form) {
+        form.addEventListener('reset', () => {
+            setTimeout(() => {
+                const checkedRadio = Array.from(radios).find(r => r.checked);
+                if (checkedRadio) {
+                    if (hiddenInput) hiddenInput.value = checkedRadio.value;
+                    if (label) label.textContent = checkedRadio.value;
+                    toggle.classList.add('has-value');
+                } else {
+                    if (hiddenInput) hiddenInput.value = '';
+                    if (label) label.textContent = 'Unit Type *';
+                    toggle.classList.remove('has-value');
+                }
+                toggle.classList.remove('is-invalid');
+                setOpen(true);
+            }, 0);
+        });
+    }
+
+    // Initialize state
+    const checkedRadio = Array.from(radios).find(r => r.checked);
+    if (checkedRadio) {
+        if (hiddenInput) hiddenInput.value = checkedRadio.value;
+        if (label) label.textContent = checkedRadio.value;
+        toggle.classList.add('has-value');
+    } else {
+        if (label) label.textContent = 'Unit Type *';
+        toggle.classList.remove('has-value');
+    }
     setOpen(true);
 }
 
@@ -113,6 +153,10 @@ function initValidation(root) {
             && value !== ''
             && (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value < getTodayDateString());
 
+        if (isMoveInDateInvalid) {
+            field.value = '';
+        }
+
         const isNameInvalid = (field.name === 'first-name' || field.name === 'last-name')
             && value !== ''
             && !/^[a-zA-Z\s]+$/.test(value);
@@ -126,7 +170,7 @@ function initValidation(root) {
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{1,63}\.[a-zA-Z]{2,63}$/;
 
             // to reject emojis
-const isPunycode = domainPart.includes('xn--');
+            const isPunycode = domainPart.includes('xn--');
 
             isEmailInvalid = value.length > 254
                 || parts.length !== 2
@@ -200,7 +244,9 @@ const isPunycode = domainPart.includes('xn--');
 
     form.querySelectorAll('input:not([type="radio"]), select').forEach((field) => {
         field.addEventListener('blur', () => checkFieldValidity(field));
+        field.addEventListener('change', () => checkFieldValidity(field));
         field.addEventListener('input', () => {
+            if (field.name === 'move-in-date') return;
             if (field.classList.contains('is-invalid')) {
                 checkFieldValidity(field);
             }
@@ -251,22 +297,15 @@ const isPunycode = domainPart.includes('xn--');
             if (!response.ok) throw new Error('Contact form submission failed.');
 
             form.reset();
-            const unitToggleLabel = form.querySelector('[data-unit-toggle-label]');
-            const unitToggle = form.querySelector('[data-unit-toggle]');
-            const radioField = form.querySelector('.c-contact-form__field--radio');
             const successMessage = form.querySelector('[data-contact-form-success]');
-            if (unitToggleLabel) unitToggleLabel.textContent = 'Unit Type *';
-            if (unitToggle) {
-                unitToggle.classList.remove('is-invalid');
-                unitToggle.classList.remove('has-value');
-                unitToggle.setAttribute('aria-expanded', 'true');
-            }
-            if (radioField) {
-                radioField.hidden = false;
-                radioField.classList.add('is-open');
-            }
             if (successMessage) successMessage.hidden = false;
             form.classList.add('is-success');
+
+            if (successMessage) {
+                successMessage.setAttribute('tabindex', '-1');
+                successMessage.focus({ preventScroll: true });
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         } catch (error) {
             if (submitButton) submitButton.disabled = false;
         }

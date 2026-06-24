@@ -1,10 +1,12 @@
 @import "../common";
 
 .our-projects {
-    &__header{
+    &__header {
         color: $neutral-600;
     }
+
     padding-top: 64px;
+
     @include media-breakpoint-up(xl) {
         padding-top: 100px;
     }
@@ -15,9 +17,10 @@
 
     &__filters-wrapper {
         margin-top: 50px;
-         @include media-breakpoint-up(xl) {
-        margin-top: 60px;
-         }
+
+        @include media-breakpoint-up(xl) {
+            margin-top: 60px;
+        }
     }
 
     &__filters-shell {
@@ -94,6 +97,7 @@
         gap: 32px;
         padding-block: 16px;
         margin-bottom: 0;
+
         @include media-breakpoint-up(xl) {
             gap: 32px;
         }
@@ -135,10 +139,10 @@
     &__pagination-wrapper {
         margin-top: 50px;
         padding-bottom: 144px;
-        
+
         @include media-breakpoint-up(xl) {
             margin-top: 70px;
-             padding-bottom: 100px;
+            padding-bottom: 100px;
         }
     }
 
@@ -148,6 +152,7 @@
 
     &__pagination {
         gap: 0px;
+
         @include media-breakpoint-up(md) {
             gap: 4px;
         }
@@ -156,6 +161,17 @@
             background-color: $primary-red;
             border-color: $primary-red;
             color: $white;
+        }
+
+        // Disabled state for prev/next arrows when on first or last page.
+        // pointer-events: none stops click/hover entirely.
+        // opacity communicates non-interactivity visually.
+        .page-item.disabled {
+            .our-projects__page-arrow {
+                pointer-events: none;
+                cursor: default;
+                opacity: 0.3;
+            }
         }
     }
 
@@ -172,16 +188,17 @@
         border: 1px solid $neutral-100;
         border-radius: 2px !important;
         background-color: $white;
+
         @include media-breakpoint-up(md) {
             min-width: 48px;
             min-height: 48px;
         }
 
         .page-item:not(.active) & {
-        &:hover{
-            color: $primary-red !important;
+            &:hover {
+                color: $primary-red !important;
+            }
         }
-    }
     }
 
     &__page-arrow {
