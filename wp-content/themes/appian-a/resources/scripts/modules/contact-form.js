@@ -88,6 +88,7 @@ function initUnitToggle(root) {
 function initValidation(root) {
     const form = root.querySelector('.c-contact-form__form');
     if (!form || form.dataset.validationBound) return;
+    const submitButton = form.querySelector('button[type="submit"]');
 
     form.dataset.validationBound = 'true';
 
@@ -116,45 +117,32 @@ function initValidation(root) {
             && value !== ''
             && !/^[a-zA-Z\s]+$/.test(value);
 
-        let isEmailInvalid = false;
         let emailErrorMessage = 'Please enter a valid email address.';
+        let isEmailInvalid = false;
 
         if (field.type === 'email' && value !== '') {
+            const parts = value.split('@');
+            const [localPart = '', domainPart = ''] = parts;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{1,63}\.[a-zA-Z]{2,63}$/;
+
+            // to reject emojis
+const isPunycode = domainPart.includes('xn--');
+
+            isEmailInvalid = value.length > 254
+                || parts.length !== 2
+                || localPart.length > 64
+                || domainPart.length > 188
+                || isPunycode
+                || !emailRegex.test(value);
+
             if (value.length > 254) {
-                isEmailInvalid = true;
                 emailErrorMessage = 'Email must not exceed 254 characters.';
-            } else {
-                const parts = value.split('@');
-                if (parts.length !== 2) {
-                    isEmailInvalid = true;
-                } else {
-                    const [localPart, domainPart] = parts;
-                    if (localPart.length > 64) {
-                        isEmailInvalid = true;
-                        emailErrorMessage = 'Email local part must not exceed 64 characters.';
-                    } else if (domainPart.length > 255) {
-                        isEmailInvalid = true;
-                        emailErrorMessage = 'Email domain must not exceed 255 characters.';
-                    } else {
-                        const labels = domainPart.split('.');
-                        if (labels.length < 2 || labels.some(label => label.length === 0 || label.length > 63)) {
-                            isEmailInvalid = true;
-                            emailErrorMessage = 'Email domain structure is invalid.';
-                        } else {
-                            const domainRegex = /^[a-zA-Z0-9.-]+$/;
-                            if (!domainRegex.test(domainPart)) {
-                                isEmailInvalid = true;
-                                emailErrorMessage = 'Email domain must not contain special characters or emojis.';
-                            } else {
-                                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                                if (!emailRegex.test(value)) {
-                                    isEmailInvalid = true;
-                                    emailErrorMessage = 'Please enter a valid email address.';
-                                }
-                            }
-                        }
-                    }
-                }
+            } else if (localPart.length > 64) {
+                emailErrorMessage = 'Email local part must not exceed 64 characters.';
+            } else if (domainPart.length > 188) {
+                emailErrorMessage = 'Email domain must not exceed 188 characters.';
+            } else if (parts.length === 2 && domainPart.split('.')[0]?.length > 63) {
+                emailErrorMessage = 'Email domain label must not exceed 63 characters.';
             }
         }
 
@@ -224,6 +212,11 @@ function initValidation(root) {
     });
 
     form.addEventListener('submit', async (e) => {
+        if (submitButton?.disabled || form.classList.contains('is-success')) {
+            e.preventDefault();
+            return;
+        }
+
         let isFormValid = true;
 
         form.querySelectorAll('input:not([type="radio"]), select').forEach((field) => {
@@ -240,8 +233,13 @@ function initValidation(root) {
             e.preventDefault();
             const firstInvalid = form.querySelector('.is-invalid');
             if (firstInvalid) firstInvalid.focus();
-        } else {
-            e.preventDefault();
+            return;
+        }
+
+        e.preventDefault();
+        if (submitButton) submitButton.disabled = true;
+
+        try {
             const formData = new FormData(form);
             formData.append('action', 'submit_contact_form');
 
@@ -250,7 +248,7 @@ function initValidation(root) {
                 body: formData,
             });
 
-            if (!response.ok) return;
+            if (!response.ok) throw new Error('Contact form submission failed.');
 
             form.reset();
             const unitToggleLabel = form.querySelector('[data-unit-toggle-label]');
@@ -258,7 +256,7 @@ function initValidation(root) {
             const radioField = form.querySelector('.c-contact-form__field--radio');
             const successMessage = form.querySelector('[data-contact-form-success]');
             if (unitToggleLabel) unitToggleLabel.textContent = 'Unit Type *';
-             if (unitToggle) {
+            if (unitToggle) {
                 unitToggle.classList.remove('is-invalid');
                 unitToggle.classList.remove('has-value');
                 unitToggle.setAttribute('aria-expanded', 'true');
@@ -268,6 +266,9 @@ function initValidation(root) {
                 radioField.classList.add('is-open');
             }
             if (successMessage) successMessage.hidden = false;
+            form.classList.add('is-success');
+        } catch (error) {
+            if (submitButton) submitButton.disabled = false;
         }
     });
 }

@@ -94,6 +94,10 @@ $contact-input-padding : 0.875rem 1.5rem;
         width: 100%;
         margin: 0;
         padding: 0;
+
+        &.is-success > :not(.c-contact-form__success) {
+            display: none;
+        }
     }
 
     &__row {
@@ -358,6 +362,7 @@ $contact-input-padding : 0.875rem 1.5rem;
 
     &__success {
         color: var(--neutral-600, #{$neutral-600});
+        margin-top: 0;
 
         &[hidden] {
             display: none;

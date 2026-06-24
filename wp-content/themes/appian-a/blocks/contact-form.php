@@ -98,7 +98,7 @@ $contact_form_text     = $contact_group['description'] ?? '';
                         </div>
 
                         <p class="c-contact-form__success body-sm-all m-0" data-contact-form-success hidden>
-                            Thank you for contacting us.
+                            THANK YOU FOR CONTACTING US.
                         </p>
 
                     </form>
