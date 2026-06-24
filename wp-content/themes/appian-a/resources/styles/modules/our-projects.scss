@@ -44,6 +44,9 @@
     }
 
     &__filters-toggle {
+        color: $neutral-600;
+        -webkit-text-fill-color: $neutral-600;
+
         &::after {
             display: none;
         }
@@ -84,11 +87,14 @@
         border: 0;
         background-color: transparent;
         text-align: right;
+        color: $neutral-600;
+        -webkit-text-fill-color: $neutral-600;
 
         &:hover,
         &:focus-visible,
         &:active {
             color: $primary-red;
+            -webkit-text-fill-color: $primary-red;
             background-color: $gray-50;
         }
     }
@@ -110,6 +116,11 @@
         &:hover,
         &:focus-visible {
             color: $primary-red;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $secondary;
+            outline-offset: 2px;
         }
     }
 
@@ -198,6 +209,11 @@
             &:hover {
                 color: $primary-red !important;
             }
+        }
+
+        &:focus-visible {
+            outline: 2px solid $secondary;
+            outline-offset: 2px;
         }
     }
 

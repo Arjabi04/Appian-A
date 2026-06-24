@@ -82,6 +82,7 @@ if (empty($faq_section_title) && empty($faq_heading) && empty($faq_description) 
 						<div
 							id="<?php echo esc_attr($item_id); ?>"
 							class="<?php echo esc_attr($panel_class); ?>"
+							data-bs-parent="#faqAccordion"
 							aria-labelledby="<?php echo esc_attr($heading_id); ?>">
 							<div class="accordion-body faq__panel-body body-small">
 								<?php echo wp_kses_post($item['answer']); ?>
