@@ -79,7 +79,8 @@ if (empty($section_title) && ! $has_partners && ! $has_view_all) {
                                     <img
                                         class="partners__logo"
                                         src="<?php echo esc_url($logo_url); ?>"
-                                        alt="<?php echo esc_attr($logo_alt); ?>">
+                                        alt="<?php echo esc_attr($logo_alt); ?>"
+                                        loading="lazy">
                                     <?php if ($has_link) : ?>
                                     </a>
                                 <?php endif; ?>

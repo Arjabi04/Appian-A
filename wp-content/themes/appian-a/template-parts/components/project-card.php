@@ -47,7 +47,8 @@ $is_clickable = ! empty($link_url);
         <img
             class="project-card__image"
             src="<?php echo esc_url($image_url); ?>"
-            alt="<?php echo esc_attr($image_alt); ?>">
+            alt="<?php echo esc_attr($image_alt); ?>"
+            loading="lazy">
     <?php endif; ?>
 
     <?php if (! empty($category_label)) : ?>
