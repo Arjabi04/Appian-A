@@ -72,7 +72,7 @@ $section_label = ! empty($section_title) ? $section_title : 'Our History';
                                 <div class="m-our-history__image-wrapper overflow-hidden">
                                     <img class="m-our-history__image w-100 h-100 d-block" src="<?php echo esc_url($slide['image_url']); ?>"
                                         alt="<?php echo esc_attr($slide['image_alt']); ?>"
-                                        loading="lazy" />
+                                        />
                                 </div>
                             </div>
                             <?php
@@ -119,7 +119,7 @@ $section_label = ! empty($section_title) ? $section_title : 'Our History';
                     aria-hidden="true" />
             </button>
             <div class="m-our-history-popup__image-wrapper w-100 overflow-hidden">
-                <img class="m-our-history-popup__image w-100 h-100 d-block" src="" alt="" loading="lazy" />
+                <img class="m-our-history-popup__image w-100 h-100 d-block" src="" alt=""/>
             </div>
             <div class="m-our-history-popup__content">
                 <div class="m-our-history-popup__body">

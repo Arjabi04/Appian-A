@@ -112,7 +112,6 @@ $render_card = static function (string $card_type, array $data) {
 						class="m-two-column__image"
 						src="<?php echo esc_url($display_image_url); ?>"
 						alt="<?php echo esc_attr($data['image_alt']); ?>"
-						loading="lazy"
 						/>
 				</picture>
 			</div>

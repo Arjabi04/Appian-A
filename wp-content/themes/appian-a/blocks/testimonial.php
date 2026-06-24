@@ -57,7 +57,7 @@ if (! $show_color_block && ! $has_person_name) {
             class="m-testimonial__person"
             src="<?php echo esc_url($person_image_url); ?>"
             alt="<?php echo esc_attr(! empty($person_image_alt) ? $person_image_alt : $person_name); ?>"
-            loading="lazy" />
+            />
     <?php endif; ?>
 
     <?php if ($has_person_name) : ?>
@@ -80,7 +80,7 @@ if (! $show_color_block && ! $has_person_name) {
                         class="m-testimonial__quote-bg"
                         src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/quote-box-mobile.svg'); ?>"
                         alt=""
-                        loading="lazy" />
+                        />
                 </picture>
             </div>
             <div class="m-testimonial__quote-content">
