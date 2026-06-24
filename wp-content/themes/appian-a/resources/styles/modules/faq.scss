@@ -89,6 +89,11 @@
       box-shadow: none;
     }
 
+    &:focus-visible {
+      outline: 1px solid $secondary;
+      // outline-offset: 4px;
+    }
+
     &::after {
       display: none;
     }
