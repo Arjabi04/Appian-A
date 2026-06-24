@@ -108,7 +108,7 @@ if (empty($block) || empty($work_items)) {
                         <div class="our-work__image d-flex flex-start">
                             <img src="<?php echo esc_url($image_url); ?>"
                                 alt="<?php echo esc_attr($image_alt); ?>"
-                                loading="lazy" />
+                                />
                         </div>
                     <?php endif; ?>
                 </div>

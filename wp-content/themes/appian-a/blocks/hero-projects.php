@@ -89,7 +89,7 @@ if ($has_projects) {
                 <img
                     src="<?php echo esc_url($featured_image_url); ?>"
                     alt="<?php echo esc_attr($featured_image_alt); ?>"
-                    loading="lazy">
+                    />
             </div>
         <?php endif; ?>
 

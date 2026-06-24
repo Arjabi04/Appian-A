@@ -21,6 +21,9 @@ function initDateField(root) {
 
     const showPlaceholder = () => {
         if (!dateField.value) {
+            if (dateField.validity && dateField.validity.badInput) {
+                return;
+            }
             dateField.type = 'text';
             dateField.placeholder = 'Move-In Date *';
         }
@@ -40,7 +43,14 @@ function initDateField(root) {
 
     dateField.addEventListener('focus', showPicker);
     dateField.addEventListener('click', showPicker);
-    dateField.addEventListener('blur', showPlaceholder);
+    dateField.addEventListener('blur', () => {
+        setTimeout(() => {
+            if (document.activeElement === dateField) {
+                return;
+            }
+            showPlaceholder();
+        }, 150);
+    });
 }
 
 function initUnitToggle(root) {
@@ -145,17 +155,14 @@ function initValidation(root) {
         return error;
     }
 
-    function checkFieldValidity(field) {
+    function checkFieldValidity(field, isSubmitting = false) {
         const errorEl = getOrCreateError(field, '.c-contact-form__field');
         const value = field.value.trim();
         const isPhoneInvalid = field.name === 'phone' && value !== '' && !/^[0-9]{10}$/.test(value);
         const isMoveInDateInvalid = field.name === 'move-in-date'
             && value !== ''
+            && !(!isSubmitting && document.activeElement === field && value.startsWith('0'))
             && (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value < getTodayDateString());
-
-        if (isMoveInDateInvalid) {
-            field.value = '';
-        }
 
         const isNameInvalid = (field.name === 'first-name' || field.name === 'last-name')
             && value !== ''
@@ -190,10 +197,27 @@ function initValidation(root) {
             }
         }
 
-        if (!field.checkValidity() || isPhoneInvalid || isMoveInDateInvalid || isNameInvalid || isEmailInvalid) {
+        let isFieldValid = true;
+        if (field.name === 'move-in-date') {
+            const hasBadInput = field.validity && field.validity.badInput;
+            const isRequired = field.hasAttribute('required');
+            if (hasBadInput) {
+                isFieldValid = false;
+            } else if (isRequired && value === '') {
+                isFieldValid = false;
+            } else if (isMoveInDateInvalid) {
+                isFieldValid = false;
+            }
+        } else {
+            isFieldValid = field.checkValidity() && !isPhoneInvalid && !isNameInvalid && !isEmailInvalid;
+        }
+
+        if (!isFieldValid) {
             field.classList.add('is-invalid');
             if (errorEl) {
-                if (value === '') {
+                if (field.name === 'move-in-date' && field.validity && field.validity.badInput) {
+                    errorEl.textContent = 'Date entered is invalid.';
+                } else if (value === '') {
                     errorEl.textContent = 'Please fill out this field.';
                 } else if (isNameInvalid) {
                     errorEl.textContent = 'Please enter valid alphabetic characters only.';
@@ -266,7 +290,7 @@ function initValidation(root) {
         let isFormValid = true;
 
         form.querySelectorAll('input:not([type="radio"]), select').forEach((field) => {
-            if (!checkFieldValidity(field)) {
+            if (!checkFieldValidity(field, true)) {
                 isFormValid = false;
             }
         });
