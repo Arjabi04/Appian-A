@@ -172,6 +172,12 @@
                     height: 24px;
                 }
             }
+
+            .site-header__socials {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
         }
     }
 

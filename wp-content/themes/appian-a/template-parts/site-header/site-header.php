@@ -3,6 +3,8 @@ $logo = get_field('logo', 'option');
 $phone = get_field('phone_number', 'option');
 $linkedin = get_field('linkedin_url', 'option');
 $contact_label = get_field('contact_label', 'option');
+$social_links  = get_field('social_links', 'option');
+$social_items  = $social_links['social_items'] ?? [];
 
 // If none of the fields have content, do not render the block.
 if (empty($logo) && empty($phone) && empty($linkedin) && empty($contact_label)) {
@@ -38,10 +40,30 @@ if (! empty($phone)) {
                 ?>
             </div>
             <div class="site-header__mobile-footer">
-                <?php if ($linkedin) : ?>
-                    <a href="<?php echo esc_url($linkedin); ?>" class="site-header__linkedin" aria-label="Appian on LinkedIn" target="_blank" rel="noopener noreferrer">
-                        <img src="<?php echo get_template_directory_uri(); ?>/resources/images/svgs/linkedin.svg" alt="LinkedIn">
-                    </a>
+                <?php if ( ! empty($social_items) ) : ?>
+                    <div class="site-header__socials">
+                        <?php foreach ( $social_items as $item ) :
+                            $icon     = $item['icon']     ?? null;
+                            $platform = $item['platform'] ?? '';
+                            $url      = $item['url']      ?? '';
+                            if ( empty($url) ) continue;
+                        ?>
+                            <a
+                                class="site-header__linkedin"
+                                href="<?php echo esc_url($url); ?>"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="<?php echo esc_attr($platform); ?>">
+                                <?php if ( ! empty($icon) && ! empty($icon['url']) ) : ?>
+                                    <img
+                                        src="<?php echo esc_url($icon['url']); ?>"
+                                        alt="<?php echo esc_attr($platform); ?>"
+                                        width="24"
+                                        height="24">
+                                <?php endif; ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
                 <div class="site-header__contact-wrapper">
                     <a href="<?php echo esc_url($phone_href); ?>" class="site-header__contact" aria-label="<?php echo esc_attr($phone); ?>">

@@ -1,0 +1,52 @@
+{
+  "key": "group_6b2fa91537cd3",
+  "title": "Social Links",
+  "fields": [
+    {
+      "key": "field_6b2fa91537cd4",
+      "label": "Social Links",
+      "name": "social_links",
+      "type": "group",
+      "sub_fields": [
+        {
+          "key": "field_6b2fa91537cd5",
+          "label": "Social Items",
+          "name": "social_items",
+          "type": "repeater",
+          "layout": "row",
+          "sub_fields": [
+            {
+              "key": "field_6b2fa91537cd6",
+              "label": "Icon",
+              "name": "icon",
+              "type": "image",
+              "return_format": "array"
+            },
+            {
+              "key": "field_6b2fa91537cd7",
+              "label": "Platform",
+              "name": "platform",
+              "type": "text"
+            },
+            {
+              "key": "field_6b2fa91537cd8",
+              "label": "URL",
+              "name": "url",
+              "type": "url"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "global-settings-social-links"
+      }
+    ]
+  ],
+  "active": true
+}
