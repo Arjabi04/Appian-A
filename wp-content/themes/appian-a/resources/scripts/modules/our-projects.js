@@ -18,6 +18,14 @@ function initOurProjects(container = document) {
 
         let currentFilter = 'all';
 
+        // If the page was loaded with ?paged= in the URL (plain navigation),
+        // scroll the module into view so the user lands at the top of the
+        // cards grid rather than wherever the browser restored scroll to.
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('paged')) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         // Keep the desktop active state matched with the current filter.
         const updateDesktopState = (currentFilter) => {
             section.querySelectorAll('.our-projects__filter').forEach((filterButton) => {
@@ -77,7 +85,7 @@ function initOurProjects(container = document) {
 
                 await loadProjects(currentFilter, requestedPage);
 
-                cardsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
     });

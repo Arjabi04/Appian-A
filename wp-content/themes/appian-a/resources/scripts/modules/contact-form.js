@@ -100,7 +100,35 @@ function initUnitToggle(root) {
         }
     };
     document.addEventListener('click', handleOutsideClick);
-    document.addEventListener('touchstart', handleOutsideClick, { passive: true });
+
+    // Track touch interactions to support click outside on mobile without closing on scroll/swipe
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const handleTouchStart = (e) => {
+        if (e.touches && e.touches[0]) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }
+    };
+
+    const handleTouchEnd = (e) => {
+        if (e.changedTouches && e.changedTouches[0]) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const diffX = Math.abs(touchEndX - touchStartX);
+            const diffY = Math.abs(touchEndY - touchStartY);
+
+            // If the user moved their finger more than 10 pixels, consider it a scroll/swipe and don't close.
+            if (diffX > 10 || diffY > 10) {
+                return;
+            }
+        }
+        handleOutsideClick(e);
+    };
+
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd);
 
     const form = root.querySelector('.c-contact-form__form');
     if (form) {
