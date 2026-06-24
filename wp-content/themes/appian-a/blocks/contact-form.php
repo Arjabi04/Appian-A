@@ -57,13 +57,13 @@ $contact_form_text     = $contact_group['description'] ?? '';
                         </div>
 
                         <div class="c-contact-form__field c-contact-form__field--select">
-                            <input type="hidden" name="unit-type" id="unit-type" value="Studio">
+                            <input type="hidden" name="unit-type" id="unit-type" value="1 Bedroom">
                             <button type="button" id="unit-type-toggle"
                                 class="c-contact-form__input c-contact-form__select body has-value"
                                 aria-expanded="true"
                                 aria-controls="unit-preference-options"
                                 data-unit-toggle>
-                                <span data-unit-toggle-label>Studio</span>
+                                <span data-unit-toggle-label>1 Bedroom</span>
                             </button>
                         </div>
 
@@ -71,13 +71,13 @@ $contact_form_text     = $contact_group['description'] ?? '';
                             <div class="c-contact-form__radio-group">
                                 <span class="c-contact-form__radio-item">
                                     <label class="body">
-                                        <input type="radio" name="unit-preference" value="Studio" checked>
+                                        <input type="radio" name="unit-preference" value="Studio">
                                         <span>Studio</span>
                                     </label>
                                 </span>
                                 <span class="c-contact-form__radio-item">
                                     <label class="body">
-                                        <input type="radio" name="unit-preference" value="1 Bedroom">
+                                        <input type="radio" name="unit-preference" value="1 Bedroom" checked>
                                         <span>1 Bedroom</span>
                                     </label>
                                 </span>
