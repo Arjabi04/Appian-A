@@ -4,6 +4,17 @@ function initVideoModule() {
 
     let currentlyPlaying = null;
 
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+                const video = entry.target.querySelector('.m-video-module__video');
+                if (video && !video.paused) {
+                    video.pause();
+                }
+            }
+        });
+    }, { threshold: 0 });
+
     blocks.forEach(block => {
         if (block.dataset.initialized) return;
         block.dataset.initialized = 'true';
@@ -12,6 +23,8 @@ function initVideoModule() {
         const controlBtn = block.querySelector('[data-video-control]');
         const videoWrapper = block.querySelector('.m-video-module__wrapper');
         if (!video || !controlBtn || !videoWrapper) return;
+
+        observer.observe(block);
 
         function togglePlayback() {
             if (video.paused) {
