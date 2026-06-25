@@ -31,6 +31,7 @@ function initLeadspace() {
     let sectionTop = 0;
     let sectionHeight = 0;
     function updateSectionMetrics() {
+        section.style.removeProperty('--leadspace-height');
         const rect = section.getBoundingClientRect();
         sectionTop = rect.top + window.scrollY;
         sectionHeight = rect.height;
