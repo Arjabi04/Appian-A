@@ -88,29 +88,8 @@
                 },
                 {
                     "key": "field_6a2f2d6c9c006",
-                    "label": "heading_mobile",
-                    "name": "heading_mobile",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "allow_in_bindings": 0,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
-                    "key": "field_6a2f2d6c9c007",
-                    "label": "heading_desktop",
-                    "name": "heading_desktop",
+                    "label": "Heading",
+                    "name": "heading",
                     "aria-label": "",
                     "type": "textarea",
                     "instructions": "",

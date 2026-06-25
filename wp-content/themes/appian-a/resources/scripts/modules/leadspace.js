@@ -85,7 +85,9 @@ function initLeadspace() {
     function getProgress() {
         if (sectionHeight <= 0) return 0;
         const scrolled = window.scrollY;
-        return Math.min(1, Math.max(0, scrolled / (sectionHeight * 0.6)));
+        const isMobile = window.innerWidth < 768;
+        const limit = isMobile ? (window.innerHeight * 0.6) : (sectionHeight * 0.6);
+        return Math.min(1, Math.max(0, scrolled / limit));
     }
 
     let ticking = false;

@@ -11,20 +11,19 @@ $leadspace_image = $leadspace_group['background_image'] ?? [];
 $leadspace_image = is_array($leadspace_image) ? $leadspace_image : [];
 
 $eyebrow_text = $leadspace_group['eyebrow_text'] ?? '';
-$heading_mobile = $leadspace_group['heading_mobile'] ?? '';
-$heading_desktop = $leadspace_group['heading_desktop'] ?? '';
+$heading = $leadspace_group['heading'] ?? '';
 
 $video_url  = $leadspace_video['url'] ?? '';
 $poster_url = $leadspace_image['url'] ?? '';
 
 $has_media = ! empty($video_url);
-$has_text = ! empty($eyebrow_text) || ! empty($heading_mobile) || ! empty($heading_desktop);
+$has_text = ! empty($eyebrow_text) || ! empty($heading);
 
 if (! $has_media && ! $has_text) {
 	return;
 }
 
-$section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadspace';
+$section_label = $heading ?: $eyebrow_text ?: 'Leadspace';
 ?>
 
 <section class="leadspace" aria-label="<?php echo esc_attr($section_label); ?>">
@@ -78,15 +77,8 @@ $section_label = $heading_desktop ?: $heading_mobile ?: $eyebrow_text ?: 'Leadsp
 				<?php if (! empty($eyebrow_text)) : ?>
 					<p class="leadspace__eyebrow body-sm-all"><?php echo esc_html($eyebrow_text); ?></p>
 				<?php endif; ?>
-				<?php if (! empty($heading_mobile) || ! empty($heading_desktop)) : ?>
-					<h1 class="leadspace__heading d1">
-						<?php if (! empty($heading_mobile)) : ?>
-							<span class="leadspace__heading-mobile"><?php echo esc_html($heading_mobile); ?></span>
-						<?php endif; ?>
-						<?php if (! empty($heading_desktop)) : ?>
-							<span class="leadspace__heading-desktop"><?php echo esc_html($heading_desktop); ?></span>
-						<?php endif; ?>
-					</h1>
+				<?php if (! empty($heading)) : ?>
+					<h1 class="leadspace__heading d1"><?php echo esc_html($heading); ?></h1>
 				<?php endif; ?>
 			</div>
 		</div>
