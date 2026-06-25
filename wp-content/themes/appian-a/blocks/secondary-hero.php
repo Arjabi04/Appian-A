@@ -46,7 +46,7 @@ if (empty($hero_video_url) && empty($hero_image_url) && empty($hero_heading)) {
         <div class="m-secondary-hero__overlay"></div>
     <?php elseif (! empty($hero_image_url)) : ?>
         <img
-            class="m-secondary-hero__image"
+            class="m-secondary-hero__image js-animate-image"
             src="<?php echo esc_url($hero_image_url); ?>"
             alt="<?php echo esc_attr($hero_image_alt); ?>"
             loading="eager"

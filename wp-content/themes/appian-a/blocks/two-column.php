@@ -100,7 +100,7 @@ $render_card = static function (string $card_type, array $data) {
 	$link_target = $data['link_target'] === '_blank' ? '_blank' : '_self';
 	$link_rel = $link_target === '_blank' ? 'noopener noreferrer' : '';
 	$aria_label = ! empty($data['link_title']) ? $data['link_title'] : $data['heading'];
-	?>
+?>
 	<div class="m-two-column__card m-two-column__card--<?php echo esc_attr($card_type); ?>">
 		<?php if (! empty($data['image_url']) || ! empty($data['mobile_image_url'])) : ?>
 			<?php
@@ -109,12 +109,13 @@ $render_card = static function (string $card_type, array $data) {
 			<div class="m-two-column__image-wrapper">
 				<picture class="m-two-column__picture">
 					<img
-						class="m-two-column__image"
+						class="m-two-column__image js-animate-image"
 						src="<?php echo esc_url($display_image_url); ?>"
 						alt="<?php echo esc_attr($data['image_alt']); ?>"
-						/>
+						loading="lazy" />
 				</picture>
 			</div>
+
 		<?php endif; ?>
 
 		<div class="m-two-column__overlay"></div>
@@ -136,7 +137,7 @@ $render_card = static function (string $card_type, array $data) {
 				class="m-two-column__button"
 				href="<?php echo esc_url($data['link_url']); ?>"
 				target="<?php echo esc_attr($link_target); ?>"
-				<?php if (! empty($link_rel)) : ?>rel="<?php echo esc_attr($link_rel); ?>"<?php endif; ?>
+				<?php if (! empty($link_rel)) : ?>rel="<?php echo esc_attr($link_rel); ?>" <?php endif; ?>
 				aria-label="<?php echo esc_attr($aria_label); ?>">
 				<span class="m-two-column__button-inner">
 					<?php echo appian_get_svg_icon('arrow-right'); ?>
@@ -144,7 +145,7 @@ $render_card = static function (string $card_type, array $data) {
 			</a>
 		<?php endif; ?>
 	</div>
-	<?php
+<?php
 };
 ?>
 

@@ -5,6 +5,7 @@ import.meta.glob('../images/**', {
 import * as bootstrap from 'bootstrap';
 import './global/footer.js';
 import './global/header.js';
+import { initImageAnimations, initLazyLoadImages } from './utils/images.js';
 
 const activateButtonAnimation = (e) => {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -15,3 +16,14 @@ const activateButtonAnimation = (e) => {
 };
 document.addEventListener('mouseover', activateButtonAnimation);
 document.addEventListener('focusin', activateButtonAnimation);
+
+const initImageObservers = () => {
+  initLazyLoadImages();
+  initImageAnimations();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initImageObservers, { once: true });
+} else {
+  initImageObservers();
+}

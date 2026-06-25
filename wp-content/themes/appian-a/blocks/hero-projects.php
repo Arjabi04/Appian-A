@@ -88,8 +88,10 @@ $args = ['featured' => false];
         if (! empty($featured_image_url)) : ?>
             <div class="hero-projects__feature-image">
                 <img
+                    class="js-animate-image"
                     src="<?php echo esc_url($featured_image_url); ?>"
                     alt="<?php echo esc_attr($featured_image_alt); ?>"
+                    loading="lazy"
                     />
             </div>
         <?php endif; ?>

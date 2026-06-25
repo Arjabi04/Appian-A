@@ -54,9 +54,10 @@ if (! $show_color_block && ! $has_person_name) {
 
     <?php if ($has_person_image) : ?>
         <img
-            class="m-testimonial__person"
+            class="m-testimonial__person js-animate-image"
             src="<?php echo esc_url($person_image_url); ?>"
             alt="<?php echo esc_attr(! empty($person_image_alt) ? $person_image_alt : $person_name); ?>"
+            loading="lazy"
             />
     <?php endif; ?>
 

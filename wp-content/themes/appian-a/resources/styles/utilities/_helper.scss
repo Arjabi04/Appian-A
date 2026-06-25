@@ -125,6 +125,15 @@
   }
 }
 
+.js-animate-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+
+  &.is-visible {
+    opacity: 1;
+  }
+}
+
 .u {
   &-content-basic {
     a {
