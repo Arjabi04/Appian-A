@@ -5,14 +5,12 @@ $footer_fields = get_field('footer_group', 'option');
 $footer_fields = is_array($footer_fields) ? $footer_fields : [];
 
 $has_explore_group = array_key_exists('explore_group', $footer_fields);
-$has_social_group  = array_key_exists('social_group', $footer_fields);
 
 $branding_group  = (isset($footer_fields['branding_group']) && is_array($footer_fields['branding_group'])) ? $footer_fields['branding_group'] : [];
 $subscribe_group = (isset($footer_fields['subscribe_group']) && is_array($footer_fields['subscribe_group'])) ? $footer_fields['subscribe_group'] : [];
 $address_group   = (isset($footer_fields['address_group']) && is_array($footer_fields['address_group'])) ? $footer_fields['address_group'] : [];
 $contact_group   = (isset($footer_fields['contact_group']) && is_array($footer_fields['contact_group'])) ? $footer_fields['contact_group'] : [];
 $explore_group   = (isset($footer_fields['explore_group']) && is_array($footer_fields['explore_group'])) ? $footer_fields['explore_group'] : [];
-$social_group    = (isset($footer_fields['social_group']) && is_array($footer_fields['social_group'])) ? $footer_fields['social_group'] : [];
 $social_links = get_field('social_links', 'option');
 $social_items = $social_links['social_items'] ?? [];
 
