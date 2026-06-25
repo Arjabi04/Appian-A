@@ -1,12 +1,22 @@
 document.addEventListener('click', (e) => {
-    const button = e.target.closest('.m-two-column__button');
-    if (button) {
-        button.classList.add('is-clicked');
+    const card = e.target.closest('.m-two-column__card');
+    if (card) {
+        const selection = window.getSelection();
+        if (selection && selection.toString().trim() !== '') {
+            e.preventDefault();
+            return;
+        }
+
+        card.classList.add('is-clicked');
+        const button = card.querySelector('.m-two-column__button');
+        if (button) {
+            button.classList.add('is-clicked');
+        }
     }
 });
 
 window.addEventListener('pageshow', () => {
-    document.querySelectorAll('.m-two-column__button').forEach(button => {
-        button.classList.remove('is-clicked');
+    document.querySelectorAll('.m-two-column__card, .m-two-column__button').forEach(el => {
+        el.classList.remove('is-clicked');
     });
 });

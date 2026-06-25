@@ -100,8 +100,15 @@ $render_card = static function (string $card_type, array $data) {
 	$link_target = $data['link_target'] === '_blank' ? '_blank' : '_self';
 	$link_rel = $link_target === '_blank' ? 'noopener noreferrer' : '';
 	$aria_label = ! empty($data['link_title']) ? $data['link_title'] : $data['heading'];
+
+	$tag_name = $has_link ? 'a' : 'div';
+	$href_attr = $has_link ? ' href="' . esc_url($data['link_url']) . '"' : '';
+	$target_attr = $has_link ? ' target="' . esc_attr($link_target) . '"' : '';
+	$rel_attr = ($has_link && ! empty($link_rel)) ? ' rel="' . esc_attr($link_rel) . '"' : '';
+	$aria_attr = $has_link ? ' aria-label="' . esc_attr($aria_label) . '"' : '';
+	$drag_attr = $has_link ? ' draggable="false"' : '';
 ?>
-	<div class="m-two-column__card m-two-column__card--<?php echo esc_attr($card_type); ?>">
+	<<?php echo $tag_name; ?> class="m-two-column__card m-two-column__card--<?php echo esc_attr($card_type); ?>"<?php echo $href_attr . $target_attr . $rel_attr . $aria_attr . $drag_attr; ?>>
 		<?php if (! empty($data['image_url']) || ! empty($data['mobile_image_url'])) : ?>
 			<?php
 			$display_image_url = ! empty($data['image_url']) ? $data['image_url'] : $data['mobile_image_url'];
@@ -133,18 +140,13 @@ $render_card = static function (string $card_type, array $data) {
 		</div>
 
 		<?php if ($has_link) : ?>
-			<a
-				class="m-two-column__button"
-				href="<?php echo esc_url($data['link_url']); ?>"
-				target="<?php echo esc_attr($link_target); ?>"
-				<?php if (! empty($link_rel)) : ?>rel="<?php echo esc_attr($link_rel); ?>" <?php endif; ?>
-				aria-label="<?php echo esc_attr($aria_label); ?>">
+			<span class="m-two-column__button">
 				<span class="m-two-column__button-inner">
 					<?php echo appian_get_svg_icon('arrow-right'); ?>
 				</span>
-			</a>
+			</span>
 		<?php endif; ?>
-	</div>
+	</<?php echo $tag_name; ?>>
 <?php
 };
 ?>

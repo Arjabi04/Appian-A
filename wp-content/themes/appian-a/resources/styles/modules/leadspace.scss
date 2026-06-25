@@ -1,9 +1,10 @@
 @import "../common";
 
 .leadspace {
+    --leadspace-height: max(668px, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 72px));
     position: relative;
     width: 100%;
-    min-height: max(668px, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 72px));
+    min-height: var(--leadspace-height);
     overflow: hidden;
     background: var(--White, #FFF);
     display: flex;
@@ -152,7 +153,8 @@
     }
 
     @include media-breakpoint-up(md) {
-        min-height: max(750px, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px));
+        --leadspace-height: max(750px, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px));
+        min-height: var(--leadspace-height);
         height: auto;
 
         &__eclipse--76 {
@@ -193,7 +195,8 @@
 
 
     @include media-breakpoint-up(lg) {
-        min-height: max(668px, 46.389vw, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px));
+        --leadspace-height: max(668px, 46.389vw, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px));
+        min-height: var(--leadspace-height);
         height: auto;
         justify-content: center;
 

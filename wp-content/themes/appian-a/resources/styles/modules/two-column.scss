@@ -27,6 +27,19 @@
         padding-left: clamp(1.75rem, 0.6rem + 4.88vw, 5rem);
         padding-right: clamp(1.75rem, 1.05rem + 2.96vw, 3.75rem);
         padding-bottom: clamp(2rem, 1.66rem + 1.45vw, 3rem);
+        text-decoration: none;
+        color: inherit;
+        -webkit-user-drag: none;
+        user-select: text;
+
+        &:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: 0.125rem solid var(--primary-red, #{$primary-red});
+            outline-offset: -0.25rem;
+        }
 
         &--construction {
             .m-two-column__image {
@@ -189,24 +202,24 @@
         outline: none;
 
         @media (hover: hover) and (pointer: fine) {
-            &:hover {
+            .m-two-column__card:hover & {
                 background: var(--btn-hover-bg, #{$btn-hover-dark});
                 transform: scale(1.05);
             }
         }
 
         @media (hover: hover) and (pointer: fine) {
-            &:active,
-            &.is-clicked {
+            .m-two-column__card:active &,
+            .m-two-column__card.is-clicked & {
                 background: var(--btn-hover-bg, #{$btn-hover-dark});
             }
         }
 
         @media (hover: none), (pointer: coarse) {
-            &:active,
-            &:hover,
-            &:focus,
-            &.is-clicked {
+            .m-two-column__card:active &,
+            .m-two-column__card:hover &,
+            .m-two-column__card:focus &,
+            .m-two-column__card.is-clicked & {
                 background: var(--primary-red, #{$primary-red}) !important;
                 transform: none !important;
                 
@@ -271,20 +284,20 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-        &__button.has-hovered:not(:hover):not(.is-clicked) {
+        &__card.has-hovered:not(:hover):not(.is-clicked) {
             .m-two-column__button-inner svg>* {
                 animation: buttonArrowLeave 0.5s ease-in-out;
             }
         }
 
-        &__button:hover {
+        &__card:hover {
             .m-two-column__button-inner svg>* {
                 animation: buttonArrowHover 0.5s ease-in-out forwards;
             }
         }
 
-        &__button.is-clicked,
-        &__button:active {
+        &__card.is-clicked,
+        &__card:active {
             .m-two-column__button-inner svg>* {
                 animation: buttonArrowHover 0.5s ease-in-out forwards;
             }
