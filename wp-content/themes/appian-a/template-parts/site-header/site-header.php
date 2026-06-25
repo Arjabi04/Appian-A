@@ -1,13 +1,12 @@
 <?php
 $logo = get_field('logo', 'option');
 $phone = get_field('phone_number', 'option');
-$linkedin = get_field('linkedin_url', 'option');
 $contact_label = get_field('contact_label', 'option');
 $social_links  = get_field('social_links', 'option');
 $social_items  = $social_links['social_items'] ?? [];
 
 // If none of the fields have content, do not render the block.
-if (empty($logo) && empty($phone) && empty($linkedin) && empty($contact_label)) {
+if (empty($logo) && empty($phone) && empty($contact_label)) {
     return;
 }
 $phone_href = '';
