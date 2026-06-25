@@ -368,6 +368,7 @@ $contact-input-padding : 0.875rem 1.5rem;
     &__success {
         color: var(--neutral-600, #{$neutral-600});
         margin-top: 0;
+        outline: none;
 
         &[hidden] {
             display: none;
