@@ -45,10 +45,9 @@ $is_clickable = ! empty($link_url);
 
     <?php if (! empty($image_url)) : ?>
         <img
-            class="project-card__image js-animate-image"
+            class="project-card__image"
             src="<?php echo esc_url($image_url); ?>"
             alt="<?php echo esc_attr($image_alt); ?>"
-            loading="lazy"
             />
     <?php endif; ?>
 
