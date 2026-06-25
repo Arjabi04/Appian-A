@@ -108,8 +108,7 @@ if (empty($block) || empty($work_items)) {
                         <div class="our-work__image d-flex flex-start">
                             <img
                                 src="<?php echo esc_url($image_url); ?>"
-                                alt="<?php echo esc_attr($image_alt); ?>"
-                                loading="lazy" />
+                                alt="<?php echo esc_attr($image_alt); ?>" />
                         </div>
                     <?php endif; ?>
                 </div>
@@ -174,8 +173,8 @@ if (empty($block) || empty($work_items)) {
                             <div class="our-work__content align-items-center d-flex justify-content-center">
                                 <div class="<?php echo esc_attr($desc_class); ?>">
                                     <?php if ($has_image) : ?>
-                                        <div class="our-work__image d-flex flex-start js-animate-image">
-                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" loading="lazy" />
+                                        <div class="our-work__image d-flex flex-start">
+                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" />
                                         </div>
                                     <?php endif; ?>
                                     <div class="description d-flex flex-column">
