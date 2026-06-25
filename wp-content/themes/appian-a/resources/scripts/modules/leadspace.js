@@ -87,7 +87,7 @@ function initLeadspace() {
         if (sectionHeight <= 0) return 0;
         const scrolled = window.scrollY;
         const isMobile = window.innerWidth < 768;
-        const limit = isMobile ? (window.innerHeight * 0.6) : (sectionHeight * 0.6);
+        const limit = isMobile ? (window.innerHeight * 0.7) : (sectionHeight * 0.7);
         return Math.min(1, Math.max(0, scrolled / limit));
     }
 
@@ -151,10 +151,10 @@ function initLeadspace() {
     motionQuery.addEventListener('change', onMotionChange);
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLeadspace);
-} else {
+if (document.readyState === 'complete') {
     initLeadspace();
+} else {
+    window.addEventListener('load', initLeadspace);
 }
 
 if (window.acf) {
