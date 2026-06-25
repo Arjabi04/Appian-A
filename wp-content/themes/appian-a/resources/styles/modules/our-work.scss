@@ -248,10 +248,4 @@
         }
     }
 
-    &__accordion {
-        .accordion-collapse.show .our-work__image img {
-            animation: our-work-image-fade 0.3s ease-in;
-            opacity: 1;
-        }
-    }
 }
