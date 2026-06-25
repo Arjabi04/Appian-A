@@ -217,11 +217,9 @@ if (toggleBtn && nav && header) {
     }
 
     const setOverlayOpen = (isOpen) => {
-        if (window.innerWidth < DESKTOP_BREAKPOINT_PX) {
-            overlay.classList.remove("is-active");
-            return;
-        }
-        overlay.classList.toggle("is-active", Boolean(isOpen));
+        const shouldOpen = window.innerWidth >= DESKTOP_BREAKPOINT_PX && Boolean(isOpen);
+        overlay.classList.toggle("is-active", shouldOpen);
+        document.body.classList.toggle("site-header-dropdown-open", shouldOpen);
     };
 
     dropdownLinks.forEach((link) => {

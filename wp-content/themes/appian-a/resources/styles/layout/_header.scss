@@ -666,7 +666,8 @@
 
 }
 
-body.site-header-menu-open {
+body.site-header-menu-open,
+body.site-header-dropdown-open {
     overflow: hidden;
 }
 
