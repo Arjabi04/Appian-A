@@ -23,7 +23,6 @@ if (toggleBtn && nav && header) {
         });
     };
 
-    let lockedScrollY = 0;
     let lastScrollY = window.scrollY;
     let isScrollTicking = false;
     let isNavFitTicking = false;
@@ -41,23 +40,11 @@ if (toggleBtn && nav && header) {
     }
 
     function lockBodyScroll() {
-        lockedScrollY = window.scrollY;
         document.body.classList.add("site-header-menu-open");
-        document.body.style.position = "fixed";
-        document.body.style.top = `-${lockedScrollY}px`;
-        document.body.style.left = "0";
-        document.body.style.right = "0";
-        document.body.style.width = "100%";
     }
 
     function unlockBodyScroll() {
         document.body.classList.remove("site-header-menu-open");
-        document.body.style.position = "";
-        document.body.style.top = "";
-        document.body.style.left = "";
-        document.body.style.right = "";
-        document.body.style.width = "";
-        window.scrollTo(0, lockedScrollY);
     }
 
     function setMenuOpen(isOpen) {
