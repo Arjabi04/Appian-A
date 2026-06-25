@@ -14,8 +14,8 @@
 
     &__eclipse--76 {
         position: absolute;
-        width: max(744px, 170vw, var(--leadspace-height, 0px));
-        height: max(744px, 170vw, var(--leadspace-height, 0px));
+        width: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
+        height: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
         border-radius: 50%;
         bottom: 74px; // Mobile bottom offset
         left: 50%;
@@ -87,6 +87,12 @@
         margin: 0;
         word-break: break-word;
         overflow-wrap: break-word;
+
+        // On mobile, use Body Small All (Desktop)
+        font-family: $font-family-sans-serif;
+        font-weight: 500;
+        font-size: 0.875rem; // 14px
+        line-height: 1.5; // 150%
     }
 
     &__heading {
@@ -97,6 +103,12 @@
         overflow-wrap: break-word;
 
         &.d1 {
+            // On mobile, use Heading H3 (Mobile)
+            font-family: $font-family-heading;
+            font-weight: 700;
+            font-size: 1.75rem; // 28px
+            line-height: 1.4; // 140%
+
             @include media-breakpoint-up(md) {
                 font-size: 2.5rem;
                 line-height: 1.2;
@@ -104,22 +116,15 @@
         }
     }
 
-    // Mobile shows the short heading; tablet/desktop the full sentence.
-    &__heading-mobile {
-        display: inline;
-    }
 
-    &__heading-desktop {
-        display: none;
-    }
 
 
     &__arc {
         position: absolute;
         left: 50%;
         transform: translate3d(-50%, 0, 0);
-        width: max(744px, 170vw, var(--leadspace-height, 0px));
-        height: max(744px, 170vw, var(--leadspace-height, 0px));
+        width: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
+        height: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
         bottom: 66px; // 8px below the video circle (bottom 74px) — opens the mobile gap
         z-index: 4;
         pointer-events: none;
@@ -174,13 +179,7 @@
             max-width: 654px;
         }
 
-        &__heading-mobile {
-            display: none;
-        }
 
-        &__heading-desktop {
-            display: inline;
-        }
 
         &__arc {
             width: max(1300px, var(--leadspace-height, 0px));
