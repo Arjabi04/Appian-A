@@ -55,6 +55,7 @@ if ($has_projects) {
         $projects_below = array_slice($projects, $cards_before_image);
     }
 }
+$args = ['featured' => false];
 ?>
 
 <section class="hero-projects grid-container">
