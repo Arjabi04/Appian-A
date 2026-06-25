@@ -77,9 +77,10 @@ if (empty($section_title) && ! $has_partners && ! $has_view_all) {
                                     <a class="partners__logo-link" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>" <?php if ($link_is_blank) : ?> rel="noopener noreferrer" <?php endif; ?>>
                                     <?php endif; ?>
                                     <img
-                                        class="partners__logo"
+                                        class="partners__logo js-animate-image"
                                         src="<?php echo esc_url($logo_url); ?>"
                                         alt="<?php echo esc_attr($logo_alt); ?>"
+                                        loading="lazy"
                                         />
                                     <?php if ($has_link) : ?>
                                     </a>

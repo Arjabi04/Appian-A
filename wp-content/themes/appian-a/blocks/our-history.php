@@ -70,8 +70,9 @@ $section_label = ! empty($section_title) ? $section_title : 'Our History';
                             <div class="m-our-history__image-year-box">
                                 <span class="m-our-history__year body-xlarge d-inline-block m-0"><?php echo esc_html($slide['year']); ?></span>
                                 <div class="m-our-history__image-wrapper overflow-hidden">
-                                    <img class="m-our-history__image w-100 h-100 d-block" src="<?php echo esc_url($slide['image_url']); ?>"
+                                    <img class="m-our-history__image js-animate-image w-100 h-100 d-block" src="<?php echo esc_url($slide['image_url']); ?>"
                                         alt="<?php echo esc_attr($slide['image_alt']); ?>"
+                                        loading="lazy"
                                         />
                                 </div>
                             </div>

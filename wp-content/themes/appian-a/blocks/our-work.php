@@ -18,7 +18,7 @@ if (empty($block) || empty($work_items)) {
         <h2 class="our-work__header h2 text-center"><?php echo esc_html($section_title); ?></h2>
         <div class="our-work__divider-wrap section-divider d-flex justify-content-center" data-section-divider>
             <img
-                class="our-work__section-divider section-divider__image"
+                class="our-work__section-divider section-divider__image "
                 src="<?php echo esc_url(get_template_directory_uri() . '/resources/images/svgs/divider.svg'); ?>"
                 alt=""
                 aria-hidden="true" />
@@ -106,9 +106,10 @@ if (empty($block) || empty($work_items)) {
 
                     <?php if ($has_image) : ?>
                         <div class="our-work__image d-flex flex-start">
-                            <img src="<?php echo esc_url($image_url); ?>"
+                            <img
+                                src="<?php echo esc_url($image_url); ?>"
                                 alt="<?php echo esc_attr($image_alt); ?>"
-                                />
+                                loading="lazy" />
                         </div>
                     <?php endif; ?>
                 </div>
@@ -173,8 +174,8 @@ if (empty($block) || empty($work_items)) {
                             <div class="our-work__content align-items-center d-flex justify-content-center">
                                 <div class="<?php echo esc_attr($desc_class); ?>">
                                     <?php if ($has_image) : ?>
-                                        <div class="our-work__image d-flex flex-start">
-                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>"/>
+                                        <div class="our-work__image d-flex flex-start js-animate-image">
+                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" loading="lazy" />
                                         </div>
                                     <?php endif; ?>
                                     <div class="description d-flex flex-column">

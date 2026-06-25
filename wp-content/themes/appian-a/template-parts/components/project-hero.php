@@ -75,7 +75,7 @@ if (
     <?php if (! empty($image_url)) : ?>
         <div class="m-tertiary-hero__image-wrapper">
             <img
-                class="m-tertiary-hero__image"
+                class="m-tertiary-hero__image js-animate-image "
                 src="<?php echo esc_url($image_url); ?>"
                 alt="<?php echo esc_attr($image_alt); ?>"
                 fetchpriority="high" />

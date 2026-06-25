@@ -1,5 +1,15 @@
 @import "../custom";
 
+@keyframes our-work-image-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 .our-work {
     &__wrapper {
         position: relative;
@@ -228,6 +238,20 @@
             @include media-breakpoint-up(md) {
                 aspect-ratio: 420 / 408;
             }
+        }
+    }
+
+    &__desktop {
+        .our-work__content.d-flex .our-work__image img {
+            animation: our-work-image-fade 0.3s ease-in;
+            opacity: 1;
+        }
+    }
+
+    &__accordion {
+        .accordion-collapse.show .our-work__image img {
+            animation: our-work-image-fade 0.3s ease-in;
+            opacity: 1;
         }
     }
 }

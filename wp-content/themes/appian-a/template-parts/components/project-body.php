@@ -94,6 +94,8 @@ while ($i < $count) {
             $img_node->removeAttribute('height');
             $img_node->removeAttribute('sizes');
             $img_node->removeAttribute('srcset');
+            $img_node->setAttribute('class', trim($img_node->getAttribute('class') . ' js-animate-image'));
+            $img_node->setAttribute('loading', 'lazy');
             $output .= $dom->saveHTML($img_node);
         }
         $i++;
@@ -101,6 +103,8 @@ while ($i < $count) {
     }
 
     if ($tag === 'img') {
+        $node->setAttribute('class', trim($node->getAttribute('class') . ' js-animate-image'));
+        $node->setAttribute('loading', 'lazy');
         $output .= $dom->saveHTML($node);
         $i++;
         continue;
