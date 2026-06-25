@@ -55,6 +55,10 @@ if ($has_projects) {
         $projects_below = array_slice($projects, $cards_before_image);
     }
 }
+
+// Never show the featured tag on hero-projects cards — pass this
+// via $args so project-card.php uses it instead of the ACF field.
+$args = ['featured' => false];
 ?>
 
 <section class="hero-projects grid-container">
