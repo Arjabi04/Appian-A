@@ -192,4 +192,16 @@
         align-self: stretch;
         color: $secondary-dark;
     }
+
+    @media (min-width: 768px) and (max-width: 1024.98px) {
+        &__annotation {
+            left: 74vw;
+        }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1199.98px) {
+        &__annotation {
+            right: max(5rem, calc((100% - 74rem) / 2 + 12rem), 14%);
+        }
+    }
 }

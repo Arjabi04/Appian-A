@@ -32,6 +32,7 @@ function initDateField(root) {
     const showPicker = () => {
         if (dateField.type === 'date') return;
         dateField.type = 'date';
+        dateField.min = getTodayDateString();
         try {
             if (typeof dateField.showPicker === 'function') {
                 dateField.showPicker();
@@ -39,10 +40,20 @@ function initDateField(root) {
         } catch (e) { }
     };
 
+    const changeToDate = () => {
+        if (dateField.type !== 'date') {
+            dateField.type = 'date';
+            dateField.min = getTodayDateString();
+        }
+    };
+
     showPlaceholder();
 
     dateField.addEventListener('focus', showPicker);
     dateField.addEventListener('click', showPicker);
+    dateField.addEventListener('pointerdown', changeToDate);
+    dateField.addEventListener('touchstart', changeToDate);
+    dateField.addEventListener('mousedown', changeToDate);
     dateField.addEventListener('blur', () => {
         setTimeout(() => {
             if (document.activeElement === dateField) {
