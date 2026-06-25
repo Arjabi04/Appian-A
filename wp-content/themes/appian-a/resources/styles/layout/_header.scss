@@ -40,6 +40,10 @@
         align-items: center;
         text-decoration: none;
         z-index: 220;
+
+            &:focus-visible {
+                outline: 2px solid $secondary;
+            }
     }
 
     &__logo-image {
@@ -301,6 +305,11 @@
             overflow-wrap: anywhere;
 	        transition: color 0.3s ease;
 
+            &:focus-visible {
+                outline: 1px solid $secondary;
+                outline-offset: 2px;
+            }
+
 	        &:hover {
 	            color: $primary-red;
 	        }
@@ -349,6 +358,9 @@
 
     &__contact:hover,
     &__contact:focus-visible {
+        outline: 1px solid $secondary;
+        outline-offset: 2px;
+
         .site-header__contact-number {
             color: $primary-red;
         }
