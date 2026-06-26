@@ -15,6 +15,12 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<style>
+		html {
+			scrollbar-gutter: stable;
+		}
+	</style>
+
 	<?php wp_head(); ?>
 
 </head>
