@@ -2,9 +2,11 @@
 
 .leadspace {
     --leadspace-height: max(668px, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 72px));
+    --leadspace-circle-size: max(744px, 170vw, var(--leadspace-height, 0px));
+    --leadspace-eclipse-bottom: 74px;
     position: relative;
     width: 100%;
-    min-height: var(--leadspace-height);
+    min-height: 668px;
     overflow: hidden;
     background: var(--White, #FFF);
     display: flex;
@@ -14,10 +16,10 @@
 
     &__eclipse--76 {
         position: absolute;
-        width: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
-        height: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
+        width: var(--leadspace-circle-size);
+        height: var(--leadspace-circle-size);
         border-radius: 50%;
-        bottom: 74px; // Mobile bottom offset
+        bottom: var(--leadspace-eclipse-bottom);
         left: 50%;
         transform: translate3d(-50%, 0, 0);
         overflow: hidden;
@@ -78,7 +80,7 @@
         align-items: center;
         gap: 32px;
         width: 100%;
-        max-width: 318px; // Mobile heading width
+        max-width: 318px;
         text-align: center;
     }
 
@@ -87,8 +89,6 @@
         margin: 0;
         word-break: break-word;
         overflow-wrap: break-word;
-
-        // On mobile, use Body Small All (Desktop)
         font-family: $font-family-sans-serif;
         font-weight: 500;
         font-size: 0.875rem; // 14px
@@ -103,7 +103,6 @@
         overflow-wrap: break-word;
 
         &.d1 {
-            // On mobile, use Heading H3 (Mobile)
             font-family: $font-family-heading;
             font-weight: 700;
             font-size: 1.75rem; // 28px
@@ -123,9 +122,9 @@
         position: absolute;
         left: 50%;
         transform: translate3d(-50%, 0, 0);
-        width: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
-        height: max(744px, 170vw, var(--leadspace-height, 0px), 120vh);
-        bottom: 66px; // 8px below the video circle (bottom 74px) — opens the mobile gap
+        width: var(--leadspace-circle-size);
+        height: var(--leadspace-circle-size);
+        bottom: calc(var(--leadspace-eclipse-bottom) - (18px - var(--leadspace-circle-size) * 0.009));
         z-index: 4;
         pointer-events: none;
     }
@@ -160,14 +159,10 @@
     @include media-breakpoint-up(md) {
         justify-content: flex-end;
         --leadspace-height: max(750px, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 84px));
+        --leadspace-circle-size: max(1300px, var(--leadspace-height, 0px));
+        --leadspace-eclipse-bottom: 60px;
         min-height: var(--leadspace-height);
         height: auto;
-
-        &__eclipse--76 {
-            width: max(1300px, var(--leadspace-height, 0px));
-            height: max(1300px, var(--leadspace-height, 0px));
-            bottom: 60px;
-        }
 
         &__inner {
             margin-bottom: 260px;
@@ -180,14 +175,6 @@
             max-width: 654px;
         }
 
-
-
-        &__arc {
-            width: max(1300px, var(--leadspace-height, 0px));
-            height: max(1300px, var(--leadspace-height, 0px));
-            bottom: 60px;
-        }
-
         &__arc-path {
             --arc-start: 0.16;
         }
@@ -196,6 +183,8 @@
 
     @include media-breakpoint-up(lg) {
         --leadspace-height: max(668px, 46.389vw, calc(100vh - var(--wp-admin--admin-bar--height, 0px) - 90.2px));
+        --leadspace-circle-size: max(2000px, 138.888vw, var(--leadspace-height, 0px));
+        --leadspace-eclipse-bottom: calc(max(668px, 46.389vw) * 0.5 - max(264px, 18.333vw));
         min-height: var(--leadspace-height);
         height: auto;
         justify-content: center;
@@ -211,13 +200,6 @@
             height: max(56.25vw, var(--leadspace-height, 668px));
         }
 
-
-        &__eclipse--76 {
-            width: max(2000px, 138.888vw, var(--leadspace-height, 0px));
-            height: max(2000px, 138.888vw, var(--leadspace-height, 0px));
-            bottom: calc(max(668px, 46.389vw) * 0.5 - max(264px, 18.333vw));
-        }
-
         &__inner {
             top: 0;
             bottom: auto;
@@ -231,13 +213,6 @@
         &__content {
             max-width: 832px;
         }
-
-        &__arc {
-            width: max(2000px, 138.888vw, var(--leadspace-height, 0px));
-            height: max(2000px, 138.888vw, var(--leadspace-height, 0px));
-            bottom: calc(max(668px, 46.389vw) * 0.5 - max(264px, 18.333vw));
-        }
-
 
         &__arc-path {
             --arc-start: 0.16;
