@@ -114,7 +114,10 @@ function initLeadspace() {
         });
     }
 
+    let lastWidth = window.innerWidth;
     function onResize() {
+        if (window.innerWidth === lastWidth) return;
+        lastWidth = window.innerWidth;
         updateArcMetrics();
         onScroll();
     }
@@ -149,12 +152,18 @@ function initLeadspace() {
     _prevMotionQuery = motionQuery;
     _prevMotionChangeHandler = onMotionChange;
     motionQuery.addEventListener('change', onMotionChange);
+
+    // Update metrics and scroll state again after all resources are fully loaded
+    window.addEventListener('load', () => {
+        updateArcMetrics();
+        onScroll();
+    }, { once: true });
 }
 
-if (document.readyState === 'complete') {
-    initLeadspace();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLeadspace);
 } else {
-    window.addEventListener('load', initLeadspace);
+    initLeadspace();
 }
 
 if (window.acf) {
