@@ -51,9 +51,7 @@ function initDateField(root) {
 
     dateField.addEventListener('focus', showPicker);
     dateField.addEventListener('click', showPicker);
-    dateField.addEventListener('pointerdown', changeToDate);
     dateField.addEventListener('touchstart', changeToDate);
-    dateField.addEventListener('mousedown', changeToDate);
     dateField.addEventListener('blur', () => {
         setTimeout(() => {
             if (document.activeElement === dateField) {
