@@ -117,7 +117,12 @@ function initUnitToggle(root) {
     });
 
     const handleOutsideClick = (e) => {
-        if (!toggle.contains(e.target) && !radioField.contains(e.target)) {
+        const submitButton = root.querySelector('button[type="submit"]');
+        if (
+            !toggle.contains(e.target) &&
+            !radioField.contains(e.target) &&
+            (!submitButton || !submitButton.contains(e.target))
+        ) {
             if (!closeTimeoutId) {
                 closeTimeoutId = setTimeout(() => {
                     setOpen(false);
