@@ -355,12 +355,14 @@
 
     &__contact:hover,
     &__contact:focus-visible {
-        outline: 1px solid $secondary;
-        outline-offset: 2px;
-
         .site-header__contact-number {
             color: $primary-red;
         }
+    }
+
+    &__contact:focus-visible {
+        outline: 1px solid $secondary;
+        outline-offset: 2px;
     }
 
     &__mobile-toggle {

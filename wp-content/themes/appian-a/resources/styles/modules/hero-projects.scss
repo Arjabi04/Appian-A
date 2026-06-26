@@ -18,6 +18,10 @@
         gap: 12px;
         margin-top: 50px;
 
+        @include media-breakpoint-up(md) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
         @include media-breakpoint-up(xl) {
             grid-template-columns: repeat(4, minmax(0, 4fr));
             column-gap: 12px;
@@ -38,6 +42,10 @@
             height: 100%;
             object-fit: cover;
             border-radius: 10px;
+        }
+
+        @include media-breakpoint-up(md) {
+            grid-column: span 2;
         }
 
         @include media-breakpoint-up(xl) {
