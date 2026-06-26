@@ -1,22 +1,15 @@
-const lazyImages = document.querySelectorAll('.js-lazy-image');
+const lazyImages = document.querySelectorAll('[loading="lazy"]');
 const animatedImages = document.querySelectorAll('.js-animate-image');
 
 export function initLazyLoadImages() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(({ isIntersecting, target }) => {
-            if (!isIntersecting) return;
+    lazyImages.forEach((image) => {
+        if (image.complete) {
+            image.classList.add('is-loaded');
+            return;
+        }
 
-            if (target.complete) {
-                target.classList.add('is-loaded');
-            } else {
-                target.addEventListener('load', () => target.classList.add('is-loaded'), { once: true });
-            }
-
-            observer.unobserve(target);
-        });
+        image.addEventListener('load', () => image.classList.add('is-loaded'), { once: true });
     });
-
-    lazyImages.forEach((image) => observer.observe(image));
 }
 
 export function initImageAnimations() {
