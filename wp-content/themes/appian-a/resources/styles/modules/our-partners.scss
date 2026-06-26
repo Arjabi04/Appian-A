@@ -227,10 +227,16 @@
             color: $primary-red;
         }
 
-        &:hover,
         &:focus-visible {
             color: $primary-red;
             text-decoration: underline;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            &:hover {
+                color: $primary-red;
+                text-decoration: underline;
+            }
         }
     }
 }
