@@ -27,3 +27,23 @@ if (document.readyState === 'loading') {
 } else {
   initImageObservers();
 }
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn');
+  if (btn) {
+    btn.classList.add('is-clicked');
+  }
+});
+
+document.addEventListener('mouseout', (e) => {
+  const btn = e.target.closest('.btn');
+  if (btn && !btn.contains(e.relatedTarget)) {
+    btn.classList.remove('is-clicked');
+  }
+});
+
+window.addEventListener('pageshow', () => {
+  document.querySelectorAll('.btn').forEach((btn) => {
+    btn.classList.remove('is-clicked');
+  });
+});

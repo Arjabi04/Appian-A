@@ -73,10 +73,24 @@ function initUnitToggle(root) {
 
     if (!toggle || !radioField) return;
 
+    let closeTimeoutId = null;
+
     const setOpen = (isOpen) => {
+        if (closeTimeoutId) {
+            clearTimeout(closeTimeoutId);
+            closeTimeoutId = null;
+        }
         radioField.hidden = !isOpen;
         radioField.classList.toggle('is-open', isOpen);
         toggle.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    root.closeUnitToggle = () => setOpen(false);
+    root.cancelUnitToggleClose = () => {
+        if (closeTimeoutId) {
+            clearTimeout(closeTimeoutId);
+            closeTimeoutId = null;
+        }
     };
 
     let recentlyOpenedByFocus = false;
@@ -104,10 +118,14 @@ function initUnitToggle(root) {
         });
     });
 
-    // Close on click/touchstart outside of the toggle and radioField (supporting iOS click propagation)
     const handleOutsideClick = (e) => {
         if (!toggle.contains(e.target) && !radioField.contains(e.target)) {
-            setOpen(false);
+            if (!closeTimeoutId) {
+                closeTimeoutId = setTimeout(() => {
+                    setOpen(false);
+                    closeTimeoutId = null;
+                }, 150);
+            }
         }
     };
     document.addEventListener('click', handleOutsideClick);
@@ -321,6 +339,10 @@ function initValidation(root) {
     });
 
     form.addEventListener('submit', async (e) => {
+        if (typeof root.cancelUnitToggleClose === 'function') {
+            root.cancelUnitToggleClose();
+        }
+
         if (submitButton?.disabled || form.classList.contains('is-success')) {
             e.preventDefault();
             return;
@@ -340,6 +362,11 @@ function initValidation(root) {
 
         if (!isFormValid) {
             e.preventDefault();
+            if (checkRadioValidity()) {
+                if (typeof root.closeUnitToggle === 'function') {
+                    root.closeUnitToggle();
+                }
+            }
             const firstInvalid = form.querySelector('.is-invalid');
             if (firstInvalid) firstInvalid.focus();
             return;

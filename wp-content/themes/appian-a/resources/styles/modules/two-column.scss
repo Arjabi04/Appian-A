@@ -210,8 +210,20 @@
 
         @media (hover: hover) and (pointer: fine) {
             .m-two-column__card:active &,
-            .m-two-column__card.is-clicked & {
+            &:active {
                 background: var(--btn-hover-bg, #{$btn-hover-dark});
+            }
+
+            &.is-clicked,
+            .m-two-column__card.is-clicked & {
+                background: var(--primary-red, #{$primary-red}) !important;
+                transform: none !important;
+            }
+
+            &:active.is-clicked,
+            .m-two-column__card:active.is-clicked & {
+                background: var(--btn-hover-bg, #{$btn-hover-dark}) !important;
+                transform: scale(1.05) !important;
             }
         }
 
