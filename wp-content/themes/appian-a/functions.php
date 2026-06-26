@@ -165,6 +165,16 @@ function outside_traineeship_biolerplate_scripts()
 }
 add_action('wp_enqueue_scripts', 'outside_traineeship_biolerplate_scripts', 2);
 
+function preload_styles($html, $handle, $href, $media)
+{
+	if ($handle === 'app-css') {
+		$html = '<link rel="preload" href="' . esc_url($href) . '" as="style">' . $html;
+	}
+
+	return $html;
+}
+add_filter('style_loader_tag', 'preload_styles', 10, 4);
+
 
 function is_block_preview()
 {
@@ -224,13 +234,11 @@ add_action('wp_ajax_nopriv_appian_footer_email_empty', 'appian_footer_email_empt
 
 function theme_assets()
 {
-
 	$is_dev = defined('WP_ENV')
 		&& WP_ENV === 'development';
 
 	// Vite HMR
 	if ($is_dev) {
-
 		wp_enqueue_script(
 			'vite-client',
 			'http://localhost:5173/@vite/client',
@@ -400,25 +408,26 @@ add_filter('acf/validate_value/name=fax_number', 'appian_validate_header_phone',
 /**
  * Preload background assets for leadspace and secondary-hero blocks in the head.
  */
-function appian_get_first_block_data( $block_name, $blocks = null ) {
-	if ( null === $blocks ) {
+function appian_get_first_block_data($block_name, $blocks = null)
+{
+	if (null === $blocks) {
 		$post = get_post();
-		if ( ! $post ) {
+		if (! $post) {
 			return [];
 		}
 
-		$blocks = parse_blocks( $post->post_content );
+		$blocks = parse_blocks($post->post_content);
 	}
 
-	foreach ( $blocks as $block ) {
-		if ( ! empty( $block['blockName'] ) && $block_name === $block['blockName'] ) {
+	foreach ($blocks as $block) {
+		if (! empty($block['blockName']) && $block_name === $block['blockName']) {
 			$data = $block['attrs']['data'] ?? [];
-			return is_array( $data ) ? $data : [];
+			return is_array($data) ? $data : [];
 		}
 
-		if ( ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
-			$nested_data = appian_get_first_block_data( $block_name, $block['innerBlocks'] );
-			if ( ! empty( $nested_data ) ) {
+		if (! empty($block['innerBlocks']) && is_array($block['innerBlocks'])) {
+			$nested_data = appian_get_first_block_data($block_name, $block['innerBlocks']);
+			if (! empty($nested_data)) {
 				return $nested_data;
 			}
 		}
@@ -427,96 +436,101 @@ function appian_get_first_block_data( $block_name, $blocks = null ) {
 	return [];
 }
 
-function appian_get_block_media_url( $value ) {
-	if ( is_array( $value ) ) {
+function appian_get_block_media_url($value)
+{
+	if (is_array($value)) {
 		return $value['url'] ?? '';
 	}
 
-	if ( is_numeric( $value ) ) {
-		return wp_get_attachment_url( (int) $value ) ?: '';
+	if (is_numeric($value)) {
+		return wp_get_attachment_url((int) $value) ?: '';
 	}
 
-	return is_string( $value ) ? $value : '';
+	return is_string($value) ? $value : '';
 }
 
-function appian_preload_hero_assets() {
-	if ( ! is_singular() ) {
+function appian_preload_hero_assets()
+{
+	if (! is_singular()) {
 		return;
 	}
 
-	if ( has_block( 'acf/leadspace' ) ) {
-		$leadspace_data = appian_get_first_block_data( 'acf/leadspace' );
-		$video_url      = appian_get_block_media_url( $leadspace_data['leadspace_group_background_video'] ?? '' );
-		$poster_url     = appian_get_block_media_url( $leadspace_data['leadspace_group_background_image'] ?? '' );
+	if (has_block('acf/leadspace')) {
+		$leadspace_data = appian_get_first_block_data('acf/leadspace');
+		$video_url      = appian_get_block_media_url($leadspace_data['leadspace_group_background_video'] ?? '');
+		$poster_url     = appian_get_block_media_url($leadspace_data['leadspace_group_background_image'] ?? '');
 
-		if ( ! empty( $poster_url ) ) {
-			echo '	<link rel="preload" as="image" href="' . esc_url( $poster_url ) . '" fetchpriority="high">' . "\n";
+		if (! empty($poster_url)) {
+			echo '	<link rel="preload" as="image" href="' . esc_url($poster_url) . '" fetchpriority="high">' . "\n";
 		}
 
-		if ( ! empty( $video_url ) ) {
-			echo '	<link rel="preload" as="video" href="' . esc_url( $video_url ) . '" fetchpriority="high">' . "\n";
+		if (! empty($video_url)) {
+			echo '	<link rel="preload" as="video" href="' . esc_url($video_url) . '" fetchpriority="high">' . "\n";
 		}
 	}
 
-	if ( has_block( 'acf/secondary-hero' ) ) {
-		$secondary_hero_group = get_field( 'secondary_hero' );
+	if (has_block('acf/secondary-hero')) {
+		$secondary_hero_group = get_field('secondary_hero');
 		$hero_video           = $secondary_hero_group['secondaryhero__video'] ?? [];
 		$hero_image           = $secondary_hero_group['secondaryhero__image'] ?? [];
-		$hero_video_url       = is_array( $hero_video ) ? ( $hero_video['url'] ?? '' ) : '';
+		$hero_video_url       = is_array($hero_video) ? ($hero_video['url'] ?? '') : '';
 		$hero_image_url       = $hero_image['url'] ?? '';
 
-		if ( ! empty( $hero_video_url ) ) {
-			echo '	<link rel="preload" as="video" href="' . esc_url( $hero_video_url ) . '" fetchpriority="high">' . "\n";
+		if (! empty($hero_video_url)) {
+			echo '	<link rel="preload" as="video" href="' . esc_url($hero_video_url) . '" fetchpriority="high">' . "\n";
 		}
 
-		if ( ! empty( $hero_image_url ) ) {
-			echo '	<link rel="preload" as="image" href="' . esc_url( $hero_image_url ) . '" fetchpriority="high">' . "\n";
+		if (! empty($hero_image_url)) {
+			echo '	<link rel="preload" as="image" href="' . esc_url($hero_image_url) . '" fetchpriority="high">' . "\n";
 		}
 	}
 }
-add_action( 'wp_head', 'appian_preload_hero_assets', 1 );
+add_action('wp_head', 'appian_preload_hero_assets', 1);
 
 add_action('wp_head', function () {
-    $fonts = [
-        'Appian Fonts/RecklessNeue/RecklessNeue-Bold.woff',
-        'Appian Fonts/RecklessNeue/RecklessNeue-Book.woff',
-        'Appian Fonts/RecklessNeue/RecklessNeue-Medium.woff',
-        'Appian Fonts/GeneralSans/GeneralSans-Regular.woff',
-        'Appian Fonts/GeneralSans/GeneralSans-Medium.woff',
-    ];
+	$fonts = [
+		'Appian Fonts/RecklessNeue/RecklessNeue-Bold.woff',
+		'Appian Fonts/RecklessNeue/RecklessNeue-Book.woff',
+		'Appian Fonts/RecklessNeue/RecklessNeue-Medium.woff',
+		'Appian Fonts/GeneralSans/GeneralSans-Regular.woff',
+		'Appian Fonts/GeneralSans/GeneralSans-Medium.woff',
+	];
 
-    foreach ($fonts as $font) {
-        $url = vite_assets('resources/fonts/' . $font);
-        if ($url) {
-            echo '<link rel="preload" href="' . esc_url($url) . '" as="font" type="font/woff" crossorigin="anonymous">' . "\n";
-        }
-    }
+	foreach ($fonts as $font) {
+		$url = vite_assets('resources/fonts/' . $font);
+		if ($url) {
+			echo '<link rel="preload" href="' . esc_url($url) . '" as="font" type="font/woff" crossorigin="anonymous">' . "\n";
+		}
+	}
 }, 1);
 
 require get_template_directory() . '/inc/cpt-projects.php';
 
 add_filter('wp_handle_upload_prefilter', 'our_work_block_gif_upload');
 
-function our_work_block_gif_upload($file) {
-    if (isset($file['type']) && $file['type'] === 'image/gif') {
-        $file['error'] = 'GIF files are not allowed.';
-    }
-    return $file;
+function our_work_block_gif_upload($file)
+{
+	if (isset($file['type']) && $file['type'] === 'image/gif') {
+		$file['error'] = 'GIF files are not allowed.';
+	}
+	return $file;
 }
 add_filter('upload_mimes', 'our_work_allow_svg_upload');
 
-function our_work_allow_svg_upload($mimes) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
+function our_work_allow_svg_upload($mimes)
+{
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
 }
 
 add_filter('wp_check_filetype_and_ext', 'our_work_fix_svg_mime', 10, 5);
 
-function our_work_fix_svg_mime($data, $file, $filename, $mimes, $real_mime) {
-    $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-    if ($ext === 'svg') {
-        $data['ext']  = 'svg';
-        $data['type'] = 'image/svg+xml';
-    }
-    return $data;
+function our_work_fix_svg_mime($data, $file, $filename, $mimes, $real_mime)
+{
+	$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+	if ($ext === 'svg') {
+		$data['ext']  = 'svg';
+		$data['type'] = 'image/svg+xml';
+	}
+	return $data;
 }
