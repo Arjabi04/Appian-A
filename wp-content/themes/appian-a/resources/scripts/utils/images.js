@@ -1,6 +1,16 @@
-
+const lazyImages = document.querySelectorAll('[loading="lazy"]');
 const animatedImages = document.querySelectorAll('.js-animate-image');
 
+export function initLazyLoadImages() {
+    lazyImages.forEach((image) => {
+        if (image.complete) {
+            image.classList.add('is-loaded');
+            return;
+        }
+
+        image.addEventListener('load', () => image.classList.add('is-loaded'), { once: true });
+    });
+}
 
 export function initImageAnimations() {
     const observer = new IntersectionObserver((entries) => {
