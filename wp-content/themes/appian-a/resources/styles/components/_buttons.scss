@@ -109,6 +109,20 @@
     outline-offset: 0.125rem;
   }
 
+  &.is-clicked {
+    background-color: var(--btn-bg, #{$primary-red}) !important;
+    border-color: var(--btn-border-color, #{$primary-red}) !important;
+    color: var(--btn-color, #{$white}) !important;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:active.is-clicked {
+      background-color: var(--btn-hover-bg, #{$btn-hover-dark}) !important;
+      border-color: var(--btn-hover-border-color, #{$btn-hover-dark}) !important;
+      color: var(--btn-hover-color, #{$white}) !important;
+    }
+  }
+
   &--small {
     --btn-padding: 0.75rem 1.25rem;
   }

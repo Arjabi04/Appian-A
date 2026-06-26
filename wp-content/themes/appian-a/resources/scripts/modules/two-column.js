@@ -14,6 +14,16 @@ document.addEventListener('click', (e) => {
         }
     }
 });
+document.addEventListener('mouseout', (e) => {
+    const card = e.target.closest('.m-two-column__card');
+    if (card && !card.contains(e.relatedTarget)) {
+        card.classList.remove('is-clicked');
+        const button = card.querySelector('.m-two-column__button');
+        if (button) {
+            button.classList.remove('is-clicked');
+        }
+    }
+});
 
 window.addEventListener('pageshow', () => {
     document.querySelectorAll('.m-two-column__card, .m-two-column__button').forEach(el => {

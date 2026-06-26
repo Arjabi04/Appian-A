@@ -26,6 +26,7 @@ if (toggleBtn && nav && header) {
     let lastScrollY = window.scrollY;
     let isScrollTicking = false;
     let isNavFitTicking = false;
+    let isFirstScroll = true;
 
     // throttle helper func
     function throttle(func, limit = 300) {
@@ -142,6 +143,14 @@ if (toggleBtn && nav && header) {
 
     function syncHeaderVisibility() {
         const currentScrollY = Math.max(window.scrollY, 0);
+
+        if (isFirstScroll) {
+            isFirstScroll = false;
+            lastScrollY = currentScrollY;
+            isScrollTicking = false;
+            return;
+        }
+
         const scrollDifference = currentScrollY - lastScrollY;
         const isMenuOpen = nav.classList.contains("site-header__nav--mobile-active");
 
