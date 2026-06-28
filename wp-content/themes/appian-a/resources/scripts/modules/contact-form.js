@@ -91,20 +91,8 @@ function initUnitToggle(root) {
         }
     };
 
-    let recentlyOpenedByFocus = false;
-
-    toggle.addEventListener('focus', () => {
-        if (toggle.getAttribute('aria-expanded') !== 'true') {
-            setOpen(true);
-            recentlyOpenedByFocus = true;
-            setTimeout(() => { recentlyOpenedByFocus = false; }, 200);
-        }
-    });
-
     toggle.addEventListener('click', () => {
-        if (!recentlyOpenedByFocus) {
-            setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-        }
+        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
     });
 
     radios.forEach((radio) => {
