@@ -353,10 +353,17 @@
         }
     }
 
-    &__contact:hover,
     &__contact:focus-visible {
         .site-header__contact-number {
             color: $primary-red;
+        }
+    }
+
+    @include media-breakpoint-up(xl) {
+        &__contact:hover {
+            .site-header__contact-number {
+                color: $primary-red;
+            }
         }
     }
 
