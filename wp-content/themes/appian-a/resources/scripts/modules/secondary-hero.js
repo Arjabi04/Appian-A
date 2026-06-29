@@ -6,7 +6,6 @@ function initSecondaryHero() {
             if (e.matches) {
                 video.pause();
             } else {
-                // Ensure it plays if reduced motion is disabled
                 video.play().catch(() => { });
             }
         });
