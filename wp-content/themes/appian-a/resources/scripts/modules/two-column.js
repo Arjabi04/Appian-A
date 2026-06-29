@@ -25,6 +25,13 @@ document.addEventListener('mouseout', (e) => {
     }
 });
 
+document.addEventListener('focusin', (e) => {
+    const card = e.target.closest('.m-two-column__card');
+    if (card && card.matches(':focus-visible')) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+});
+
 window.addEventListener('pageshow', () => {
     document.querySelectorAll('.m-two-column__card, .m-two-column__button').forEach(el => {
         el.classList.remove('is-clicked');

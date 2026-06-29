@@ -122,7 +122,7 @@ function initLeadspace() {
         onScroll();
     }
 
-    function applyMotionPreference(matches) {
+    function applyMotionPreference(matches, isInitial = false) {
         if (matches) {
             if (video) video.pause();
             window.removeEventListener('scroll', onScroll);
@@ -130,7 +130,7 @@ function initLeadspace() {
             updateArcMetrics();
             paths.forEach(path => { path.style.strokeDashoffset = 0; });
         } else {
-            if (video) video.play().catch(function () { });
+            if (video && !isInitial) video.play().catch(function () { });
             updateArcMetrics();
             onScroll();
             window.removeEventListener('scroll', onScroll);
@@ -141,10 +141,10 @@ function initLeadspace() {
     }
 
     function onMotionChange(e) {
-        applyMotionPreference(e.matches);
+        applyMotionPreference(e.matches, false);
     }
 
-    applyMotionPreference(motionQuery.matches);
+    applyMotionPreference(motionQuery.matches, true);
 
     if (_prevMotionQuery && _prevMotionChangeHandler) {
         _prevMotionQuery.removeEventListener('change', _prevMotionChangeHandler);
@@ -153,7 +153,6 @@ function initLeadspace() {
     _prevMotionChangeHandler = onMotionChange;
     motionQuery.addEventListener('change', onMotionChange);
 
-    // Update metrics and scroll state again after all resources are fully loaded
     window.addEventListener('load', () => {
         updateArcMetrics();
         onScroll();
