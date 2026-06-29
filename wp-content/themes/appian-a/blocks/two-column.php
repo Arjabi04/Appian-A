@@ -35,6 +35,14 @@ $resolve_image = static function ($value): array {
 };
 
 $resolve_link = static function ($value): array {
+	if (is_string($value)) {
+		return [
+			'url'    => $value,
+			'title'  => '',
+			'target' => '_self',
+		];
+	}
+
 	if (! is_array($value)) {
 		return ['url' => '', 'title' => '', 'target' => '_self'];
 	}
@@ -134,6 +142,7 @@ $render_card = static function (string $card_type, array $data) {
 				<?php
 				$heading_clean = wp_kses_post($data['heading']);
 				$heading_clean = preg_replace('/<\/?p[^>]*>/i', '', $heading_clean);
+				$heading_clean = preg_replace('/<a\b[^>]*>(.*?)<\/a>/i', '$1', $heading_clean);
 				?>
 				<h2 class="m-two-column__heading"><?php echo $heading_clean; ?></h2>
 			<?php endif; ?>
